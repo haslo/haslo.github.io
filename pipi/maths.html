@@ -130,7 +130,7 @@
     <p style="font-size: 0.82em; color: var(--text-secondary); margin-bottom: 12px;">
       The Burchfield/Tucker studies standardized on &ldquo;first urge&rdquo; voids (perceptual scale 2 = Normal).
       Their population norms (eu=5&plusmn;2, eu=7&plusmn;2) are therefore in Normal-equivalent units.
-      Weights are derived from typical voided volumes reported in ICS bladder diary parameters
+      Weights are approximated from typical voided volumes in ICS bladder diary literature
       and functional bladder capacity studies (~400&ndash;500ml):
     </p>
 
@@ -153,6 +153,8 @@
         not because you need to) produces only ~0.4&times; the volume &mdash; it's a behavioral event, not a strong
         physiological signal. Because the research baselines were measured at Normal urgency, these weights convert
         any urgency back to &ldquo;Normal-equivalent voids&rdquo; &mdash; the unit the population norms are expressed in.
+        These are practical approximations &mdash; no study has directly validated urgency-to-volume conversion factors
+        in healthy adults, but the underlying physiology (fuller bladder = more urgency = more volume) is well established.
       </p>
     </div>
 
@@ -257,8 +259,9 @@
     <p>
       Volume-weighted matching means missing a 500ml bottle of water matters more than missing a small sip.
       The 3-hour eligibility gate prevents penalizing recent intake (you just drank &mdash; give your kidneys time).
-      The 0.5h&ndash;3h response window is based on normal kidney processing time: Perrier et al. (2013) showed
-      strong correlation between fluid intake and subsequent urine output within this timeframe.
+      The 0.5h&ndash;3h response window reflects general kidney physiology (ingested water appears in urine
+      within 30 minutes to several hours). Perrier et al. (2013) confirmed strong correlation between
+      fluid intake and urine output markers.
       The neutral default of 15 (half marks) ensures the score isn't punished early in the day when no water
       events are old enough to evaluate.
     </p>
@@ -587,10 +590,9 @@
   <div class="research-callout">
     <div class="cite-label">Implementation References</div>
     <ul style="font-size: 0.95em;">
-      <li>Apple &ldquo;Calculating the dominant colors in an image&rdquo; &mdash; official Accelerate sample using vDSP k-means</li>
       <li>Kodeco Swift Algorithm Club: K-Means &mdash; educational Swift k-means with full source</li>
       <li>AIToolbox by KevinCoble: <code>KMeans.swift</code> &mdash; vDSP-backed k-means with k-means++ init</li>
-      <li>Apple vDSP documentation &mdash; <code>distanceSquared</code>, <code>add</code>, vector arithmetic</li>
+      <li>Apple vDSP documentation &mdash; <code>distanceSquared</code>, <code>add</code>, vector arithmetic &mdash; <a href="https://developer.apple.com/documentation/accelerate/vdsp" target="_blank">developer.apple.com</a></li>
     </ul>
   </div>
 
@@ -609,15 +611,15 @@
 
     <h4 style="margin-top: 16px; font-size: 0.85em;">Clustering &amp; Statistics</h4>
     <ol start="6">
-      <li>Tibshirani R, Walther G, Hastie T (2001) &mdash; gap statistic</li>
-      <li>Rousseeuw PJ (1987) &mdash; silhouette score</li>
-      <li>Arthur D, Vassilvitskii S (2007) &mdash; k-means++</li>
-      <li>Dolnicar S et al. (2014) &mdash; minimum sample sizes for clustering</li>
+      <li>Tibshirani R, Walther G, Hastie T (2001) &mdash; gap statistic &mdash; <a href="https://doi.org/10.1111/1467-9868.00293" target="_blank">JRSSB</a></li>
+      <li>Rousseeuw PJ (1987) &mdash; silhouette score &mdash; <a href="https://doi.org/10.1016/0377-0427(87)90125-7" target="_blank">J. Comput. Appl. Math.</a></li>
+      <li>Arthur D, Vassilvitskii S (2007) &mdash; k-means++ &mdash; <a href="https://dl.acm.org/doi/10.5555/1283383.1283494" target="_blank">ACM-SIAM</a></li>
+      <li>Dolnicar S et al. (2014) &mdash; minimum sample sizes for clustering &mdash; <a href="https://doi.org/10.1177/0047287513496475" target="_blank">J. Travel Research</a></li>
     </ol>
 
     <h4 style="margin-top: 16px; font-size: 0.85em;">Implementation</h4>
     <ol start="10">
-      <li>Apple Accelerate/vDSP &mdash; dominant colors sample, vDSP docs &mdash; <a href="https://developer.apple.com/documentation/accelerate/finding-the-dominant-colors-in-an-image" target="_blank">developer.apple.com</a></li>
+      <li>Apple vDSP &mdash; vector arithmetic for k-means &mdash; <a href="https://developer.apple.com/documentation/accelerate/vdsp" target="_blank">developer.apple.com</a></li>
       <li>Kodeco Swift Algorithm Club &mdash; k-means &mdash; <a href="https://github.com/kodecocodes/swift-algorithm-club/tree/master/K-Means" target="_blank">GitHub</a></li>
       <li>AIToolbox &mdash; vDSP k-means with k-means++ init &mdash; <a href="https://github.com/KevinCoble/AIToolbox" target="_blank">GitHub</a></li>
     </ol>

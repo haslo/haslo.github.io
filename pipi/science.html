@@ -104,7 +104,7 @@
       <div class="score-label">Frequency</div>
       <div class="score-desc">
         Urgency-weighted void count vs <strong>your personal 7-day rolling average</strong>.
-        Weights derived from typical voided volumes (ICS bladder diary parameters):
+        Weights approximated from typical voided volumes (ICS bladder diary literature):
         &#x1F630; Urgent = 1.4&times; (fuller bladder),
         &#x1F60A; Normal = 1.0&times; (research baseline),
         &#x1F60C; Just in Case = 0.4&times; (low-fill).
@@ -149,8 +149,9 @@
     <p>
       The foundational void-frequency studies (Burchfield et al. 2015; Tucker et al. 2016) standardized
       on &ldquo;first urge&rdquo; voids (perceptual scale 2). Their population norms are therefore in
-      Normal-urgency units. Since urgency maps to bladder fill level and thus voided volume (ICS
-      bladder diary parameters), each urgency level carries a different amount of hydration information.
+      Normal-urgency units. Since urgency generally maps to bladder fill level and approximate voided volume,
+      each urgency level carries a different amount of hydration information.
+      The weights below are practical approximations, not validated conversion factors.
     </p>
     <table style="width:100%; margin-top:12px; font-size:0.88em;">
       <thead>
@@ -233,7 +234,7 @@
         <strong style="color: #DC2626;">Out of Scope</strong>
         <ul style="margin-top: 4px;">
           <li>Cannot diagnose dehydration (requires lab markers)</li>
-          <li>Individual variability by activity, health, age, sex</li>
+          <li>Individual variability by activity, health, age, sex (urgency weights are approximations)</li>
           <li>Research populations are primarily healthy young adults</li>
           <li>Copeptin pathway is observational, not proven in long-term RCTs</li>
           <li>Several key studies involve Danone Research funding/authors (disclosed)</li>
@@ -358,8 +359,8 @@
       <div class="source-col">
         <h4>Research</h4>
         <ol>
-          <li>Dolnicar S et al. (2014) &ldquo;Required Sample Sizes for Data-Driven Market Segmentation Analyses&rdquo; &mdash; minimum N guidelines per clustering dimensionality</li>
-          <li>Qiu &amp; Joe (2009) &mdash; N &ge; 10&middot;d&middot;k rule of thumb for stable k-means</li>
+          <li>Dolnicar S et al. (2014) &ldquo;Required Sample Sizes for Data-Driven Market Segmentation Analyses&rdquo; &mdash; minimum N guidelines per clustering dimensionality &mdash; <a href="https://doi.org/10.1177/0047287513496475" target="_blank">J. Travel Research</a></li>
+          <li>Qiu &amp; Joe (2006) &mdash; N &ge; 10&middot;d&middot;k rule of thumb for stable k-means &mdash; <a href="https://doi.org/10.1007/s00357-006-0018-y" target="_blank">J. Classification</a></li>
           <li>Day-type classification of electrical load profiles &mdash; <a href="https://www.sciencedirect.com/topics/engineering/load-profile" target="_blank">ScienceDirect</a> &mdash; weekday/weekend as dominant signal for daily consumption patterns</li>
           <li>Tibshirani R et al. (2001) &ldquo;Estimating the number of clusters in a data set via the gap statistic&rdquo; &mdash; <a href="https://doi.org/10.1111/1467-9868.00293" target="_blank">J. R. Statist. Soc. B</a></li>
           <li>Rousseeuw PJ (1987) &ldquo;Silhouettes: a graphical aid to the interpretation and validation of cluster analysis&rdquo; &mdash; <a href="https://doi.org/10.1016/0377-0427(87)90125-7" target="_blank">J. Comput. Appl. Math.</a></li>
@@ -368,7 +369,6 @@
       <div class="source-col">
         <h4>Code &amp; Implementation</h4>
         <ol>
-          <li>Apple &ldquo;Calculating the dominant colors in an image&rdquo; &mdash; official Accelerate sample code using vDSP k-means &mdash; <a href="https://developer.apple.com/documentation/accelerate/finding-the-dominant-colors-in-an-image" target="_blank">developer.apple.com</a></li>
           <li>Kodeco Swift Algorithm Club: K-Means &mdash; educational Swift k-means with full source &mdash; <a href="https://github.com/kodecocodes/swift-algorithm-club/tree/master/K-Means" target="_blank">GitHub</a></li>
           <li>AIToolbox by KevinCoble: <code>KMeans.swift</code> &mdash; vDSP-backed k-means with k-means++ init &mdash; <a href="https://github.com/KevinCoble/AIToolbox" target="_blank">GitHub</a></li>
           <li>Apple vDSP documentation &mdash; <code>distanceSquared</code>, <code>add</code>, vector arithmetic &mdash; <a href="https://developer.apple.com/documentation/accelerate/vdsp" target="_blank">developer.apple.com</a></li>
