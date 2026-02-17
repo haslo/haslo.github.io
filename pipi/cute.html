@@ -11,8 +11,9 @@
     science.html  — Science (Hydration Proof Engine, scoring, patterns)
     tech.html     — Tech (architecture, shared infra, data storage)
 
-  THIS FILE: Cute Mode tab — explains Clean vs Adorable modes, shows 3 side-by-side SVG
-  comparisons (Pipi Clock, Timeline, Quick Log Widget), and lists where hearts appear.
+  THIS FILE: Cute Mode tab — explains Clean (no hearts) vs Adorable (hearts everywhere) modes,
+  shows 3 side-by-side SVG comparisons (Pipi Clock, Timeline, Quick Log Widget), and lists
+  where hearts appear when Cute Mode is ON.
 
   EDITING:
   - Content lives inside <div class="container">. Styles come from styles.css.
@@ -58,7 +59,7 @@
   <section>
     <div class="cute-hero-intro">
       <h2><span class="emoji">&#x1F49B;</span> Cute Mode</h2>
-      <div class="cute-tagline">A single toggle in Settings &mdash; from barely-there to adorable</div>
+      <div class="cute-tagline">A single toggle in Settings &mdash; from clean to adorable</div>
       <div style="margin-top: 12px; font-size: 0.95em; color: var(--text-secondary); font-style: italic;">
         <strong>&ldquo;Every heart has a job.&rdquo;</strong> Hearts serve as backdrops, markers, separators, and brand stamps &mdash; never random decoration. UX first, cute second.
       </div>
@@ -68,10 +69,8 @@
       <div class="cute-mode-card">
         <h4>Clean (Cute Mode OFF)</h4>
         <p>
-          Near-invisible hearts. Very low opacity (~0.08&ndash;0.12), tucked into backgrounds &mdash;
-          behind chart areas, faintly in widget chrome, ghostly hearts in empty space.
-          You'd only notice them if you looked for them. Think watermark-level subtlety.
-          Not accents, not decorations &mdash; <em>atmosphere</em>.
+          No hearts at all. Standard dots, lines, and circles &mdash; a straightforward,
+          minimal UI with zero heart imagery. Clean means clean.
         </p>
       </div>
       <div class="cute-mode-card">
@@ -116,10 +115,6 @@
               <text x="158" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">6h</text>
               <text x="90" y="155" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">12h</text>
               <text x="24" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">18h</text>
-              <!-- Ghostly hearts — barely visible -->
-              <text x="75" y="50" font-size="12" opacity="0.08">&#x1F499;</text>
-              <text x="120" y="130" font-size="10" opacity="0.08">&#x1F49B;</text>
-              <text x="50" y="105" font-size="11" opacity="0.08">&#x1F499;</text>
               <!-- Water drops -->
               <circle cx="109" cy="19" r="6" fill="#22B8CF" opacity="0.85"/><text x="109" y="22" text-anchor="middle" font-size="7">💧</text>
               <circle cx="145" cy="40" r="6" fill="#22B8CF" opacity="0.85"/><text x="145" y="43" text-anchor="middle" font-size="7">💧</text>
@@ -129,7 +124,7 @@
               <circle cx="140" cy="110" r="7" fill="#FBBF24" opacity="0.25"/><text x="140" y="113" text-anchor="middle" font-size="9">😌</text>
             </svg>
           </div>
-          <p style="font-size:0.82em; color:var(--text-secondary);">Hearts at ~8% opacity &mdash; pure atmosphere</p>
+          <p style="font-size:0.82em; color:var(--text-secondary);">No hearts &mdash; clean and minimal</p>
         </div>
         <div class="cute-compare-card">
           <h4>Cute Mode ON</h4>
