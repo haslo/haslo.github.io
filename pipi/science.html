@@ -8,7 +8,8 @@
     product.html  — Product (vision, features, USPs, monetization)
     widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
     cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
-    science.html  — THIS FILE. Hydration Proof Engine scoring + Pattern Detection.
+    science.html  — THIS FILE. Research basis, health case, claims and limitations.
+    maths.html    — Maths (Hydration Score formulas, Pattern Detection algorithm references)
     tech.html     — Tech (architecture, shared infra, data storage)
 
   THIS FILE: Two full-width gradient sections — Hydration Proof Engine (science-section)
@@ -16,7 +17,7 @@
 
   EDITING:
   - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
-  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - Hero, nav, and footer are shared across all pages — edit all 7 if changing these.
   - Score components use .score-breakdown grid with .score-component cards (.intake, .frequency, .throughput).
   - Pattern phase cards reuse .score-component with .pattern variant.
   - Citations use .citations with ordered list.
@@ -51,6 +52,7 @@
   <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
   <a class="tab-btn" href="cute.html">Cute Mode</a>
   <a class="tab-btn active" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
   <a class="tab-btn" href="tech.html">Tech</a>
 </nav>
 
@@ -69,16 +71,18 @@
   <div class="research-callout">
     <div class="cite-label">Research Basis</div>
     <p>
-      <strong>Well-hydrated adults average 7&plusmn;2 voids per 24 hours</strong>; hypohydrated adults average 5&plusmn;2.
-      This was confirmed with high test-retest reliability (ICC 0.86) across repeated trials.
+      <strong>Euhydrated adults void more frequently than hypohydrated adults.</strong>
+      Burchfield et al. (2015) found euhydrated subjects averaged 5&plusmn;2 voids/24h
+      vs 3&plusmn;1 for hypohydrated subjects. Tucker et al. (2016) confirmed this with
+      7&plusmn;2 (euhydrated) vs 5&plusmn;2 (hypohydrated), with high test-retest reliability
+      (ICC &asymp; 0.85) and within-subject coefficients of variation of 15&ndash;21%.
     </p>
     <p>
-      A 24-hour void frequency of <strong>&le;6 detects suboptimal hydration</strong> with 81.5% accuracy (AUC 0.815).
-      Frequency <strong>&le;4 is a strong predictor</strong> of dehydration (positive likelihood ratio 9.03).
-    </p>
-    <p>
-      However, <strong>individual variability is 15&ndash;21% day-to-day</strong>. Absolute thresholds
-      don't work for everyone. A person who normally goes 5 times is different from someone who goes 9 times.
+      Combined, the research places <strong>euhydrated void frequency at roughly 5&ndash;7 per day</strong>.
+      Perrier et al. (2021) further suggests that void frequency, alongside urine color and
+      intake of 2.5&ndash;3.5 L/day, can guide daily self-monitoring.
+      However, <strong>individual variability means absolute thresholds don't work for everyone</strong>.
+      A person who normally goes 5 times is different from someone who goes 9 times.
       <em>Personal baselines are essential.</em>
     </p>
   </div>
@@ -93,28 +97,31 @@
         How close you are to your daily water goal.
         Hitting 100% of goal = 33pts. Small buffer up to 120% = full 40.
       </div>
-      <div class="score-formula">min(intake/goal, 1.2) / 1.2 &times; 40</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for formula</a></div>
     </div>
     <div class="score-component frequency">
       <div class="score-points">30</div>
       <div class="score-label">Frequency</div>
       <div class="score-desc">
-        Today's pee count vs <strong>your personal 7-day rolling average</strong>.
-        Within &plusmn;20% of your norm = full points.
-        No medical thresholds &mdash; your pattern is your baseline.
+        Urgency-weighted void count vs <strong>your personal 7-day rolling average</strong>.
+        Weights derived from typical voided volumes (ICS bladder diary parameters):
+        &#x1F630; Urgent = 1.4&times; (fuller bladder),
+        &#x1F60A; Normal = 1.0&times; (research baseline),
+        &#x1F60C; Just in Case = 0.4&times; (low-fill).
+        Within 80% of your expected pace = full points.
       </div>
-      <div class="score-formula">voids_today / rolling_avg_7d</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for formula</a></div>
     </div>
     <div class="score-component throughput">
       <div class="score-points">30</div>
       <div class="score-label">Throughput</div>
       <div class="score-desc">
         <strong>The differentiator.</strong> Correlates intake timing with void timing.
-        Healthy hydration: pee follows water within 1&ndash;3 hours.
-        Drank 2L but no pee by afternoon? Score drops. <em>Only possible with both data streams.</em>
+        Healthy hydration: pee follows water within 0.5&ndash;3 hours.
+        Drank 500ml but no pee by afternoon? Score drops. <em>Only possible with both data streams.</em>
         <br><em style="font-size: 0.95em;">Over time, expected timing adjusts to your detected day pattern.</em>
       </div>
-      <div class="score-formula">corr(intake_times, void_times)</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for formula</a></div>
     </div>
   </div>
 
@@ -137,22 +144,45 @@
     </div>
   </div>
 
+  <div class="research-callout" style="border-left-color: var(--pee);">
+    <div class="cite-label" style="color: var(--pee-dark);">Urgency as a Signal</div>
+    <p>
+      The foundational void-frequency studies (Burchfield et al. 2015; Tucker et al. 2016) standardized
+      on &ldquo;first urge&rdquo; voids (perceptual scale 2). Their population norms are therefore in
+      Normal-urgency units. Since urgency maps to bladder fill level and thus voided volume (ICS
+      bladder diary parameters), each urgency level carries a different amount of hydration information.
+    </p>
+    <table style="width:100%; margin-top:12px; font-size:0.88em;">
+      <thead>
+        <tr><th>Pipi Emoji</th><th>Perceptual Scale</th><th>Typical Volume</th><th>Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&#x1F630; Urgent</td><td>3&ndash;4 (strong/desperate)</td><td>~350 ml</td><td>1.4&times; Normal &mdash; strong hydration evidence</td></tr>
+        <tr><td>&#x1F60A; Normal</td><td>2 (first urge)</td><td>~250 ml</td><td>1.0&times; &mdash; baseline (matches research norms)</td></tr>
+        <tr><td>&#x1F60C; Just in Case</td><td>0&ndash;1 (no/weak urge)</td><td>~100 ml</td><td>0.4&times; Normal &mdash; behavioral, weak signal</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.85em; margin-top:8px; font-style:italic;">
+      See the <a href="maths.html">Maths tab</a> for how these weights feed into the Frequency Score formula.
+    </p>
+  </div>
+
   <div class="score-example">
     <h4>Example: Sarah at 3 PM</h4>
     <p style="font-size: 0.88em; color: var(--text-secondary);">
-      Goal: 2.5L &middot; Drank so far: 1.9L &middot; Pee count: 4 (her 7-day avg at 3 PM: 4.2) &middot; Last pee was 1.5h after last water
+      Goal: 2500ml &middot; Intake: 1900ml &middot; Voids: 3 (&#x1F60A; w=1.0, &#x1F630; w=1.4, &#x1F60C; w=0.4) &middot; Her 7-day avg: 7.2/day
     </p>
     <div class="score-example-bar">
-      <div class="bar-seg" style="width: 27%; background: var(--water);">27</div>
-      <div class="bar-seg" style="width: 27%; background: var(--pee-dark);">27</div>
-      <div class="bar-seg" style="width: 24%; background: var(--hydrated-dark);">24</div>
-      <div class="bar-seg" style="width: 22%; background: #E2E8F0; color: var(--text-secondary);">&nbsp;</div>
+      <div class="bar-seg" style="width: 25%; background: var(--water);">25</div>
+      <div class="bar-seg" style="width: 23%; background: var(--pee-dark);">23</div>
+      <div class="bar-seg" style="width: 21%; background: var(--hydrated-dark);">21</div>
+      <div class="bar-seg" style="width: 31%; background: #E2E8F0; color: var(--text-secondary);">&nbsp;</div>
     </div>
     <p style="font-size: 0.82em; color: var(--text-secondary); margin-bottom: 0;">
-      <strong style="color: var(--water);">Intake 27/40</strong> &mdash; 76% of goal, on pace &middot;
-      <strong style="color: var(--pee-dark);">Frequency 27/30</strong> &mdash; 95% of her average &middot;
-      <strong style="color: var(--hydrated-dark);">Throughput 24/30</strong> &mdash; good correlation
-      &rarr; <strong style="color: var(--text);">Total: 78 (On Track)</strong>
+      <strong style="color: var(--water);">Intake 25/40</strong> &mdash; 76% of goal, on pace &middot;
+      <strong style="color: var(--pee-dark);">Frequency 23/30</strong> &mdash; 2.8 effective voids vs 4.5 expected (time-proportional) &middot;
+      <strong style="color: var(--hydrated-dark);">Throughput 21/30</strong> &mdash; 2 of 3 eligible water events matched with a void
+      &rarr; <strong style="color: var(--text);">Total: 69 (On Track)</strong>
     </p>
   </div>
 
@@ -167,13 +197,64 @@
     </p>
   </div>
 
+  <div class="research-callout" style="border-left-color: #F87171;">
+    <div class="cite-label" style="color: #DC2626;">The Health Case &mdash; Vasopressin Pathway</div>
+    <p>
+      Chronic low water intake triggers elevated vasopressin (AVP), measured via its stable proxy copeptin.
+      <strong>Elevated copeptin is an independent risk marker</strong> for type 2 diabetes, metabolic syndrome,
+      CKD, and cardiovascular disease (Enh&ouml;rning &amp; Melander 2018).
+    </p>
+    <p>
+      Increasing water intake by 1&ndash;1.5L/day for 6 weeks <strong>significantly reduced both fasting copeptin
+      and fasting glucose</strong> in habitual low drinkers (Enh&ouml;rning et al. 2019).
+      At the population level, high water intake correlates with lower triglycerides and higher HDL,
+      with copeptin as the unifying variable (Brunkwall et al. 2020).
+    </p>
+    <p style="font-size: 0.9em; font-style: italic;">
+      Pipi doesn't measure copeptin &mdash; but the behavioral inputs it tracks (water intake, void frequency)
+      are the same practical proxies the research recommends for daily self-monitoring.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--hydrated);">
+    <div class="cite-label" style="color: var(--hydrated-dark);">What Pipi Claims &mdash; and Doesn't</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.88em;">
+      <div>
+        <strong style="color: var(--hydrated-dark);">Supported</strong>
+        <ul style="margin-top: 4px;">
+          <li>Void frequency is a validated, research-backed hydration indicator</li>
+          <li>Correlating intake with output provides more information than either alone</li>
+          <li>Urgency adds signal quality to frequency data</li>
+          <li>5&ndash;7 voids/day is a research-backed adequate range</li>
+          <li>Adequate hydration is associated with lower metabolic risk</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color: #DC2626;">Out of Scope</strong>
+        <ul style="margin-top: 4px;">
+          <li>Cannot diagnose dehydration (requires lab markers)</li>
+          <li>Individual variability by activity, health, age, sex</li>
+          <li>Research populations are primarily healthy young adults</li>
+          <li>Copeptin pathway is observational, not proven in long-term RCTs</li>
+          <li>Several key studies involve Danone Research funding/authors (disclosed)</li>
+          <li>Score is a <em>behavioral wellness signal</em>, not a medical measurement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="citations">
     <strong>Sources</strong>
     <ol>
-      <li>Tucker MA et al. (2019) &ldquo;Adequacy of Daily Fluid Intake Volume Can Be Identified From Urinary Frequency and Perceived Thirst&rdquo; &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31347984/" target="_blank">PubMed 31347984</a></li>
-      <li>Bottin JH et al. (2016) &ldquo;Reliability of 24-h void frequency as an index of hydration status when euhydrated and hypohydrated&rdquo; &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26862006/" target="_blank">PubMed 26862006</a></li>
-      <li>Burchfield JM &amp; Gonzalez studies, University of Arkansas &mdash; <a href="https://news.uark.edu/articles/33623/studies-suggest-frequency-of-urination-may-be-used-to-judge-hydration" target="_blank">uark.edu</a></li>
-      <li>Perrier ET et al. (2022) &ldquo;Personalized prediction of optimal water intake in adult population&rdquo; &mdash; <a href="https://www.nature.com/articles/s41598-022-21869-y" target="_blank">Nature Scientific Reports</a></li>
+      <li>Burchfield JM et al. (2015) &ldquo;24-h Void Number as an Indicator of Hydration Status&rdquo; &mdash; <em>Eur J Clin Nutr</em> 69(5), 638&ndash;641 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/25604776/" target="_blank">PubMed</a></li>
+      <li>Tucker MA et al. (2016) &ldquo;Reliability of 24-h Void Frequency as an Index of Hydration Status&rdquo; &mdash; <em>Eur J Clin Nutr</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26862006/" target="_blank">PubMed</a></li>
+      <li>Perrier ET et al. (2013) &ldquo;Relation Between Urinary Hydration Biomarkers and Total Fluid Intake&rdquo; &mdash; <em>Eur J Clin Nutr</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/23695204/" target="_blank">PubMed</a></li>
+      <li>Perrier ET et al. (2021) &ldquo;Hydration for Health Hypothesis: A Narrative Review&rdquo; &mdash; <em>Eur J Nutr</em> 60, 1167&ndash;1180 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/32632658/" target="_blank">PubMed</a>. Note: several authors are employees or consultants of Danone Research (disclosed).</li>
+      <li>Enh&ouml;rning S et al. (2019) &ldquo;Effects of Hydration on Plasma Copeptin, Glycemia and Gluco-Regulatory Hormones&rdquo; &mdash; <em>Eur J Nutr</em> 58, 315&ndash;324 &mdash; <a href="https://link.springer.com/article/10.1007/s00394-017-1595-8" target="_blank">Springer</a></li>
+      <li>Enh&ouml;rning S et al. (2019) &ldquo;Water Supplementation Reduces Copeptin and Plasma Glucose&rdquo; &mdash; <em>J Clin Endocrinol Metab</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/30566641/" target="_blank">PubMed</a></li>
+      <li>Brunkwall L et al. (2020) &ldquo;High Water Intake and Low Urine Osmolality Are Associated With Favorable Metabolic Profile&rdquo; &mdash; <em>Eur J Nutr</em> 59, 3715&ndash;3722 &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7669756/" target="_blank">PMC</a></li>
+      <li>Enh&ouml;rning S &amp; Melander O (2018) &ldquo;The Vasopressin System in the Risk of Diabetes and Cardiorenal Disease&rdquo; &mdash; <em>Ann Nutr Metab</em> 72(Suppl 2), 21&ndash;27 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/29925066/" target="_blank">PubMed</a></li>
+      <li>Song Y et al. (2023) &ldquo;Analysis on Fluid Intake and Urination Behaviors Among the Elderly&rdquo; &mdash; <em>Front Nutr</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/38249613/" target="_blank">PubMed</a></li>
     </ol>
   </div>
   </div>
@@ -213,7 +294,7 @@
         Research confirms weekday/weekend is the dominant signal for daily consumption patterns.
         Already enough to stop 6am Sunday reminders.
       </div>
-      <div class="score-formula">group_by(day_of_week).mean()</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for algorithm details</a></div>
     </div>
     <div class="score-component pattern">
       <div class="score-points">2</div>
@@ -224,7 +305,7 @@
         Gap statistic validates whether real clusters exist &mdash; k=1 (&ldquo;your days are consistent&rdquo;) is a valid answer.
         Silhouette score picks optimal k. 30-day rolling window handles life changes.
       </div>
-      <div class="score-formula">kmeans(features, k=gap_stat(2..4))</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for algorithm details</a></div>
     </div>
     <div class="score-component pattern">
       <div class="score-points">3</div>
@@ -235,7 +316,7 @@
         Anomaly detection: &gt;2&sigma; from any centroid = gently flagged unusual day.
         Re-clusters weekly as data evolves.
       </div>
-      <div class="score-formula">classify(today, centroids)</div>
+      <div class="score-formula"><a href="maths.html">See Maths tab for algorithm details</a></div>
     </div>
   </div>
 

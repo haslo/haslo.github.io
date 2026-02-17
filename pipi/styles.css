@@ -8,7 +8,8 @@
     product.html  — Product tab (vision, features, USPs, monetization)
     widgets.html  — Widgets & Design tab (circle widgets, widget inventory, visualizations, design language)
     cute.html     — Cute Mode tab (OFF/ON comparisons, heart placement guide)
-    science.html  — Science tab (Hydration Proof Engine, scoring, pattern detection)
+    science.html  — Science tab (research basis, health case, claims)
+    maths.html    — Maths tab (Hydration Score formulas, Pattern Detection algorithm references)
     tech.html     — Tech tab (architecture, shared infra, data storage)
 
   EDITING GUIDE:
@@ -21,7 +22,7 @@
 
   CROSS-REFERENCES:
   - If adding a new CSS class, no other file changes needed — just use it in the relevant HTML.
-  - If renaming a class, update all 6 HTML content pages that might use it.
+  - If renaming a class, update all 7 HTML content pages that might use it.
   - If changing :root variables, all pages inherit automatically.
 */
 
@@ -602,6 +603,14 @@ tbody tr:hover { background: #FAFCFE; }
 .science-section {
   background: linear-gradient(180deg, #F8FAFC 0%, #F0F9FF 50%, var(--bg) 100%);
   border-top: 2px solid var(--water) !important;
+}
+
+/* ======================== */
+/* MATHS SECTION             */
+/* ======================== */
+.maths-section {
+  background: linear-gradient(135deg, #F8FAFF 0%, #F1F0FF 50%, #F8FAFC 100%);
+  padding: 48px 0;
 }
 
 /* ======================== */

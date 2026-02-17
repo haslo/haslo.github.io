@@ -1,0 +1,634 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: Maths
+  ========================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, USPs, monetization)
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
+    science.html  — Science (research basis, health case, claims)
+    maths.html    — THIS FILE. Complete mathematical specifications for Hydration Score and Pattern Detection.
+    tech.html     — Tech (architecture, shared infra, data storage)
+
+  THIS FILE: Mathematical specifications — three sections:
+  1. Hydration Score (Intake, Frequency, Throughput formulas with worked example)
+  2. Personal Baseline Evolution (bootstrap, rolling average, pattern-aware)
+  3. Pattern Detection Algorithm References (day-of-week, k-means, classification)
+
+  EDITING:
+  - Content lives inside <section class="maths-section"> > <div class="container">.
+  - Styles come from styles.css. Uses .score-component cards, .score-formula, .research-callout, tables.
+  - Hero, nav, and footer are shared across all pages — edit all 7 if changing these.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — Maths</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn active" href="maths.html">Maths</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<section class="maths-section">
+  <div class="container">
+
+  <!-- ==================== SECTION A: HYDRATION SCORE ==================== -->
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4D0;</span> Hydration Score &mdash; Mathematical Specification</h2>
+  <div class="science-intro">
+    <p>
+      The Hydration Score (0&ndash;100) combines three independently computed subscores. Each is designed
+      to be meaningful at any time of day, converge to personal norms over time, and degrade gracefully
+      with sparse data. See the <a href="science.html">Science tab</a> for the research basis.
+    </p>
+  </div>
+
+  <!-- A1: Intake Score -->
+  <h3 style="text-align: center; margin-top: 36px;">A1: Intake Score (0&ndash;40)</h3>
+
+  <div class="score-component intake" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">40</div>
+      <div class="score-label" style="font-size: 1.1em;">Intake</div>
+    </div>
+
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      S<sub>intake</sub> = min(I / G, 1.2) / 1.2 &times; 40
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th><th>Default</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>I</td><td>Total water intake today (ml)</td><td>&mdash;</td></tr>
+        <tr><td>G</td><td>Daily goal (ml)</td><td>2500</td></tr>
+        <tr><td>1.2</td><td>Overshoot cap (120% of goal)</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Boundary Behavior</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Intake</th><th>% of Goal</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0 ml</td><td>0%</td><td>0</td></tr>
+        <tr><td>1250 ml</td><td>50%</td><td>16.7</td></tr>
+        <tr><td>2500 ml</td><td>100%</td><td>33.3</td></tr>
+        <tr><td>3000 ml</td><td>120%+</td><td>40.0 (cap)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Design Rationale</div>
+    <p>
+      The 120% cap prevents gaming (drinking excessive water for score) while rewarding a healthy buffer
+      above goal. Hitting your exact goal earns 83% of the subscore; the remaining 17% rewards a modest
+      surplus. Score is linear &mdash; no cliffs, no bonus thresholds. Research (Perrier 2021) recommends
+      2.5&ndash;3.5 L/day, so the default goal of 2.5L with a 120% cap covers this range.
+    </p>
+  </div>
+
+  <!-- A2: Frequency Score -->
+  <h3 style="text-align: center; margin-top: 36px;">A2: Frequency Score (0&ndash;30)</h3>
+
+  <div class="score-component frequency" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">30</div>
+      <div class="score-label" style="font-size: 1.1em;">Frequency</div>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Urgency Weights &mdash; Volume-Proxy Derivation</h4>
+    <p style="font-size: 0.82em; color: var(--text-secondary); margin-bottom: 12px;">
+      The Burchfield/Tucker studies standardized on &ldquo;first urge&rdquo; voids (perceptual scale 2 = Normal).
+      Their population norms (eu=5&plusmn;2, eu=7&plusmn;2) are therefore in Normal-equivalent units.
+      Weights are derived from typical voided volumes reported in ICS bladder diary parameters
+      and functional bladder capacity studies (~400&ndash;500ml):
+    </p>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Emoji</th><th>Urgency</th><th>Perceptual Scale</th><th>Typical Volume</th><th>Weight (vol / 250ml)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&#x1F60C;</td><td>Just in Case</td><td>0&ndash;1 (no/weak urge)</td><td>~100 ml</td><td><strong>0.4</strong></td></tr>
+        <tr><td>&#x1F60A;</td><td>Normal</td><td>2 (first urge)</td><td>~250 ml</td><td><strong>1.0</strong></td></tr>
+        <tr><td>&#x1F630;</td><td>Urgent</td><td>3&ndash;4 (strong/desperate)</td><td>~350 ml</td><td><strong>1.4</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="research-callout" style="margin: 12px 0 16px; font-size: 0.95em;">
+      <p>
+        <strong>Why volume-proxy weights work:</strong> Higher urgency = fuller bladder = more urine volume per void
+        = stronger evidence of kidney throughput. A single Urgent void produces ~1.4&times; the volume of a Normal void,
+        so it carries ~1.4&times; the hydration signal. Conversely, a Just-in-Case void (going before a meeting,
+        not because you need to) produces only ~0.4&times; the volume &mdash; it's a behavioral event, not a strong
+        physiological signal. Because the research baselines were measured at Normal urgency, these weights convert
+        any urgency back to &ldquo;Normal-equivalent voids&rdquo; &mdash; the unit the population norms are expressed in.
+      </p>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Formulas</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      V<sub>eff</sub> = &Sigma; w(u<sub>i</sub>) &nbsp;&mdash;&nbsp; effective void count (urgency-weighted sum)<br>
+      <br>
+      B = 6.0 &nbsp;&mdash;&nbsp; bootstrap baseline (days 1&ndash;7)<br>
+      &nbsp;&nbsp;&nbsp; rolling_7d_mean(V<sub>eff</sub>) &nbsp;&mdash;&nbsp; personal baseline (day 8+)<br>
+      &nbsp;&nbsp;&nbsp; cluster_baseline &nbsp;&mdash;&nbsp; pattern-aware baseline (day 30+, if active)<br>
+      <br>
+      E = B &times; h / 24 &nbsp;&mdash;&nbsp; expected effective voids at hour h of day<br>
+      <br>
+      S<sub>frequency</sub> = min(V<sub>eff</sub> / (0.8 &times; E), 1.0) &times; 30
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>w(u)</td><td>Urgency weight (volume-proxy)</td><td>&#x1F60C;=0.4, &#x1F60A;=1.0, &#x1F630;=1.4</td></tr>
+        <tr><td>V<sub>eff</sub></td><td>Effective void count today</td><td>Sum of weights</td></tr>
+        <tr><td>B</td><td>Personal baseline (effective voids/day)</td><td>Rolling average or bootstrap</td></tr>
+        <tr><td>6.0</td><td>Bootstrap value</td><td>Midpoint of Burchfield (eu=5) and Tucker (eu=7) means</td></tr>
+        <tr><td>h</td><td>Current hour (0&ndash;24)</td><td>Clock time</td></tr>
+        <tr><td>E</td><td>Expected voids at current time</td><td>Time-proportional</td></tr>
+        <tr><td>0.8</td><td>Full-marks threshold (80% of expected)</td><td>Generous band for individual variability</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="font-size: 0.85em; margin-top: 12px;">Behavior</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>V<sub>eff</sub> / E</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&ge; 0.8</td><td>30 (full)</td></tr>
+        <tr><td>0.6</td><td>22.5</td></tr>
+        <tr><td>0.4</td><td>15.0</td></tr>
+        <tr><td>0.0</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--pee);">
+    <div class="cite-label" style="color: var(--pee-dark);">Why 80% Threshold?</div>
+    <p>
+      No penalty for exceeding expected count. Research consistently shows higher void frequency = better hydrated.
+      The 80% threshold is intentionally generous because within-subject variability is real (Tucker 2016,
+      ICC &gt; 0.85 but not 1.0). You need to be noticeably below your baseline to lose points.
+    </p>
+  </div>
+
+  <!-- A3: Throughput Score -->
+  <h3 style="text-align: center; margin-top: 36px;">A3: Throughput Score (0&ndash;30)</h3>
+
+  <div class="score-component throughput" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">30</div>
+      <div class="score-label" style="font-size: 1.1em;">Throughput</div>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Algorithm &mdash; Water-Void Matching</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For each water event j at time t<sub>j</sub> with volume v<sub>j</sub>:<br>
+      <br>
+      &nbsp;&nbsp;1. Eligibility: &nbsp; eligible<sub>j</sub> = 1 if (now &minus; t<sub>j</sub>) &ge; 3h<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(full response window must have elapsed)<br>
+      <br>
+      &nbsp;&nbsp;2. Response window: &nbsp; [t<sub>j</sub> + 0.5h, &nbsp; t<sub>j</sub> + 3h]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(kidneys need &ge;30 min; most response within 3h)<br>
+      <br>
+      &nbsp;&nbsp;3. Match: &nbsp; matched<sub>j</sub> = 1 if ANY void exists within the response window<br>
+      <br>
+      Score calculation:<br>
+      &nbsp;&nbsp;If &Sigma;(eligible<sub>j</sub> &times; v<sub>j</sub>) &gt; 0:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;R = &Sigma;(eligible<sub>j</sub> &times; matched<sub>j</sub> &times; v<sub>j</sub>) / &Sigma;(eligible<sub>j</sub> &times; v<sub>j</sub>)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;S<sub>throughput</sub> = R &times; 30<br>
+      &nbsp;&nbsp;Else:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;S<sub>throughput</sub> = 15 &nbsp;&mdash;&nbsp; neutral (not enough time has passed to judge)
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>t<sub>j</sub></td><td>Time of water event j</td><td>&mdash;</td></tr>
+        <tr><td>v<sub>j</sub></td><td>Volume of water event j (ml)</td><td>&mdash;</td></tr>
+        <tr><td>3h</td><td>Eligibility window &mdash; time before scoring</td><td>Kidney response physiology</td></tr>
+        <tr><td>0.5h</td><td>Response window start &mdash; minimum processing time</td><td>&mdash;</td></tr>
+        <tr><td>3h</td><td>Response window end &mdash; maximum expected lag</td><td>Perrier 2013</td></tr>
+        <tr><td>R</td><td>Volume-weighted match ratio</td><td>[0, 1]</td></tr>
+        <tr><td>15</td><td>Neutral default (no eligible events)</td><td>Score midpoint</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--hydrated);">
+    <div class="cite-label" style="color: var(--hydrated-dark);">Design Rationale</div>
+    <p>
+      Volume-weighted matching means missing a 500ml bottle of water matters more than missing a small sip.
+      The 3-hour eligibility gate prevents penalizing recent intake (you just drank &mdash; give your kidneys time).
+      The 0.5h&ndash;3h response window is based on normal kidney processing time: Perrier et al. (2013) showed
+      strong correlation between fluid intake and subsequent urine output within this timeframe.
+      The neutral default of 15 (half marks) ensures the score isn't punished early in the day when no water
+      events are old enough to evaluate.
+    </p>
+  </div>
+
+  <!-- A4: Total Score and Tiers -->
+  <h3 style="text-align: center; margin-top: 36px;">A4: Total Score and Tier Mapping</h3>
+
+  <div class="score-formula" style="display: block; text-align: center; font-size: 0.9em; margin: 20px auto; max-width: 500px;">
+    S<sub>total</sub> = round(S<sub>intake</sub> + S<sub>frequency</sub> + S<sub>throughput</sub>)
+  </div>
+
+  <table style="max-width: 600px; margin: 0 auto 24px; font-size: 0.9em;">
+    <thead>
+      <tr><th>Range</th><th>Tier</th><th>Color</th><th>Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>80&ndash;100</td><td>Well Hydrated</td><td style="color: var(--hydrated-dark);">Green</td><td>All three components strong</td></tr>
+      <tr><td>60&ndash;79</td><td>On Track</td><td style="color: var(--water-dark);">Blue</td><td>Good overall, room to improve in one area</td></tr>
+      <tr><td>40&ndash;59</td><td>Drink More</td><td style="color: var(--pee-dark);">Yellow</td><td>Noticeably below in one or more areas</td></tr>
+      <tr><td>0&ndash;39</td><td>Dehydrated</td><td style="color: #DC2626;">Red</td><td>Multiple indicators low</td></tr>
+    </tbody>
+  </table>
+
+  <!-- A5: Worked Example -->
+  <h3 style="text-align: center; margin-top: 36px;">A5: Worked Example &mdash; Sarah at 3 PM</h3>
+
+  <div class="score-example" style="max-width: 700px; margin: 20px auto;">
+    <h4>Setup</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Goal: 2500 ml<br>
+      Intake so far: 1900 ml<br>
+      Her 7-day rolling average: 7.2 effective voids/day<br>
+      <br>
+      Water events:<br>
+      &nbsp;&nbsp;06:30 &mdash; 500 ml<br>
+      &nbsp;&nbsp;08:30 &mdash; 500 ml<br>
+      &nbsp;&nbsp;10:00 &mdash; 400 ml<br>
+      &nbsp;&nbsp;13:00 &mdash; 500 ml<br>
+      <br>
+      Void events:<br>
+      &nbsp;&nbsp;07:45 &mdash; &#x1F60A; Normal &nbsp;(w = 1.0)<br>
+      &nbsp;&nbsp;11:30 &mdash; &#x1F630; Urgent &nbsp;(w = 1.4)<br>
+      &nbsp;&nbsp;14:30 &mdash; &#x1F60C; Just in Case &nbsp;(w = 0.4)
+    </div>
+
+    <h4>Intake Calculation</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      ratio = min(1900 / 2500, 1.2) = 0.76<br>
+      S<sub>intake</sub> = 0.76 / 1.2 &times; 40 = 25.3 &asymp; <strong>25</strong>
+    </div>
+
+    <h4>Frequency Calculation</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      V<sub>eff</sub> = 1.0 + 1.4 + 0.4 = 2.8 &nbsp;(Normal-equivalent voids)<br>
+      E = 7.2 &times; 15/24 = 4.5 &nbsp;(expected at 3 PM = hour 15)<br>
+      ratio = 2.8 / (0.8 &times; 4.5) = 2.8 / 3.6 = 0.778<br>
+      S<sub>frequency</sub> = 0.778 &times; 30 = 23.3 &asymp; <strong>23</strong>
+    </div>
+
+    <h4>Throughput Calculation</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      06:30 (500 ml): eligible (8.5h ago)<br>
+      &nbsp;&nbsp;Window [07:00, 09:30] &rarr; void at 07:45 &#x2713; matched<br>
+      <br>
+      08:30 (500 ml): eligible (6.5h ago)<br>
+      &nbsp;&nbsp;Window [09:00, 11:30] &rarr; void at 11:30 &#x2713; matched<br>
+      <br>
+      10:00 (400 ml): eligible (5h ago)<br>
+      &nbsp;&nbsp;Window [10:30, 13:00] &rarr; no void in window &#x2717; unmatched<br>
+      <br>
+      13:00 (500 ml): NOT eligible (only 2h ago)<br>
+      <br>
+      R = (500 + 500 + 0) / (500 + 500 + 400) = 1000 / 1400 = 0.714<br>
+      S<sub>throughput</sub> = 0.714 &times; 30 = 21.4 &asymp; <strong>21</strong>
+    </div>
+
+    <h4>Total</h4>
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.9em; margin-bottom: 16px;">
+      S<sub>total</sub> = 25 + 23 + 21 = <strong>69 &rarr; On Track (blue)</strong>
+    </div>
+
+    <div class="score-example-bar">
+      <div class="bar-seg" style="width: 25%; background: var(--water);">25</div>
+      <div class="bar-seg" style="width: 23%; background: var(--pee-dark);">23</div>
+      <div class="bar-seg" style="width: 21%; background: var(--hydrated-dark);">21</div>
+      <div class="bar-seg" style="width: 31%; background: #E2E8F0; color: var(--text-secondary);">&nbsp;</div>
+    </div>
+    <p style="font-size: 0.82em; color: var(--text-secondary); margin-bottom: 0;">
+      <strong style="color: var(--water);">Intake 25/40</strong> &mdash; 76% of goal, on pace &middot;
+      <strong style="color: var(--pee-dark);">Frequency 23/30</strong> &mdash; 2.8 effective voids vs 4.5 expected &middot;
+      <strong style="color: var(--hydrated-dark);">Throughput 21/30</strong> &mdash; 2 of 3 eligible water events matched
+    </p>
+  </div>
+
+  <!-- ==================== SECTION B: PERSONAL BASELINE EVOLUTION ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F4C8;</span> Personal Baseline Evolution</h2>
+
+  <div class="score-breakdown">
+    <div class="score-component pattern">
+      <div class="score-points">1</div>
+      <div class="score-label">Bootstrap (Days 1&ndash;7)</div>
+      <div class="score-desc" style="text-align: left;">
+        <div class="score-formula" style="display: block; text-align: center; margin-bottom: 8px;">B = 6.0 effective voids/day</div>
+        <strong>Source:</strong> Midpoint of Burchfield (eu mean = 5) and Tucker (eu mean = 7).
+        Combined euhydrated range: roughly 5&ndash;7 voids/day.
+        <br><br>All voids weighted equally until enough data for personal calibration.
+      </div>
+    </div>
+    <div class="score-component pattern">
+      <div class="score-points">2</div>
+      <div class="score-label">Rolling Average (Day 8+)</div>
+      <div class="score-desc" style="text-align: left;">
+        <div class="score-formula" style="display: block; text-align: center; margin-bottom: 8px;">B = mean(V<sub>eff</sub>[day] for day in last_7_days)</div>
+        7-day window smooths day-to-day variation.
+        ICC &gt; 0.85 (Tucker 2016) confirms personal averages are stable.
+      </div>
+    </div>
+    <div class="score-component pattern">
+      <div class="score-points">3</div>
+      <div class="score-label">Pattern-Aware (Day 30+)</div>
+      <div class="score-desc" style="text-align: left;">
+        <div class="score-formula" style="display: block; text-align: center; margin-bottom: 8px;">B = mean(V<sub>eff</sub>[day] for day in same_cluster &cap; last_30_days)</div>
+        If pattern detection is active and current day classified, baseline comes from days
+        in the same cluster. Otherwise falls back to rolling average.
+        <br><br>Pattern-aware baselines mean a &ldquo;Weekend Sipper&rdquo; day isn't judged
+        against &ldquo;Weekday Worker&rdquo; norms.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION C: PATTERN DETECTION ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F9E0;</span> Pattern Detection &mdash; Algorithm References</h2>
+
+  <div class="research-callout" style="border-left-color: #8B5CF6;">
+    <div class="cite-label" style="color: #8B5CF6;">Established Methods Only</div>
+    <p>
+      Pattern detection uses exclusively established statistical and machine learning methods.
+      Pipi invents no new algorithms &mdash; it applies well-studied techniques to hydration data.
+      This section documents the specific methods and their academic references.
+      See the <a href="science.html">Science tab</a> for the product experience these algorithms enable.
+    </p>
+  </div>
+
+  <!-- C1: Day-of-Week -->
+  <h3 style="text-align: center; margin-top: 36px;">C1: Day-of-Week Baselines (Day 7+)</h3>
+
+  <div class="score-component pattern" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">1</div>
+      <div class="score-label" style="font-size: 1.1em;">Day-of-Week Baselines</div>
+    </div>
+
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Method: Group-by aggregation (descriptive statistics)<br>
+      <br>
+      For each day_of_week d &isin; {Mon, Tue, ..., Sun}:<br>
+      &nbsp;&nbsp;profile<sub>d</sub> = mean(hourly_intake[day] for day where weekday(day) = d)<br>
+      <br>
+      Standard deviation computed per day-of-week for anomaly context.
+    </div>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Reference</div>
+    <p>
+      Day-type classification of consumption profiles is standard in load-profile analysis (ScienceDirect).
+      Weekday/weekend split is consistently the dominant signal.
+    </p>
+    <p>
+      <strong>Why it works immediately:</strong> No parameters to tune, no minimum sample size beyond 7 days,
+      fully interpretable. Already enough to differentiate &ldquo;your average Monday&rdquo; from
+      &ldquo;your average Saturday.&rdquo;
+    </p>
+  </div>
+
+  <!-- C2: K-Means Clustering -->
+  <h3 style="text-align: center; margin-top: 36px;">C2: K-Means Clustering (Day 30+)</h3>
+
+  <div class="score-component pattern" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">2</div>
+      <div class="score-label" style="font-size: 1.1em;">Data-Driven Clustering</div>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Feature Extraction</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For each day, compute 4 features:<br>
+      &nbsp;&nbsp;f<sub>morning</sub> &nbsp; = water intake 06:00&ndash;12:00 / daily_total<br>
+      &nbsp;&nbsp;f<sub>afternoon</sub> = water intake 12:00&ndash;17:00 / daily_total<br>
+      &nbsp;&nbsp;f<sub>evening</sub> &nbsp; = water intake 17:00&ndash;22:00 / daily_total<br>
+      &nbsp;&nbsp;f<sub>night</sub> &nbsp;&nbsp;&nbsp; = water intake 22:00&ndash;06:00 / daily_total<br>
+      <br>
+      Normalization to fractions (sum = 1.0) removes volume differences,<br>
+      isolating the temporal pattern.
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">K Selection &mdash; Gap Statistic</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For k &isin; {1, 2, 3, 4}:<br>
+      &nbsp;&nbsp;1. Run k-means++ on feature matrix X (30 days &times; 4 features)<br>
+      &nbsp;&nbsp;2. Compute W<sub>k</sub> = within-cluster sum of squares<br>
+      &nbsp;&nbsp;3. Generate B reference datasets from uniform distribution over feature range<br>
+      &nbsp;&nbsp;4. Compute Gap(k) = (1/B) &Sigma; log(W*<sub>kb</sub>) &minus; log(W<sub>k</sub>)<br>
+      &nbsp;&nbsp;5. Compute s<sub>k</sub> = std(log(W*<sub>kb</sub>)) &times; &radic;(1 + 1/B)<br>
+      <br>
+      Select smallest k where: Gap(k) &ge; Gap(k+1) &minus; s<sub>k+1</sub><br>
+      <br>
+      k = 1 is valid (&ldquo;your days are consistent&rdquo;).
+    </div>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Gap Statistic Reference</div>
+    <p>
+      Tibshirani R, Walther G, Hastie T (2001). &ldquo;Estimating the number of clusters in a data set
+      via the gap statistic.&rdquo; <em>J. R. Statist. Soc. B</em>, 63(2), 411&ndash;423.
+    </p>
+  </div>
+
+  <div class="score-component pattern" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Cluster Validation &mdash; Silhouette Score</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For each point i:<br>
+      &nbsp;&nbsp;a<sub>i</sub> = mean distance to other points in same cluster<br>
+      &nbsp;&nbsp;b<sub>i</sub> = min(mean distance to points in each other cluster)<br>
+      &nbsp;&nbsp;s<sub>i</sub> = (b<sub>i</sub> &minus; a<sub>i</sub>) / max(a<sub>i</sub>, b<sub>i</sub>)<br>
+      <br>
+      Mean silhouette S&#x0304; = mean(s<sub>i</sub> for all i)<br>
+      Accept clustering if S&#x0304; &gt; 0.25 (weak structure or better).
+    </div>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Silhouette Reference</div>
+    <p>
+      Rousseeuw PJ (1987). &ldquo;Silhouettes: a graphical aid to the interpretation and validation
+      of cluster analysis.&rdquo; <em>J. Comput. Appl. Math.</em>, 20, 53&ndash;65.
+    </p>
+  </div>
+
+  <div class="score-component pattern" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">K-Means++ Initialization</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      1. Choose first centroid uniformly at random from data points<br>
+      2. For each remaining centroid:<br>
+      &nbsp;&nbsp;a. Compute D(x) = distance to nearest existing centroid for each point x<br>
+      &nbsp;&nbsp;b. Choose next centroid with probability proportional to D(x)&sup2;<br>
+      3. Repeat until k centroids chosen<br>
+      Then run standard k-means (Lloyd's algorithm) to convergence.
+    </div>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">K-Means++ Reference</div>
+    <p>
+      Arthur D, Vassilvitskii S (2007). &ldquo;k-means++: The advantages of careful seeding.&rdquo;
+      <em>Proc. 18th annual ACM-SIAM symposium on discrete algorithms</em>, 1027&ndash;1035.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--pee);">
+    <div class="cite-label" style="color: var(--pee-dark);">Sample Size</div>
+    <p>
+      Dolnicar et al. (2014) recommend N &ge; 10&middot;d&middot;k for stable k-means. With d=4 features and k&le;4:
+      N &ge; 160 ideally. A 30-day window is the minimum viable &mdash; reduced dimensionality (4 vs 24 features)
+      makes this tractable but results improve with more data.
+    </p>
+  </div>
+
+  <!-- C3: Adaptive Classification -->
+  <h3 style="text-align: center; margin-top: 36px;">C3: Adaptive Classification (Day 60+)</h3>
+
+  <div class="score-component pattern" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">3</div>
+      <div class="score-label" style="font-size: 1.1em;">Adaptive Intelligence</div>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Real-Time Day Classification</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Given today's partial observations x<sub>partial</sub> (hours 0..h):<br>
+      &nbsp;&nbsp;1. Truncate each centroid to the same hours: c<sub>partial</sub><br>
+      &nbsp;&nbsp;2. Compute Euclidean distance: d<sub>k</sub> = ||x<sub>partial</sub> &minus; c<sub>k_partial</sub>||<br>
+      &nbsp;&nbsp;3. Classify: assigned_cluster = argmin<sub>k</sub>(d<sub>k</sub>)<br>
+      &nbsp;&nbsp;4. Confidence: 1 &minus; (d<sub>assigned</sub> / &Sigma; d<sub>k</sub>)<br>
+      <br>
+      Minimum 6 hours of data before attempting classification.
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Anomaly Detection</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      If d<sub>assigned</sub> &gt; 2 &times; &sigma;<sub>cluster</sub> (within-cluster std dev):<br>
+      &nbsp;&nbsp;Flag as unusual day (no action, just informational).
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Auto-Naming</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Clusters receive auto-generated labels based on their centroid's dominant time block:<br>
+      &nbsp;&nbsp;&bull; Highest f<sub>morning</sub> &rarr; &ldquo;Morning Loader&rdquo;<br>
+      &nbsp;&nbsp;&bull; Balanced fractions &rarr; &ldquo;Steady Sipper&rdquo;<br>
+      &nbsp;&nbsp;&bull; Highest f<sub>evening</sub> &rarr; &ldquo;Evening Catch-Up&rdquo;<br>
+      &nbsp;&nbsp;&bull; etc.
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Maintenance</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Re-cluster weekly using 30-day rolling window.<br>
+      Life changes (new job, season change) naturally phase out old patterns.
+    </div>
+  </div>
+
+  <!-- C4: Computational Profile -->
+  <h3 style="text-align: center; margin-top: 36px;">C4: Computational Profile</h3>
+
+  <div class="tech-tags">
+    <span class="tech-tag">Pure Swift</span>
+    <span class="tech-tag">Accelerate (vDSP)</span>
+    <span class="tech-tag">No Core ML</span>
+    <span class="tech-tag">No cloud</span>
+    <span class="tech-tag">~130 lines</span>
+    <span class="tech-tag">&lt;5ms on iPhone</span>
+    <span class="tech-tag">100% on-device</span>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Implementation References</div>
+    <ul style="font-size: 0.95em;">
+      <li>Apple &ldquo;Calculating the dominant colors in an image&rdquo; &mdash; official Accelerate sample using vDSP k-means</li>
+      <li>Kodeco Swift Algorithm Club: K-Means &mdash; educational Swift k-means with full source</li>
+      <li>AIToolbox by KevinCoble: <code>KMeans.swift</code> &mdash; vDSP-backed k-means with k-means++ init</li>
+      <li>Apple vDSP documentation &mdash; <code>distanceSquared</code>, <code>add</code>, vector arithmetic</li>
+    </ul>
+  </div>
+
+  <!-- ==================== SOURCES ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Hydration Science</h4>
+    <ol>
+      <li>Burchfield JM et al. (2015) &mdash; void count as hydration indicator (eu=5&plusmn;2, hypo=3&plusmn;1) &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/25604776/" target="_blank">PubMed</a></li>
+      <li>Tucker MA et al. (2016) &mdash; void count reliability (eu=7&plusmn;2, hypo=5&plusmn;2, ICC&asymp;0.85, CV 15&ndash;21%) &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26862006/" target="_blank">PubMed</a></li>
+      <li>Perrier ET et al. (2013) &mdash; urinary biomarkers and fluid intake (|r|&ge;0.6) &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/23695204/" target="_blank">PubMed</a></li>
+      <li>Perrier ET et al. (2021) &mdash; hydration-for-health review, 2.5&ndash;3.5 L/day recommendation (Danone ties disclosed) &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/32632658/" target="_blank">PubMed</a></li>
+      <li>Song Y et al. (2023) &mdash; urination behaviors in elderly populations &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/38249613/" target="_blank">PubMed</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Clustering &amp; Statistics</h4>
+    <ol start="6">
+      <li>Tibshirani R, Walther G, Hastie T (2001) &mdash; gap statistic</li>
+      <li>Rousseeuw PJ (1987) &mdash; silhouette score</li>
+      <li>Arthur D, Vassilvitskii S (2007) &mdash; k-means++</li>
+      <li>Dolnicar S et al. (2014) &mdash; minimum sample sizes for clustering</li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Implementation</h4>
+    <ol start="10">
+      <li>Apple Accelerate/vDSP &mdash; dominant colors sample, vDSP docs &mdash; <a href="https://developer.apple.com/documentation/accelerate/finding-the-dominant-colors-in-an-image" target="_blank">developer.apple.com</a></li>
+      <li>Kodeco Swift Algorithm Club &mdash; k-means &mdash; <a href="https://github.com/kodecocodes/swift-algorithm-club/tree/master/K-Means" target="_blank">GitHub</a></li>
+      <li>AIToolbox &mdash; vDSP k-means with k-means++ init &mdash; <a href="https://github.com/KevinCoble/AIToolbox" target="_blank">GitHub</a></li>
+    </ol>
+  </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>
