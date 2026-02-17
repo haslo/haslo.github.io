@@ -1,0 +1,244 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: Tech
+  =======================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, USPs, monetization)
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
+    science.html  — Science (Hydration Proof Engine, scoring, patterns)
+    tech.html     — THIS FILE. Architecture, shared infra, data storage, new components.
+
+  THIS FILE: Technical architecture — SVG architecture diagram, shared infrastructure cards,
+  data storage table, HealthKit notes, and new infrastructure summary table.
+  Uses .tech-section wrapper for semantic grouping with light theme styling.
+
+  EDITING:
+  - The <section class="tech-section"> wraps <div class="container">.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - Architecture diagram is an inline SVG with its own internal <style> block.
+  - Tech cards use .tech-grid > .tech-card. Framework tags use .framework-tags > .fw-tag.
+  - JetBrains Mono is used for headings and code elements (tech-tab identity choice).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — Tech</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn active" href="tech.html">Tech</a>
+</nav>
+
+<section class="tech-section">
+  <div class="container">
+
+    <h2><span class="emoji">&gt;_</span> Technical Architecture</h2>
+    <p>Pipi is a standalone Xcode project within the Gwen Widgets ecosystem, sharing the <code>HealthWidgetsCore</code> SPM package with OmniWidget (the proof-of-concept playground).</p>
+
+    <div class="framework-tags">
+      <span class="fw-tag primary">SwiftUI</span>
+      <span class="fw-tag primary">WidgetKit</span>
+      <span class="fw-tag primary">HealthKit</span>
+      <span class="fw-tag primary">AppIntents</span>
+      <span class="fw-tag">Swift Charts</span>
+      <span class="fw-tag">StoreKit 2</span>
+      <span class="fw-tag">WatchKit</span>
+      <span class="fw-tag">iOS 17+ interactive widgets</span>
+      <span class="fw-tag">iOS 18 ControlWidget</span>
+      <span class="fw-tag">Accelerate</span>
+    </div>
+
+    <h3>// Architecture</h3>
+    <div class="arch-diagram" style="padding: 20px 12px; overflow-x: auto;">
+      <svg viewBox="0 0 680 420" width="100%" style="max-width: 680px; display: block; margin: 0 auto;">
+        <style>
+          .svg-label { font-family: 'JetBrains Mono', 'SF Mono', monospace; }
+          .svg-dim { fill: #475569; }
+          .svg-cyan { fill: #0891B2; }
+          .svg-green { fill: #059669; }
+          .svg-yellow { fill: #D97706; }
+          .svg-purple { fill: #7C3AED; }
+          .svg-sub { fill: #64748B; }
+          .svg-box-dim { stroke: #94A3B8; fill: none; stroke-width: 1.5; }
+          .svg-box-cyan { stroke: #0891B2; fill: none; stroke-width: 1.5; }
+          .svg-box-green { stroke: #059669; fill: none; stroke-width: 1.5; }
+          .svg-line-dim { stroke: #94A3B8; stroke-width: 1.5; fill: none; }
+          .svg-line-yellow { stroke: #D97706; stroke-width: 1.5; fill: none; }
+        </style>
+
+        <!-- Outer box: Gwen Widgets Ecosystem -->
+        <rect x="10" y="10" width="660" height="400" rx="6" class="svg-box-dim"/>
+        <text x="30" y="38" class="svg-label svg-purple" font-size="14" font-weight="600">Gwen Widgets Ecosystem</text>
+
+        <!-- Pipi App box (standalone project) -->
+        <rect x="40" y="60" width="200" height="110" rx="4" class="svg-box-cyan"/>
+        <text x="140" y="82" text-anchor="middle" class="svg-label svg-cyan" font-size="12" font-weight="600">Pipi (App Store)</text>
+        <text x="60" y="105" class="svg-label svg-sub" font-size="11">App + widget ext.</text>
+        <text x="60" y="125" class="svg-label svg-sub" font-size="11">Watch app</text>
+        <text x="60" y="145" class="svg-label svg-sub" font-size="11">Test target</text>
+
+        <!-- OmniWidget (playground) box -->
+        <rect x="280" y="60" width="240" height="90" rx="4" class="svg-box-cyan"/>
+        <text x="400" y="82" text-anchor="middle" class="svg-label svg-cyan" font-size="12" font-weight="600">OmniWidget</text>
+        <text x="300" y="105" class="svg-label svg-sub" font-size="11">Playground / proof of concept</text>
+        <text x="300" y="125" class="svg-label svg-sub" font-size="11">App + widget ext.</text>
+
+        <!-- Connector lines from apps down to merge point -->
+        <line x1="140" y1="170" x2="140" y2="200" class="svg-line-dim"/>
+        <line x1="400" y1="150" x2="400" y2="200" class="svg-line-dim"/>
+        <line x1="140" y1="200" x2="270" y2="200" class="svg-line-dim"/>
+        <line x1="400" y1="200" x2="270" y2="200" class="svg-line-dim"/>
+
+        <!-- Arrow down -->
+        <line x1="270" y1="200" x2="270" y2="225" class="svg-line-dim"/>
+        <polygon points="264,220 270,230 276,220" class="svg-dim"/>
+
+        <!-- HealthWidgetsCore box -->
+        <rect x="40" y="235" width="600" height="56" rx="4" class="svg-box-green"/>
+        <text x="340" y="258" text-anchor="middle" class="svg-label svg-green" font-size="12" font-weight="600">HealthWidgetsCore (SPM Package)</text>
+        <text x="340" y="278" text-anchor="middle" class="svg-label svg-sub" font-size="11">Models/    Services/    Logic/    Theme/    Charts/</text>
+
+        <!-- Connector line down from package, splits to two -->
+        <line x1="270" y1="291" x2="270" y2="320" class="svg-line-dim"/>
+        <line x1="170" y1="320" x2="370" y2="320" class="svg-line-yellow"/>
+
+        <!-- Left arrow: HealthKit -->
+        <line x1="170" y1="320" x2="170" y2="345" class="svg-line-yellow"/>
+        <polygon points="164,340 170,350 176,340" fill="#D97706"/>
+        <text x="170" y="370" text-anchor="middle" class="svg-label svg-yellow" font-size="12" font-weight="600">HealthKit</text>
+        <text x="170" y="387" text-anchor="middle" class="svg-label svg-sub" font-size="10">(dietaryWater)</text>
+        <text x="170" y="401" text-anchor="middle" class="svg-label svg-sub" font-size="10">read + write</text>
+
+        <!-- Right arrow: App Group -->
+        <line x1="370" y1="320" x2="370" y2="345" class="svg-line-yellow"/>
+        <polygon points="364,340 370,350 376,340" fill="#D97706"/>
+        <text x="370" y="370" text-anchor="middle" class="svg-label svg-yellow" font-size="12" font-weight="600">App Group</text>
+        <text x="370" y="387" text-anchor="middle" class="svg-label svg-sub" font-size="10">(pee logs, prefs,</text>
+        <text x="370" y="401" text-anchor="middle" class="svg-label svg-sub" font-size="10">cache, presets)</text>
+      </svg>
+    </div>
+
+    <h3>// Shared Infrastructure</h3>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>Reused from OmniWidget</h4>
+        <ul>
+          <li><strong>Models:</strong> <code>WaterData</code>, <code>ActivityHourlyData</code></li>
+          <li><strong>Services:</strong> <code>HealthKitService.fetchWaterEntries()</code>, <code>ActivityHourlyDataService</code> (.water metric)</li>
+          <li><strong>Views:</strong> <code>ActivityChartView</code> for cumulative water charts</li>
+          <li><strong>Cache:</strong> <code>CacheStorage</code> + <code>HealthKitCacheService</code> with versioning (<code>CacheConfiguration.cacheVersion</code>)</li>
+          <li><strong>Theme:</strong> <code>WidgetTheme</code> colors, <code>WidgetStyles</code> modifiers (e.g. <code>.overlayShadow()</code>)</li>
+          <li><strong>Charts:</strong> <code>CustomTimeAxisView</code>, <code>LabelLayoutService</code>, <code>CustomXAxisWithCenteredLabels</code></li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>New for Pipi</h4>
+        <ul>
+          <li><code>PipiEntry</code> &mdash; <code>nonisolated struct</code>, timestamp + urgency enum</li>
+          <li><code>PipiDataService</code> &mdash; actor, App Group persistence (JSON)</li>
+          <li><code>HydrationScoreService</code> &mdash; composite score from water + pee correlation</li>
+          <li><code>LogWaterIntent</code> / <code>LogPipiIntent</code> &mdash; <code>AppIntent</code> for interactive widgets</li>
+          <li><code>PatternDetectionService</code> &mdash; actor, tiered pattern detection (day-of-week &rarr; k-means clustering), Accelerate/vDSP</li>
+          <li><code>ControlWidget</code> targets &mdash; iOS 18 Control Center</li>
+          <li>WatchKit app + <code>WidgetFamily.accessoryCircular</code> complications</li>
+          <li>StoreKit 2 &mdash; <code>Product</code>, <code>Transaction</code>, one-time purchase</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>// Data Storage</h3>
+    <table>
+      <thead><tr><th>Data</th><th>Storage</th><th>Access</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Water intake</td>
+          <td><code>HKQuantityType(.dietaryWater)</code> &mdash; read + write</td>
+          <td>Bidirectional sync with other health apps</td>
+        </tr>
+        <tr>
+          <td>Pee logs</td>
+          <td>App Group container &mdash; JSON via <code>CacheStorage</code></td>
+          <td>App + widget extensions only</td>
+        </tr>
+        <tr>
+          <td>Preferences</td>
+          <td><code>UserDefaults(suiteName:)</code> via App Group</td>
+          <td>Presets, daily goal, units (dl/oz)</td>
+        </tr>
+        <tr>
+          <td>Cache</td>
+          <td>Existing <code>CacheStorage</code> pattern with <code>CachedValue</code> versioning</td>
+          <td>App + widget extensions</td>
+        </tr>
+        <tr>
+          <td>Pattern profiles</td>
+          <td>App Group container &mdash; JSON via <code>CacheStorage</code></td>
+          <td>Day-type centroids, cluster assignments, feature vectors</td>
+        </tr>
+        <tr>
+          <td>Premium status</td>
+          <td>StoreKit 2 <code>Transaction.currentEntitlements</code></td>
+          <td>App + extensions via <code>Transaction.updates</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>// HealthKit</h3>
+    <p>
+      <strong style="color: var(--water-dark);">Read + Write:</strong> <code>HKQuantityType(.dietaryWater)</code> &mdash; bidirectional sync with other apps.
+      No other HealthKit types needed. Pee data is app-local only
+      (HealthKit has no urination category &mdash; only <code>HKCategoryType(.bladderIncontinence)</code> which is medical/symptom, not what we want).
+    </p>
+
+    <h3>// New Infrastructure Summary</h3>
+    <table>
+      <thead><tr><th>Component</th><th>Type</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>PipiEntry</code></td><td>Model</td><td>Timestamp + urgency emoji &mdash; app-local, not HealthKit</td></tr>
+        <tr><td><code>PipiDataService</code></td><td>Actor</td><td>Local persistence via App Group for widget access</td></tr>
+        <tr><td><code>HydrationScoreService</code></td><td>Actor</td><td>Composite score from water intake + pee frequency</td></tr>
+        <tr><td><code>PatternDetectionService</code></td><td>Actor</td><td>Tiered pattern detection: day-of-week baselines &rarr; k-means clustering (k=2&ndash;4) with gap statistic validation</td></tr>
+        <tr><td><code>LogWaterIntent</code></td><td>AppIntent</td><td>Interactive widget &amp; Control Center water logging</td></tr>
+        <tr><td><code>LogPipiIntent</code></td><td>AppIntent</td><td>Interactive widget &amp; Control Center pee logging</td></tr>
+        <tr><td>Control Center widgets</td><td>ControlWidget</td><td>iOS 18 one-tap logging from Control Center</td></tr>
+        <tr><td>Apple Watch app</td><td>WatchKit</td><td>Complications + quick-log interface</td></tr>
+        <tr><td>Pipi Xcode project</td><td>App</td><td>Standalone project in the Gwen Widgets ecosystem</td></tr>
+        <tr><td>Premium unlock</td><td>StoreKit 2</td><td>One-time purchase (~$5-8) with 7-day trial</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: Science
+  ==========================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, USPs, monetization)
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
+    science.html  — THIS FILE. Hydration Proof Engine scoring + Pattern Detection.
+    tech.html     — Tech (architecture, shared infra, data storage)
+
+  THIS FILE: Two full-width gradient sections — Hydration Proof Engine (science-section)
+  and Pattern Detection (science-ml-section). Each wraps its own <div class="container">.
+
+  EDITING:
+  - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - Score components use .score-breakdown grid with .score-component cards (.intake, .frequency, .throughput).
+  - Pattern phase cards reuse .score-component with .pattern variant.
+  - Citations use .citations with ordered list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — Science</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn active" href="science.html">Science</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<!-- ==================== SCIENCE ==================== -->
+<section class="science-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F9EA;</span> The Science &mdash; Hydration Proof Engine</h2>
+  <div class="science-intro">
+    <p>
+      Pipi's Hydration Score isn't guesswork. It's built on peer-reviewed research showing that
+      <strong>void frequency is a reliable, validated biomarker of hydration status</strong> &mdash;
+      and that combining it with intake data gives a clearer picture than either metric alone.
+    </p>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Research Basis</div>
+    <p>
+      <strong>Well-hydrated adults average 7&plusmn;2 voids per 24 hours</strong>; hypohydrated adults average 5&plusmn;2.
+      This was confirmed with high test-retest reliability (ICC 0.86) across repeated trials.
+    </p>
+    <p>
+      A 24-hour void frequency of <strong>&le;6 detects suboptimal hydration</strong> with 81.5% accuracy (AUC 0.815).
+      Frequency <strong>&le;4 is a strong predictor</strong> of dehydration (positive likelihood ratio 9.03).
+    </p>
+    <p>
+      However, <strong>individual variability is 15&ndash;21% day-to-day</strong>. Absolute thresholds
+      don't work for everyone. A person who normally goes 5 times is different from someone who goes 9 times.
+      <em>Personal baselines are essential.</em>
+    </p>
+  </div>
+
+  <h3 style="text-align: center; margin-top: 36px;">Hydration Score &mdash; Three Components (0&ndash;100)</h3>
+
+  <div class="score-breakdown">
+    <div class="score-component intake">
+      <div class="score-points">40</div>
+      <div class="score-label">Intake</div>
+      <div class="score-desc">
+        How close you are to your daily water goal.
+        Hitting 100% of goal = 33pts. Small buffer up to 120% = full 40.
+      </div>
+      <div class="score-formula">min(intake/goal, 1.2) / 1.2 &times; 40</div>
+    </div>
+    <div class="score-component frequency">
+      <div class="score-points">30</div>
+      <div class="score-label">Frequency</div>
+      <div class="score-desc">
+        Today's pee count vs <strong>your personal 7-day rolling average</strong>.
+        Within &plusmn;20% of your norm = full points.
+        No medical thresholds &mdash; your pattern is your baseline.
+      </div>
+      <div class="score-formula">voids_today / rolling_avg_7d</div>
+    </div>
+    <div class="score-component throughput">
+      <div class="score-points">30</div>
+      <div class="score-label">Throughput</div>
+      <div class="score-desc">
+        <strong>The differentiator.</strong> Correlates intake timing with void timing.
+        Healthy hydration: pee follows water within 1&ndash;3 hours.
+        Drank 2L but no pee by afternoon? Score drops. <em>Only possible with both data streams.</em>
+        <br><em style="font-size: 0.95em;">Over time, expected timing adjusts to your detected day pattern.</em>
+      </div>
+      <div class="score-formula">corr(intake_times, void_times)</div>
+    </div>
+  </div>
+
+  <div class="score-tiers">
+    <div class="score-tier">
+      <div class="tier-dot" style="background: var(--hydrated);"></div>
+      80&ndash;100 Well Hydrated
+    </div>
+    <div class="score-tier">
+      <div class="tier-dot" style="background: var(--water);"></div>
+      60&ndash;79 On Track
+    </div>
+    <div class="score-tier">
+      <div class="tier-dot" style="background: var(--pee);"></div>
+      40&ndash;59 Drink More
+    </div>
+    <div class="score-tier">
+      <div class="tier-dot" style="background: #F87171;"></div>
+      0&ndash;39 Dehydrated
+    </div>
+  </div>
+
+  <div class="score-example">
+    <h4>Example: Sarah at 3 PM</h4>
+    <p style="font-size: 0.88em; color: var(--text-secondary);">
+      Goal: 2.5L &middot; Drank so far: 1.9L &middot; Pee count: 4 (her 7-day avg at 3 PM: 4.2) &middot; Last pee was 1.5h after last water
+    </p>
+    <div class="score-example-bar">
+      <div class="bar-seg" style="width: 27%; background: var(--water);">27</div>
+      <div class="bar-seg" style="width: 27%; background: var(--pee-dark);">27</div>
+      <div class="bar-seg" style="width: 24%; background: var(--hydrated-dark);">24</div>
+      <div class="bar-seg" style="width: 22%; background: #E2E8F0; color: var(--text-secondary);">&nbsp;</div>
+    </div>
+    <p style="font-size: 0.82em; color: var(--text-secondary); margin-bottom: 0;">
+      <strong style="color: var(--water);">Intake 27/40</strong> &mdash; 76% of goal, on pace &middot;
+      <strong style="color: var(--pee-dark);">Frequency 27/30</strong> &mdash; 95% of her average &middot;
+      <strong style="color: var(--hydrated-dark);">Throughput 24/30</strong> &mdash; good correlation
+      &rarr; <strong style="color: var(--text);">Total: 78 (On Track)</strong>
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--hydrated);">
+    <div class="cite-label" style="color: var(--hydrated-dark);">Why Personal Baselines?</div>
+    <p>
+      First 7 days, Pipi bootstraps from population averages (6&ndash;7 voids/day).
+      As your data accumulates, the score converges to <em>your</em> pattern.
+      Research shows within-subject reliability is high (ICC &gt; 0.85) &mdash;
+      meaning your personal average is a stable, meaningful number.
+      Pattern detection takes this further &mdash; instead of one personal baseline, Pipi discovers multiple baselines for your distinct day types.
+    </p>
+  </div>
+
+  <div class="citations">
+    <strong>Sources</strong>
+    <ol>
+      <li>Tucker MA et al. (2019) &ldquo;Adequacy of Daily Fluid Intake Volume Can Be Identified From Urinary Frequency and Perceived Thirst&rdquo; &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31347984/" target="_blank">PubMed 31347984</a></li>
+      <li>Bottin JH et al. (2016) &ldquo;Reliability of 24-h void frequency as an index of hydration status when euhydrated and hypohydrated&rdquo; &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26862006/" target="_blank">PubMed 26862006</a></li>
+      <li>Burchfield JM &amp; Gonzalez studies, University of Arkansas &mdash; <a href="https://news.uark.edu/articles/33623/studies-suggest-frequency-of-urination-may-be-used-to-judge-hydration" target="_blank">uark.edu</a></li>
+      <li>Perrier ET et al. (2022) &ldquo;Personalized prediction of optimal water intake in adult population&rdquo; &mdash; <a href="https://www.nature.com/articles/s41598-022-21869-y" target="_blank">Nature Scientific Reports</a></li>
+    </ol>
+  </div>
+  </div>
+</section>
+
+<!-- ==================== PATTERN DETECTION ==================== -->
+<section class="science-ml-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F9E0;</span> The Intelligence &mdash; Pattern Detection</h2>
+  <div class="science-intro">
+    <p>
+      Most apps treat every day the same. Pipi learns that your Thursday is different from your Saturday.
+      An on-device pattern engine clusters your days into natural types &mdash; no labels needed, no cloud, no creepiness.
+      It just makes everything smarter.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: #8B5CF6;">
+    <div class="cite-label" style="color: #8B5CF6;">The Honest Approach</div>
+    <p>
+      Rather than throwing k-means at 14 days of data and hoping for the best, Pipi uses a
+      <strong>tiered system that earns its complexity</strong>. Day-of-week grouping provides value from week one.
+      Data-driven clustering only activates once there's enough data to be meaningful.
+      The best algorithm is the simplest one that actually works.
+    </p>
+  </div>
+
+  <h3 style="text-align: center; margin-top: 36px;">Three Phases &mdash; Earning Intelligence</h3>
+
+  <div class="score-breakdown">
+    <div class="score-component pattern">
+      <div class="score-points">1</div>
+      <div class="score-label">Day-of-Week Baselines</div>
+      <div class="score-desc">
+        <strong>Week 1+</strong> &mdash; From day 7, group data by day-of-week and compute hourly average profiles.
+        Your average Monday, your average Saturday. Zero ML, fully interpretable, robust immediately.
+        Research confirms weekday/weekend is the dominant signal for daily consumption patterns.
+        Already enough to stop 6am Sunday reminders.
+      </div>
+      <div class="score-formula">group_by(day_of_week).mean()</div>
+    </div>
+    <div class="score-component pattern">
+      <div class="score-points">2</div>
+      <div class="score-label">Data-Driven Clustering</div>
+      <div class="score-desc">
+        <strong>Day 30+</strong> &mdash; Reduce each day to 4&ndash;5 features (morning, afternoon, evening, night totals + daily total).
+        K-means (k=2&ndash;4) with k-means++ init on reduced features.
+        Gap statistic validates whether real clusters exist &mdash; k=1 (&ldquo;your days are consistent&rdquo;) is a valid answer.
+        Silhouette score picks optimal k. 30-day rolling window handles life changes.
+      </div>
+      <div class="score-formula">kmeans(features, k=gap_stat(2..4))</div>
+    </div>
+    <div class="score-component pattern">
+      <div class="score-points">3</div>
+      <div class="score-label">Adaptive Intelligence</div>
+      <div class="score-desc">
+        <strong>Day 60+</strong> &mdash; Clusters get auto-named by characteristics (&ldquo;Morning Loader&rdquo;, &ldquo;Steady Sipper&rdquo;).
+        Real-time partial-day matching: compare observed hours only, weighted by completeness (min 6 hours before attempting).
+        Anomaly detection: &gt;2&sigma; from any centroid = gently flagged unusual day.
+        Re-clusters weekly as data evolves.
+      </div>
+      <div class="score-formula">classify(today, centroids)</div>
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--hydrated);">
+    <div class="cite-label" style="color: var(--hydrated-dark);">Why This Tiered Approach?</div>
+    <p>
+      Published clustering guidelines (Dolnicar et al., Qiu &amp; Joe) show that <strong>24-dimensional k-means needs 500&ndash;700+ samples</strong> for stable centroids.
+      14 days of data in 24D = centroid instability, overfitting to noise, forced patterns in randomness.
+    </p>
+    <p>
+      <strong>Dimensionality reduction</strong> (to 4&ndash;5 features) + <strong>gap statistic validation</strong> = robust clustering with just 30 days.
+      Day-of-week grouping provides immediate value while the ML phase accumulates enough data to be honest.
+    </p>
+  </div>
+
+  <div class="insight-callout">
+    <div class="insight-label">What It Feels Like</div>
+    <p style="font-size: 1.05em; color: var(--text); max-width: 560px; margin: 0 auto;">
+      The algorithm is invisible. You never see phases or clusters or vectors.
+      You just notice that your Sunday reminders come later than your Monday ones, that the app somehow
+      knows you drink less on weekends, that it stops nagging at 6am when you're not at the office.
+      It just&hellip; <em>knows</em> you.
+    </p>
+  </div>
+
+  <div class="tech-tags">
+    <span class="tech-tag">Pure Swift</span>
+    <span class="tech-tag">Accelerate (vDSP)</span>
+    <span class="tech-tag">No Core ML</span>
+    <span class="tech-tag">No cloud</span>
+    <span class="tech-tag">~130 lines</span>
+    <span class="tech-tag">&lt;5ms on iPhone</span>
+    <span class="tech-tag">100% on-device</span>
+  </div>
+
+  <div class="citations">
+    <strong>Sources</strong>
+    <div class="source-grid">
+      <div class="source-col">
+        <h4>Research</h4>
+        <ol>
+          <li>Dolnicar S et al. (2014) &ldquo;Required Sample Sizes for Data-Driven Market Segmentation Analyses&rdquo; &mdash; minimum N guidelines per clustering dimensionality</li>
+          <li>Qiu &amp; Joe (2009) &mdash; N &ge; 10&middot;d&middot;k rule of thumb for stable k-means</li>
+          <li>Day-type classification of electrical load profiles &mdash; <a href="https://www.sciencedirect.com/topics/engineering/load-profile" target="_blank">ScienceDirect</a> &mdash; weekday/weekend as dominant signal for daily consumption patterns</li>
+          <li>Tibshirani R et al. (2001) &ldquo;Estimating the number of clusters in a data set via the gap statistic&rdquo; &mdash; <a href="https://doi.org/10.1111/1467-9868.00293" target="_blank">J. R. Statist. Soc. B</a></li>
+          <li>Rousseeuw PJ (1987) &ldquo;Silhouettes: a graphical aid to the interpretation and validation of cluster analysis&rdquo; &mdash; <a href="https://doi.org/10.1016/0377-0427(87)90125-7" target="_blank">J. Comput. Appl. Math.</a></li>
+        </ol>
+      </div>
+      <div class="source-col">
+        <h4>Code &amp; Implementation</h4>
+        <ol>
+          <li>Apple &ldquo;Calculating the dominant colors in an image&rdquo; &mdash; official Accelerate sample code using vDSP k-means &mdash; <a href="https://developer.apple.com/documentation/accelerate/finding-the-dominant-colors-in-an-image" target="_blank">developer.apple.com</a></li>
+          <li>Kodeco Swift Algorithm Club: K-Means &mdash; educational Swift k-means with full source &mdash; <a href="https://github.com/kodecocodes/swift-algorithm-club/tree/master/K-Means" target="_blank">GitHub</a></li>
+          <li>AIToolbox by KevinCoble: <code>KMeans.swift</code> &mdash; vDSP-backed k-means with k-means++ init &mdash; <a href="https://github.com/KevinCoble/AIToolbox" target="_blank">GitHub</a></li>
+          <li>Apple vDSP documentation &mdash; <code>distanceSquared</code>, <code>add</code>, vector arithmetic &mdash; <a href="https://developer.apple.com/documentation/accelerate/vdsp" target="_blank">developer.apple.com</a></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

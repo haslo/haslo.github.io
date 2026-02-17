@@ -1,0 +1,330 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: Cute Mode
+  ============================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, USPs, monetization)
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — THIS FILE. Cute Mode OFF/ON comparisons, heart placement guide.
+    science.html  — Science (Hydration Proof Engine, scoring, patterns)
+    tech.html     — Tech (architecture, shared infra, data storage)
+
+  THIS FILE: Cute Mode tab — explains Clean vs Adorable modes, shows 3 side-by-side SVG
+  comparisons (Pipi Clock, Timeline, Quick Log Widget), and lists where hearts appear.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - SVG comparisons use .cute-compare grid (2-col) with .cute-compare-card.
+  - The "Where Hearts Appear" section uses .cute-feature-item list inside .cute-mode-section.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — Cute Mode</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn active" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+
+  <section>
+    <div class="cute-hero-intro">
+      <h2><span class="emoji">&#x1F49B;</span> Cute Mode</h2>
+      <div class="cute-tagline">A single toggle in Settings &mdash; from barely-there to adorable</div>
+      <div style="margin-top: 12px; font-size: 0.95em; color: var(--text-secondary); font-style: italic;">
+        <strong>&ldquo;Every heart has a job.&rdquo;</strong> Hearts serve as backdrops, markers, separators, and brand stamps &mdash; never random decoration. UX first, cute second.
+      </div>
+    </div>
+
+    <div class="cute-mode-modes" style="margin-bottom: 32px;">
+      <div class="cute-mode-card">
+        <h4>Clean (Cute Mode OFF)</h4>
+        <p>
+          Near-invisible hearts. Very low opacity (~0.08&ndash;0.12), tucked into backgrounds &mdash;
+          behind chart areas, faintly in widget chrome, ghostly hearts in empty space.
+          You'd only notice them if you looked for them. Think watermark-level subtlety.
+          Not accents, not decorations &mdash; <em>atmosphere</em>.
+        </p>
+      </div>
+      <div class="cute-mode-card">
+        <h4>Adorable (Cute Mode ON)</h4>
+        <p>
+          Hearts woven into the UI. Chart dots become heart-shaped markers. Timeline bullets become colored hearts
+          (&#x1F499; water, &#x1F49B; pee). Widget buttons get heart-shaped backgrounds. Clock tick marks turn into
+          tiny hearts. A gentle watermark heart sits at the center of the clock face.
+          Every heart has a job &mdash; framing, marking, branding &mdash; never just floating. UX first, cute second.
+        </p>
+      </div>
+    </div>
+
+    <!-- Comparison 1: Pipi Clock -->
+    <div class="cute-comparison-group">
+      <h3>&#x1F570;&#xFE0F; Pipi Clock</h3>
+      <div class="cute-compare">
+        <div class="cute-compare-card">
+          <h4>Cute Mode OFF</h4>
+          <div class="compare-svg">
+            <svg width="160" height="160" viewBox="0 0 180 180">
+              <!-- Clock face -->
+              <circle cx="90" cy="90" r="78" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" />
+              <circle cx="90" cy="90" r="68" fill="none" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="4 4" />
+              <!-- Hour marks -->
+              <g stroke="#CBD5E1" stroke-width="1.5">
+                <line x1="90" y1="16" x2="90" y2="24" />
+                <line x1="129" y1="21" x2="125" y2="28" />
+                <line x1="160" y1="51" x2="153" y2="55" />
+                <line x1="168" y1="90" x2="160" y2="90" />
+                <line x1="160" y1="129" x2="153" y2="125" />
+                <line x1="129" y1="159" x2="125" y2="152" />
+                <line x1="90" y1="168" x2="90" y2="160" />
+                <line x1="51" y1="159" x2="55" y2="152" />
+                <line x1="20" y1="129" x2="27" y2="125" />
+                <line x1="12" y1="90" x2="20" y2="90" />
+                <line x1="20" y1="51" x2="27" y2="55" />
+                <line x1="51" y1="21" x2="55" y2="28" />
+              </g>
+              <!-- Hour labels -->
+              <text x="90" y="38" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">0h</text>
+              <text x="158" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">6h</text>
+              <text x="90" y="155" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">12h</text>
+              <text x="24" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">18h</text>
+              <!-- Ghostly hearts — barely visible -->
+              <text x="75" y="50" font-size="12" opacity="0.08">&#x1F499;</text>
+              <text x="120" y="130" font-size="10" opacity="0.08">&#x1F49B;</text>
+              <text x="50" y="105" font-size="11" opacity="0.08">&#x1F499;</text>
+              <!-- Water drops -->
+              <circle cx="109" cy="19" r="6" fill="#22B8CF" opacity="0.85"/><text x="109" y="22" text-anchor="middle" font-size="7">💧</text>
+              <circle cx="145" cy="40" r="6" fill="#22B8CF" opacity="0.85"/><text x="145" y="43" text-anchor="middle" font-size="7">💧</text>
+              <circle cx="163" cy="75" r="6" fill="#22B8CF" opacity="0.85"/><text x="163" y="78" text-anchor="middle" font-size="7">💧</text>
+              <!-- Pee emoji -->
+              <circle cx="130" cy="55" r="7" fill="#FBBF24" opacity="0.25"/><text x="130" y="58" text-anchor="middle" font-size="9">😊</text>
+              <circle cx="140" cy="110" r="7" fill="#FBBF24" opacity="0.25"/><text x="140" y="113" text-anchor="middle" font-size="9">😌</text>
+            </svg>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary);">Hearts at ~8% opacity &mdash; pure atmosphere</p>
+        </div>
+        <div class="cute-compare-card">
+          <h4>Cute Mode ON</h4>
+          <div class="compare-svg">
+            <svg width="160" height="160" viewBox="0 0 180 180">
+              <!-- Clock face -->
+              <circle cx="90" cy="90" r="78" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" />
+              <circle cx="90" cy="90" r="68" fill="none" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="4 4" />
+              <!-- Large watermark heart at center — brand personality -->
+              <text x="90" y="125" text-anchor="middle" font-size="80" opacity="0.12">&#x1F49B;</text>
+              <!-- Heart tick marks — replacing line ticks -->
+              <text x="87" y="22" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="127" y="27" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="155" y="56" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="163" y="93" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="155" y="130" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="127" y="158" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="87" y="166" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="52" y="158" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="24" y="130" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="16" y="93" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="24" y="56" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <text x="52" y="27" text-anchor="middle" font-size="10" opacity="0.25">&#x1F49B;</text>
+              <!-- Hour labels -->
+              <text x="90" y="38" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">0h</text>
+              <text x="158" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">6h</text>
+              <text x="90" y="155" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">12h</text>
+              <text x="24" y="93" text-anchor="middle" font-family="Inter" font-size="8" fill="#94A3B8">18h</text>
+              <!-- Heart-shaped icon backdrops for water drops -->
+              <text x="109" y="22" text-anchor="middle" font-size="17" opacity="0.30">&#x1F499;</text>
+              <text x="109" y="19" text-anchor="middle" font-size="12">💧</text>
+              <text x="145" y="43" text-anchor="middle" font-size="17" opacity="0.30">&#x1F499;</text>
+              <text x="145" y="40" text-anchor="middle" font-size="12">💧</text>
+              <text x="163" y="78" text-anchor="middle" font-size="17" opacity="0.30">&#x1F499;</text>
+              <text x="163" y="75" text-anchor="middle" font-size="12">💧</text>
+              <!-- Heart-shaped icon backdrops for pee emoji -->
+              <text x="130" y="61" text-anchor="middle" font-size="16" opacity="0.25">&#x1F49B;</text>
+              <text x="130" y="58" text-anchor="middle" font-size="9">😊</text>
+              <text x="140" y="116" text-anchor="middle" font-size="16" opacity="0.25">&#x1F49B;</text>
+              <text x="140" y="113" text-anchor="middle" font-size="9">😌</text>
+            </svg>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary);">Heart tick marks, watermark center, heart-shaped icon backdrops</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison 2: Timeline -->
+    <div class="cute-comparison-group">
+      <h3>&#x1F4CB; Daily Timeline</h3>
+      <div class="cute-compare">
+        <div class="cute-compare-card">
+          <h4>Cute Mode OFF</h4>
+          <div class="compare-svg" style="text-align: left; padding: 0 12px;">
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.85em;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">07:15</span>
+                <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#22B8CF"/></svg>
+                <span>💧 2.5 dl</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">08:40</span>
+                <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#FBBF24"/></svg>
+                <span>😊 Normal</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">09:30</span>
+                <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#22B8CF"/></svg>
+                <span>💧 3 dl</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">11:50</span>
+                <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#FBBF24"/></svg>
+                <span>😌 Just in Case</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary); margin-top:8px;">Standard circle dots</p>
+        </div>
+        <div class="cute-compare-card">
+          <h4>Cute Mode ON</h4>
+          <div class="compare-svg" style="text-align: left; padding: 0 12px;">
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.85em;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">07:15</span>
+                <span style="font-size:0.8em;">&#x1F499;</span>
+                <span>💧 2.5 dl</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">08:40</span>
+                <span style="font-size:0.8em;">&#x1F49B;</span>
+                <span>😊 Normal</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">09:30</span>
+                <span style="font-size:0.8em;">&#x1F499;</span>
+                <span>💧 3 dl</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color:var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:0.85em;">11:50</span>
+                <span style="font-size:0.8em;">&#x1F49B;</span>
+                <span>😌 Just in Case</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary); margin-top:8px;">Heart emoji replace dots &mdash; &#x1F499; water, &#x1F49B; pee</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison 3: Widget Examples -->
+    <div class="cute-comparison-group">
+      <h3>&#x1F4F1; Pipi Quick Log Widget</h3>
+      <div class="cute-compare">
+        <div class="cute-compare-card">
+          <h4>Cute Mode OFF</h4>
+          <div class="compare-svg">
+            <svg width="180" height="70" viewBox="0 0 180 70">
+              <!-- Widget background -->
+              <rect x="0" y="0" width="180" height="70" rx="14" fill="#FAFCFE" stroke="#E2E8F0" stroke-width="1"/>
+              <!-- Emoji buttons -->
+              <circle cx="40" cy="35" r="18" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1"/>
+              <text x="40" y="41" text-anchor="middle" font-size="18">😰</text>
+              <circle cx="90" cy="35" r="18" fill="#FEF9C3" stroke="#FCD34D" stroke-width="1"/>
+              <text x="90" y="41" text-anchor="middle" font-size="18">😊</text>
+              <circle cx="140" cy="35" r="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+              <text x="140" y="41" text-anchor="middle" font-size="18">😌</text>
+            </svg>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary);">Clean emoji buttons, no decoration</p>
+        </div>
+        <div class="cute-compare-card">
+          <h4>Cute Mode ON</h4>
+          <div class="compare-svg">
+            <svg width="180" height="70" viewBox="0 0 180 70">
+              <!-- Widget background -->
+              <rect x="0" y="0" width="180" height="70" rx="14" fill="#FAFCFE" stroke="#E2E8F0" stroke-width="1"/>
+              <!-- Heart brand stamp — top-left identity mark -->
+              <text x="6" y="14" font-size="8" opacity="0.35">&#x1F49B;</text>
+              <!-- Heart-shaped button backgrounds -->
+              <text x="40" y="44" text-anchor="middle" font-size="36" opacity="0.20">&#x1F49B;</text>
+              <text x="40" y="38" text-anchor="middle" font-size="18">😰</text>
+              <text x="90" y="44" text-anchor="middle" font-size="36" opacity="0.20">&#x1F49B;</text>
+              <text x="90" y="38" text-anchor="middle" font-size="18">😊</text>
+              <text x="140" y="44" text-anchor="middle" font-size="36" opacity="0.20">&#x1F49B;</text>
+              <text x="140" y="38" text-anchor="middle" font-size="18">😌</text>
+              <!-- Heart separator — decorative footer -->
+              <text x="80" y="66" text-anchor="middle" font-size="6" opacity="0.30">&#x1F49B;</text>
+              <text x="90" y="66" text-anchor="middle" font-size="6" opacity="0.30">&#x1F49B;</text>
+              <text x="100" y="66" text-anchor="middle" font-size="6" opacity="0.30">&#x1F49B;</text>
+            </svg>
+          </div>
+          <p style="font-size:0.82em; color:var(--text-secondary);">Heart-shaped buttons, brand stamp, heart separator</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Where Hearts Appear -->
+    <div class="cute-mode-section" style="margin-top: 24px;">
+      <h3>&#x1F49B; Where Hearts Appear</h3>
+      <div style="margin-top: 12px;">
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x1F4C8;</span>
+          <div class="cute-desc"><strong>Chart data points</strong> &mdash; dots become small hearts on the line</div>
+        </div>
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x23F0;</span>
+          <div class="cute-desc"><strong>Timeline dots</strong> &mdash; &#x1F499; for water entries, &#x1F49B; for pee entries</div>
+        </div>
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x1F4F1;</span>
+          <div class="cute-desc"><strong>Icon backdrops</strong> &mdash; heart shapes replace circles behind clock icons and widget buttons</div>
+        </div>
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x1F570;&#xFE0F;</span>
+          <div class="cute-desc"><strong>Clock tick marks</strong> &mdash; tiny hearts replace line ticks, making the clock structure itself cute</div>
+        </div>
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x1F48E;</span>
+          <div class="cute-desc"><strong>Watermarks &amp; brand stamps</strong> &mdash; centered heart on clock face; corner heart on widgets as brand mark</div>
+        </div>
+        <div class="cute-feature-item">
+          <span class="cute-icon">&#x1F3A8;</span>
+          <div class="cute-desc"><strong>Color coding</strong> &mdash; &#x1F49B; yellow = pee, &#x1F499; blue = water (matching the app's primary color pair)</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: TL;DR (Landing Page)
+  ======================================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — THIS FILE. TL;DR landing page.
+    product.html  — Product (vision, features, USPs, monetization)
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
+    science.html  — Science (Hydration Proof Engine, scoring, patterns)
+    tech.html     — Tech (architecture, shared infra, data storage)
+
+  THIS FILE: Landing page with elevator pitch, Hydration Cycle Ring SVG, and feature pills.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - The Hydration Cycle Ring SVG uses CSS animations (.water-arc-tldr, .pee-arc-tldr) defined in styles.css.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — TL;DR</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn active" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+  <section>
+    <h2><span class="emoji">&#x26A1;</span> TL;DR</h2>
+    <p style="font-size:1.15em; max-width:640px;">
+      <strong>Pipi</strong> is a water + pee tracker for iOS. You log water in, you log pee out, and the app tells you
+      whether you're <em>actually</em> hydrated &mdash; not just drinking.
+    </p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; margin:32px 0; align-items:center;">
+      <!-- Key visual: Hydration Cycle Ring -->
+      <div style="text-align:center;">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#E2E8F0" stroke-width="14" />
+          <circle cx="100" cy="100" r="80" fill="none"
+            stroke="url(#tldrWaterGrad)" stroke-width="14"
+            stroke-dasharray="503" stroke-linecap="round"
+            transform="rotate(-90 100 100)"
+            class="water-arc-tldr" />
+          <circle cx="100" cy="100" r="62" fill="none" stroke="#E2E8F0" stroke-width="11" />
+          <circle cx="100" cy="100" r="62" fill="none"
+            stroke="url(#tldrPeeGrad)" stroke-width="11"
+            stroke-dasharray="390" stroke-linecap="round"
+            transform="rotate(90 100 100) scale(-1, 1)" transform-origin="100 100"
+            class="pee-arc-tldr" />
+          <!-- Ghostly hearts (cute mode off) -->
+          <text x="52" y="48" font-size="14" opacity="0.08">&#x1F499;</text>
+          <text x="140" y="55" font-size="12" opacity="0.08">&#x1F499;</text>
+          <text x="36" y="140" font-size="10" opacity="0.08">&#x1F49B;</text>
+          <text x="150" y="148" font-size="13" opacity="0.08">&#x1F49B;</text>
+          <text x="100" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="32" fill="#1E293B">81%</text>
+          <text x="100" y="114" text-anchor="middle" font-family="Inter, sans-serif" font-weight="500" font-size="13" fill="#64748B">hydrated</text>
+          <defs>
+            <linearGradient id="tldrWaterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#22B8CF" />
+              <stop offset="100%" stop-color="#0891B2" />
+            </linearGradient>
+            <linearGradient id="tldrPeeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FBBF24" />
+              <stop offset="100%" stop-color="#F59E0B" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div style="font-size:0.8em; color:var(--text-secondary); margin-top:8px;">The Hydration Cycle Ring &mdash; hero widget</div>
+      </div>
+
+      <!-- Elevator pitch bullets -->
+      <div>
+        <ul>
+          <li><strong>Water in, pee out.</strong> The only app that tracks both sides of hydration.</li>
+          <li><strong>Hydration Proof Engine.</strong> Correlates intake with output to calculate a real hydration score.</li>
+          <li><strong>Widget-first.</strong> Interactive home screen widgets &mdash; log without opening the app.</li>
+          <li><strong>100% cute, zero clinical.</strong> Emoji urgency levels, optional heart accents (every heart has a job &mdash; backdrops, markers, never random decoration), no &ldquo;voiding&rdquo; anywhere.</li>
+          <li><strong>No subscription.</strong> Core logging free forever. One-time premium for widgets (~$5-8).</li>
+          <li><strong>HealthKit native.</strong> Reads and writes water data. Part of the Gwen Widgets ecosystem, sharing <code>HealthWidgetsCore</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick-glance feature pills -->
+    <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:24px 0;">
+      <span class="urgency-pill normal" style="cursor:default;"><span class="pill-emoji">💧</span> Water Tracking</span>
+      <span class="urgency-pill chill" style="cursor:default;"><span class="pill-emoji">😊</span> Pee Logging</span>
+      <span class="urgency-pill" style="background:#E0F7FA; color:#0891B2; cursor:default;"><span class="pill-emoji">📱</span> 14+ Widgets</span>
+      <span class="urgency-pill" style="background:#EEF2FF; color:#6D28D9; cursor:default;"><span class="pill-emoji">🧪</span> Hydration Science</span>
+      <span class="urgency-pill" style="background:#FEF9C3; color:#D97706; cursor:default;"><span class="pill-emoji">&#x1F49B;</span> Cute Mode</span>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

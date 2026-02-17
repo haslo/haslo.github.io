@@ -1,0 +1,278 @@
+<!--
+  LLM INSTRUCTIONS — Pipi Concept: Product
+  ==========================================
+
+  FILE MAP (docs/pipi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — THIS FILE. Vision, features, USPs, monetization.
+    widgets.html  — Widgets & Design (circle widgets, inventory, visualizations)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
+    science.html  — Science (Hydration Proof Engine, scoring, patterns)
+    tech.html     — Tech (architecture, shared infra, data storage)
+
+  THIS FILE: Product definition — vision/positioning, 6 core feature cards, 6 USP cards, monetization tiers.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - Feature cards use .feature-card with color variants (.water, .pee, .notify, .watch, .app).
+  - USP cards use .usp-grid > .usp-card with numbered badges.
+  - Pricing uses .pricing-grid with .pricing-free and .pricing-premium cards.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipi — Product</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="drop">💧</span> Pipi</h1>
+  <div class="tagline">"Hydration, full circle."</div>
+  <p class="pitch">
+    The only app that tracks both sides of hydration &mdash; what goes in AND what comes out.
+    Beautiful widgets, one-tap logging, zero friction.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn active" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+
+  <!-- ==================== VISION ==================== -->
+  <section>
+    <h2><span class="emoji">&#x1F3AF;</span> Vision &amp; Positioning</h2>
+    <p>
+      Most hydration apps tell you to drink more water. <strong>Pipi tells you whether it's actually working.</strong>
+      Track your water intake with one tap, log your bathroom visits with a single emoji, and let the
+      Hydration Proof Engine connect the dots. Beautiful interactive widgets mean you rarely need to open the app at all.
+    </p>
+    <p>
+      <strong>Target audience:</strong> Health-conscious iPhone users who want effortless hydration tracking without subscription fatigue.
+    </p>
+    <p>
+      <strong>Name rationale:</strong> "Pipi" is playful and internationally understood &mdash; it works in German, French, Spanish, and English. It's cute, memorable, and sets the tone: this app takes hydration seriously but never takes itself seriously.
+    </p>
+  </section>
+
+  <!-- ==================== FEATURES ==================== -->
+  <section>
+    <h2><span class="emoji">&#x2B50;</span> Core Features</h2>
+    <div class="feature-grid">
+
+      <div class="feature-card water">
+        <span class="card-emoji">💧</span>
+        <h3>Water Tracking</h3>
+        <ul>
+          <li>Input in <strong>dl</strong> (metric) or <strong>fl oz</strong> (imperial), user-configurable</li>
+          <li><strong>Preset quick-log buttons</strong> &mdash; e.g., 2dl glass, 3dl cup, 5dl bottle &mdash; user-configurable sizes and labels</li>
+          <li>Water only &mdash; no beverage hydration index, no coffee/tea ratios, no "does soup count?" debates. You log water. Simple.</li>
+          <li><strong>HealthKit read + write</strong> (<code>dietaryWater</code>) &mdash; full interop with other apps</li>
+          <li>Daily goal user-configurable (default 2.5L)</li>
+        </ul>
+      </div>
+
+      <div class="feature-card pee">
+        <span class="card-emoji">😊</span>
+        <h3>Pee Tracking (Pipi)</h3>
+        <p>100% cute, zero clinical language. No "voiding", no "urination", no color charts.</p>
+        <div class="urgency-row">
+          <span class="urgency-pill urgent"><span class="pill-emoji">😰</span> Urgent</span>
+          <span class="urgency-pill normal"><span class="pill-emoji">😊</span> Normal</span>
+          <span class="urgency-pill chill"><span class="pill-emoji">😌</span> Just in Case</span>
+        </div>
+        <ul>
+          <li><strong>One-tap logging</strong> &mdash; timestamp auto-captured, that's it</li>
+          <li>Optional fun "how was it?" quick reaction (never required, keep it light)</li>
+          <li><strong>App-local storage only</strong> &mdash; HealthKit has no urination category (only <code>bladderIncontinence</code> which is medical/symptom, not what we want)</li>
+        </ul>
+      </div>
+
+      <div class="feature-card notify">
+        <span class="card-emoji">🔔</span>
+        <h3>Notifications &amp; Reminders</h3>
+        <ul>
+          <li><strong>Smart hydration reminders</strong> that calculate your pace &mdash; only nudge when falling behind, stop when on track. After your first week, reminders adapt to your day patterns &mdash; no 6am nudge on Sundays just because that's your weekday rhythm.</li>
+          <li>Configurable quiet hours (sleep, meetings)</li>
+          <li><strong>Actionable notifications:</strong> tap "Log 2.5dl" directly from the banner (<code>UNNotificationAction</code> + <code>AppIntent</code>)</li>
+          <li><strong>Morning summary:</strong> yesterday's hydration score + today's goal</li>
+          <li>Achievement notifications: streak days, personal records</li>
+          <li>Optional pee reminder: "It's been a while &mdash; bathroom break?"</li>
+        </ul>
+      </div>
+
+      <div class="feature-card watch">
+        <span class="card-emoji">&#x231A;</span>
+        <h3>Apple Watch</h3>
+        <ul>
+          <li>Complication showing daily progress (water intake / goal)</li>
+          <li>Quick-log buttons on watch face</li>
+          <li>Pee logging with urgency emoji selection</li>
+          <li>Haptic reminders synced with iPhone schedule</li>
+        </ul>
+      </div>
+
+      <div class="feature-card app full">
+        <span class="card-emoji">📱</span>
+        <h3>App (Main Screen) &mdash; Always Free</h3>
+        <ul>
+          <li>Clean, easy-on-the-eyes design with quick-log buttons front and center</li>
+          <li><strong>Logging through the app is always free</strong> &mdash; fast and frictionless</li>
+          <li><strong>Daily timeline:</strong> water drops 💧 and pee emoji interleaved, showing the rhythm of your day</li>
+          <li>Simple charts: daily water intake, pee frequency, hydration score</li>
+          <li><strong>Pattern insights:</strong> &ldquo;You have 2 distinct hydration patterns&rdquo; &mdash; tap to compare your typical Monday vs your typical Saturday</li>
+          <li>Settings: configure presets, daily goal, units (dl/oz), <strong>Cute Mode toggle</strong></li>
+        </ul>
+      </div>
+
+      <div class="feature-card full" style="border-top: 3px solid var(--pee); background: linear-gradient(135deg, #FFFBEB 0%, #F0F9FF 100%);">
+        <span class="card-emoji">&#x1F49B;</span>
+        <h3>Cute Mode</h3>
+        <p>
+          Toggle between <strong>Clean</strong> and <strong>Cute</strong> in Settings.
+          Clean mode: ghostly, near-invisible hearts tucked into backgrounds (watermark-level subtlety).
+          Cute mode: heart-shaped backdrops behind icons, heart markers on chart lines and timelines, heart tick marks on clocks &mdash;
+          &#x1F49B; yellow for pee, &#x1F499; blue for water.
+          Every heart has a job; none just float. UX first, cute second.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== USPs ==================== -->
+  <section>
+    <h2><span class="emoji">&#x1F680;</span> USPs &mdash; What Makes Pipi Different</h2>
+    <div class="usp-grid">
+      <div class="usp-card">
+        <div class="usp-number">1</div>
+        <div class="usp-content">
+          <h3>Hydration Proof Engine</h3>
+          <p>
+            Correlates water intake with pee frequency to show whether you're <em>actually</em> hydrated, not just drinking.
+            "You drank 2.5L but only went twice today &mdash; drink more!"
+            No competitor combines both data streams intelligently. This is the app's defining feature.
+            Over time, the engine learns your personal hydration patterns &mdash; it knows your body processes water differently on active days vs rest days.
+          </p>
+        </div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-number">2</div>
+        <div class="usp-content">
+          <h3>Smart Reminders That Stop</h3>
+          <p>
+            Reminders pause automatically when you're on track for your daily goal. The #1 complaint about
+            Plant Nanny, WaterMinder, and every other water app: they keep nagging after you've hit your target.
+            Pipi calculates your pace and only nudges when you're falling behind.
+            Better yet, after a week it learns your day types &mdash; the Thursday-at-the-office reminder schedule adapts separately from Sunday-on-the-couch.
+          </p>
+        </div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-number">3</div>
+        <div class="usp-content">
+          <h3>Zero Paywall on Logging</h3>
+          <p>
+            All tracking features free forever. Open the app, tap, done. Interactive widgets are premium
+            (convenience upgrade, not feature gate). The #1 App Store complaint across ALL water apps
+            is subscription paywalls on basic logging. Pipi has no subscription at all.
+          </p>
+        </div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-number">4</div>
+        <div class="usp-content">
+          <h3>One-Tap Home Screen Logging</h3>
+          <p>
+            Interactive widgets, Control Center buttons, and Lock Screen actions mean you can log water or pee
+            without ever opening the app. The widget IS the app for daily use.
+          </p>
+        </div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-number">5</div>
+        <div class="usp-content">
+          <h3>Water AND Pee in One App</h3>
+          <p>
+            Nobody does both. Water apps ignore output. Pipi tracks the full cycle &mdash;
+            because hydration isn't just about drinking, it's about what your body does with it.
+            Heart accents (&#x1F49B;&#x1F499;) woven into the UI &mdash; as icon backdrops, data markers, clock tick marks &mdash; make pee tracking feel cute and approachable instead of clinical.
+          </p>
+        </div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-number">6</div>
+        <div class="usp-content">
+          <h3>User-Configurable Presets</h3>
+          <p>
+            Your glass, your bottle, your mug &mdash; configured once, always one tap away.
+            No scrolling through preset lists that don't match your life.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MONETIZATION ==================== -->
+  <section>
+    <h2><span class="emoji">&#x1F4B0;</span> Monetization</h2>
+
+    <div class="pricing-grid">
+      <div class="pricing-card pricing-free">
+        <div class="pricing-label">Free Tier</div>
+        <div class="pricing-title">Free Forever</div>
+        <div class="pricing-subtitle">All logging, no limits</div>
+        <ul>
+          <li>All logging features (water + pee)</li>
+          <li>Display-only widgets (progress, charts, timeline, circles)</li>
+          <li>Smart reminders</li>
+          <li>Basic daily/weekly charts</li>
+          <li>Standard presets</li>
+        </ul>
+      </div>
+      <div class="pricing-card pricing-premium">
+        <div class="pricing-label">Premium</div>
+        <div class="pricing-title">~$5&ndash;8 one-time</div>
+        <div class="pricing-subtitle">7-day free trial &middot; No subscription</div>
+        <ul>
+          <li>Interactive widgets (home, lock, Control Center)</li>
+          <li>Hydration Proof Engine analytics</li>
+          <li>Pattern detection &mdash; personalized day-type recognition and adaptive reminders</li>
+          <li>Historical trends beyond 30 days</li>
+          <li>Extra widget styles</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>
+      <strong>Why this works:</strong> Logging through the app is fast and free &mdash; nobody is locked out of tracking.
+      Interactive widgets are a genuine convenience upgrade (skip opening the app entirely).
+      Users who love the free experience will pay for the shortcut.
+      No subscription means no churn anxiety &mdash; pay once, use forever.
+    </p>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Pipi</span> &mdash; Water &amp; Pee Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>
