@@ -1,0 +1,587 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: Sound
+  ==========================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
+    maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
+    watch.html    — Watch (Apple Watch sensor fusion for improved sleep staging)
+    sound.html    — THIS FILE. Passive microphone analysis for sleep insights.
+
+  THIS FILE: Five sections —
+    A: Sound Science — Passive Microphone Analysis (sound-section)
+    B: Sound Maths — Audio Processing Algorithms (sound-section)
+    C: "Possible but Silly" — Active Acoustic Approaches (sound-section)
+    D: Optional Event Recording — Pillow-Style (sound-section)
+    E: iOS Audio Implementation (ios-section)
+
+  EDITING:
+  - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
+  - Hero, nav, and footer are shared across all pages — edit all 5 if changing these.
+  - Research callouts use .research-callout with .cite-label.
+  - Citations at bottom use .citations with ordered list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; Sound</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Apple Watch and microphone data improve accuracy when available &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
+  <a class="tab-btn" href="watch.html">Watch</a>
+  <a class="tab-btn active" href="sound.html">Sound</a>
+</nav>
+
+<!-- ==================== A: SOUND SCIENCE ==================== -->
+<section class="sound-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F3A4;</span> Sound Science &mdash; Passive Microphone Analysis</h2>
+  <div class="science-intro">
+    <p>
+      Phone microphone passively listens during sleep. All audio processing happens on-device &mdash;
+      no audio is uploaded, stored, or transmitted. Privacy-first: explicit opt-in with clear disclosure.
+      Audio is processed into features (snoring events, breathing rate, noise levels) and immediately discarded.
+    </p>
+  </div>
+
+  <!-- Snoring Detection -->
+  <h3>Snoring Detection</h3>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Strong Evidence &mdash; Highest-Confidence Audio Signal</div>
+    <p>
+      <strong>98.2% accuracy</strong>, 98.0% sensitivity, 98.3% specificity using directional
+      microphone at 1m distance. AdaBoost classifier with 34 time/spectral features across
+      76,600+ manually classified episodes.
+    </p>
+    <p>
+      Source: Kim et al. (2013) &ldquo;Automatic Detection of Whole Night Snoring Events Using
+      Non-Contact Microphone&rdquo; &mdash; <em>PLOS ONE</em>
+    </p>
+    <p>
+      Deep neural network approach: <strong>95.3% accuracy</strong>, 92.2% sensitivity,
+      97.7% specificity.
+    </p>
+    <p>
+      Source: Arsenali B et al. (2021) &ldquo;Audio-based snore detection using deep neural
+      networks&rdquo; &mdash; <em>PubMed</em>
+    </p>
+    <p>
+      Snoring occurs in both NREM and REM with OSA-specific patterns. At AHI &ge;30:
+      94&ndash;100% sensitivity NREM, 92&ndash;97% REM.
+    </p>
+    <p>
+      Source: Saha S et al. (2018) &ldquo;Snore Sound Analysis Can Detect the Presence of
+      Obstructive Sleep Apnea Specific to NREM or REM Sleep&rdquo; &mdash; <em>J Clin Sleep Med</em>
+    </p>
+  </div>
+
+  <div class="score-breakdown">
+    <div class="score-component sound-stage">
+      <div class="score-points">98%</div>
+      <div class="score-label">Snoring Detection Accuracy</div>
+      <div class="score-desc">
+        Non-contact mic at 1m distance.
+        AdaBoost with 34 features.
+      </div>
+    </div>
+    <div class="score-component sound-stage">
+      <div class="score-points">95%</div>
+      <div class="score-label">Deep Learning Accuracy</div>
+      <div class="score-desc">
+        Neural network approach.
+        92.2% sensitivity, 97.7% specificity.
+      </div>
+    </div>
+    <div class="score-component sound-stage">
+      <div class="score-points">94&ndash;100%</div>
+      <div class="score-label">OSA Detection Sensitivity</div>
+      <div class="score-desc">
+        Severe cases (AHI &ge;30), NREM sleep.
+        92&ndash;97% in REM.
+      </div>
+    </div>
+  </div>
+
+  <!-- Breathing Rate from Audio -->
+  <h3>Breathing Rate from Audio</h3>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Strong Evidence</div>
+    <p>
+      <strong>&lt;1% median error</strong> for respiratory rate estimation from phone microphone.
+      <strong>96% of recordings within &plusmn;1 bpm</strong> in controlled conditions.
+      Lab MAE: 0.2 &plusmn; 0.27 bpm.
+    </p>
+    <p>
+      Effective up to <strong>30 cm from nose</strong>.
+    </p>
+    <p>
+      Remote/noisy conditions: 87.5% within &plusmn;1 bpm (MAE: 0.79 &plusmn; 2.44 bpm).
+    </p>
+    <p>
+      Source: Nam Y et al. (2016) &ldquo;Estimation of Respiratory Rates Using the Built-in
+      Microphone of a Smartphone or Headset&rdquo; &mdash; <em>IEEE J Biomed Health Inform</em>
+    </p>
+    <p>
+      <strong>Limitation:</strong> Requires open nasal passages. Nasal congestion causes doubled
+      respiratory rate artifacts. Tracheal sounds produce poor estimates.
+    </p>
+  </div>
+
+  <!-- Sleep/Wake from Breathing -->
+  <h3>Sleep/Wake Detection from Breathing Sounds</h3>
+
+  <div class="research-callout" style="border-left-color: var(--rem);">
+    <div class="cite-label" style="color: #0284C7;">Moderate Evidence</div>
+    <p>
+      <strong>83.3% overall accuracy</strong>, 92.2% sensitivity (sleep detection), 56.6% specificity
+      (wake detection), Cohen's kappa 0.508. Uses breathing pattern features with AdaBoost
+      classifier. 70 subjects, whole-night validation.
+    </p>
+    <p>
+      Source: Nakano H et al. (2014) &ldquo;Sleep-Wake Evaluation from Whole-Night Non-Contact
+      Audio Recordings of Breathing Sounds&rdquo; &mdash; <em>PLOS ONE</em>
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">Advanced Deep Learning &mdash; HomeSleepNet</div>
+    <p>
+      <strong>HomeSleepNet (2023):</strong> 76.2% overall accuracy (3-stage: wake/NREM/REM),
+      88.5% accuracy (2-stage: sleep/wake). Robust across demographics
+      (73.4&ndash;79.4% across age, gender, BMI, OSA severity).
+    </p>
+    <p>
+      Architecture: Mel spectrogram &rarr; Listener + Transformer encoder (per-epoch) &rarr;
+      Bi-LSTM Transformer for temporal sequence across 40-epoch windows.
+    </p>
+    <p>
+      Source: Choi SH et al. (2023) &ldquo;Prediction of Sleep Stages Via Deep Learning Using
+      Smartphone Audio Recordings in Home Environments&rdquo; &mdash; <em>JMIR</em>
+    </p>
+  </div>
+
+  <!-- Environmental Noise -->
+  <h3>Environmental Noise Monitoring</h3>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Well-Established</div>
+    <p>
+      Nocturnal noise disrupts sleep architecture: increased wake and N1, decreased N3 (deep)
+      and REM &rarr; shallower sleep overall.
+    </p>
+    <p>
+      <strong>Arousals at ~48 dB</strong> (air traffic threshold).
+      <strong>Physiological reactions at ~33 dB</strong> (increased cortisol, body movements).
+    </p>
+    <p>
+      Long-term: stress hormone increases, emerging cardiometabolic adverse outcomes.
+    </p>
+    <p>
+      Source: Basner M &amp; McGuire S (2022) &ldquo;Environmental Noise and Effects on Sleep:
+      An Update to the WHO Systematic Review and Meta-Analysis&rdquo; &mdash;
+      <em>Environmental Health Perspectives</em>
+    </p>
+  </div>
+
+  <!-- Sleep Apnea Screening -->
+  <h3>Sleep Apnea Screening from Audio</h3>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Moderate Evidence &mdash; Screening Only, Not Diagnosis</div>
+    <p>
+      Random forest model on breathing sound analysis:
+    </p>
+    <ul>
+      <li>AHI &ge;5 events/h: <strong>88.2% accuracy</strong>, 90.8% sensitivity, 64.7% specificity</li>
+      <li>AHI &ge;15 events/h: <strong>82.3% accuracy</strong>, 87.3% sensitivity, 70.6% specificity</li>
+      <li>AHI &ge;30 events/h: <strong>81.7% accuracy</strong>, 83.0% sensitivity, 80.3% specificity</li>
+      <li>Correlation: 0.78 for AHI estimation</li>
+    </ul>
+    <p>
+      Source: Kim J et al. (2022) &ldquo;Evaluating Prediction Models of Sleep Apnea From
+      Smartphone-Recorded Sleep Breathing Sounds&rdquo; &mdash; <em>PMC</em>
+    </p>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== B: SOUND MATHS ==================== -->
+<section class="sound-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4D0;</span> Sound Maths &mdash; Audio Processing Algorithms</h2>
+
+  <!-- Snoring Detection Pipeline -->
+  <div class="score-component sound-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Snoring Detection Pipeline</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Input: Raw audio at 16 kHz sample rate<br>
+      <br>
+      1. Framing: 25ms frames, 10ms hop (60% overlap)<br>
+      2. Mel spectrogram: 40 Mel filter banks, 0&ndash;8 kHz range<br>
+      3. Feature extraction per frame:<br>
+      &nbsp;&nbsp;&bull; Spectral centroid (frequency center of mass)<br>
+      &nbsp;&nbsp;&bull; Spectral rolloff (frequency below which 85% of energy)<br>
+      &nbsp;&nbsp;&bull; MFCCs (13 coefficients &mdash; Mel-Frequency Cepstral Coefficients)<br>
+      &nbsp;&nbsp;&bull; Zero crossing rate<br>
+      &nbsp;&nbsp;&bull; RMS energy<br>
+      4. Classification: Binary (snore/not-snore) per frame<br>
+      &nbsp;&nbsp;&bull; On-device CoreML model (trained offline)<br>
+      5. Aggregation:<br>
+      &nbsp;&nbsp;&bull; Snoring Index (SI) = snoring events per hour of sleep<br>
+      &nbsp;&nbsp;&bull; Snoring Duration Fraction = total snoring time / total sleep time
+    </div>
+  </div>
+
+  <!-- Breathing Rate Extraction -->
+  <div class="score-component sound-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Breathing Rate Extraction</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Input: Raw audio, 16 kHz<br>
+      <br>
+      1. Band-pass filter: 0.1&ndash;0.6 Hz (6&ndash;36 breaths/min range)<br>
+      &nbsp;&nbsp;Applied to audio energy envelope, not raw audio<br>
+      2. Audio energy envelope:<br>
+      &nbsp;&nbsp;&bull; Compute RMS energy per 50ms frame<br>
+      &nbsp;&nbsp;&bull; Smooth with 1s moving average<br>
+      3. Band-pass the smoothed envelope to isolate breathing rhythm<br>
+      4. Peak detection: Count peaks in filtered envelope<br>
+      &nbsp;&nbsp;&bull; RR_audio = peaks per minute<br>
+      5. Per-epoch features:<br>
+      &nbsp;&nbsp;&bull; RR_mean = mean respiratory rate over epoch<br>
+      &nbsp;&nbsp;&bull; RR_CV = std(RR) / mean(RR) &mdash; coefficient of variation<br>
+      <br>
+      Stage signal:<br>
+      &nbsp;&nbsp;RR_CV &gt; 0.15 &rarr; irregular breathing &rarr; REM indicator<br>
+      &nbsp;&nbsp;RR_CV &lt; 0.05 &rarr; regular breathing &rarr; deep sleep indicator
+    </div>
+  </div>
+
+  <!-- Audio Sleep/Wake Classifier -->
+  <div class="score-component sound-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Audio Sleep/Wake Classifier</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Input: 30s audio epochs<br>
+      <br>
+      1. Convert to Mel spectrogram (same parameters as snoring pipeline)<br>
+      2. Extract per-epoch features:<br>
+      &nbsp;&nbsp;&bull; Breathing regularity (RR_CV)<br>
+      &nbsp;&nbsp;&bull; Ambient noise level (RMS energy, dB(A))<br>
+      &nbsp;&nbsp;&bull; Movement sound presence (transient high-energy events)<br>
+      &nbsp;&nbsp;&bull; Snoring presence (from snoring classifier)<br>
+      3. Binary classification: sleep vs. wake<br>
+      &nbsp;&nbsp;Supplements accelerometer-based sleep/wake detection<br>
+      <br>
+      Combined with accelerometer:<br>
+      &nbsp;&nbsp;P(sleep|audio) augments P(sleep|accel):<br>
+      &nbsp;&nbsp;&bull; Breathing detected + low noise &rarr; confirms sleep<br>
+      &nbsp;&nbsp;&bull; Movement sounds + high noise variance &rarr; confirms wake
+    </div>
+  </div>
+
+  <!-- Noise Level Quality Integration -->
+  <div class="score-component awake-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Noise Level Quality Integration</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Continuous monitoring:<br>
+      &nbsp;&nbsp;L_eq = 10 &times; log10(mean(p&sup2;/p_ref&sup2;)) per epoch<br>
+      &nbsp;&nbsp;where p = sound pressure, p_ref = 20 &mu;Pa<br>
+      <br>
+      Arousal correlation:<br>
+      &nbsp;&nbsp;Noise spike (&gt;48 dB) + movement spike within 30s &rarr; noise-induced arousal event<br>
+      <br>
+      Quality score modifier:<br>
+      &nbsp;&nbsp;Sustained noise &gt;40 dB(A) across &gt;25% of sleep epochs:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;quality_penalty = min(10, (fraction_noisy &minus; 0.25) &times; 40)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Applied as: quality = quality &minus; noise_penalty<br>
+      <br>
+      Noise-induced arousals:<br>
+      &nbsp;&nbsp;Each detected arousal &rarr; awake time increased proportionally<br>
+      &nbsp;&nbsp;(feeds into existing awake% penalty from quality scoring)
+    </div>
+  </div>
+
+  <!-- Combined Audio + Accelerometer Fusion -->
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Combined Audio + Accelerometer Fusion</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Phone-only with sound:<br>
+      &nbsp;&nbsp;P(stage) = P_movement &times; P_cycle &times; position_bias &times; M_audio<br>
+      <br>
+      where M_audio:<br>
+      &nbsp;&nbsp;M_REM &nbsp;= 1.0 + 0.3 &times; (RR_CV &gt; 0.15) &nbsp;&mdash; irregular breathing &rarr; REM boost<br>
+      &nbsp;&nbsp;M_deep = 1.0 + 0.2 &times; (RR_CV &lt; 0.05) &nbsp;&mdash; regular breathing &rarr; deep boost<br>
+      &nbsp;&nbsp;M_wake = 1.0 + 0.4 &times; (movement_sounds) &mdash; movement sounds &rarr; wake boost<br>
+      <br>
+      Normalize and assign as usual.<br>
+      <br>
+      Audio adds most value for:<br>
+      &nbsp;&nbsp;&bull; REM vs deep (breathing pattern differences)<br>
+      &nbsp;&nbsp;&bull; Wake detection (ambient sound changes, movement sounds)<br>
+      &nbsp;&nbsp;&bull; Quality context (noise-induced arousals)
+    </div>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== C: POSSIBLE BUT SILLY ==================== -->
+<section class="sound-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F921;</span> &ldquo;Possible but Silly&rdquo; &mdash; Active Acoustic Approaches</h2>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Ultrasonic Sonar (e.g., ApneaApp, Google Nest Hub approach)</div>
+    <p>
+      <strong>How it works:</strong> Phone speaker emits inaudible sound (~20&ndash;24 kHz),
+      microphone listens for reflections off chest/abdomen to detect breathing movements.
+    </p>
+    <p>
+      Lab accuracy: 95&ndash;99% for respiratory event detection (University of Washington,
+      300+ hours vs PSG). Clinical study: 32/37 patients correctly classified (86.5%).
+    </p>
+    <p>
+      Source: UW ApneaApp
+    </p>
+    <p>
+      <strong>Why it's silly for Schlafi:</strong>
+    </p>
+    <ul>
+      <li>Requires <strong>continuous speaker emission</strong> &mdash; severe battery drain overnight</li>
+      <li>Phone must be on nightstand <strong>facing the user</strong> at specific distance &mdash; defeats &ldquo;phone on mattress&rdquo; premise</li>
+      <li>Environmental interference from pets, ultrasonic pest deterrents, other smart devices</li>
+      <li>Can detect <em>movement</em> but cannot distinguish sleep stages (still = deep OR REM)</li>
+      <li>Privacy: continuous ultrasound emission is detectable and raises concerns</li>
+      <li>Partner in bed creates reflection confusion</li>
+    </ul>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Active Acoustic Sensing (audible frequencies)</div>
+    <p>
+      Emitting audible sound pulses to detect motion from reflections.
+    </p>
+    <p>
+      <strong>Why it's silly:</strong> It wakes the sleeper. And their partner. Self-defeating for a sleep app.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Ballistocardiography via Phone Microphone</div>
+    <p>
+      <strong>Concept:</strong> Detect heartbeat-induced micro-vibrations (5&ndash;50 Hz, micrometer scale)
+      through the mattress.
+    </p>
+    <p>
+      Source reference: Inan OT et al. (2015) &ldquo;Ballistocardiography and seismocardiography&rdquo;
+      &mdash; <em>J Appl Physiol</em>
+    </p>
+    <p>
+      <strong>Why it's silly:</strong>
+    </p>
+    <ul>
+      <li>Phone microphone is electrically isolated from mattress vibrations &mdash; no acoustic coupling path</li>
+      <li>Phone on nightstand can't detect mattress-transmitted vibrations</li>
+      <li>Even with mattress contact, motion artifacts from normal tossing/rolling completely dominate the heartbeat signal</li>
+      <li>Would require a dedicated bed sensor, not a phone</li>
+    </ul>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== D: OPTIONAL EVENT RECORDING ==================== -->
+<section class="sound-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4FC;</span> Optional Event Recording &mdash; Pillow-Style</h2>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Two Privacy Tiers</div>
+    <p>
+      <strong>Default mode:</strong> Audio is processed into features (snoring events, RR, noise levels)
+      and immediately discarded. No audio stored.
+    </p>
+    <p>
+      <strong>Optional recording mode:</strong> When enabled, Schlafi saves short audio clips around
+      detected events (snoring episodes, unusual breathing, loud noises, sleep talking). The user
+      can review these clips the next morning &mdash; like Pillow's &ldquo;Sound Recording&rdquo; feature.
+    </p>
+  </div>
+
+  <div class="score-component sound-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">How It Works</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Continuous audio monitoring (always running when mic is enabled):<br>
+      &nbsp;&nbsp;1. Real-time classification: snore / breathing anomaly / noise spike / silence<br>
+      &nbsp;&nbsp;2. When event detected AND recording is enabled:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Save audio clip: 5s before event + event duration + 5s after<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Tag with: timestamp, event type, confidence, sleep stage (if known)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Store locally on device (no cloud)<br>
+      &nbsp;&nbsp;3. Morning review screen:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Timeline of detected events with playback<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Event type icons (snoring, noise, talking, etc.)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&bull; Option to delete individual clips or all clips<br>
+      <br>
+      Storage:<br>
+      &nbsp;&nbsp;&bull; Clips stored in app sandbox (not shared via HealthKit)<br>
+      &nbsp;&nbsp;&bull; Auto-delete after configurable retention (default: 7 days)<br>
+      &nbsp;&nbsp;&bull; User can export individual clips (share sheet)<br>
+      &nbsp;&nbsp;&bull; Estimated storage: ~50 KB per event (compressed audio)
+    </div>
+  </div>
+
+  <div class="claims-grid" style="margin: 24px 0;">
+    <div class="research-callout" style="border-left-color: var(--quality); margin: 0;">
+      <div class="cite-label" style="color: var(--quality-dark);">Tier 1 &mdash; Analysis Only (default)</div>
+      <p>
+        Microphone on, audio processed in real-time, features extracted, audio discarded.
+        No clips saved. Minimal privacy footprint.
+      </p>
+    </div>
+    <div class="research-callout" style="border-left-color: var(--rem); margin: 0;">
+      <div class="cite-label" style="color: #0284C7;">Tier 2 &mdash; Event Recording (opt-in)</div>
+      <p>
+        Same as Tier 1, plus short clips saved around detected events. Clips stored locally,
+        auto-deleted after retention period. User has full control: review, delete, export.
+      </p>
+    </div>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Why This Matters</div>
+    <ul>
+      <li>Users who snore often don't know it. Hearing a recording is far more compelling than seeing a &ldquo;snoring detected&rdquo; badge.</li>
+      <li>Sleep talking recordings are a popular feature (entertainment value + partner verification).</li>
+      <li>Environmental noise clips help identify specific disruptions (dog barking, traffic, neighbor's music) &mdash; actionable insights.</li>
+    </ul>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== E: iOS AUDIO IMPLEMENTATION ==================== -->
+<section class="ios-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x2699;&#xFE0F;</span> iOS Audio Implementation</h2>
+  <div class="science-intro">
+    <p>
+      Key iOS frameworks and constraints for implementing passive audio sleep analysis.
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card sleep">
+      <h3>SoundAnalysis Framework</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        iOS 13+. Best choice for passive monitoring. Supports custom CoreML models for
+        snoring/breathing classification. Real-time, battery-efficient, on-device processing.
+      </p>
+    </div>
+    <div class="feature-card rem">
+      <h3>Background Audio</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Requires <code>UIBackgroundModes</code> + <code>audio</code> in Info.plist.
+        Persistent notification shown while recording. Explicit microphone permission required.
+      </p>
+    </div>
+    <div class="feature-card deep">
+      <h3>Hardware Constraints</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Phone mic has hardware high-pass filter ~250 Hz (removes some low-frequency breathing detail).
+        Noise floor ~40 dB SPL. Frequency response optimized for 200 Hz&ndash;16 kHz (voice range).
+      </p>
+    </div>
+    <div class="feature-card quality">
+      <h3>Event Recording Storage</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Clips in app sandbox using AVAudioRecorder (compressed AAC). Circular buffer approach:
+        continuously record to rolling 10s buffer, flush to file when event detected.
+        Auto-cleanup on retention expiry.
+      </p>
+    </div>
+  </div>
+
+  <div class="tech-tags">
+    <span class="tech-tag primary">SoundAnalysis</span>
+    <span class="tech-tag primary">CoreML</span>
+    <span class="tech-tag primary">On-device</span>
+    <span class="tech-tag">Privacy-first</span>
+    <span class="tech-tag">Opt-in</span>
+    <span class="tech-tag">Background Audio</span>
+    <span class="tech-tag">AVAudioRecorder</span>
+    <span class="tech-tag">Event Clips</span>
+  </div>
+
+  <!-- ==================== CITATIONS ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Snoring Detection</h4>
+    <ol>
+      <li>Kim J et al. (2013) &ldquo;Automatic Detection of Whole Night Snoring Events Using Non-Contact Microphone&rdquo; &mdash; <em>PLOS ONE</em> &mdash; <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0084139" target="_blank">PLOS</a></li>
+      <li>Arsenali B et al. (2021) &ldquo;Audio-based snore detection using deep neural networks&rdquo; &mdash; <em>PubMed</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/33434817/" target="_blank">PubMed</a></li>
+      <li>Saha S et al. (2018) &ldquo;Snore Sound Analysis Can Detect OSA Specific to NREM or REM&rdquo; &mdash; <em>JCSM</em> &mdash; <a href="https://jcsm.aasm.org/doi/10.5664/jcsm.7168" target="_blank">JCSM</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Breathing &amp; Sleep/Wake</h4>
+    <ol start="4">
+      <li>Nam Y et al. (2016) &ldquo;Estimation of Respiratory Rates Using the Built-in Microphone&rdquo; &mdash; <em>IEEE JBHI</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26415194/" target="_blank">PubMed</a></li>
+      <li>Nakano H et al. (2014) &ldquo;Sleep-Wake Evaluation from Non-Contact Audio Recordings&rdquo; &mdash; <em>PLOS ONE</em> &mdash; <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0117382" target="_blank">PLOS</a></li>
+      <li>Choi SH et al. (2023) &ldquo;HomeSleepNet: Sleep Staging from Smartphone Audio&rdquo; &mdash; <em>JMIR</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10273036/" target="_blank">PMC</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Sleep Apnea Screening</h4>
+    <ol start="7">
+      <li>Kim J et al. (2022) &ldquo;Prediction Models of Sleep Apnea From Smartphone-Recorded Sounds&rdquo; &mdash; <em>PMC</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9011176/" target="_blank">PMC</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Environmental Noise</h4>
+    <ol start="8">
+      <li>Basner M &amp; McGuire S (2022) &ldquo;Environmental Noise and Sleep: WHO Meta-Analysis Update&rdquo; &mdash; <em>Environ Health Perspect</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9272916/" target="_blank">PMC</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Active Acoustic (cited for completeness)</h4>
+    <ol start="9">
+      <li>UW ApneaApp &mdash; <a href="https://apnea.cs.washington.edu/" target="_blank">apnea.cs.washington.edu</a></li>
+      <li>Inan OT et al. (2015) &ldquo;Ballistocardiography and seismocardiography&rdquo; &mdash; <em>J Appl Physiol</em> &mdash; <a href="https://journals.physiology.org/doi/full/10.1152/japplphysiol.00298.2017" target="_blank">APS</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">iOS Implementation</h4>
+    <ol start="11">
+      <li>Apple &mdash; SoundAnalysis Framework &mdash; <a href="https://developer.apple.com/documentation/soundanalysis" target="_blank">developer.apple.com</a></li>
+    </ol>
+  </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

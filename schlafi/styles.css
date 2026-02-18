@@ -7,6 +7,8 @@
     index.html    — TL;DR tab (landing page)
     science.html  — Science tab (actigraphy, phone-based staging, sensors, iOS landscape)
     maths.html    — Maths tab (activity counts, sleep/wake algorithms, staging, quality scoring)
+    watch.html    — Watch tab (Apple Watch sensor fusion for improved sleep staging)
+    sound.html    — Sound tab (passive microphone analysis, snoring, breathing, noise)
 
   EDITING GUIDE:
   - All content pages link to this stylesheet via <link rel="stylesheet" href="styles.css">.
@@ -18,7 +20,7 @@
 
   CROSS-REFERENCES:
   - If adding a new CSS class, no other file changes needed — just use it in the relevant HTML.
-  - If renaming a class, update all 3 HTML content pages that might use it.
+  - If renaming a class, update all 5 HTML content pages that might use it.
   - If changing :root variables, all pages inherit automatically.
 */
 
@@ -226,6 +228,22 @@ tbody tr:hover { background: #FAFCFE; }
 }
 
 /* ======================== */
+/* WATCH SECTION             */
+/* ======================== */
+.watch-section {
+  background: linear-gradient(180deg, #FEF3C7 0%, #FDE68A 20%, #FEFCE8 60%, var(--bg) 100%);
+  border-top: 2px solid #D97706 !important;
+}
+
+/* ======================== */
+/* SOUND SECTION             */
+/* ======================== */
+.sound-section {
+  background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 20%, #F0FDF4 60%, var(--bg) 100%);
+  border-top: 2px solid var(--quality) !important;
+}
+
+/* ======================== */
 /* IOS SECTION               */
 /* ======================== */
 .ios-section {
@@ -311,6 +329,10 @@ tbody tr:hover { background: #FAFCFE; }
 .score-component.light-stage .score-points { color: var(--light); }
 .score-component.awake-stage .score-points { color: var(--awake); }
 .score-component.quality-stage .score-points { color: var(--quality); }
+.score-component.watch-stage::before { background: #D97706; }
+.score-component.watch-stage .score-points { color: #D97706; }
+.score-component.sound-stage::before { background: var(--quality); }
+.score-component.sound-stage .score-points { color: var(--quality); }
 .score-component .score-label {
   font-size: 0.85em;
   font-weight: 700;
@@ -426,7 +448,7 @@ tbody tr:hover { background: #FAFCFE; }
   .feature-grid, .score-breakdown, .claims-grid {
     break-inside: avoid;
   }
-  .science-section, .sensors-section, .maths-section {
+  .science-section, .sensors-section, .maths-section, .watch-section, .sound-section {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 }

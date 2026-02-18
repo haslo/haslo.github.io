@@ -7,6 +7,8 @@
     index.html    — TL;DR (landing page)
     science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
     maths.html    — THIS FILE. Mathematical specifications for all algorithms.
+    watch.html    — Watch (Apple Watch sensor fusion for improved sleep staging)
+    sound.html    — Sound (passive microphone analysis, snoring, breathing, noise)
 
   THIS FILE: Mathematical specifications — five sections:
     A: Activity Count Computation (raw accelerometer to epoch aggregation)
@@ -18,7 +20,7 @@
   EDITING:
   - Content lives inside <section class="maths-section"> > <div class="container">.
   - Styles come from styles.css. Uses .score-component cards, .score-formula, .research-callout, tables.
-  - Hero, nav, and footer are shared across all pages — edit all 3 if changing these.
+  - Hero, nav, and footer are shared across all pages — edit all 5 if changing these.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +38,11 @@
   <p class="pitch">
     A sleep tracker that works with just your phone on the mattress.
     Movement-based sleep detection backed by 40 years of actigraphy research.
-    Watch support coming later &mdash; phone-first, always.
+    Apple Watch and microphone data improve accuracy when available &mdash; phone-first, always.
   </p>
   <div class="platforms">
     <span class="platform-badge">iPhone</span>
-    <span class="platform-badge coming-soon">Apple Watch (coming later)</span>
+    <span class="platform-badge">Apple Watch</span>
   </div>
 </header>
 
@@ -48,6 +50,8 @@
   <a class="tab-btn" href="index.html">TL;DR</a>
   <a class="tab-btn" href="science.html">Science</a>
   <a class="tab-btn active" href="maths.html">Maths</a>
+  <a class="tab-btn" href="watch.html">Watch</a>
+  <a class="tab-btn" href="sound.html">Sound</a>
 </nav>
 
 <section class="maths-section">
@@ -512,13 +516,13 @@
     <ol>
       <li>Sadeh A et al. (1994) &ldquo;Activity-Based Sleep-Wake Identification: An Empirical Test of Methodological Issues&rdquo; &mdash; <em>Sleep</em> 17(3), 201&ndash;207 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/7939118/" target="_blank">PubMed</a></li>
       <li>Cole RJ et al. (1992) &ldquo;Automatic Sleep/Wake Identification From Wrist Activity&rdquo; &mdash; <em>Sleep</em> 15(5), 461&ndash;469 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/1455130/" target="_blank">PubMed</a></li>
-      <li>Winnebeck EC et al. (2023) &ldquo;40 years of actigraphy in sleep medicine and current state of the art&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://doi.org/10.1038/s41746-023-00802-1" target="_blank">Nature</a></li>
+      <li>Patterson MR et al. (2023) &ldquo;40 years of actigraphy in sleep medicine and current state of the art&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://doi.org/10.1038/s41746-023-00802-1" target="_blank">Nature</a></li>
     </ol>
 
     <h4 style="margin-top: 16px; font-size: 0.85em;">Validation &amp; Accuracy</h4>
     <ol start="4">
-      <li>de Leeuw MEDM et al. (2023) &ldquo;Accuracy of 11 Consumer Sleep Trackers&rdquo; &mdash; <em>J Clin Sleep Med</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10394383/" target="_blank">PMC</a></li>
-      <li>Fino E et al. (2020) &ldquo;(Not so) Smart sleep tracking through the phone&rdquo; &mdash; <em>J Sleep Res</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31696594/" target="_blank">PubMed</a></li>
+      <li>Lee T, Cho Y et al. (2023) &ldquo;Accuracy of 11 Wearable, Nearable, and Airable Consumer Sleep Trackers: Prospective Multicenter Validation Study&rdquo; &mdash; <em>JMIR mHealth and uHealth</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654909/" target="_blank">PMC</a></li>
+      <li>Fino E et al. (2020) &ldquo;(Not so) Smart sleep tracking through the phone&rdquo; &mdash; <em>J Sleep Res</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31674096/" target="_blank">PubMed</a></li>
       <li>van Hees VT et al. (2015) &ldquo;A Novel, Open Access Method to Assess Sleep Duration Using a Wrist-Worn Accelerometer&rdquo; &mdash; <em>PLoS ONE</em> &mdash; heuristic method, F1 79.1 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26569414/" target="_blank">PubMed</a></li>
     </ol>
 

@@ -1,0 +1,484 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: Watch
+  ==========================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
+    maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
+    watch.html    — THIS FILE. Apple Watch sensor fusion for improved sleep staging.
+    sound.html    — Sound (passive microphone analysis, snoring, breathing, noise)
+
+  THIS FILE: Three full-width gradient sections —
+    A: Watch Science — What Apple Watch Adds (watch-section)
+    B: Watch Maths — Sensor Fusion Formulas (watch-section)
+    C: HealthKit Integration (ios-section)
+
+  EDITING:
+  - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
+  - Hero, nav, and footer are shared across all pages — edit all 5 if changing these.
+  - Research callouts use .research-callout with .cite-label.
+  - Citations at bottom use .citations with ordered list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; Watch</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Apple Watch and microphone data improve accuracy when available &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
+  <a class="tab-btn active" href="watch.html">Watch</a>
+  <a class="tab-btn" href="sound.html">Sound</a>
+</nav>
+
+<!-- ==================== A: WATCH SCIENCE ==================== -->
+<section class="watch-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x231A;</span> Watch Science &mdash; What Apple Watch Adds</h2>
+  <div class="science-intro">
+    <p>
+      Phone-on-mattress achieves 80&ndash;88% sleep/wake accuracy but stage classification
+      is heuristic (F1 0.26&ndash;0.69). Apple Watch adds cardiovascular signals that are
+      orthogonal to movement &mdash; heart rate, HRV, respiratory rate, and SpO2.
+      Combined models reach ~77&ndash;78% accuracy for 4-stage classification.
+    </p>
+  </div>
+
+  <!-- Heart Rate Patterns -->
+  <h3>Heart Rate Patterns Across Sleep Stages</h3>
+
+  <div class="research-callout">
+    <div class="cite-label">Research Basis</div>
+    <p>
+      A deep learning model using instantaneous heart rate achieved <strong>0.77 accuracy</strong>
+      and <strong>0.66 Cohen's kappa</strong> for 4-class sleep staging (wake/light/deep/REM)
+      on 10,000+ nights.
+    </p>
+    <p>
+      Source: Radha M et al. (2020) &ldquo;Deep learning for automated sleep staging using
+      instantaneous heart rate&rdquo; &mdash; <em>npj Digital Medicine</em>
+    </p>
+  </div>
+
+  <div class="score-breakdown">
+    <div class="score-component deep-stage">
+      <div class="score-points">&#x1F311;</div>
+      <div class="score-label">Deep Sleep (N3)</div>
+      <div class="score-desc">
+        Minimal HR variation. Slow, stable heart rate.
+        Lowest of all stages. Parasympathetic dominance.
+      </div>
+    </div>
+    <div class="score-component rem-stage">
+      <div class="score-points">&#x1F441;</div>
+      <div class="score-label">REM Sleep</div>
+      <div class="score-desc">
+        Higher HR variability, resembles wakefulness.
+        Rapid rate changes. Sympathetic activation.
+      </div>
+    </div>
+    <div class="score-component light-stage">
+      <div class="score-points">&#x1F4A4;</div>
+      <div class="score-label">Light Sleep (N1/N2)</div>
+      <div class="score-desc">
+        HR slowed from wake but more variable than deep.
+        Transitional pattern.
+      </div>
+    </div>
+  </div>
+
+  <!-- Heart Rate Variability -->
+  <h3>Heart Rate Variability (HRV)</h3>
+
+  <div class="research-callout" style="border-left-color: var(--rem);">
+    <div class="cite-label" style="color: #0284C7;">Key HRV Metrics for Sleep Staging</div>
+    <p>
+      <strong>RMSSD</strong> (Root Mean Square of Successive Differences): Primary parasympathetic/vagal
+      marker. Elevated in light sleep, <strong>lowest in deep sleep (N3)</strong>, decreases in REM.
+    </p>
+    <p>
+      <strong>LF/HF ratio</strong> (Low Frequency 0.04&ndash;0.15 Hz / High Frequency 0.15&ndash;0.4 Hz):
+      Higher in wake and REM (sympathetic dominant), lower in NREM (parasympathetic dominant).
+    </p>
+    <p>
+      <strong>SDNN</strong> (Standard Deviation of Normal-to-Normal intervals): Global HRV marker.
+      Lower in deep sleep.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">HRV Reliability by Stage</div>
+    <p>
+      Herzig D et al. (2017) found stage-dependent reliability:
+    </p>
+    <ul>
+      <li><strong>N2 (light):</strong> excellent reliability for HF, LF, RMSSD</li>
+      <li><strong>N3 (deep):</strong> lowest RMSSD and LF power; LF unreliable in deep sleep</li>
+      <li><strong>REM:</strong> excellent reliability for HF and LF</li>
+    </ul>
+    <p>
+      Sources: Herzig D et al. (2017) &ldquo;Reproducibility of Heart Rate Variability Is Parameter
+      and Sleep Stage Dependent&rdquo; &mdash; <em>Frontiers in Physiology</em>;
+      Boudreau P et al. (2013) &ldquo;Circadian variation of heart rate variability across sleep
+      stages&rdquo; &mdash; <em>Sleep</em>
+    </p>
+  </div>
+
+  <!-- Respiratory Rate -->
+  <h3>Respiratory Rate</h3>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Respiratory Rate as Stage Discriminator</div>
+    <p>
+      Available from Apple Watch since watchOS 8 (September 2021) via
+      <code>HKQuantityTypeIdentifierRespiratoryRate</code>.
+    </p>
+    <ul>
+      <li><strong>Light sleep:</strong> Slightly slower than wake</li>
+      <li><strong>Deep sleep:</strong> Slow, regular breathing (low coefficient of variation)</li>
+      <li><strong>REM sleep:</strong> Irregular, variable respiratory rate &mdash; key REM marker</li>
+    </ul>
+    <p>
+      A cardiorespiratory sleep staging algorithm (CReSS) combining HR + respiratory rate
+      achieved <strong>Cohen's kappa 0.643</strong> for 4-stage classification (wake/light/deep/REM)
+      and <strong>77.6% epoch-level accuracy</strong>.
+    </p>
+    <p>
+      Source: Sridhar N et al. (2020) &ldquo;Estimating sleep stages using cardiorespiratory
+      signals: validation of a novel algorithm across demographic groups&rdquo; &mdash; <em>SLEEP</em>
+    </p>
+  </div>
+
+  <!-- Blood Oxygen -->
+  <h3>Blood Oxygen (SpO2)</h3>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Not for Staging &mdash; For Quality &amp; Screening</div>
+    <p>
+      <strong>SpO2 cannot distinguish sleep stages.</strong> It is used for
+      <strong>sleep quality</strong> and <strong>disordered-breathing detection</strong>.
+    </p>
+    <p>
+      Normal sleep: SpO2 stable 95&ndash;100%, minimal fluctuation.
+    </p>
+    <p>
+      <strong>Oxygen Desaturation Index (ODI):</strong> Count of &ge;3% SpO2 drops per hour.
+    </p>
+    <ul>
+      <li>ODI &gt; 5: suggests mild sleep apnea (5&ndash;15 events/hour)</li>
+      <li>ODI &gt; 10: <strong>93% sensitivity, 75% specificity</strong> for moderate-to-severe sleep-disordered breathing</li>
+      <li>ODI &gt; 30: severe</li>
+    </ul>
+    <p>
+      Source: PMC article (2023) &ldquo;Oxygen desaturation index as a diagnostic marker for OSA&rdquo;
+    </p>
+    <p>
+      <strong>Schlafi should flag, not diagnose.</strong> Display warning if ODI suggests evaluation needed.
+    </p>
+  </div>
+
+  <!-- Combined Model Accuracy -->
+  <h3>Combined Model Accuracy</h3>
+
+  <div class="score-breakdown two-col">
+    <div class="score-component watch-stage">
+      <div class="score-points">77%</div>
+      <div class="score-label">4-Stage with HR</div>
+      <div class="score-desc">
+        Heart rate alone: 0.77 accuracy, kappa 0.66.
+        Radha et al. 2020, 10,000+ nights.
+      </div>
+    </div>
+    <div class="score-component watch-stage">
+      <div class="score-points">78%</div>
+      <div class="score-label">4-Stage with HR + RR</div>
+      <div class="score-desc">
+        Cardiorespiratory fusion: 77.6% accuracy, kappa 0.643.
+        Sridhar et al. 2020.
+      </div>
+    </div>
+  </div>
+
+  <table style="font-size:0.88em;">
+    <thead>
+      <tr><th>Configuration</th><th>Accuracy</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Accelerometer alone</td><td>~86% sleep/wake, F1 0.26&ndash;0.69 staging</td><td>Lee et al. 2023</td></tr>
+      <tr><td>+ Heart rate</td><td>0.77 (4-stage), kappa 0.66</td><td>Radha et al. 2020</td></tr>
+      <tr><td>+ HR + Respiratory rate</td><td>77.6% (4-stage), kappa 0.643</td><td>Sridhar et al. 2020</td></tr>
+      <tr><td>Actigraphy + HRV combined</td><td>77&ndash;78% (3-stage wake/NREM/REM)</td><td>Sridhar et al. 2020; Walch 2019</td></tr>
+      <tr><td>Full multimodal (accel+HR+RR+temp)</td><td>73&ndash;90% depending on stage</td><td>Multimodal review, MDPI Sensors 2022</td></tr>
+    </tbody>
+  </table>
+
+  <div class="research-callout">
+    <div class="cite-label">Multi-Sensor Fusion Reference</div>
+    <p>
+      Walch O (2019) &ldquo;Detecting sleep using heart rate and motion data from multisensor
+      consumer-grade wearables&rdquo; &mdash; <em>SLEEP</em>
+    </p>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== B: WATCH MATHS ==================== -->
+<section class="watch-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4D0;</span> Watch Maths &mdash; Sensor Fusion Formulas</h2>
+
+  <!-- HR-Based Stage Priors -->
+  <div class="score-component watch-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">HR-Based Stage Priors</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      HR_baseline = mean(HR) over all sleep epochs<br>
+      HR_std = std(HR) over all sleep epochs<br>
+      <br>
+      Per-epoch HR features:<br>
+      &nbsp;&nbsp;HR_z = (HR_epoch &minus; HR_baseline) / HR_std<br>
+      &nbsp;&nbsp;HR_var = variance(HR) within epoch (computed from individual samples)<br>
+      <br>
+      Stage bias from HR:<br>
+      &nbsp;&nbsp;Deep: &nbsp;HR_z &lt; &minus;0.5 (sustained low HR) &rarr; P(deep) &times; 1.5<br>
+      &nbsp;&nbsp;REM: &nbsp;&nbsp;HR_var &gt; P75(session HR variance) &rarr; P(REM) &times; 1.4<br>
+      &nbsp;&nbsp;Light: otherwise &rarr; no modifier
+    </div>
+  </div>
+
+  <!-- HRV Stage Priors -->
+  <div class="score-component watch-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">HRV Stage Priors</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Compute per-epoch (30s minimum, ideally 5-min rolling):<br>
+      &nbsp;&nbsp;RMSSD = &radic;(mean(&Delta;RR&sup2;)) where &Delta;RR = successive RR interval differences<br>
+      &nbsp;&nbsp;LF/HF = power(0.04&ndash;0.15 Hz) / power(0.15&ndash;0.4 Hz) from RR interval spectrum<br>
+      <br>
+      Stage bias from HRV:<br>
+      &nbsp;&nbsp;Deep: &nbsp;RMSSD &lt; P25(session) &rarr; P(deep) &times; 1.5<br>
+      &nbsp;&nbsp;REM: &nbsp;&nbsp;LF/HF &gt; P75(session) &rarr; P(REM) &times; 1.4<br>
+      &nbsp;&nbsp;Light: both within P25&ndash;P75 &rarr; no modifier
+    </div>
+  </div>
+
+  <!-- Respiratory Rate Modifiers -->
+  <div class="score-component watch-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Respiratory Rate Modifiers</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      RR_epoch = breaths per minute (from HealthKit or derived)<br>
+      RR_CV = coefficient of variation of RR within sliding window<br>
+      <br>
+      Stage bias from RR:<br>
+      &nbsp;&nbsp;REM: &nbsp;RR_CV &gt; 0.15 &rarr; P(REM) &times; 1.3 &nbsp;(irregular breathing = REM marker)<br>
+      &nbsp;&nbsp;Deep: RR_CV &lt; 0.05 &rarr; P(deep) &times; 1.2 &nbsp;(regular, slow breathing)
+    </div>
+  </div>
+
+  <!-- Sensor Fusion Formula -->
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Sensor Fusion &mdash; Updated Stage Probability</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Phone-only (existing):<br>
+      &nbsp;&nbsp;P(stage) = P_movement(level, stage) &times; P_cycle(cycle, stage) &times; position_bias<br>
+      <br>
+      Phone + Watch:<br>
+      &nbsp;&nbsp;P(stage) = P_movement &times; P_cycle &times; position_bias &times; M_HR &times; M_HRV &times; M_RR<br>
+      &nbsp;&nbsp;where M_x are multiplicative modifiers from watch signals (default 1.0 if no data)<br>
+      <br>
+      Normalize: P(stage) = P(stage) / &Sigma; P(all stages)<br>
+      Assign: stage = argmax P(stage)
+    </div>
+  </div>
+
+  <!-- Confidence Boost -->
+  <div class="score-component quality-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Confidence Boost with Watch</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Watch data increases per-epoch confidence:<br>
+      &nbsp;&nbsp;confidence_epoch(watch) &asymp; 1.3&ndash;1.5 &times; confidence_epoch(phone-only)<br>
+      <br>
+      Rationale: HR/HRV provide independent confirmation of stage assignment.<br>
+      &nbsp;&nbsp;Movement says &ldquo;still&rdquo; &rarr; could be deep OR REM.<br>
+      &nbsp;&nbsp;HR says &ldquo;low, stable&rdquo; &rarr; confirms deep.<br>
+      &nbsp;&nbsp;HR says &ldquo;variable, elevated&rdquo; &rarr; confirms REM.<br>
+      <br>
+      The ambiguity between deep and REM (the main weakness of phone-only)<br>
+      is directly addressed by cardiovascular signals.
+    </div>
+  </div>
+
+  <!-- Epoch Length -->
+  <div class="research-callout">
+    <div class="cite-label">Epoch Length</div>
+    <p>
+      <strong>Phone-only:</strong> 60s epochs (noisier signal needs averaging)<br>
+      <strong>Phone + Watch:</strong> 30s epochs (watch signal is clean, matches clinical PSG standard)
+    </p>
+  </div>
+
+  <!-- SpO2 Quality Adjustment -->
+  <div class="score-component awake-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">SpO2 Quality Adjustment</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      ODI = count(SpO2 drops &ge; 3%) / total_sleep_hours<br>
+      <br>
+      Quality modifier:<br>
+      &nbsp;&nbsp;ODI &le; 5: no adjustment<br>
+      &nbsp;&nbsp;5 &lt; ODI &le; 10: informational flag (&ldquo;elevated desaturation events detected&rdquo;)<br>
+      &nbsp;&nbsp;ODI &gt; 10: quality penalty &minus;5 pts + prominent warning (&ldquo;consider clinical evaluation&rdquo;)<br>
+      &nbsp;&nbsp;ODI &gt; 30: quality penalty &minus;10 pts + strong warning
+    </div>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== C: HEALTHKIT INTEGRATION ==================== -->
+<section class="ios-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x2699;&#xFE0F;</span> HealthKit Integration</h2>
+  <div class="science-intro">
+    <p>
+      Apple Watch sleep data flows through HealthKit. Schlafi reads cardiovascular signals
+      to improve its classifier, or uses Apple's pre-computed sleep stages directly when available.
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card sleep">
+      <h3>Heart Rate</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        <code>HKQuantityTypeIdentifierHeartRate</code>. Continuous during sleep when watch is worn.
+        Provides instantaneous HR samples for stage discrimination.
+      </p>
+    </div>
+    <div class="feature-card rem">
+      <h3>Respiratory Rate</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        <code>HKQuantityTypeIdentifierRespiratoryRate</code>. Available since watchOS 8.
+        Sleeping respiratory rate measurement via micro-motion monitoring.
+      </p>
+    </div>
+    <div class="feature-card deep">
+      <h3>Blood Oxygen</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        <code>HKQuantityTypeIdentifierOxygenSaturation</code>. Background SpO2 measurements
+        during sleep. Not available on all watch models.
+      </p>
+    </div>
+    <div class="feature-card quality">
+      <h3>Sleep Analysis</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        <code>HKCategoryTypeIdentifierSleepAnalysis</code>. Apple's pre-computed sleep stages
+        (inBed, asleepCore, asleepDeep, asleepREM, awake). When available, Schlafi can use
+        these directly instead of its own classifier.
+      </p>
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Dual Path Strategy</div>
+    <div class="claims-grid">
+      <div>
+        <strong style="color: var(--quality-dark);">Apple Stages Available</strong>
+        <ul style="margin-top: 4px;">
+          <li>Use HealthKit sleep categories directly</li>
+          <li>Full confidence &mdash; trustworthy stage data</li>
+          <li>Quality scoring uses these stages with full penalties</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color: #0284C7;">Raw HR/HRV/RR Only</strong>
+        <ul style="margin-top: 4px;">
+          <li>Use watch cardiovascular data to improve phone-based classifier</li>
+          <li>Sensor fusion via multiplicative modifiers</li>
+          <li>Higher confidence than phone-only</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top: 12px;">
+      <strong>No watch data:</strong> Fall back to phone-only heuristic classifier with confidence attenuation.
+    </p>
+  </div>
+
+  <div class="tech-tags">
+    <span class="tech-tag primary">HealthKit</span>
+    <span class="tech-tag primary">Heart Rate</span>
+    <span class="tech-tag primary">HRV</span>
+    <span class="tech-tag">Respiratory Rate</span>
+    <span class="tech-tag">SpO2</span>
+    <span class="tech-tag">watchOS 8+</span>
+    <span class="tech-tag">On-device</span>
+  </div>
+
+  <!-- ==================== CITATIONS ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Heart Rate &amp; Sleep Staging</h4>
+    <ol>
+      <li>Radha M et al. (2020) &ldquo;Deep learning for automated sleep staging using instantaneous heart rate&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://www.nature.com/articles/s41746-020-0291-x" target="_blank">Nature</a></li>
+      <li>Sridhar N et al. (2020) &ldquo;Estimating sleep stages using cardiorespiratory signals&rdquo; &mdash; <em>SLEEP</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8314617/" target="_blank">PMC</a></li>
+      <li>Fonseca P et al. (2022) &ldquo;An automated heart rate-based algorithm for sleep stage classification&rdquo; &mdash; <em>Frontiers in Neuroscience</em> &mdash; <a href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2022.974192/full" target="_blank">Frontiers</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Heart Rate Variability</h4>
+    <ol start="4">
+      <li>Herzig D et al. (2017) &ldquo;Reproducibility of Heart Rate Variability Is Parameter and Sleep Stage Dependent&rdquo; &mdash; <em>Frontiers in Physiology</em> &mdash; <a href="https://www.frontiersin.org/articles/10.3389/fphys.2017.01100/full" target="_blank">Frontiers</a></li>
+      <li>Boudreau P et al. (2013) &ldquo;Circadian variation of heart rate variability across sleep stages&rdquo; &mdash; <em>Sleep</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/23425526/" target="_blank">PubMed</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Blood Oxygen &amp; Sleep Apnea</h4>
+    <ol start="6">
+      <li>Oxygen Desaturation Index study (2023) &mdash; <em>PMC</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10250969/" target="_blank">PMC</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Multi-Sensor Fusion</h4>
+    <ol start="7">
+      <li>Walch O (2019) &ldquo;Detecting sleep using heart rate and motion data&rdquo; &mdash; <em>SLEEP</em> &mdash; <a href="https://academic.oup.com/sleep/article/43/7/zsaa045/5811697" target="_blank">Oxford Academic</a></li>
+      <li>Systematic Review of Sensing Technologies (2022) &mdash; <em>MDPI Sensors</em> &mdash; <a href="https://www.mdpi.com/1424-8220/21/5/1562" target="_blank">MDPI</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Wearable Validation</h4>
+    <ol start="9">
+      <li>Performance validation of 6 wrist-worn devices vs PSG (2024) &mdash; <em>Sleep Advances</em> &mdash; <a href="https://academic.oup.com/sleepadvances/article/6/2/zpaf021/8090472" target="_blank">Oxford Academic</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Apple Developer</h4>
+    <ol start="10">
+      <li>Apple &mdash; HKQuantityTypeIdentifierHeartRate &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierheartrate" target="_blank">developer.apple.com</a></li>
+      <li>Apple &mdash; HKQuantityTypeIdentifierRespiratoryRate &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierrespiratoryrate" target="_blank">developer.apple.com</a></li>
+      <li>Apple &mdash; Track sleep on Apple Watch &mdash; <a href="https://support.apple.com/en-us/108906" target="_blank">support.apple.com</a></li>
+    </ol>
+  </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>
