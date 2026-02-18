@@ -1,0 +1,897 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: ML (Machine Learning)
+  ==========================================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
+    maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
+    watch.html    — Watch (Apple Watch sensor fusion for improved sleep staging)
+    sound.html    — Sound (passive microphone analysis, snoring, breathing, noise)
+    ml.html       — THIS FILE. On-device ML strategy, Apple frameworks, research models, training data.
+
+  THIS FILE: Six sections —
+    A: Apple's ML Ecosystem — What's Already Built (ml-section)
+    B: Phone vs Watch — Accuracy Comparison (ml-section)
+    C: Research Models — Complexity & Feasibility (ml-section)
+    D: On-Device Inference — Hardware & Battery (ml-section)
+    E: Training Data & Datasets (ml-section)
+    F: What Schlafi Uses — Decision Matrix (ml-section)
+
+  EDITING:
+  - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
+  - Research callouts use .research-callout with .cite-label.
+  - Citations at bottom use .citations with ordered list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; ML</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Apple Watch and microphone data improve accuracy when available &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
+  <a class="tab-btn" href="watch.html">Watch</a>
+  <a class="tab-btn" href="sound.html">Sound</a>
+  <a class="tab-btn active" href="ml.html">ML</a>
+</nav>
+
+<!-- ==================== A: APPLE'S ML ECOSYSTEM ==================== -->
+<section class="ml-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F9E0;</span> Apple's ML Ecosystem &mdash; What's Already Built</h2>
+  <div class="science-intro">
+    <p>
+      This tab documents Schlafi's ML strategy: which frameworks and algorithms handle which tasks,
+      what accuracy to expect from each configuration (phone-only, phone+watch, phone+sound), and
+      what the research literature says about the models behind them. Classical algorithms for
+      sleep/wake, Apple frameworks for sound classification and watch-derived data, custom CoreML
+      only as a future option.
+    </p>
+  </div>
+
+  <h3>Apple's Built-In ML for Sleep</h3>
+
+  <table>
+    <thead>
+      <tr><th>Capability</th><th>Phone (Built-In)</th><th>Watch (Built-In)</th><th>Custom ML Needed?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sleep/wake detection</strong></td>
+        <td>Sadeh/Cole-Kripke (classical, not ML)</td>
+        <td>Apple's accelerometer-based ML classifier, 93% epoch accuracy</td>
+        <td>No &mdash; classical works on phone, Apple ML works on watch</td>
+      </tr>
+      <tr>
+        <td><strong>Sleep stage classification</strong></td>
+        <td>Heuristic (F1 0.26&ndash;0.69)</td>
+        <td><code>HKCategoryValueSleepAnalysis</code> stages (asleepCore/Deep/REM), ~75% 4-stage accuracy, kappa 0.53&ndash;0.60</td>
+        <td>No &mdash; Apple provides stages via HealthKit when watch is worn</td>
+      </tr>
+      <tr>
+        <td><strong>Snoring detection</strong></td>
+        <td>SoundAnalysis &mdash; built-in <code>.version1</code> has <code>snoring</code> label, BUT iOS 18 broke background GPU access. Needs custom CoreML model with CPU-only inference for overnight use.</td>
+        <td>N/A (no microphone during sleep)</td>
+        <td>Yes &mdash; custom model needed for background execution (iOS 18+)</td>
+      </tr>
+      <tr>
+        <td><strong>Breathing detection</strong></td>
+        <td>SoundAnalysis &mdash; built-in <code>.version1</code> has <code>breathing</code> label, same iOS 18 background limitation</td>
+        <td>N/A</td>
+        <td>Yes &mdash; same workaround needed</td>
+      </tr>
+      <tr>
+        <td><strong>Respiratory rate</strong></td>
+        <td>Not in v1 (possible future: audio-derived)</td>
+        <td><code>HKQuantityTypeIdentifierRespiratoryRate</code> &mdash; ML-derived from wrist micro-movements during sleep (watchOS 8+)</td>
+        <td>No &mdash; watch provides this; phone path defers to future</td>
+      </tr>
+      <tr>
+        <td><strong>Sleep apnea screening</strong></td>
+        <td>Not in v1 (possible future: audio-based)</td>
+        <td><code>appleSleepingBreathingDisturbances</code> &mdash; FDA-cleared, 30-day analysis (watchOS 11, Series 9+)</td>
+        <td>No &mdash; watch has FDA-cleared screening; phone audio is a future option</td>
+      </tr>
+      <tr>
+        <td><strong>Environmental noise</strong></td>
+        <td><code>SNClassifySoundRequest</code> (300+ categories)</td>
+        <td>N/A</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Heart rate / HRV</strong></td>
+        <td>N/A (phone can't measure)</td>
+        <td>Continuous PPG during sleep, HealthKit</td>
+        <td>No &mdash; read from HealthKit</td>
+      </tr>
+      <tr>
+        <td><strong>SpO2</strong></td>
+        <td>N/A</td>
+        <td>Background SpO2 (Series 6+)</td>
+        <td>No &mdash; read from HealthKit</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="research-callout">
+    <div class="cite-label">Key Insight</div>
+    <p>
+      Schlafi combines two ML approaches depending on available hardware. <strong>With Apple Watch:</strong>
+      sensor fusion of ML-derived sleep stages, respiratory rate, HR, HRV, and SpO2 produces ~75% 4-stage
+      accuracy with FDA-level apnea screening. Phone adds SoundAnalysis-powered snoring and breathing
+      detection that watch can't provide. <strong>Without watch:</strong> phone accelerometer (classical
+      algorithms) + SoundAnalysis still produces functional sleep tracking. The combination of both
+      covers more ground than either alone.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">SoundAnalysis Built-In Classifier</div>
+    <p>
+      Apple's <code>SNClassifySoundRequest(.version1)</code> recognizes 300+ sound types on-device (iOS 15+).
+      Confirmed sleep-relevant labels: <code>snoring</code> (index 23), <code>breathing</code> (index 22),
+      <code>cough</code> (25), <code>gasp</code> (24), <code>sigh</code> (15), <code>speech</code> (0),
+      <code>whispering</code> (6).
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: #DC2626;">
+    <div class="cite-label" style="color: #DC2626;">iOS 18 Background Limitation</div>
+    <p>
+      The built-in <code>.version1</code> classifier uses the GPU. iOS 18 blocks GPU work from background
+      processes &mdash; so <code>SNClassifySoundRequest(classifierIdentifier: .version1)</code> fails silently
+      in the background. For overnight audio analysis, Schlafi must use a <strong>custom CoreML model</strong>
+      loaded via <code>SNClassifySoundRequest(mlModel:)</code> with <code>MLModelConfiguration.computeUnits = .cpuOnly</code>.
+    </p>
+    <p>
+      This means a custom-trained snoring/breathing model is required after all &mdash; the built-in classifier
+      only works in the foreground. Create ML with AudioFeaturePrint transfer learning is the path: train on
+      public audio datasets, export ~5.5 MB .mlmodel, load CPU-only for background use.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--rem);">
+    <div class="cite-label" style="color: #0284C7;">Apple Watch Sleep Staging</div>
+    <p>
+      Apple published &ldquo;Estimating Sleep Stages from Apple Watch&rdquo; (updated October 2025). The algorithm
+      uses <strong>accelerometer signals</strong> &mdash; body movements and respiration-induced wrist motion
+      patterns &mdash; classified into 30-second epochs. Reports ~75% 4-stage accuracy, 93% sleep/wake accuracy.
+      Interestingly, Apple's own staging is primarily accelerometer-based, not heart-rate-based &mdash; validating
+      the core principle that movement signals carry stage information.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">Apple Watch Sleep Apnea</div>
+    <p>
+      watchOS 11 (September 2024) introduced FDA 510(k)-cleared sleep apnea notifications on Series 9/10/Ultra 2.
+      Uses accelerometer to detect breathing disturbances via wrist micro-movements. Analyzes 30 nights before
+      issuing notification. New HealthKit type: <code>appleSleepingBreathingDisturbances</code>.
+    </p>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== B: PHONE VS WATCH — ACCURACY ==================== -->
+<section class="ml-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4CA;</span> Phone vs Watch &mdash; Accuracy Comparison</h2>
+
+  <h3>Accuracy by Configuration</h3>
+
+  <table>
+    <thead>
+      <tr><th>Task</th><th>Phone Only</th><th>Phone + Sound</th><th>Phone + Watch</th><th>Phone + Watch + Sound</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sleep/wake</strong></td>
+        <td>80&ndash;88% (Sadeh/Cole)</td>
+        <td>~83% with breathing patterns</td>
+        <td>93% (Apple Watch)</td>
+        <td>93%+</td>
+        <td>Patterson 2023; Apple 2025</td>
+      </tr>
+      <tr>
+        <td><strong>Stage classification (4-stage)</strong></td>
+        <td>F1 0.26&ndash;0.69 (heuristic)</td>
+        <td>Marginal improvement (breathing regularity helps REM)</td>
+        <td>~75% kappa 0.53&ndash;0.60 (Apple stages)</td>
+        <td>~75%+ (Apple stages are the ceiling)</td>
+        <td>Lee et al. 2023; Apple 2025</td>
+      </tr>
+      <tr>
+        <td><strong>Stage classification (research best)</strong></td>
+        <td>&mdash;</td>
+        <td>76.2% 3-stage (HomeSleepNet, audio)</td>
+        <td>77% 4-stage (Sridhar et al., HR)</td>
+        <td>~78% 4-stage (HR + RR fusion)</td>
+        <td>Sridhar 2020; Bakker 2021</td>
+      </tr>
+      <tr>
+        <td><strong>Snoring detection</strong></td>
+        <td>Not available</td>
+        <td>SoundAnalysis built-in</td>
+        <td>Not available (no mic on watch)</td>
+        <td>SoundAnalysis built-in</td>
+        <td>Kim 2013; Apple SoundAnalysis</td>
+      </tr>
+      <tr>
+        <td><strong>Respiratory rate</strong></td>
+        <td>Not available</td>
+        <td>Not in v1 (future: audio-derived)</td>
+        <td>HealthKit (watch ML)</td>
+        <td>HealthKit (watch ML)</td>
+        <td>Nam 2016</td>
+      </tr>
+      <tr>
+        <td><strong>Apnea screening</strong></td>
+        <td>Not available</td>
+        <td>Not in v1 (future: audio-based)</td>
+        <td>FDA-cleared (watchOS 11)</td>
+        <td>FDA-cleared (watchOS 11)</td>
+        <td>Kim 2022; Apple 2024</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>What Watch Adds</h3>
+
+  <div class="score-breakdown">
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x1F30C;</div>
+      <div class="score-label">Sleep Stages</div>
+      <div class="score-desc">
+        Apple's pre-computed stages (asleepCore/Deep/REM) &mdash; no custom ML needed. ~75% 4-stage
+        accuracy. Schlafi can use these directly or fuse with phone data.
+      </div>
+    </div>
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x2764;&#xFE0F;</div>
+      <div class="score-label">Cardio Signals</div>
+      <div class="score-desc">
+        Heart rate, HRV (SDNN), respiratory rate, SpO2 during sleep &mdash; orthogonal to
+        movement data. Resolves the deep-vs-REM ambiguity that phone-only can't solve.
+      </div>
+    </div>
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x1F3E5;</div>
+      <div class="score-label">Apnea Screening</div>
+      <div class="score-desc">
+        FDA-cleared breathing disturbance detection, 30-night longitudinal analysis.
+        Far more authoritative than phone audio screening.
+      </div>
+    </div>
+  </div>
+
+  <h3>What Phone Adds</h3>
+
+  <div class="score-breakdown">
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x1F3A4;</div>
+      <div class="score-label">Sound Analysis</div>
+      <div class="score-desc">
+        Snoring detection, breathing patterns, environmental noise &mdash; watch has no microphone
+        during sleep. Phone mic is the only audio signal source.
+      </div>
+    </div>
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x1F4F1;</div>
+      <div class="score-label">No Wearable Required</div>
+      <div class="score-desc">
+        Works without any wearable. Phone-on-mattress is the minimum viable configuration.
+        Classical algorithms are well-validated for sleep/wake.
+      </div>
+    </div>
+    <div class="score-component ml-stage">
+      <div class="score-points">&#x1F4FC;</div>
+      <div class="score-label">Event Recording</div>
+      <div class="score-desc">
+        Optional audio clip capture (snoring episodes, sleep talking, noise events)
+        for morning review.
+      </div>
+    </div>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== C: RESEARCH MODELS ==================== -->
+<section class="ml-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F52C;</span> Research Models &mdash; Complexity &amp; Feasibility</h2>
+  <div class="science-intro">
+    <p>
+      For context: what does the research literature offer beyond Apple's built-in capabilities?
+      These models are cited as validation references and potential future improvements &mdash;
+      not current deployment targets.
+    </p>
+  </div>
+
+  <h3>Model Complexity Comparison</h3>
+
+  <table>
+    <thead>
+      <tr><th>Model</th><th>Architecture</th><th>Parameters</th><th>Input</th><th>Accuracy</th><th>Inference</th><th>On-Device?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="7" style="background:#F8FAFC; font-weight:600; font-size:0.85em; letter-spacing:0.05em; color:var(--text-secondary);">CLASSICAL (PHONE)</td></tr>
+      <tr>
+        <td><strong>Sadeh (1994)</strong></td>
+        <td>Linear regression</td>
+        <td>4 coefficients</td>
+        <td>Accelerometer</td>
+        <td>~86%</td>
+        <td>&lt;0.01ms</td>
+        <td>Trivial</td>
+      </tr>
+      <tr>
+        <td><strong>Cole-Kripke (1992)</strong></td>
+        <td>Weighted sum</td>
+        <td>8 coefficients</td>
+        <td>Accelerometer</td>
+        <td>~88%</td>
+        <td>&lt;0.01ms</td>
+        <td>Trivial</td>
+      </tr>
+      <tr>
+        <td><strong>Schlafi heuristic</strong></td>
+        <td>Lookup + priors</td>
+        <td>~20 parameters</td>
+        <td>Accel + cycle</td>
+        <td>F1 0.26&ndash;0.69</td>
+        <td>&lt;0.01ms</td>
+        <td>Trivial</td>
+      </tr>
+      <tr><td colspan="7" style="background:#F8FAFC; font-weight:600; font-size:0.85em; letter-spacing:0.05em; color:var(--text-secondary);">APPLE BUILT-IN</td></tr>
+      <tr>
+        <td><strong>Apple Watch staging</strong></td>
+        <td>ML classifier (undisclosed)</td>
+        <td>Unknown</td>
+        <td>Watch accelerometer</td>
+        <td>~75%, &kappa; 0.53&ndash;0.60</td>
+        <td>Real-time</td>
+        <td>Built into watchOS</td>
+      </tr>
+      <tr>
+        <td><strong>SoundAnalysis v1</strong></td>
+        <td>Pre-trained (300+ classes)</td>
+        <td>Unknown</td>
+        <td>Audio</td>
+        <td>Varies by class</td>
+        <td>Real-time</td>
+        <td>Built into iOS 15+</td>
+      </tr>
+      <tr><td colspan="7" style="background:#F8FAFC; font-weight:600; font-size:0.85em; letter-spacing:0.05em; color:var(--text-secondary);">WATCH-SENSOR RESEARCH</td></tr>
+      <tr>
+        <td><strong>Sridhar et al. (2020)</strong></td>
+        <td>Dilated CNN</td>
+        <td>~1M est.</td>
+        <td>Heart rate (2 Hz)</td>
+        <td>77%, &kappa; 0.66</td>
+        <td>~50&ndash;100ms</td>
+        <td>Possible (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>Radha et al. (2021)</strong></td>
+        <td>Transfer RNN</td>
+        <td>Unknown</td>
+        <td>PPG (wrist)</td>
+        <td>76.4%, &kappa; 0.65</td>
+        <td>~50&ndash;100ms</td>
+        <td>Possible (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>Bakker/CReSS (2021)</strong></td>
+        <td>CNN-LSTM</td>
+        <td>Unknown</td>
+        <td>HR + airflow</td>
+        <td>78%, &kappa; 0.643</td>
+        <td>~10&ndash;50ms</td>
+        <td>Yes (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>Walch et al. (2020)</strong></td>
+        <td>Neural network</td>
+        <td>Unknown</td>
+        <td>Watch accel + HR</td>
+        <td>90% sleep/wake, 72% 3-stage</td>
+        <td>~10ms</td>
+        <td>Yes</td>
+      </tr>
+      <tr><td colspan="7" style="background:#F8FAFC; font-weight:600; font-size:0.85em; letter-spacing:0.05em; color:var(--text-secondary);">PHONE-AUDIO RESEARCH</td></tr>
+      <tr>
+        <td><strong>Kim (2013) snoring</strong></td>
+        <td>AdaBoost (300 stumps)</td>
+        <td>300 &times; 34 features</td>
+        <td>Audio (16 kHz)</td>
+        <td>98.2%</td>
+        <td>~5ms</td>
+        <td>Yes (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>Xie/Arsenali (2021) snoring</strong></td>
+        <td>CNN + 64-unit LSTM</td>
+        <td>~100K est.</td>
+        <td>Audio (CQT)</td>
+        <td>95.3%</td>
+        <td>~10&ndash;20ms</td>
+        <td>Yes (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>TinyML snoring (2024)</strong></td>
+        <td>Quantized CNN</td>
+        <td>17K RAM, 34K flash</td>
+        <td>Audio (MFCC)</td>
+        <td>95.8%</td>
+        <td>48ms</td>
+        <td>Yes (even MCU)</td>
+      </tr>
+      <tr>
+        <td><strong>Kim (2022) apnea</strong></td>
+        <td>Random forest</td>
+        <td>~500 trees</td>
+        <td>Audio features</td>
+        <td>88.2% (AHI&ge;5)</td>
+        <td>~5ms</td>
+        <td>Yes (CoreML)</td>
+      </tr>
+      <tr>
+        <td><strong>HomeSleepNet (2023)</strong></td>
+        <td>Transformer+BiLSTM</td>
+        <td>~millions est.</td>
+        <td>Audio (Mel spec)</td>
+        <td>76.2% 3-stage</td>
+        <td>~200&ndash;500ms</td>
+        <td>Challenging</td>
+      </tr>
+      <tr>
+        <td><strong>Micro SleepNet (2023)</strong></td>
+        <td>1D GroupConv+ECSA</td>
+        <td>48,226</td>
+        <td><strong>EEG</strong> (not audio)</td>
+        <td>83.3%</td>
+        <td>2.8ms</td>
+        <td>Yes (~100 KB)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="research-callout">
+    <div class="cite-label">Key Takeaway</div>
+    <p>
+      Apple's built-in Watch staging (~75%) is already competitive with the best published research models
+      (72&ndash;78%). Schlafi doesn't need to train or deploy any of these research models. They're documented
+      here to show that the accuracy ceiling for consumer sleep staging is fundamentally ~75&ndash;78% &mdash;
+      Schlafi is already near it by using Apple's data. Custom ML is a future option, not a v1 requirement.
+    </p>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== D: ON-DEVICE INFERENCE ==================== -->
+<section class="ml-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x2699;&#xFE0F;</span> On-Device Inference &mdash; Hardware &amp; Battery</h2>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">Apple Neural Engine</div>
+    <table>
+      <thead>
+        <tr><th>Chip</th><th>Device (Year)</th><th>Neural Engine TOPS</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A15</td><td>iPhone 13 (2021)</td><td>15.8</td></tr>
+        <tr><td>A16</td><td>iPhone 14 Pro (2022)</td><td>17</td></tr>
+        <tr><td>A17 Pro</td><td>iPhone 15 Pro (2023)</td><td>35</td></tr>
+        <tr><td>A18</td><td>iPhone 16 (2024)</td><td>35</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Audio classification models (1&ndash;10 MB) run in single-digit milliseconds on A17+.
+      The bottleneck is battery, not compute.
+    </p>
+  </div>
+
+  <h3>Inference by Task</h3>
+
+  <table>
+    <thead>
+      <tr><th>Task</th><th>Phone Implementation</th><th>Phone Inference</th><th>Watch Implementation</th><th>Watch Inference</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sleep/wake</strong></td>
+        <td>Sadeh/Cole arithmetic</td>
+        <td>&lt;0.01ms/epoch</td>
+        <td>Apple ML classifier</td>
+        <td>Real-time (transparent)</td>
+      </tr>
+      <tr>
+        <td><strong>Stage classification</strong></td>
+        <td>Heuristic lookup</td>
+        <td>&lt;0.01ms/epoch</td>
+        <td>Apple ML (HealthKit read)</td>
+        <td>0ms (pre-computed)</td>
+      </tr>
+      <tr>
+        <td><strong>Snoring detection</strong></td>
+        <td>SoundAnalysis built-in</td>
+        <td>Real-time, continuous</td>
+        <td>N/A (no mic)</td>
+        <td>&mdash;</td>
+      </tr>
+      <tr>
+        <td><strong>Breathing rate</strong></td>
+        <td>Audio envelope + peak detection</td>
+        <td>~1ms/window</td>
+        <td>ML from wrist motion</td>
+        <td>Pre-computed by watch</td>
+      </tr>
+      <tr>
+        <td><strong>Apnea screening</strong></td>
+        <td>Not in v1</td>
+        <td>&mdash;</td>
+        <td>Apple (30-night analysis)</td>
+        <td>Pre-computed by watch</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Hardware Constraints</h3>
+
+  <table>
+    <thead>
+      <tr><th>Constraint</th><th>Phone</th><th>Watch</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Accelerometer</strong></td>
+        <td>On mattress: ~9&times; weaker than wrist. Memory foam SNR 3&ndash;5. 50 Hz via CMSensorRecorder.</td>
+        <td>On wrist: direct contact, clean signal. Apple uses for staging + respiratory rate + apnea detection.</td>
+      </tr>
+      <tr>
+        <td><strong>Microphone</strong></td>
+        <td>High-pass ~250 Hz (attenuates low-freq breathing). Noise floor ~40 dB SPL. Good for snoring (300&ndash;3000 Hz).</td>
+        <td>Not used during sleep tracking.</td>
+      </tr>
+      <tr>
+        <td><strong>Heart rate</strong></td>
+        <td>Not available</td>
+        <td>Continuous PPG (green LED). Foundation for HR, HRV, SpO2.</td>
+      </tr>
+      <tr>
+        <td><strong>Battery overnight</strong></td>
+        <td>~8&ndash;16% (accel 2&ndash;5% + audio 5&ndash;10% + misc 1%)</td>
+        <td>Managed by watchOS &mdash; Apple optimizes for overnight wear.</td>
+      </tr>
+      <tr>
+        <td><strong>Background execution</strong></td>
+        <td>Audio requires <code>UIBackgroundModes</code> audio + <code>.record</code> AVAudioSession. GPU disabled in background (iOS 18+).</td>
+        <td>watchOS manages sensor access natively.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+</section>
+
+<!-- ==================== E: TRAINING DATA ==================== -->
+<section class="ml-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4BE;</span> Training Data &amp; Datasets</h2>
+
+  <h3>Does Schlafi Need Training Data?</h3>
+
+  <table>
+    <thead>
+      <tr><th>Capability</th><th>Watch Path</th><th>Phone Path</th><th>Training Data Needed?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sleep/wake</strong></td>
+        <td>HealthKit (Apple ML)</td>
+        <td>Classical formula (Sadeh/Cole)</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Sleep stages</strong></td>
+        <td>HealthKit (Apple ML)</td>
+        <td>Heuristic (no ML)</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Snoring detection</strong></td>
+        <td>N/A (no mic)</td>
+        <td>Custom CoreML (built-in blocked in background on iOS 18)</td>
+        <td>Yes &mdash; public audio datasets via Create ML</td>
+      </tr>
+      <tr>
+        <td><strong>Breathing detection</strong></td>
+        <td>N/A</td>
+        <td>Custom CoreML (same iOS 18 limitation)</td>
+        <td>Yes &mdash; same training pipeline</td>
+      </tr>
+      <tr>
+        <td><strong>Respiratory rate</strong></td>
+        <td>HealthKit (watch ML)</td>
+        <td>Not in v1</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Apnea screening</strong></td>
+        <td>HealthKit (watch, FDA-cleared)</td>
+        <td>Not in v1</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Environmental noise</strong></td>
+        <td>N/A</td>
+        <td>SoundAnalysis built-in</td>
+        <td>No</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="research-callout">
+    <div class="cite-label">Answer: Yes, but Only for Audio</div>
+    <p>
+      Due to the iOS 18 background GPU restriction, Schlafi needs a custom CoreML snoring/breathing model
+      for overnight use (the built-in SoundAnalysis classifier can't run in the background). Create ML with
+      AudioFeaturePrint makes this straightforward &mdash; public datasets are sufficient. Everything else
+      (sleep/wake, staging, watch data) uses Apple frameworks or classical algorithms with zero training.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--rem);">
+    <div class="cite-label" style="color: #0284C7;">Custom Audio Model (v1 Requirement Due to iOS 18)</div>
+    <p>
+      Since the built-in SoundAnalysis classifier can't run in the background on iOS 18+, Schlafi needs
+      a custom CoreML model for snoring and breathing detection. Create ML with AudioFeaturePrint transfer
+      learning is the path: train a classifier head on public datasets (Kaggle snoring, ESC-50 negatives,
+      PSG-Audio), producing a ~5.5 MB .mlmodel that runs CPU-only in the background. The AudioFeaturePrint
+      feature extractor is built into iOS &mdash; only the lightweight classifier head ships with the app.
+    </p>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--text-secondary);">
+    <div class="cite-label" style="color: var(--text-secondary);">Future Options (Not v1)</div>
+    <p>
+      Audio-based breathing rate extraction and apnea screening are feasible with public data but are
+      not v1 features. These would use the same Create ML pipeline.
+    </p>
+  </div>
+
+  <h3>Public Datasets</h3>
+
+  <table>
+    <thead>
+      <tr><th>Dataset</th><th>Size</th><th>Signals</th><th>Status (2025)</th><th>Access</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kaggle Snoring</strong></td>
+        <td>1,000 samples</td>
+        <td>Audio (snore/not-snore)</td>
+        <td>Available</td>
+        <td>Free (Kaggle)</td>
+      </tr>
+      <tr>
+        <td><strong>ESC-50</strong></td>
+        <td>2,000 clips, 50 categories</td>
+        <td>Environmental audio</td>
+        <td>Available</td>
+        <td>Free (CC BY-NC)</td>
+      </tr>
+      <tr>
+        <td><strong>PSG-Audio (2021)</strong></td>
+        <td>212 PSGs</td>
+        <td>Audio synced with PSG</td>
+        <td>Available</td>
+        <td>Free (Figshare)</td>
+      </tr>
+      <tr>
+        <td><strong>Google AudioSet (snoring)</strong></td>
+        <td>~1,700 clips</td>
+        <td>Audio</td>
+        <td>Degraded (link rot)</td>
+        <td>Free</td>
+      </tr>
+      <tr>
+        <td><strong>MESA (NSRR)</strong></td>
+        <td>2,056 PSGs</td>
+        <td>Actigraphy + PSG</td>
+        <td>Available</td>
+        <td>Free (application)</td>
+      </tr>
+      <tr>
+        <td><strong>SHHS (NSRR)</strong></td>
+        <td>5,804 participants</td>
+        <td>PSG + actigraphy</td>
+        <td>Available</td>
+        <td>Free (application)</td>
+      </tr>
+      <tr>
+        <td><strong>DREAMT (2024)</strong></td>
+        <td>100 participants</td>
+        <td>Smartwatch + PSG</td>
+        <td>Available</td>
+        <td>Free (PhysioNet)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="research-callout" style="border-left-color: #DC2626;">
+    <div class="cite-label" style="color: #DC2626;">What's Missing</div>
+    <p>
+      No public dataset provides <strong>phone-on-mattress accelerometer data with PSG ground truth</strong>.
+      Doesn't matter for v1 &mdash; phone uses classical algorithms, watch uses Apple's ML. Would only matter
+      if Schlafi ever trains its own staging model from mattress accel data (no plans to do so).
+    </p>
+  </div>
+
+  </div>
+</section>
+
+<!-- ==================== F: DECISION MATRIX ==================== -->
+<section class="ml-section" style="border-top: none !important;">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x2705;</span> What Schlafi Uses &mdash; Decision Matrix</h2>
+
+  <h3>Schlafi v1 Stack</h3>
+
+  <div class="score-breakdown">
+    <div class="score-component ml-stage" style="text-align: left;">
+      <div class="score-label">Apple Frameworks</div>
+      <div class="score-desc">
+        HealthKit (watch sleep stages, respiratory rate, HR, HRV, SpO2, apnea screening).
+        SoundAnalysis pipeline for audio processing (but with custom model due to iOS 18 background limitation).
+      </div>
+    </div>
+    <div class="score-component ml-stage" style="text-align: left;">
+      <div class="score-label">Classical Algorithms</div>
+      <div class="score-desc">
+        Sadeh (1994) and Cole-Kripke (1992) for phone sleep/wake. Heuristic staging from
+        movement + cycle priors. Quality scoring formula. No ML, 40 years of validation.
+      </div>
+    </div>
+    <div class="score-component ml-stage" style="text-align: left;">
+      <div class="score-label">Custom CoreML (v1)</div>
+      <div class="score-desc">
+        Snoring and breathing classifier trained via Create ML with AudioFeaturePrint. ~5.5 MB model,
+        CPU-only inference in background. Required because built-in SoundAnalysis classifier can't run
+        in background on iOS 18+.
+      </div>
+    </div>
+  </div>
+
+  <h3>Quality Tiers</h3>
+
+  <table>
+    <thead>
+      <tr><th>Tier</th><th>Configuration</th><th>Stage Accuracy</th><th>Snoring</th><th>Apnea Screening</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Best</strong></td>
+        <td>Phone + Watch + Sound</td>
+        <td>~75% 4-stage (Apple Watch stages) + audio context</td>
+        <td>SoundAnalysis</td>
+        <td>FDA-cleared (watch)</td>
+      </tr>
+      <tr>
+        <td><strong>Good</strong></td>
+        <td>Phone + Watch</td>
+        <td>~75% 4-stage (Apple Watch stages)</td>
+        <td>Not available (no mic)</td>
+        <td>FDA-cleared (watch)</td>
+      </tr>
+      <tr>
+        <td><strong>Functional</strong></td>
+        <td>Phone + Sound</td>
+        <td>F1 0.26&ndash;0.69 heuristic + audio helps with REM</td>
+        <td>SoundAnalysis</td>
+        <td>Not in v1</td>
+      </tr>
+      <tr>
+        <td><strong>Minimum</strong></td>
+        <td>Phone only</td>
+        <td>F1 0.26&ndash;0.69 heuristic</td>
+        <td>Not available</td>
+        <td>Not available</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== CITATIONS ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Classical vs ML</h4>
+    <ol>
+      <li>Patterson MR et al. (2023) &ldquo;40 years of actigraphy in sleep medicine and current state of the art algorithms&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://www.nature.com/articles/s41746-023-00802-1" target="_blank">Nature</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Watch-Sensor ML</h4>
+    <ol start="2">
+      <li>Sridhar N et al. (2020) &ldquo;Deep learning for automated sleep staging using instantaneous heart rate&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://www.nature.com/articles/s41746-020-0291-x" target="_blank">Nature</a></li>
+      <li>Radha M et al. (2021) &ldquo;A deep transfer learning approach for wearable sleep stage classification with photoplethysmography&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://www.nature.com/articles/s41746-021-00510-8" target="_blank">Nature</a></li>
+      <li>Bakker JP et al. (2021) &ldquo;Estimating sleep stages using cardiorespiratory signals: validation of CReSS&rdquo; &mdash; <em>JCSM</em> &mdash; <a href="https://jcsm.aasm.org/doi/10.5664/jcsm.9192" target="_blank">JCSM</a></li>
+      <li>Walch O et al. (2020) &ldquo;Detecting sleep using heart rate and motion data from multisensor consumer-grade wearables&rdquo; &mdash; <em>SLEEP</em> &mdash; <a href="https://academic.oup.com/sleep/article/43/7/zsaa045/5811697" target="_blank">Oxford Academic</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Phone-Audio ML</h4>
+    <ol start="6">
+      <li>Choi SH et al. (2023) &ldquo;HomeSleepNet: Prediction of Sleep Stages Via Deep Learning Using Smartphone Audio Recordings&rdquo; &mdash; <em>JMIR</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10273036/" target="_blank">PMC</a></li>
+      <li>Kim J et al. (2013) &ldquo;Automatic Detection of Whole Night Snoring Events Using Non-Contact Microphone&rdquo; &mdash; <em>PLOS ONE</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3877189/" target="_blank">PMC</a></li>
+      <li>Xie J, Arsenali B et al. (2021) &ldquo;Audio-based snore detection using deep neural networks&rdquo; &mdash; <em>Computer Methods and Programs in Biomedicine</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/33434817/" target="_blank">PubMed</a></li>
+      <li>Kim J et al. (2022) &ldquo;Evaluating Prediction Models of Sleep Apnea From Smartphone-Recorded Sleep Breathing Sounds&rdquo; &mdash; <em>JAMA Otolaryngology</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9011176/" target="_blank">PMC</a></li>
+      <li>Liu et al. (2023) &ldquo;Micro SleepNet: efficient deep learning model for mobile terminal real-time sleep staging&rdquo; &mdash; <em>Frontiers in Neuroscience</em> &mdash; <a href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2023.1218072/full" target="_blank">Frontiers</a> &mdash; Note: uses EEG input, not audio.</li>
+      <li>Malche et al. (2024) &ldquo;A TinyML Approach to Real-Time Snoring Detection&rdquo; &mdash; <em>MDPI Engineering Proceedings</em> &mdash; <a href="https://www.mdpi.com/2673-4591/82/1/55" target="_blank">MDPI</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Apple Watch Validation</h4>
+    <ol start="12">
+      <li>Apple (2025) &ldquo;Estimating Sleep Stages from Apple Watch&rdquo; (white paper, updated Oct 2025) &mdash; <a href="https://www.apple.com/health/pdf/Estimating_Sleep_Stages_from_Apple_Watch_Oct_2025.pdf" target="_blank">Apple</a></li>
+      <li>Antwerp 6-device validation (2025) &mdash; <em>SLEEP Advances</em> &mdash; <a href="https://academic.oup.com/sleepadvances/article/6/2/zpaf021/8090472" target="_blank">Oxford Academic</a></li>
+      <li>Wearable sleep staging scoping review (2024) &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://www.nature.com/articles/s41746-024-01016-9" target="_blank">Nature</a></li>
+      <li>Apple (2024) &ldquo;Sleep Apnea Notifications on Apple Watch&rdquo; &mdash; <a href="https://www.apple.com/health/pdf/sleep-apnea/Sleep_Apnea_Notifications_on_Apple_Watch_September_2024.pdf" target="_blank">Apple</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Apple Developer</h4>
+    <ol start="16">
+      <li>SoundAnalysis Framework &mdash; <a href="https://developer.apple.com/documentation/soundanalysis" target="_blank">developer.apple.com</a></li>
+      <li>SNClassifySoundRequest &mdash; <a href="https://developer.apple.com/documentation/soundanalysis/snclassifysoundrequest" target="_blank">developer.apple.com</a></li>
+      <li>Create ML Sound Classification &mdash; <a href="https://developer.apple.com/machine-learning/create-ml/" target="_blank">developer.apple.com</a></li>
+      <li>WWDC21 &ldquo;Discover built-in sound classification&rdquo; &mdash; <a href="https://developer.apple.com/videos/play/wwdc2021/10036/" target="_blank">developer.apple.com</a></li>
+      <li>HKCategoryValueSleepAnalysis &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkcategoryvaluesleepanalysis" target="_blank">developer.apple.com</a></li>
+      <li>appleSleepingBreathingDisturbances &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifier/applesleepingbreathingdisturbances" target="_blank">developer.apple.com</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Public Datasets</h4>
+    <ol start="22">
+      <li>MESA &mdash; <a href="https://sleepdata.org/datasets/mesa" target="_blank">sleepdata.org</a></li>
+      <li>SHHS &mdash; <a href="https://sleepdata.org/datasets/shhs" target="_blank">sleepdata.org</a></li>
+      <li>Sleep-EDF &mdash; <a href="https://physionet.org/content/sleep-edfx/" target="_blank">PhysioNet</a></li>
+      <li>DREAMT (2024, smartwatch + PSG) &mdash; <a href="https://physionet.org/content/dreamt/" target="_blank">PhysioNet</a></li>
+      <li>AudioSet (snoring) &mdash; <a href="https://research.google.com/audioset/dataset/snoring.html" target="_blank">research.google.com</a> (degraded availability)</li>
+      <li>Kaggle Snoring &mdash; <a href="https://www.kaggle.com/datasets/tareqkhanemu/snoring" target="_blank">Kaggle</a></li>
+      <li>PSG-Audio (2021) &mdash; <a href="https://www.nature.com/articles/s41597-021-00977-w" target="_blank">Nature</a></li>
+      <li>ESC-50 &mdash; <a href="https://github.com/karolpiczak/ESC-50" target="_blank">GitHub</a></li>
+    </ol>
+  </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

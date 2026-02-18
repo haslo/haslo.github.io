@@ -9,12 +9,13 @@
     maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
     watch.html    — Watch (Apple Watch sensor fusion for improved sleep staging)
     sound.html    — Sound (passive microphone analysis, snoring, breathing, noise)
+    ml.html       — ML (on-device ML strategy, Apple frameworks, research models, training data)
 
   THIS FILE: Landing page with elevator pitch, feature cards, and platform badges.
 
   EDITING:
   - Content lives inside <div class="container">. Styles come from styles.css.
-  - Hero, nav, and footer are shared across all pages — edit all 5 if changing these.
+  - Hero, nav, and footer are shared across all pages — edit all 6 if changing these.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +47,7 @@
   <a class="tab-btn" href="maths.html">Maths</a>
   <a class="tab-btn" href="watch.html">Watch</a>
   <a class="tab-btn" href="sound.html">Sound</a>
+  <a class="tab-btn" href="ml.html">ML</a>
 </nav>
 
 <div class="container">
@@ -108,6 +110,14 @@
           and environmental noise. All processing on-device, no audio uploaded.
         </p>
       </div>
+      <div class="feature-card quality">
+        <span class="card-emoji">&#x1F9E0;</span>
+        <h3>On-Device ML</h3>
+        <p style="font-size:0.88em; color:var(--text-secondary);">
+          SoundAnalysis for snoring and breathing detection. Apple Watch ML for sleep stages and
+          respiratory rate. Classical algorithms for phone-only sleep/wake. All on-device, no cloud.
+        </p>
+      </div>
     </div>
 
     <!-- Quick-glance feature pills -->
@@ -118,6 +128,7 @@
       <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#FEF3C7; color:#D97706; cursor:default;">&#x2764;&#xFE0F; HealthKit Native</span>
       <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#FEF3C7; color:#92400E; cursor:default;">&#x231A; Watch Enhanced</span>
       <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#ECFDF5; color:var(--quality-dark); cursor:default;">&#x1F3A4; Microphone Optional</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#FCE7F3; color:#DB2777; cursor:default;">&#x1F9E0; On-Device ML</span>
       <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#F1F5F9; color:var(--text-secondary); cursor:default;">&#x1F9E9; Gwen Widgets</span>
     </div>
   </section>
