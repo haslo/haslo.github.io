@@ -10,10 +10,12 @@
     cute.html     — Cute Mode (OFF/ON comparisons, heart guide)
     science.html  — Science (research basis, health case, claims)
     maths.html    — Maths (Hydration Score formulas, Pattern Detection algorithm references)
-    tech.html     — THIS FILE. Architecture, shared infra, data storage, new components.
+    tech.html     — THIS FILE. Architecture, shared infra, data storage, deployment targets, new components.
 
   THIS FILE: Technical architecture — SVG architecture diagram, shared infrastructure cards,
-  data storage table, HealthKit notes, and new infrastructure summary table.
+  data storage table (CacheStorage for re-fetchable data, AppDataStorage for source-of-truth
+  persistent data like pee logs, pattern profiles, trial start), deployment target boxes,
+  HealthKit notes, and new infrastructure summary table.
   Uses .tech-section wrapper for semantic grouping with light theme styling.
 
   EDITING:
@@ -21,6 +23,7 @@
   - Hero, nav, and footer are shared across all pages — edit all 7 if changing these.
   - Architecture diagram is an inline SVG with its own internal <style> block.
   - Tech cards use .tech-grid > .tech-card. Framework tags use .framework-tags > .fw-tag.
+  - Deployment target boxes use the same .tech-grid > .tech-card pattern.
   - JetBrains Mono is used for headings and code elements (tech-tab identity choice).
 -->
 <!DOCTYPE html>
@@ -142,7 +145,7 @@
         <polygon points="364,340 370,350 376,340" fill="#D97706"/>
         <text x="370" y="370" text-anchor="middle" class="svg-label svg-yellow" font-size="12" font-weight="600">App Group</text>
         <text x="370" y="387" text-anchor="middle" class="svg-label svg-sub" font-size="10">(pee logs, prefs,</text>
-        <text x="370" y="401" text-anchor="middle" class="svg-label svg-sub" font-size="10">cache, presets)</text>
+        <text x="370" y="401" text-anchor="middle" class="svg-label svg-sub" font-size="10">cache, patterns)</text>
       </svg>
     </div>
 
@@ -167,8 +170,10 @@
           <li><code>HydrationScoreService</code> &mdash; composite score from water + pee correlation</li>
           <li><code>LogWaterIntent</code> / <code>LogPipiIntent</code> &mdash; <code>AppIntent</code> for interactive widgets</li>
           <li><code>PatternDetectionService</code> &mdash; actor, tiered pattern detection (day-of-week &rarr; k-means clustering), Accelerate/vDSP</li>
+          <li><code>AppDataStorage</code> &mdash; persistent storage (no auto-invalidation) for source-of-truth data (pee logs, pattern profiles, trial start)</li>
           <li><code>ControlWidget</code> targets &mdash; iOS 18 Control Center</li>
           <li>WatchKit app + <code>WidgetFamily.accessoryCircular</code> complications</li>
+          <li><code>RelevanceConfiguration</code> &mdash; watchOS 26 Smart Stack contextual relevance for hydration status (<code>@available</code>-gated)</li>
           <li>StoreKit 2 &mdash; <code>Product</code>, <code>Transaction</code>, one-time purchase</li>
         </ul>
       </div>
@@ -185,8 +190,8 @@
         </tr>
         <tr>
           <td>Pee logs</td>
-          <td>App Group container &mdash; JSON via <code>CacheStorage</code></td>
-          <td>App + widget extensions only</td>
+          <td>App Group container &mdash; JSON via <code>AppDataStorage</code></td>
+          <td>Source of truth, must persist &mdash; app + widget extensions only</td>
         </tr>
         <tr>
           <td>Preferences</td>
@@ -200,8 +205,13 @@
         </tr>
         <tr>
           <td>Pattern profiles</td>
-          <td>App Group container &mdash; JSON via <code>CacheStorage</code></td>
+          <td>App Group container &mdash; JSON via <code>AppDataStorage</code></td>
           <td>Day-type centroids, cluster assignments, feature vectors</td>
+        </tr>
+        <tr>
+          <td>Trial start date</td>
+          <td>App Group container &mdash; JSON via <code>AppDataStorage</code></td>
+          <td>Permanent record of when 7-day trial began</td>
         </tr>
         <tr>
           <td>Premium status</td>
@@ -210,6 +220,21 @@
         </tr>
       </tbody>
     </table>
+
+    <h3>// Deployment Targets</h3>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>Minimum Targets</h4>
+        <p><strong>iOS 18</strong> / <strong>watchOS 11</strong></p>
+        <p>Broadest user base supporting all required features: <code>ControlWidget</code> (iOS 18+), interactive widgets (iOS 17+), StoreKit 2 (iOS 15+).</p>
+      </div>
+      <div class="tech-card">
+        <h4>Enhanced Experience</h4>
+        <p><strong>iOS 26+</strong> gets Liquid Glass rendering automatically.</p>
+        <p><strong>watchOS 26+</strong> enables <code>RelevanceConfiguration</code> &mdash; Smart Stack contextual relevance for hydration status.</p>
+        <p>Both gated with <code>@available</code>, no user base limitation.</p>
+      </div>
+    </div>
 
     <h3>// HealthKit</h3>
     <p>
