@@ -89,19 +89,19 @@
         <td><strong>Sleep stage classification</strong></td>
         <td>Heuristic (F1 0.26&ndash;0.69)</td>
         <td><code>HKCategoryValueSleepAnalysis</code> stages (asleepCore/Deep/REM), ~75% 4-stage accuracy, kappa 0.53&ndash;0.60</td>
-        <td>No &mdash; Apple provides stages via HealthKit when watch is worn</td>
+        <td>No &mdash; classical heuristics on phone without watch, Apple stages via HealthKit with watch</td>
       </tr>
       <tr>
         <td><strong>Snoring detection</strong></td>
-        <td>SoundAnalysis &mdash; built-in <code>.version1</code> has <code>snoring</code> label, BUT iOS 18 broke background GPU access. Needs custom CoreML model with CPU-only inference for overnight use.</td>
+        <td>SoundAnalysis <code>.version1</code> has <code>snoring</code> label (iOS 15+). Blocked in background on iOS 18+ &mdash; deferred to future.</td>
         <td>N/A (no microphone during sleep)</td>
-        <td>Yes &mdash; custom model needed for background execution (iOS 18+)</td>
+        <td>Future &mdash; SoundAnalysis <code>.version1</code> blocked in background (iOS 18+). Not a v1 feature.</td>
       </tr>
       <tr>
         <td><strong>Breathing detection</strong></td>
-        <td>SoundAnalysis &mdash; built-in <code>.version1</code> has <code>breathing</code> label, same iOS 18 background limitation</td>
+        <td>Classical DSP: audio envelope + peak detection for breathing rate. No SoundAnalysis ML needed.</td>
         <td>N/A</td>
-        <td>Yes &mdash; same workaround needed</td>
+        <td>No &mdash; v1 uses classical DSP (audio envelope + peak detection), not SoundAnalysis ML.</td>
       </tr>
       <tr>
         <td><strong>Respiratory rate</strong></td>
@@ -117,9 +117,9 @@
       </tr>
       <tr>
         <td><strong>Environmental noise</strong></td>
-        <td><code>SNClassifySoundRequest</code> (300+ categories)</td>
+        <td>Noise levels via RMS energy (classical DSP). Sound categorization via <code>SNClassifySoundRequest</code> deferred to future.</td>
         <td>N/A</td>
-        <td>No</td>
+        <td>Partial &mdash; noise <em>levels</em> via RMS energy work without ML. Sound <em>categorization</em> (300+ types) uses SoundAnalysis, deferred to future.</td>
       </tr>
       <tr>
         <td><strong>Heart rate / HRV</strong></td>
@@ -141,10 +141,10 @@
     <p>
       Schlafi combines two ML approaches depending on available hardware. <strong>With Apple Watch:</strong>
       sensor fusion of ML-derived sleep stages, respiratory rate, HR, HRV, and SpO2 produces ~75% 4-stage
-      accuracy with FDA-level apnea screening. Phone adds SoundAnalysis-powered snoring and breathing
-      detection that watch can't provide. <strong>Without watch:</strong> phone accelerometer (classical
-      algorithms) + SoundAnalysis still produces functional sleep tracking. The combination of both
-      covers more ground than either alone.
+      accuracy with FDA-level apnea screening. Phone adds classical audio analysis for breathing patterns
+      and noise levels, plus accelerometer-based movement detection. <strong>Without watch:</strong> phone
+      accelerometer (classical algorithms) + classical audio DSP still produces functional sleep tracking.
+      The combination of both covers more ground than either alone.
     </p>
   </div>
 
@@ -163,13 +163,14 @@
     <p>
       The built-in <code>.version1</code> classifier uses the GPU. iOS 18 blocks GPU work from background
       processes &mdash; so <code>SNClassifySoundRequest(classifierIdentifier: .version1)</code> fails silently
-      in the background. For overnight audio analysis, Schlafi must use a <strong>custom CoreML model</strong>
+      in the background. Any future ML-based audio classification would need a <strong>custom CoreML model</strong>
       loaded via <code>SNClassifySoundRequest(mlModel:)</code> with <code>MLModelConfiguration.computeUnits = .cpuOnly</code>.
     </p>
     <p>
-      This means a custom-trained snoring/breathing model is required after all &mdash; the built-in classifier
-      only works in the foreground. Create ML with AudioFeaturePrint transfer learning is the path: train on
-      public audio datasets, export ~5.5 MB .mlmodel, load CPU-only for background use.
+      For v1, Schlafi sidesteps this limitation entirely: breathing rate uses classical DSP (audio envelope
+      analysis), not SoundAnalysis. Snoring classification &mdash; which requires the ML classifier &mdash; is
+      deferred to a future release. Custom CoreML model training via Create ML with AudioFeaturePrint is a
+      future option for background snoring detection.
     </p>
   </div>
 
@@ -235,9 +236,9 @@
       <tr>
         <td><strong>Snoring detection</strong></td>
         <td>Not available</td>
-        <td>SoundAnalysis built-in</td>
+        <td>Future</td>
         <td>Not available (no mic on watch)</td>
-        <td>SoundAnalysis built-in</td>
+        <td>Future</td>
         <td>Kim 2013; Apple SoundAnalysis</td>
       </tr>
       <tr>
@@ -295,8 +296,8 @@
       <div class="score-points">&#x1F3A4;</div>
       <div class="score-label">Sound Analysis</div>
       <div class="score-desc">
-        Snoring detection, breathing patterns, environmental noise &mdash; watch has no microphone
-        during sleep. Phone mic is the only audio signal source.
+        Breathing pattern analysis (classical DSP), noise level monitoring. Watch has no microphone
+        during sleep. Snoring classification planned for future release.
       </div>
     </div>
     <div class="score-component ml-stage">
@@ -541,8 +542,8 @@
       </tr>
       <tr>
         <td><strong>Snoring detection</strong></td>
-        <td>SoundAnalysis built-in</td>
-        <td>Real-time, continuous</td>
+        <td>Future (SoundAnalysis blocked in background on iOS 18+)</td>
+        <td>&mdash;</td>
         <td>N/A (no mic)</td>
         <td>&mdash;</td>
       </tr>
@@ -587,12 +588,12 @@
       </tr>
       <tr>
         <td><strong>Battery overnight</strong></td>
-        <td>~8&ndash;16% (accel 2&ndash;5% + audio 5&ndash;10% + misc 1%)</td>
+        <td>~7&ndash;15% (accel 2&ndash;5% + classical audio DSP 4&ndash;9% + misc 1%)</td>
         <td>Managed by watchOS &mdash; Apple optimizes for overnight wear.</td>
       </tr>
       <tr>
         <td><strong>Background execution</strong></td>
-        <td>Audio requires <code>UIBackgroundModes</code> audio + <code>.record</code> AVAudioSession. GPU disabled in background (iOS 18+).</td>
+        <td>Audio requires <code>UIBackgroundModes</code> audio + <code>.record</code> AVAudioSession. v1 uses classical audio processing only &mdash; no SoundAnalysis ML in background. GPU disabled in background (iOS 18+).</td>
         <td>watchOS manages sensor access natively.</td>
       </tr>
     </tbody>
@@ -628,14 +629,14 @@
       <tr>
         <td><strong>Snoring detection</strong></td>
         <td>N/A (no mic)</td>
-        <td>Custom CoreML (built-in blocked in background on iOS 18)</td>
-        <td>Yes &mdash; public audio datasets via Create ML</td>
+        <td>Future (SoundAnalysis blocked in background on iOS 18+)</td>
+        <td>Not for v1 &mdash; deferred to future</td>
       </tr>
       <tr>
         <td><strong>Breathing detection</strong></td>
         <td>N/A</td>
-        <td>Custom CoreML (same iOS 18 limitation)</td>
-        <td>Yes &mdash; same training pipeline</td>
+        <td>Classical DSP (audio envelope + peak detection)</td>
+        <td>No &mdash; v1 uses classical DSP</td>
       </tr>
       <tr>
         <td><strong>Respiratory rate</strong></td>
@@ -652,42 +653,42 @@
       <tr>
         <td><strong>Environmental noise</strong></td>
         <td>N/A</td>
-        <td>SoundAnalysis built-in</td>
-        <td>No</td>
+        <td>Noise levels via RMS energy (classical DSP). Categorization deferred to future.</td>
+        <td>No (levels), future (categorization)</td>
       </tr>
     </tbody>
   </table>
 
   <div class="research-callout">
-    <div class="cite-label">Answer: Yes, but Only for Audio</div>
+    <div class="cite-label">Answer: No &mdash; Not for v1</div>
     <p>
-      Due to the iOS 18 background GPU restriction, Schlafi needs a custom CoreML snoring/breathing model
-      for overnight use (the built-in SoundAnalysis classifier can't run in the background). Create ML with
-      AudioFeaturePrint makes this straightforward &mdash; public datasets are sufficient. Everything else
-      (sleep/wake, staging, watch data) uses Apple frameworks or classical algorithms with zero training.
+      v1 uses Apple's built-in frameworks and classical algorithms exclusively. Breathing rate extraction
+      uses classical DSP (audio envelope analysis). No custom model training, no datasets, no Create ML
+      pipeline. Snoring classification &mdash; the only feature that would require custom ML &mdash; is
+      deferred to a future release.
     </p>
   </div>
 
   <div class="research-callout" style="border-left-color: var(--rem);">
-    <div class="cite-label" style="color: #0284C7;">Custom Audio Model (v1 Requirement Due to iOS 18)</div>
+    <div class="cite-label" style="color: #0284C7;">Custom Audio Model (Future Option)</div>
     <p>
-      Since the built-in SoundAnalysis classifier can't run in the background on iOS 18+, Schlafi needs
-      a custom CoreML model for snoring and breathing detection. Create ML with AudioFeaturePrint transfer
-      learning is the path: train a classifier head on public datasets (Kaggle snoring, ESC-50 negatives,
-      PSG-Audio), producing a ~5.5 MB .mlmodel that runs CPU-only in the background. The AudioFeaturePrint
-      feature extractor is built into iOS &mdash; only the lightweight classifier head ships with the app.
+      For future snoring detection, Schlafi could use a custom CoreML model via Create ML with
+      AudioFeaturePrint transfer learning: train a classifier head on public datasets (Kaggle snoring,
+      ESC-50 negatives, PSG-Audio), producing a ~5.5 MB .mlmodel that runs CPU-only in the background.
+      The AudioFeaturePrint feature extractor is built into iOS &mdash; only the lightweight classifier
+      head ships with the app.
     </p>
   </div>
 
   <div class="research-callout" style="border-left-color: var(--text-secondary);">
-    <div class="cite-label" style="color: var(--text-secondary);">Future Options (Not v1)</div>
+    <div class="cite-label" style="color: var(--text-secondary);">Future Options</div>
     <p>
-      Audio-based breathing rate extraction and apnea screening are feasible with public data but are
-      not v1 features. These would use the same Create ML pipeline.
+      Audio-based apnea screening and snoring classification are feasible with public data but are
+      not v1 features. These would use the Create ML pipeline described above.
     </p>
   </div>
 
-  <h3>Public Datasets</h3>
+  <h3>Public Datasets (for Future Custom Model Training)</h3>
 
   <table>
     <thead>
@@ -770,7 +771,7 @@
       <div class="score-label">Apple Frameworks</div>
       <div class="score-desc">
         HealthKit (watch sleep stages, respiratory rate, HR, HRV, SpO2, apnea screening).
-        SoundAnalysis pipeline for audio processing (but with custom model due to iOS 18 background limitation).
+        Classical audio DSP for breathing rate and noise levels.
       </div>
     </div>
     <div class="score-component ml-stage" style="text-align: left;">
@@ -778,14 +779,6 @@
       <div class="score-desc">
         Sadeh (1994) and Cole-Kripke (1992) for phone sleep/wake. Heuristic staging from
         movement + cycle priors. Quality scoring formula. No ML, 40 years of validation.
-      </div>
-    </div>
-    <div class="score-component ml-stage" style="text-align: left;">
-      <div class="score-label">Custom CoreML (v1)</div>
-      <div class="score-desc">
-        Snoring and breathing classifier trained via Create ML with AudioFeaturePrint. ~5.5 MB model,
-        CPU-only inference in background. Required because built-in SoundAnalysis classifier can't run
-        in background on iOS 18+.
       </div>
     </div>
   </div>
@@ -801,7 +794,7 @@
         <td><strong>Best</strong></td>
         <td>Phone + Watch + Sound</td>
         <td>~75% 4-stage (Apple Watch stages) + audio context</td>
-        <td>SoundAnalysis</td>
+        <td>Future</td>
         <td>FDA-cleared (watch)</td>
       </tr>
       <tr>
@@ -815,7 +808,7 @@
         <td><strong>Functional</strong></td>
         <td>Phone + Sound</td>
         <td>F1 0.26&ndash;0.69 heuristic + audio helps with REM</td>
-        <td>SoundAnalysis</td>
+        <td>Future</td>
         <td>Not in v1</td>
       </tr>
       <tr>
