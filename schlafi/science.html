@@ -1,0 +1,385 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: Science
+  =============================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    science.html  — THIS FILE. Actigraphy research, phone-based staging, sensors, iOS landscape.
+    maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
+
+  THIS FILE: Four full-width gradient sections —
+    A: Actigraphy (science-section)
+    B: Sleep Stage Classification (science-section continued)
+    C: Additional Sensor Signals (sensors-section)
+    D: iOS Implementation Landscape (ios-section)
+
+  EDITING:
+  - Sections use full-width gradient backgrounds, so <div class="container"> is INSIDE each <section>.
+  - Hero, nav, and footer are shared across all pages — edit all 3 if changing these.
+  - Research callouts use .research-callout with .cite-label.
+  - Citations at bottom use .citations with ordered list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; Science</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Watch support coming later &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge coming-soon">Apple Watch (coming later)</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn active" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
+</nav>
+
+<!-- ==================== A: ACTIGRAPHY ==================== -->
+<section class="science-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F9EA;</span> Actigraphy &mdash; The Science of Movement-Based Sleep Detection</h2>
+  <div class="science-intro">
+    <p>
+      Schlafi's sleep/wake detection isn't a novel invention. It's built on
+      <strong>40+ years of actigraphy research</strong> &mdash; clinically validated methods
+      that infer sleep from movement patterns. The phone-on-mattress approach applies
+      these same principles using the accelerometer already in your iPhone.
+    </p>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Research Basis</div>
+    <p>
+      <strong>Actigraphy has been clinically validated since the 1980s.</strong>
+      Wrist-worn accelerometers detect movement patterns that reliably distinguish
+      sleep from wakefulness. The foundational algorithms &mdash; Sadeh (1994) and
+      Cole-Kripke (1992) &mdash; remain the gold standard, with overall accuracy
+      of 80&ndash;88% for binary sleep/wake classification.
+    </p>
+    <p>
+      A comprehensive 2023 review in <em>Nature Digital Medicine</em> ("40 years of actigraphy")
+      found that <strong>classic regression-based algorithms perform as well as or better than
+      modern machine learning approaches</strong> for sleep/wake detection. Simplicity wins.
+    </p>
+  </div>
+
+  <h3>How Phone-on-Mattress Works</h3>
+  <p>
+    When you place your phone on the mattress, body movements during sleep are transmitted
+    through the mattress material to the phone's accelerometer. The signal is weaker than
+    wrist-worn actigraphy (~9&times; attenuation) but the fundamental physics is the same:
+    <strong>sleep produces less movement than wakefulness</strong>.
+  </p>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">Mattress Transmission Hierarchy</div>
+    <p>
+      Signal quality varies by mattress type. <strong>Spring mattresses</strong> transmit
+      vibrations best (metal coils act as conductors). <strong>Latex mattresses</strong>
+      offer moderate transmission. <strong>Memory foam</strong> absorbs the most vibration
+      but still transmits enough for sleep/wake detection.
+    </p>
+    <p>
+      Schlafi uses <strong>relative measurements</strong> &mdash; comparing movement levels
+      within a session rather than relying on absolute thresholds. This self-calibrates
+      to any mattress type during the first ~30 minutes of a session.
+    </p>
+  </div>
+
+  <div class="score-breakdown two-col">
+    <div class="score-component sleep-stage">
+      <div class="score-points">80&ndash;88%</div>
+      <div class="score-label">Binary Sleep/Wake Accuracy</div>
+      <div class="score-desc">
+        Comparable to clinical wrist actigraphy.
+        Sensitivity (detecting sleep) is high (0.82&ndash;0.96);
+        specificity (detecting wake) is lower (0.35&ndash;0.68).
+      </div>
+    </div>
+    <div class="score-component quality-stage">
+      <div class="score-points">40+</div>
+      <div class="score-label">Years of Validation</div>
+      <div class="score-desc">
+        Actigraphy is one of the most studied non-invasive
+        sleep assessment methods. The algorithms Schlafi uses
+        have been validated in hundreds of studies.
+      </div>
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">Foundational Algorithms</div>
+    <p>
+      <strong>Sadeh et al. (1994)</strong> developed a scoring index using an 11-minute
+      sliding window with four variables: mean activity, number of active epochs,
+      standard deviation, and log-transformed activity. Decision rule: SI &gt; -4 &rarr; sleep.
+      See <a href="maths.html">Maths tab</a> for the full formula.
+    </p>
+    <p>
+      <strong>Cole et al. (1992)</strong> used a weighted sum of activity counts in a
+      7-minute window centered on the current epoch. Decision rule: S &lt; 1 &rarr; sleep.
+      Both algorithms are implemented as simple arithmetic &mdash; no neural networks, no cloud.
+    </p>
+  </div>
+
+  <!-- ==================== B: SLEEP STAGE CLASSIFICATION ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F30C;</span> Sleep Stage Classification from Phone Sensors</h2>
+  <div class="science-intro">
+    <p>
+      Beyond binary sleep/wake, Schlafi estimates sleep stages (REM, light, deep, awake)
+      using movement patterns and sleep architecture timing. This is the Pillow approach:
+      <strong>heuristic, not clinical</strong>, but useful.
+    </p>
+  </div>
+
+  <h3>Movement-Based Staging Approach</h3>
+  <p>
+    Movement patterns during sleep correlate loosely with sleep stages.
+    The key insight: <strong>different stages produce different movement signatures</strong>.
+  </p>
+
+  <div class="score-breakdown">
+    <div class="score-component deep-stage">
+      <div class="score-points">&#x1F311;</div>
+      <div class="score-label">Deep Sleep</div>
+      <div class="score-desc">
+        Minimal movement. Muscle tone reduced but present.
+        Longest sustained stillness periods.
+        Predominates in first sleep cycles.
+      </div>
+    </div>
+    <div class="score-component rem-stage">
+      <div class="score-points">&#x1F441;</div>
+      <div class="score-label">REM Sleep</div>
+      <div class="score-desc">
+        Muscle atonia (paralysis) with periodic twitches.
+        Brief micro-movements distinguish it from deep sleep.
+        Predominates in later cycles.
+      </div>
+    </div>
+    <div class="score-component light-stage">
+      <div class="score-points">&#x1F4A4;</div>
+      <div class="score-label">Light Sleep</div>
+      <div class="score-desc">
+        More movement than deep/REM. Position changes,
+        restlessness. Transitions between other stages.
+        Most time spent here.
+      </div>
+    </div>
+  </div>
+
+  <h3>The Pillow Approach</h3>
+  <p>
+    Apps like Pillow classify sleep stages from movement intensity combined with
+    sleep architecture priors. Schlafi follows the same strategy:
+  </p>
+  <ul>
+    <li><strong>Immobility duration</strong> discriminates deep vs REM &mdash; REM has periodic twitches while deep sleep is sustained stillness</li>
+    <li><strong>Cycle timing</strong> provides a structural prior &mdash; sleep follows ~90-minute ultradian rhythms</li>
+    <li><strong>Cycle position</strong> biases classification &mdash; first cycles have more deep sleep, later cycles have more REM (known sleep architecture)</li>
+    <li><strong>Minimum bout duration</strong> prevents implausible fragmentations &mdash; no 30-second REM episodes</li>
+  </ul>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Validation: Honest About Limits</div>
+    <p>
+      <strong>Leeuw et al. (2023)</strong> conducted a multicenter study comparing 11 consumer
+      sleep trackers against polysomnography. Phone-based apps achieved F1 scores of
+      <strong>0.26&ndash;0.69 for stage classification</strong> (vs 0.55&ndash;0.81 for wearables).
+    </p>
+    <p>
+      Staging from a phone accelerometer has <strong>fundamental limits</strong>. Without
+      heart rate and HRV data, distinguishing REM from deep sleep relies on subtle
+      movement differences that aren't always present. Schlafi is transparent about this:
+    </p>
+    <ul>
+      <li>Confidence indicators per epoch &mdash; low-confidence classifications are flagged</li>
+      <li>Aggregate night confidence shown as a data quality indicator</li>
+      <li>Watch data when available <strong>dramatically improves accuracy</strong> (heart rate + HRV add orthogonal signals)</li>
+    </ul>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--quality);">
+    <div class="cite-label" style="color: var(--quality-dark);">What Schlafi Claims &mdash; and Doesn't</div>
+    <div class="claims-grid">
+      <div>
+        <strong style="color: var(--quality-dark);">Supported</strong>
+        <ul style="margin-top: 4px;">
+          <li>Sleep/wake detection is clinically validated (actigraphy)</li>
+          <li>Stage timing patterns are real (ultradian rhythms)</li>
+          <li>Quality scoring from duration is well-established</li>
+          <li>Relative movement measurement self-calibrates to mattress</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color: #DC2626;">Out of Scope</strong>
+        <ul style="margin-top: 4px;">
+          <li>Clinical-grade stage classification (requires PSG)</li>
+          <li>Sleep disorder detection or diagnosis</li>
+          <li>Medical-grade recommendations</li>
+          <li>Absolute accuracy claims without watch data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ==================== C: ADDITIONAL SENSORS ==================== -->
+<section class="sensors-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x1F399;</span> Additional Sensor Signals</h2>
+  <div class="science-intro">
+    <p>
+      The accelerometer is the primary sensor, but iOS devices have additional sensors
+      that can improve sleep tracking accuracy when the user opts in.
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card sleep">
+      <span class="card-emoji">&#x1F3A4;</span>
+      <h3>Microphone (Optional)</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Breathing pattern detection and snoring identification. Adds a staging signal
+        (regular breathing = sleep, irregular = light/awake). Privacy-sensitive &mdash;
+        must be explicitly opt-in with clear data handling disclosure.
+        Audio processed on-device, never uploaded.
+      </p>
+    </div>
+    <div class="feature-card rem">
+      <span class="card-emoji">&#x1F50A;</span>
+      <h3>Sonar Mode (Speaker + Mic)</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Emits inaudible ultrasonic pulses from the speaker and listens for reflections.
+        Detects chest movement (breathing) contactlessly from a nightstand.
+        No mattress contact required. Similar to Google's Nest Hub sleep sensing approach.
+      </p>
+    </div>
+    <div class="feature-card deep">
+      <span class="card-emoji">&#x1F4F2;</span>
+      <h3>Proximity Sensor</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Detects face-down placement for optimal mattress contact positioning.
+        Can also detect when the phone is picked up (wake event).
+        Low power, always available.
+      </p>
+    </div>
+    <div class="feature-card quality">
+      <span class="card-emoji">&#x1F4F1;</span>
+      <h3>Screen Interaction</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Coarse bedtime/wake estimation from last screen lock and first screen unlock.
+        Provides session boundaries even without continuous accelerometer recording.
+        Zero additional permissions required.
+      </p>
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--rem);">
+    <div class="cite-label" style="color: #0284C7;">Multi-Signal Fusion</div>
+    <p>
+      Combining accelerometer data with optional microphone input provides better
+      classification than either alone. The accelerometer detects movement; the microphone
+      detects breathing regularity and rhythm. Together they address the primary weakness
+      of movement-only staging: <strong>distinguishing REM from deep sleep</strong>
+      (both have low movement, but breathing patterns differ).
+    </p>
+  </div>
+  </div>
+</section>
+
+<!-- ==================== D: iOS IMPLEMENTATION ==================== -->
+<section class="ios-section">
+  <div class="container">
+  <h2 style="text-align:center;"><span class="emoji">&#x2699;&#xFE0F;</span> iOS Implementation Landscape</h2>
+  <div class="science-intro">
+    <p>
+      Key iOS frameworks and APIs that make phone-based sleep tracking possible.
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card sleep">
+      <h3><code>CMSensorRecorder</code></h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Core Motion's background accelerometer recording. Records up to <strong>12 hours</strong>
+        of continuous data at <strong>50 Hz</strong>. Data stored on-device and retrievable
+        after the recording period. The foundation for overnight phone-on-mattress tracking.
+      </p>
+    </div>
+    <div class="feature-card rem">
+      <h3>HealthKit Sleep Analysis</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        <code>HKCategoryValueSleepAnalysis</code> defines the stage vocabulary:
+        <code>inBed</code>, <code>asleepUnspecified</code>, <code>awake</code>,
+        <code>asleepCore</code>, <code>asleepDeep</code>, <code>asleepREM</code>.
+        Schlafi writes classified sleep data to HealthKit using these standard categories.
+      </p>
+    </div>
+    <div class="feature-card deep">
+      <h3>Writing Sleep Data</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        Schlafi creates <code>HKCategorySample</code> entries for each detected sleep stage
+        period. Apple Health aggregates data from all sources. Users see Schlafi's
+        classifications alongside any watch or other tracker data.
+      </p>
+    </div>
+    <div class="feature-card quality">
+      <h3>On-Device Processing</h3>
+      <p style="font-size:0.88em; color:var(--text-secondary);">
+        All computation happens on-device. No cloud, no account, no data upload.
+        Raw accelerometer data is processed into sleep stages and discarded.
+        Only the resulting sleep analysis is stored (HealthKit + app cache).
+      </p>
+    </div>
+  </div>
+
+  <div class="tech-tags">
+    <span class="tech-tag primary">Core Motion</span>
+    <span class="tech-tag primary">CMSensorRecorder</span>
+    <span class="tech-tag primary">HealthKit</span>
+    <span class="tech-tag">On-device</span>
+    <span class="tech-tag">No cloud</span>
+    <span class="tech-tag">50 Hz accelerometer</span>
+    <span class="tech-tag">12h recording</span>
+  </div>
+
+  <!-- ==================== CITATIONS ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+    <ol>
+      <li>Sadeh A et al. (1994) &ldquo;Activity-Based Sleep-Wake Identification: An Empirical Test of Methodological Issues&rdquo; &mdash; <em>Sleep</em> 17(3), 201&ndash;207 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/7939118/" target="_blank">PubMed</a></li>
+      <li>Cole RJ et al. (1992) &ldquo;Automatic Sleep/Wake Identification From Wrist Activity&rdquo; &mdash; <em>Sleep</em> 15(5), 461&ndash;469 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/1455130/" target="_blank">PubMed</a></li>
+      <li>Winnebeck EC et al. (2023) &ldquo;40 years of actigraphy in sleep medicine and current state of the art&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://doi.org/10.1038/s41746-023-00802-1" target="_blank">Nature</a></li>
+      <li>de Leeuw MEDM et al. (2023) &ldquo;Accuracy of 11 Consumer Sleep Trackers for Measuring Sleep Staging and Sleep Efficiency&rdquo; &mdash; <em>J Clin Sleep Med</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10394383/" target="_blank">PMC</a></li>
+      <li>Fino E et al. (2020) &ldquo;(Not so) Smart sleep tracking through the phone&rdquo; &mdash; <em>J Sleep Res</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31696594/" target="_blank">PubMed</a></li>
+      <li>Apple Developer &mdash; CMSensorRecorder &mdash; <a href="https://developer.apple.com/documentation/coremotion/cmsensorrecorder" target="_blank">developer.apple.com</a></li>
+      <li>Apple Developer &mdash; HKCategoryValueSleepAnalysis &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkcategoryvaluesleepanalysis" target="_blank">developer.apple.com</a></li>
+    </ol>
+  </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: TL;DR (Landing Page)
+  =========================================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — THIS FILE. TL;DR landing page.
+    science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
+    maths.html    — Maths (activity counts, sleep/wake algorithms, staging, quality scoring)
+
+  THIS FILE: Landing page with elevator pitch, feature bullets, and platform badges.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all pages — edit all 3 if changing these.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; TL;DR</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Watch support coming later &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge coming-soon">Apple Watch (coming later)</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn active" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn" href="maths.html">Maths</a>
+</nav>
+
+<div class="container">
+  <section>
+    <h2><span class="emoji">&#x26A1;</span> TL;DR</h2>
+    <p style="font-size:1.15em; max-width:640px;">
+      <strong>Schlafi</strong> is a sleep tracker for iOS that uses your phone's accelerometer
+      to detect sleep, estimate stages, and score quality &mdash; no wearable required.
+      Place your phone on the mattress and let physics do the rest.
+    </p>
+
+    <div class="feature-grid" style="margin: 32px 0;">
+      <div class="feature-card sleep">
+        <span class="card-emoji">&#x1F4F1;</span>
+        <h3>Phone-on-Mattress Tracking</h3>
+        <p style="font-size:0.88em; color:var(--text-secondary);">
+          Your phone's accelerometer detects body movements transmitted through the mattress.
+          Spring mattresses work best; foam and latex work too. No wearable needed.
+        </p>
+      </div>
+      <div class="feature-card rem">
+        <span class="card-emoji">&#x1F4CA;</span>
+        <h3>Sleep/Wake Detection</h3>
+        <p style="font-size:0.88em; color:var(--text-secondary);">
+          Clinically validated algorithms (Sadeh 1994, Cole-Kripke 1992) classify
+          sleep vs wake with 80&ndash;88% accuracy &mdash; comparable to wrist actigraphy.
+        </p>
+      </div>
+      <div class="feature-card deep">
+        <span class="card-emoji">&#x1F30C;</span>
+        <h3>Stage Estimation</h3>
+        <p style="font-size:0.88em; color:var(--text-secondary);">
+          Heuristic classification of REM, light, deep, and awake periods using movement
+          intensity and ultradian cycle timing. Best-effort, not clinical-grade &mdash; honest about limits.
+        </p>
+      </div>
+      <div class="feature-card quality">
+        <span class="card-emoji">&#x2B50;</span>
+        <h3>Quality Scoring</h3>
+        <p style="font-size:0.88em; color:var(--text-secondary);">
+          Sleep quality score based on duration and phase distribution.
+          Reuses the proven <code>SleepQualityService</code> from OmniWidget.
+          Watch data upgrades accuracy when available.
+        </p>
+      </div>
+    </div>
+
+    <!-- Quick-glance feature pills -->
+    <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:24px 0;">
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:var(--sleep-light); color:var(--sleep-dark); cursor:default;">&#x1F319; Phone-on-Mattress</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#E0F2FE; color:#0284C7; cursor:default;">&#x1F9EA; 40 Years of Research</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:var(--quality-light); color:var(--quality-dark); cursor:default;">&#x2B50; Quality Scoring</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#FEF3C7; color:#D97706; cursor:default;">&#x2764;&#xFE0F; HealthKit Native</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:24px; font-weight:500; font-size:0.95em; background:#F1F5F9; color:var(--text-secondary); cursor:default;">&#x1F9E9; Gwen Widgets</span>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

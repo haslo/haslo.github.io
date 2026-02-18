@@ -1,0 +1,540 @@
+<!--
+  LLM INSTRUCTIONS — Schlafi Concept: Maths
+  ==========================================
+
+  FILE MAP (docs/schlafi/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    science.html  — Science (actigraphy, phone-based staging, sensors, iOS landscape)
+    maths.html    — THIS FILE. Mathematical specifications for all algorithms.
+
+  THIS FILE: Mathematical specifications — five sections:
+    A: Activity Count Computation (raw accelerometer to epoch aggregation)
+    B: Sleep/Wake Classification Algorithms (Sadeh, Cole-Kripke, selection rationale)
+    C: Sleep Stage Classification (movement intensity, ultradian model, stage assignment, confidence)
+    D: Sleep Quality Scoring (duration base, phase penalties, phone vs watch)
+    E: Signal Processing for Phone-on-Mattress (noise floor, filtering, calibration)
+
+  EDITING:
+  - Content lives inside <section class="maths-section"> > <div class="container">.
+  - Styles come from styles.css. Uses .score-component cards, .score-formula, .research-callout, tables.
+  - Hero, nav, and footer are shared across all pages — edit all 3 if changing these.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schlafi &mdash; Maths</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="moon">&#x1F319;</span> Schlafi</h1>
+  <div class="tagline">"Sleep, understood."</div>
+  <p class="pitch">
+    A sleep tracker that works with just your phone on the mattress.
+    Movement-based sleep detection backed by 40 years of actigraphy research.
+    Watch support coming later &mdash; phone-first, always.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge coming-soon">Apple Watch (coming later)</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="science.html">Science</a>
+  <a class="tab-btn active" href="maths.html">Maths</a>
+</nav>
+
+<section class="maths-section">
+  <div class="container">
+
+  <!-- ==================== SECTION A: ACTIVITY COUNT COMPUTATION ==================== -->
+  <h2 style="text-align:center;"><span class="emoji">&#x1F4D0;</span> Activity Count Computation</h2>
+  <div class="science-intro">
+    <p>
+      The first step in sleep analysis: converting raw 50 Hz accelerometer data from
+      <code>CMSensorRecorder</code> into per-epoch activity counts that the classification
+      algorithms consume. See the <a href="science.html">Science tab</a> for the research basis.
+    </p>
+  </div>
+
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Pipeline: Raw Accelerometer &rarr; Activity Count</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      1. <strong>Raw input</strong>: 50 Hz triaxial accelerometer (x, y, z) from CMSensorRecorder<br>
+      <br>
+      2. <strong>Vector magnitude</strong>: VM<sub>i</sub> = &radic;(x<sub>i</sub>&sup2; + y<sub>i</sub>&sup2; + z<sub>i</sub>&sup2;) &minus; 1g<br>
+      &nbsp;&nbsp;&nbsp;(subtract gravity to isolate dynamic acceleration)<br>
+      <br>
+      3. <strong>Band-pass filter</strong>: 0.25&ndash;3 Hz (isolate body movement frequencies)<br>
+      &nbsp;&nbsp;&nbsp;Removes: DC offset, high-frequency vibration noise<br>
+      &nbsp;&nbsp;&nbsp;Retains: body movements, position changes, breathing artifacts<br>
+      <br>
+      4. <strong>Epoch aggregation</strong>: Sum |VM<sub>filtered</sub>| over epoch window<br>
+      &nbsp;&nbsp;&nbsp;A<sub>epoch</sub> = &Sigma;<sub>i=1..N</sub> |VM<sub>filtered,i</sub>|<br>
+      &nbsp;&nbsp;&nbsp;where N = samples_per_epoch (50 Hz &times; epoch_seconds)
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Parameter</th><th>Value</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sample rate</td><td>50 Hz</td><td>CMSensorRecorder native rate</td></tr>
+        <tr><td>Band-pass</td><td>0.25&ndash;3 Hz</td><td>Body movement frequency range</td></tr>
+        <tr><td>Epoch length</td><td>30&ndash;60 s</td><td>30s standard; 60s for phone (noisier signal)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="research-callout">
+    <div class="cite-label">Epoch Length Trade-off</div>
+    <p>
+      <strong>30 seconds</strong> is the clinical actigraphy standard (matches PSG scoring epochs).
+      <strong>60 seconds</strong> averages out more noise, better for phone-on-mattress where the
+      signal-to-noise ratio is lower. Schlafi defaults to 60-second epochs for phone tracking
+      and 30-second epochs when watch data is available (cleaner signal).
+    </p>
+  </div>
+
+  <!-- ==================== SECTION B: SLEEP/WAKE CLASSIFICATION ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F4CA;</span> Sleep/Wake Classification Algorithms</h2>
+
+  <!-- B1: Sadeh -->
+  <h3 style="text-align: center; margin-top: 36px;">B1: Sadeh Algorithm (1994)</h3>
+
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.4em;">Sadeh</div>
+      <div class="score-label" style="font-size: 1.1em;">Sleep Index</div>
+    </div>
+
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.9em; margin-bottom: 16px;">
+      SI = 7.601 &minus; (0.065 &times; AVG) &minus; (1.08 &times; NATS) &minus; (0.056 &times; SD) &minus; (0.703 &times; LG)
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th><th>Window</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>AVG</td><td>Mean activity count</td><td>11-minute window centered on current epoch</td></tr>
+        <tr><td>NATS</td><td>Number of epochs with activity &ge; 50 and &le; 100</td><td>Same 11-minute window</td></tr>
+        <tr><td>SD</td><td>Standard deviation of activity counts</td><td>6-minute window within the 11-minute window</td></tr>
+        <tr><td>LG</td><td>Natural log of activity count + 1 in current epoch</td><td>Current epoch only</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="font-size: 0.85em; margin-top: 16px;">Decision Rule</h4>
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      SI &gt; &minus;4 &nbsp;&rarr;&nbsp; <strong>Sleep</strong> &nbsp;&nbsp;|&nbsp;&nbsp; SI &le; &minus;4 &nbsp;&rarr;&nbsp; <strong>Wake</strong>
+    </div>
+
+    <h4 style="font-size: 0.85em;">Performance</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sensitivity (sleep detection)</td><td>0.82&ndash;0.91</td></tr>
+        <tr><td>Specificity (wake detection)</td><td>0.47&ndash;0.68</td></tr>
+        <tr><td>Overall accuracy</td><td>~86%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- B2: Cole-Kripke -->
+  <h3 style="text-align: center; margin-top: 36px;">B2: Cole-Kripke Algorithm (1992)</h3>
+
+  <div class="score-component rem-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.4em;">Cole</div>
+      <div class="score-label" style="font-size: 1.1em;">Weighted Activity Score</div>
+    </div>
+
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      S = 0.0033 &times; (404 &times; A[0] + 598 &times; A[&minus;1] + 326 &times; A[&minus;2] + 441 &times; A[&minus;3] + 1408 &times; A[&minus;4] + 508 &times; A[+1] + 350 &times; A[+2])
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A[0]</td><td>Activity count at current epoch</td></tr>
+        <tr><td>A[&minus;1]..A[&minus;4]</td><td>Activity counts at 1..4 epochs before current</td></tr>
+        <tr><td>A[+1], A[+2]</td><td>Activity counts at 1, 2 epochs after current</td></tr>
+        <tr><td>0.0033, 404, 598...</td><td>Empirically derived regression coefficients</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="font-size: 0.85em; margin-top: 16px;">Decision Rule</h4>
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      S &lt; 1 &nbsp;&rarr;&nbsp; <strong>Sleep</strong> &nbsp;&nbsp;|&nbsp;&nbsp; S &ge; 1 &nbsp;&rarr;&nbsp; <strong>Wake</strong>
+    </div>
+
+    <h4 style="font-size: 0.85em;">Performance</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sensitivity (sleep detection)</td><td>0.88&ndash;0.96</td></tr>
+        <tr><td>Specificity (wake detection)</td><td>0.35&ndash;0.64</td></tr>
+        <tr><td>Overall accuracy</td><td>~88%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- B3: Selection Rationale -->
+  <h3 style="text-align: center; margin-top: 36px;">B3: Algorithm Selection Rationale</h3>
+
+  <div class="research-callout">
+    <div class="cite-label">Classic &ge; Modern</div>
+    <p>
+      The 2023 <em>Nature Digital Medicine</em> review ("40 years of actigraphy") found that
+      <strong>classic regression-based algorithms (Sadeh, Cole-Kripke) perform as well as
+      modern machine learning approaches</strong> for sleep/wake classification.
+      More complex models don't improve accuracy when the input signal is limited to acceleration.
+    </p>
+  </div>
+
+  <div class="score-breakdown two-col">
+    <div class="score-component sleep-stage" style="text-align: left;">
+      <div class="score-label">Sadeh &mdash; Better for Younger Populations</div>
+      <div class="score-desc">
+        Originally validated on children and young adults. The NATS variable
+        (epochs with moderate activity) captures the restlessness patterns
+        more common in younger sleepers. Higher specificity (wake detection).
+      </div>
+    </div>
+    <div class="score-component rem-stage" style="text-align: left;">
+      <div class="score-label">Cole-Kripke &mdash; Better for Adults</div>
+      <div class="score-desc">
+        Validated on adults aged 35&ndash;65. The wider window (&minus;4 to +2 epochs)
+        captures longer-scale movement patterns. Higher sensitivity (sleep detection).
+        Slightly better overall accuracy.
+      </div>
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--deep);">
+    <div class="cite-label" style="color: var(--deep);">Phone Adaptation</div>
+    <p>
+      Both algorithms were designed for wrist actigraphy. For phone-on-mattress:
+    </p>
+    <ul>
+      <li><strong>Relative thresholds</strong> instead of absolute &mdash; normalize activity counts to session percentile rather than using fixed cutoffs</li>
+      <li><strong>Mattress-specific calibration</strong> during first 30 minutes &mdash; establish noise floor and dynamic range</li>
+      <li><strong>Wider epoch windows</strong> (60s default) to average out mattress vibration noise</li>
+    </ul>
+  </div>
+
+  <!-- ==================== SECTION C: STAGE CLASSIFICATION ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F30C;</span> Sleep Stage Classification (Phone-Based)</h2>
+  <div class="science-intro">
+    <p>
+      Schlafi classifies sleep into 4 stages from phone accelerometer, following the approach used
+      by apps like Pillow. The method is heuristic, not clinically validated, but provides useful
+      approximations of sleep architecture.
+    </p>
+  </div>
+
+  <!-- C1: Movement Intensity -->
+  <h3 style="text-align: center; margin-top: 36px;">C1: Movement Intensity Classification</h3>
+
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Per-Epoch Movement Levels</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For each epoch (30&ndash;60s), classify movement intensity into 4 levels:
+    </div>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Level</th><th>Condition</th><th>Candidate Stage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Still</strong></td><td>A<sub>epoch</sub> &lt; T<sub>low</sub></td><td>Deep or REM</td></tr>
+        <tr><td><strong>Micro-movement</strong></td><td>T<sub>low</sub> &le; A<sub>epoch</sub> &lt; T<sub>mid</sub></td><td>REM (periodic twitches)</td></tr>
+        <tr><td><strong>Restless</strong></td><td>T<sub>mid</sub> &le; A<sub>epoch</sub> &lt; T<sub>high</sub></td><td>Light sleep</td></tr>
+        <tr><td><strong>Active</strong></td><td>A<sub>epoch</sub> &ge; T<sub>high</sub></td><td>Awake</td></tr>
+      </tbody>
+    </table>
+
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-top: 12px;">
+      Thresholds calibrated per-session from first 30 minutes of detected sleep:<br>
+      &nbsp;&nbsp;T<sub>low</sub> &nbsp; = P<sub>10</sub>(activity counts during sleep) &nbsp;&mdash;&nbsp; 10th percentile<br>
+      &nbsp;&nbsp;T<sub>mid</sub> &nbsp; = P<sub>40</sub>(activity counts during sleep) &nbsp;&mdash;&nbsp; 40th percentile<br>
+      &nbsp;&nbsp;T<sub>high</sub> = P<sub>75</sub>(activity counts during sleep) &nbsp;&mdash;&nbsp; 75th percentile
+    </div>
+  </div>
+
+  <!-- C2: Ultradian Cycle Model -->
+  <h3 style="text-align: center; margin-top: 36px;">C2: Ultradian Cycle Model</h3>
+
+  <div class="score-component deep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">~90-Minute Sleep Cycle Structure</h4>
+    <p style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 12px;">
+      Sleep follows approximately 90-minute ultradian cycles (Rechtschaffen &amp; Kales;
+      Carskadon &amp; Dement). Each cycle progresses: Light &rarr; Deep &rarr; Light &rarr; REM.
+    </p>
+
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Segment night into 90-minute cycles starting from sleep onset:<br>
+      &nbsp;&nbsp;cycle_number = floor((t &minus; sleep_onset) / 90 min) + 1<br>
+      &nbsp;&nbsp;cycle_position = ((t &minus; sleep_onset) mod 90 min) / 90 min &nbsp;&mdash;&nbsp; [0, 1)<br>
+      <br>
+      Structural priors vary by cycle:<br>
+      &nbsp;&nbsp;Cycles 1&ndash;2: &nbsp; P(deep | still) = 0.40, &nbsp; P(REM | still) = 0.15<br>
+      &nbsp;&nbsp;Cycles 3+: &nbsp;&nbsp; P(deep | still) = 0.15, &nbsp; P(REM | still/micro) = 0.40<br>
+      <br>
+      Within-cycle position bias:<br>
+      &nbsp;&nbsp;First third (0.0&ndash;0.33): deep bias &times; 1.3<br>
+      &nbsp;&nbsp;Last third (0.67&ndash;1.0): &nbsp;REM bias &times; 1.3
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Worked Example</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Sleep onset: 23:00 &nbsp;|&nbsp; Current epoch: 01:15 (2h 15m into sleep)<br>
+      <br>
+      cycle_number = floor(135 / 90) + 1 = 2<br>
+      cycle_position = (135 mod 90) / 90 = 45/90 = 0.50 &nbsp;(middle third)<br>
+      <br>
+      Epoch is "still" (A<sub>epoch</sub> &lt; T<sub>low</sub>):<br>
+      &nbsp;&nbsp;Cycle 2 prior: P(deep | still) = 0.40, P(REM | still) = 0.15<br>
+      &nbsp;&nbsp;Middle third: no position bias applied<br>
+      &nbsp;&nbsp;&rarr; Classify as <strong>Deep sleep</strong> (highest probability)
+    </div>
+  </div>
+
+  <!-- C3: Stage Assignment Algorithm -->
+  <h3 style="text-align: center; margin-top: 36px;">C3: Stage Assignment Algorithm</h3>
+
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Per-Epoch Decision Process</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      For each epoch classified as "sleep" by Sadeh/Cole-Kripke:<br>
+      <br>
+      &nbsp;&nbsp;1. Determine movement intensity level (Still/Micro/Restless/Active)<br>
+      &nbsp;&nbsp;2. Determine cycle position (cycle number, position within cycle)<br>
+      &nbsp;&nbsp;3. Compute stage probabilities:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P(stage) = movement_prior(level, stage) &times; cycle_prior(cycle, stage) &times; position_bias<br>
+      &nbsp;&nbsp;4. Assign: stage = argmax P(stage)<br>
+      &nbsp;&nbsp;5. Post-processing: enforce 5-minute minimum bout duration<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(merge fragments shorter than 5 min into surrounding stage)
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-top: 16px;">Stage Assignment Table</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Movement Level</th><th>Cycles 1&ndash;2</th><th>Cycles 3+</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Still</strong> (sustained)</td><td>Deep (40%), REM (15%), Light (45%)</td><td>REM (40%), Deep (15%), Light (45%)</td></tr>
+        <tr><td><strong>Micro-movement</strong></td><td>REM (55%), Light (35%), Deep (10%)</td><td>REM (60%), Light (30%), Deep (10%)</td></tr>
+        <tr><td><strong>Restless</strong></td><td>Light (80%), Awake (20%)</td><td>Light (80%), Awake (20%)</td></tr>
+        <tr><td><strong>Active</strong></td><td>Awake (90%), Light (10%)</td><td>Awake (90%), Light (10%)</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="font-size: 0.85em; margin-top: 16px;">Boundary Behavior</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Situation</th><th>Handling</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sleep onset (first 15 min)</td><td>Force Light sleep (transition period)</td></tr>
+        <tr><td>Bout &lt; 5 minutes</td><td>Merge into surrounding stage</td></tr>
+        <tr><td>Cycle boundary (&plusmn;5 min)</td><td>Blend priors from adjacent cycles</td></tr>
+        <tr><td>No clear winner (probabilities within 10%)</td><td>Lower confidence flag, use Light as default</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C4: Confidence Scoring -->
+  <h3 style="text-align: center; margin-top: 36px;">C4: Confidence Scoring</h3>
+
+  <div class="score-component quality-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Per-Epoch Confidence</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      confidence<sub>epoch</sub> = P(assigned_stage) &minus; P(second_best_stage)<br>
+      <br>
+      Range: [0, 1] where higher = more decisive classification<br>
+      <br>
+      Lower confidence when:<br>
+      &nbsp;&nbsp;&bull; Mattress noise is high (calibration SNR &lt; 3)<br>
+      &nbsp;&nbsp;&bull; Epoch is near a stage boundary (probabilities within 10%)<br>
+      &nbsp;&nbsp;&bull; Cycle length is unusual (&lt;70 min or &gt;120 min)<br>
+      &nbsp;&nbsp;&bull; Movement level is ambiguous (near threshold boundary)
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-top: 12px;">Aggregate Night Confidence</h4>
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      C<sub>night</sub> = mean(confidence<sub>epoch</sub> for all sleep epochs)
+    </div>
+    <p style="font-size: 0.85em; color: var(--text-secondary);">
+      Displayed in the UI as a data quality indicator. Low C<sub>night</sub> suggests the
+      stage breakdown should be taken with a grain of salt &mdash; the sleep/wake detection
+      is still reliable, but stage granularity is uncertain.
+    </p>
+  </div>
+
+  <!-- ==================== SECTION D: QUALITY SCORING ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x2B50;</span> Sleep Quality Scoring</h2>
+  <div class="science-intro">
+    <p>
+      Reuses the existing OmniWidget <code>SleepQualityService</code> approach.
+      Quality is a function of duration and phase distribution.
+    </p>
+  </div>
+
+  <div class="score-component quality-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <div class="score-points" style="font-size: 1.6em;">0&ndash;100</div>
+      <div class="score-label" style="font-size: 1.1em;">Quality Score</div>
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Base Score (Duration)</h4>
+    <div class="score-formula" style="display: block; text-align: center; font-size: 0.85em; margin-bottom: 16px;">
+      base = min(100, total_sleep_hours / 8 &times; 100)
+    </div>
+    <p style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 16px;">
+      8 hours = 100% base. Less than 8 hours scales linearly. More than 8 hours doesn't add bonus.
+    </p>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Phase Penalties</h4>
+    <p style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 12px;">
+      Each sleep phase has a healthy target range. Deviation from the range incurs a penalty.
+    </p>
+
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Phase</th><th>Healthy Range</th><th>Max Penalty</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color: var(--awake);">Awake</td><td>0&ndash;15% of total</td><td>&minus;15 pts</td></tr>
+        <tr><td style="color: var(--rem);">REM</td><td>12&ndash;30% of total</td><td>&minus;15 pts</td></tr>
+        <tr><td style="color: var(--light);">Light</td><td>30&ndash;60% of total</td><td>&minus;10 pts</td></tr>
+        <tr><td style="color: var(--deep);">Deep</td><td>8&ndash;35% of total</td><td>&minus;15 pts</td></tr>
+      </tbody>
+    </table>
+
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-top: 12px; margin-bottom: 16px;">
+      For each phase p:<br>
+      &nbsp;&nbsp;fraction<sub>p</sub> = phase_duration<sub>p</sub> / total_sleep<br>
+      &nbsp;&nbsp;if fraction<sub>p</sub> &lt; range_low<sub>p</sub>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;penalty<sub>p</sub> = max_penalty<sub>p</sub> &times; (range_low<sub>p</sub> &minus; fraction<sub>p</sub>) / range_low<sub>p</sub><br>
+      &nbsp;&nbsp;if fraction<sub>p</sub> &gt; range_high<sub>p</sub>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;penalty<sub>p</sub> = max_penalty<sub>p</sub> &times; (fraction<sub>p</sub> &minus; range_high<sub>p</sub>) / (1 &minus; range_high<sub>p</sub>)<br>
+      <br>
+      quality = max(0, base &minus; &Sigma; penalty<sub>p</sub>)
+    </div>
+  </div>
+
+  <div class="research-callout" style="border-left-color: var(--awake);">
+    <div class="cite-label" style="color: #D97706;">Phone vs Watch Confidence</div>
+    <p>
+      <strong>Phone-only</strong>: Uses estimated stages from the heuristic classifier.
+      Lower confidence is reflected in <strong>penalty attenuation</strong> &mdash;
+      penalties are multiplied by C<sub>night</sub> (aggregate confidence).
+      If confidence is low (e.g., 0.4), penalties are reduced by 60%.
+      This prevents confident-sounding quality scores when the underlying stage data is uncertain.
+    </p>
+    <p>
+      <strong>Watch data available</strong>: Uses HealthKit sleep stages directly
+      (written by Apple Watch or other validated wearables). Full penalties applied &mdash;
+      the stage data is trustworthy.
+    </p>
+  </div>
+
+  <!-- ==================== SECTION E: SIGNAL PROCESSING ==================== -->
+  <h2 style="text-align:center; margin-top: 48px;"><span class="emoji">&#x1F50D;</span> Signal Processing for Phone-on-Mattress</h2>
+
+  <div class="score-component sleep-stage" style="max-width: 700px; margin: 20px auto; text-align: left;">
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Noise Floor &amp; Signal Characteristics</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Phone-on-mattress signal is approximately <strong>9&times; weaker</strong> than wrist actigraphy.<br>
+      <br>
+      Noise sources:<br>
+      &nbsp;&nbsp;&bull; Mattress vibration dampening (material-dependent)<br>
+      &nbsp;&nbsp;&bull; Environmental vibration (traffic, appliances, partners)<br>
+      &nbsp;&nbsp;&bull; Phone sensor noise floor (varies by device)<br>
+      <br>
+      Signal-to-noise ratio (SNR):<br>
+      &nbsp;&nbsp;&bull; Spring mattress: SNR ~ 8&ndash;12 (good)<br>
+      &nbsp;&nbsp;&bull; Latex mattress: SNR ~ 5&ndash;8 (adequate)<br>
+      &nbsp;&nbsp;&bull; Memory foam: SNR ~ 3&ndash;5 (marginal but usable)
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">Band-Pass Filter Parameters</h4>
+    <table style="width:100%; font-size:0.88em;">
+      <thead>
+        <tr><th>Parameter</th><th>Value</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>High-pass cutoff</td><td>0.25 Hz</td><td>Remove DC offset and slow drift</td></tr>
+        <tr><td>Low-pass cutoff</td><td>3 Hz</td><td>Remove high-frequency vibration noise</td></tr>
+        <tr><td>Filter type</td><td>4th order Butterworth</td><td>Flat passband, reasonable rolloff</td></tr>
+        <tr><td>Implementation</td><td>vDSP biquad cascade</td><td>Efficient on-device processing</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="font-size: 0.85em; margin-top: 16px;">Relative Measurement Approach</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2; margin-bottom: 16px;">
+      Within-session normalization (not absolute thresholds):<br>
+      <br>
+      &nbsp;&nbsp;A<sub>normalized</sub> = (A<sub>epoch</sub> &minus; A<sub>min</sub>) / (A<sub>max</sub> &minus; A<sub>min</sub>)<br>
+      <br>
+      where A<sub>min</sub> and A<sub>max</sub> are the 5th and 95th percentiles<br>
+      of activity counts from the calibration window.
+    </div>
+
+    <h4 style="font-size: 0.85em; margin-bottom: 8px;">First-Night Calibration</h4>
+    <div class="score-formula" style="display: block; text-align: left; font-size: 0.82em; line-height: 2;">
+      First 30 minutes of detected sleep:<br>
+      &nbsp;&nbsp;1. Establish personal noise floor (A<sub>min</sub>)<br>
+      &nbsp;&nbsp;2. Establish dynamic range (A<sub>max</sub> &minus; A<sub>min</sub>)<br>
+      &nbsp;&nbsp;3. Compute movement intensity thresholds (T<sub>low</sub>, T<sub>mid</sub>, T<sub>high</sub>)<br>
+      &nbsp;&nbsp;4. Estimate mattress quality (SNR) for confidence scoring
+    </div>
+  </div>
+
+  <!-- ==================== CITATIONS ==================== -->
+  <div class="citations">
+    <strong>Sources</strong>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Sleep/Wake Algorithms</h4>
+    <ol>
+      <li>Sadeh A et al. (1994) &ldquo;Activity-Based Sleep-Wake Identification: An Empirical Test of Methodological Issues&rdquo; &mdash; <em>Sleep</em> 17(3), 201&ndash;207 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/7939118/" target="_blank">PubMed</a></li>
+      <li>Cole RJ et al. (1992) &ldquo;Automatic Sleep/Wake Identification From Wrist Activity&rdquo; &mdash; <em>Sleep</em> 15(5), 461&ndash;469 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/1455130/" target="_blank">PubMed</a></li>
+      <li>Winnebeck EC et al. (2023) &ldquo;40 years of actigraphy in sleep medicine and current state of the art&rdquo; &mdash; <em>npj Digital Medicine</em> &mdash; <a href="https://doi.org/10.1038/s41746-023-00802-1" target="_blank">Nature</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">Validation &amp; Accuracy</h4>
+    <ol start="4">
+      <li>de Leeuw MEDM et al. (2023) &ldquo;Accuracy of 11 Consumer Sleep Trackers&rdquo; &mdash; <em>J Clin Sleep Med</em> &mdash; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10394383/" target="_blank">PMC</a></li>
+      <li>Fino E et al. (2020) &ldquo;(Not so) Smart sleep tracking through the phone&rdquo; &mdash; <em>J Sleep Res</em> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/31696594/" target="_blank">PubMed</a></li>
+      <li>van Hees VT et al. (2015) &ldquo;A Novel, Open Access Method to Assess Sleep Duration Using a Wrist-Worn Accelerometer&rdquo; &mdash; <em>PLoS ONE</em> &mdash; heuristic method, F1 79.1 &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/26569414/" target="_blank">PubMed</a></li>
+    </ol>
+
+    <h4 style="margin-top: 16px; font-size: 0.85em;">iOS Implementation</h4>
+    <ol start="7">
+      <li>Apple Developer &mdash; CMSensorRecorder &mdash; <a href="https://developer.apple.com/documentation/coremotion/cmsensorrecorder" target="_blank">developer.apple.com</a></li>
+      <li>Apple Developer &mdash; HKCategoryValueSleepAnalysis &mdash; <a href="https://developer.apple.com/documentation/healthkit/hkcategoryvaluesleepanalysis" target="_blank">developer.apple.com</a></li>
+    </ol>
+  </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Schlafi</span> &mdash; Sleep Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>
