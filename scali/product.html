@@ -5,20 +5,19 @@
   FILE MAP (docs/scali/):
     styles.css    — Shared CSS (colors, layout, components)
     index.html    — TL;DR (landing page)
-    product.html  — THIS FILE. Vision, features, configuration, monetization.
+    product.html  — THIS FILE. Vision, features, configuration.
     widgets.html  — Widgets &amp; Design (chart showcase, widget inventory, design language)
     watch.html    — Watch (complications, watch app, Smart Stack)
     cute.html     — Cute Mode (OFF/ON comparisons, heart placement guide)
     tech.html     — Tech (architecture, shared infra, data storage)
     ../ecosystem/         — Ecosystem overview (index.html) + new project setup guide
 
-  THIS FILE: Product definition — vision/positioning, 5 core feature cards, status emoji explanation, monetization tiers.
+  THIS FILE: Product definition — vision/positioning, 5 core feature cards, status emoji explanation.
 
   EDITING:
   - Content lives inside <div class="container">. Styles come from styles.css.
   - Hero, nav, and footer are shared across all 6 pages — edit all 6 if changing these.
   - Feature cards use .feature-card with color variants (.weight, .target, .config, .app).
-  - Pricing uses .pricing-grid with .pricing-free and .pricing-premium cards.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -162,37 +161,6 @@
         Note: This is a global Gwen Widgets change &mdash; also benefits OmniWidget.
         Scali has NO workout award emojis (&#x1F4AA;&#x1F380;&#x1F634;). Weight data only.
       </p>
-    </div>
-  </div>
-</section>
-
-<!-- Monetization -->
-<section>
-  <h2><span class="emoji">&#x1F4B0;</span> Monetization</h2>
-
-  <div class="pricing-grid">
-    <div class="pricing-card pricing-free">
-      <div class="pricing-label">Free</div>
-      <div class="pricing-title">Core Scali</div>
-      <div class="pricing-subtitle">Free forever &mdash; no time limits, no nag screens</div>
-      <ul>
-        <li>All weight logging (app always free)</li>
-        <li>Display-only widgets (charts, stats, progress)</li>
-        <li>Watch app + complications</li>
-        <li>Both color themes, cute mode</li>
-      </ul>
-    </div>
-
-    <div class="pricing-card pricing-premium">
-      <div class="pricing-label">Premium</div>
-      <div class="pricing-title">~$3&ndash;5 one-time</div>
-      <div class="pricing-subtitle">7-day free trial &middot; One purchase, forever yours</div>
-      <ul>
-        <li>Interactive widgets (quick-log from home screen)</li>
-        <li>Advanced widget styles</li>
-        <li>Historical trends beyond 30 days</li>
-        <li>Monthly overview calendar widget</li>
-      </ul>
     </div>
   </div>
 </section>
