@@ -160,6 +160,21 @@ code {
   font-weight: 500;
 }
 .app-card .card-links a:hover { text-decoration: underline; }
+.app-card .card-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  transition: background 0.2s;
+}
+.app-card .card-button:hover {
+  background: #A7F3D0;
+}
 .app-card .card-meta {
   margin-top: 10px;
   font-size: 0.8em;
