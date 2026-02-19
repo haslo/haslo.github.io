@@ -143,6 +143,17 @@ code {
   border-radius: 16px;
   padding: 24px;
   transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.app-card p {
+  flex: 1;
+}
+.card-bundle {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 0.78em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
 }
 .app-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
 .app-card.omniwidget { border-top: 3px solid #94A3B8; }
