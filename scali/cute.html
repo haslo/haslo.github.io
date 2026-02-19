@@ -1,0 +1,266 @@
+<!--
+  LLM INSTRUCTIONS — Scali Concept: Cute Mode
+  =============================================
+
+  FILE MAP (docs/scali/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, configuration, monetization)
+    widgets.html  — Widgets &amp; Design (chart showcase, widget inventory, design language)
+    watch.html    — Watch (complications, watch app, Smart Stack)
+    cute.html     — THIS FILE. Cute Mode OFF/ON comparisons, heart placement guide.
+    tech.html     — Tech (architecture, shared infra, data storage)
+    ../ecosystem/         — Ecosystem overview (index.html) + new project setup guide
+
+  THIS FILE: Cute Mode tab — explains Clean (no hearts) vs Adorable (hearts everywhere) modes,
+  shows 3 side-by-side SVG comparisons (Weight Chart, Target Progress Arc, Stats Widget), and lists
+  where hearts appear when Cute Mode is ON.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all 6 pages — edit all 6 if changing these.
+  - SVG comparisons use .cute-compare grid (2-col) with .cute-compare-card.
+  - The "Where Hearts Appear" section uses .cute-feature-item list inside .cute-mode-section.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scali — Cute Mode</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <a href="../ecosystem/index.html" class="ecosystem-link">&larr; Gwen Widgets</a>
+  <h1><span class="drop">&#x2696;&#xFE0F;</span> Scali</h1>
+  <div class="tagline">"Weight, beautifully."</div>
+  <p class="pitch">
+    The weight tracker that makes your data gorgeous. Beautiful charts, smart status emojis,
+    and widgets that turn your weight journey into something you actually want to look at.
+    No complexity &mdash; just your weight, visualized.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="watch.html">Watch</a>
+  <a class="tab-btn active" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+
+<section>
+  <div class="cute-hero-intro">
+    <h2>&#x1F497; Cute Mode</h2>
+    <div class="cute-tagline">A single toggle in Settings &mdash; from clean to adorable</div>
+    <p style="margin-top:12px;">
+      Rule: <strong>&ldquo;Every heart has a job.&rdquo;</strong> Hearts serve as backdrops, markers,
+      separators, and brand stamps &mdash; never random decoration. UX first, cute second.
+    </p>
+  </div>
+
+  <div class="cute-mode-modes">
+    <div class="cute-mode-card">
+      <h4>&#x1F6AB; Clean (OFF)</h4>
+      <p>No hearts. Standard dots, lines, circles. Minimal UI, zero heart imagery.</p>
+    </div>
+    <div class="cute-mode-card">
+      <h4>&#x1F497; Adorable (ON)</h4>
+      <p>Hearts woven into the UI. Chart dots become heart markers. Progress arc endpoints become hearts.
+      Widget corners get brand stamps. Heart color matches your chosen theme &mdash; &#x1F497; rose or &#x1F499; ocean.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison 1: Weight Chart -->
+<section>
+  <div class="cute-comparison-group">
+    <h3>Weight Chart</h3>
+    <div class="cute-compare">
+      <div class="cute-compare-card">
+        <h4>&#x1F6AB; OFF</h4>
+        <div class="compare-svg">
+          <svg width="180" height="120" viewBox="0 0 180 120">
+            <line x1="10" y1="20" x2="170" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="10" y1="50" x2="170" y2="50" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="10" y1="80" x2="170" y2="80" stroke="#F1F5F9" stroke-width="1"/>
+            <polygon points="10,70 35,65 60,60 85,58 110,55 135,50 160,48 160,100 10,100" fill="#EC4899" opacity="0.15"/>
+            <polyline points="10,70 35,65 60,60 85,58 110,55 135,50 160,48" fill="none" stroke="#EC4899" stroke-width="2"/>
+            <polyline points="10,68 35,62 60,58 85,55 110,52 135,48 160,45" fill="none" stroke="#991B1B" stroke-width="2"/>
+            <polyline points="10,75 35,58 60,68 85,52 110,60 135,46 160,42" fill="none" stroke="#DC2626" stroke-width="1.5"/>
+            <circle cx="10" cy="75" r="3" fill="#DC2626"/>
+            <circle cx="35" cy="58" r="3" fill="#DC2626"/>
+            <circle cx="60" cy="68" r="3" fill="#DC2626"/>
+            <circle cx="85" cy="52" r="3" fill="#DC2626"/>
+            <circle cx="110" cy="60" r="3" fill="#DC2626"/>
+            <circle cx="135" cy="46" r="3" fill="#DC2626"/>
+            <circle cx="160" cy="42" r="3" fill="#DC2626"/>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Standard circle dots &mdash; clean and minimal</p>
+      </div>
+      <div class="cute-compare-card">
+        <h4>&#x1F497; ON</h4>
+        <div class="compare-svg">
+          <svg width="180" height="120" viewBox="0 0 180 120">
+            <line x1="10" y1="20" x2="170" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="10" y1="50" x2="170" y2="50" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="10" y1="80" x2="170" y2="80" stroke="#F1F5F9" stroke-width="1"/>
+            <text x="90" y="85" text-anchor="middle" font-size="50" opacity="0.08">&#x1F497;</text>
+            <polygon points="10,70 35,65 60,60 85,58 110,55 135,50 160,48 160,100 10,100" fill="#EC4899" opacity="0.15"/>
+            <polyline points="10,70 35,65 60,60 85,58 110,55 135,50 160,48" fill="none" stroke="#EC4899" stroke-width="2"/>
+            <polyline points="10,68 35,62 60,58 85,55 110,52 135,48 160,45" fill="none" stroke="#991B1B" stroke-width="2"/>
+            <polyline points="10,75 35,58 60,68 85,52 110,60 135,46 160,42" fill="none" stroke="#DC2626" stroke-width="1.5"/>
+            <text x="10" y="79" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="35" y="62" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="60" y="72" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="85" y="56" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="110" y="64" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="135" y="50" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="160" y="46" text-anchor="middle" font-size="10">&#x1F497;</text>
+            <text x="8" y="14" font-size="8" opacity="0.3">&#x1F497;</text>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Heart markers, watermark center, brand stamp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison 2: Target Progress Arc -->
+<section>
+  <div class="cute-comparison-group">
+    <h3>Target Progress Arc</h3>
+    <div class="cute-compare">
+      <div class="cute-compare-card">
+        <h4>&#x1F6AB; OFF</h4>
+        <div class="compare-svg">
+          <svg width="140" height="100" viewBox="0 0 140 100">
+            <circle cx="70" cy="55" r="40" fill="none" stroke="#E2E8F0" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="251" stroke-dashoffset="63"/>
+            <circle cx="70" cy="55" r="40" fill="none" stroke="#059669" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="251" stroke-dashoffset="113" transform="rotate(-90 70 55)"/>
+            <text x="70" y="52" text-anchor="middle" font-family="Inter" font-size="18" font-weight="800" fill="#059669">82%</text>
+            <text x="70" y="66" text-anchor="middle" font-family="Inter" font-size="8" fill="#64748B">to target</text>
+            <circle cx="110" cy="55" r="4" fill="#059669"/>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Simple arc with circle endpoint</p>
+      </div>
+      <div class="cute-compare-card">
+        <h4>&#x1F497; ON</h4>
+        <div class="compare-svg">
+          <svg width="140" height="100" viewBox="0 0 140 100">
+            <circle cx="70" cy="55" r="40" fill="none" stroke="#E2E8F0" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="251" stroke-dashoffset="63"/>
+            <circle cx="70" cy="55" r="40" fill="none" stroke="#059669" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="251" stroke-dashoffset="113" transform="rotate(-90 70 55)"/>
+            <text x="70" y="52" text-anchor="middle" font-family="Inter" font-size="18" font-weight="800" fill="#059669">82%</text>
+            <text x="70" y="66" text-anchor="middle" font-family="Inter" font-size="8" fill="#64748B">to target</text>
+            <text x="110" y="59" text-anchor="middle" font-size="14">&#x1F497;</text>
+            <text x="70" y="19" text-anchor="middle" font-size="7" opacity="0.3">&#x1F497;</text>
+            <text x="95" y="22" text-anchor="middle" font-size="7" opacity="0.3">&#x1F497;</text>
+            <text x="108" y="36" text-anchor="middle" font-size="7" opacity="0.3">&#x1F497;</text>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Heart at endpoint + tiny hearts along arc</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison 3: Stats Widget -->
+<section>
+  <div class="cute-comparison-group">
+    <h3>Stats Widget</h3>
+    <div class="cute-compare">
+      <div class="cute-compare-card">
+        <h4>&#x1F6AB; OFF</h4>
+        <div class="compare-svg">
+          <svg width="140" height="80" viewBox="0 0 140 80">
+            <text x="10" y="20" font-family="Inter" font-size="10" fill="#64748B">Current</text>
+            <text x="130" y="20" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#DC2626">74.2 kg</text>
+            <line x1="10" y1="28" x2="130" y2="28" stroke="#F1F5F9" stroke-width="1"/>
+            <text x="10" y="44" font-family="Inter" font-size="10" fill="#64748B">7d avg</text>
+            <text x="130" y="44" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#991B1B">74.5 kg</text>
+            <line x1="10" y1="52" x2="130" y2="52" stroke="#F1F5F9" stroke-width="1"/>
+            <text x="10" y="68" font-family="Inter" font-size="10" fill="#64748B">14d avg</text>
+            <text x="130" y="68" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#EC4899">74.8 kg</text>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Clean numbers, plain separators</p>
+      </div>
+      <div class="cute-compare-card">
+        <h4>&#x1F497; ON</h4>
+        <div class="compare-svg">
+          <svg width="140" height="80" viewBox="0 0 140 80">
+            <text x="6" y="12" font-size="8" opacity="0.3">&#x1F497;</text>
+            <text x="10" y="20" font-family="Inter" font-size="10" fill="#64748B">Current</text>
+            <text x="130" y="20" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#DC2626">74.2 kg</text>
+            <text x="70" y="32" text-anchor="middle" font-size="7" opacity="0.3">&#x1F497;</text>
+            <text x="10" y="44" font-family="Inter" font-size="10" fill="#64748B">7d avg</text>
+            <text x="130" y="44" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#991B1B">74.5 kg</text>
+            <text x="70" y="56" text-anchor="middle" font-size="7" opacity="0.3">&#x1F497;</text>
+            <text x="10" y="68" font-family="Inter" font-size="10" fill="#64748B">14d avg</text>
+            <text x="130" y="68" text-anchor="end" font-family="Inter" font-size="10" font-weight="700" fill="#EC4899">74.8 kg</text>
+          </svg>
+        </div>
+        <p style="font-size:0.82em; color:var(--text-secondary);">Heart brand stamp + heart separators</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Where Hearts Appear -->
+<section>
+  <div class="cute-mode-section">
+    <h3>Where Hearts Appear</h3>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x1F4C8;</span>
+      <div class="cute-desc"><strong>Chart data points</strong> &mdash; dots become small hearts on the line</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x1F3AF;</span>
+      <div class="cute-desc"><strong>Progress arc endpoint</strong> &mdash; heart at the current-position marker</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x1F4F1;</span>
+      <div class="cute-desc"><strong>Widget brand stamp</strong> &mdash; tiny heart in widget corner</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x2702;&#xFE0F;</span>
+      <div class="cute-desc"><strong>Section separators</strong> &mdash; heart dividers between stat rows</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x1F3A8;</span>
+      <div class="cute-desc"><strong>Chart watermark</strong> &mdash; subtle centered heart behind chart content</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x231A;</span>
+      <div class="cute-desc"><strong>Watch complications</strong> &mdash; heart accent on circular complication ring</div>
+    </div>
+    <div class="cute-feature-item">
+      <span class="cute-icon">&#x1F3A8;</span>
+      <div class="cute-desc"><strong>Color coding</strong> &mdash; &#x1F497; in rose theme, &#x1F499; in ocean theme (matches user&rsquo;s color choice)</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Scali</span> &mdash; Weight Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!--
+  LLM INSTRUCTIONS — Scali Concept: Watch
+  ========================================
+
+  FILE MAP (docs/scali/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — TL;DR (landing page)
+    product.html  — Product (vision, features, configuration, monetization)
+    widgets.html  — Widgets &amp; Design (chart showcase, widget inventory, design language)
+    watch.html    — THIS FILE. Watch app features, complication families, Smart Stack.
+    cute.html     — Cute Mode (OFF/ON comparisons, heart placement guide)
+    tech.html     — Tech (architecture, shared infra, data storage)
+    ../ecosystem/         — Ecosystem overview (index.html) + new project setup guide
+
+  THIS FILE: Watch tab — watch app features (4 cards), 4 complication family mockups, Smart Stack notes.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all 6 pages — edit all 6 if changing these.
+  - Watch feature cards use .feature-grid > .feature-card.
+  - Complication mockups use inline SVGs within .feature-card.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scali — Watch</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <a href="../ecosystem/index.html" class="ecosystem-link">&larr; Gwen Widgets</a>
+  <h1><span class="drop">&#x2696;&#xFE0F;</span> Scali</h1>
+  <div class="tagline">"Weight, beautifully."</div>
+  <p class="pitch">
+    The weight tracker that makes your data gorgeous. Beautiful charts, smart status emojis,
+    and widgets that turn your weight journey into something you actually want to look at.
+    No complexity &mdash; just your weight, visualized.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn active" href="watch.html">Watch</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+
+<!-- Watch App -->
+<section>
+  <h2><span class="emoji">&#x231A;</span> Watch App</h2>
+  <p>The Scali watch app is a lightweight companion for glanceable weight data.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card weight">
+      <span class="card-emoji">&#x2696;&#xFE0F;</span>
+      <h3>Current Weight</h3>
+      <p>Big number with trend arrow and status emoji. The watch face of Scali.</p>
+    </div>
+
+    <div class="feature-card weight">
+      <span class="card-emoji">&#x1F4C8;</span>
+      <h3>7-Day Mini Chart</h3>
+      <p>Spark line showing your last week&rsquo;s weight trend. Quick visual: are you heading the right direction?</p>
+    </div>
+
+    <div class="feature-card target">
+      <span class="card-emoji">&#x1F3AF;</span>
+      <h3>Target Progress</h3>
+      <p>Arc gauge showing how far you&rsquo;ve come from origin to target. Percentage + remaining.</p>
+    </div>
+
+    <div class="feature-card config">
+      <span class="card-emoji">&#x270F;&#xFE0F;</span>
+      <h3>Quick-Log Entry</h3>
+      <p>Digital Crown to adjust weight value, tap to confirm and save to HealthKit. Fast morning weigh-in from the wrist.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Complications -->
+<section>
+  <h2><span class="emoji">&#x23F2;</span> Complications</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card weight" style="text-align:center;">
+      <h3>accessoryCircular</h3>
+      <div style="display:flex; justify-content:center; margin:16px 0;">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#E2E8F0" stroke-width="4"/>
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#059669" stroke-width="4"
+            stroke-dasharray="163" stroke-dashoffset="33" stroke-linecap="round"
+            transform="rotate(-90 30 30)"/>
+          <text x="30" y="28" text-anchor="middle" font-family="Inter" font-size="12" font-weight="800" fill="#1E293B">74.2</text>
+          <text x="30" y="38" text-anchor="middle" font-family="Inter" font-size="7" fill="#64748B">kg &#x2193;</text>
+        </svg>
+      </div>
+      <p style="font-size:0.85em; color:var(--text-secondary);">Weight number with colored ring showing target proximity</p>
+    </div>
+
+    <div class="feature-card weight" style="text-align:center;">
+      <h3>accessoryRectangular</h3>
+      <div style="display:flex; justify-content:center; margin:16px 0;">
+        <svg width="140" height="45" viewBox="0 0 140 45">
+          <text x="4" y="16" font-family="Inter" font-size="14" font-weight="800" fill="#1E293B">74.2 kg</text>
+          <text x="4" y="30" font-family="Inter" font-size="9" fill="#64748B">7d avg: 74.5</text>
+          <text x="4" y="40" font-family="Inter" font-size="8" fill="#059669">&#x2193; 0.3 this week</text>
+          <polyline points="85,35 95,32 105,36 115,28 125,24 135,20" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="135" cy="20" r="2.5" fill="#DC2626"/>
+        </svg>
+      </div>
+      <p style="font-size:0.85em; color:var(--text-secondary);">Weight + avg on left, spark line on right</p>
+    </div>
+
+    <div class="feature-card weight" style="text-align:center;">
+      <h3>accessoryInline</h3>
+      <div style="display:flex; justify-content:center; margin:16px 0;">
+        <svg width="160" height="18" viewBox="0 0 160 18">
+          <text x="2" y="14" font-family="Inter" font-size="12" fill="#1E293B">&#x2696;&#xFE0F; 74.2 kg &#x2193; &#x1F60A;</text>
+        </svg>
+      </div>
+      <p style="font-size:0.85em; color:var(--text-secondary);">Single line: emoji + weight + trend + status</p>
+    </div>
+
+    <div class="feature-card weight" style="text-align:center;">
+      <h3>accessoryCorner</h3>
+      <div style="display:flex; justify-content:center; margin:16px 0;">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <path d="M 5 35 A 30 30 0 0 1 35 5" fill="none" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 5 35 A 30 30 0 0 1 28 8" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+          <text x="20" y="28" text-anchor="middle" font-family="Inter" font-size="10" font-weight="800" fill="#1E293B">74.2</text>
+        </svg>
+      </div>
+      <p style="font-size:0.85em; color:var(--text-secondary);">Weight number with gauge arc in corner</p>
+    </div>
+  </div>
+</section>
+
+<!-- Smart Stack -->
+<section>
+  <h2><span class="emoji">&#x1F4DA;</span> Smart Stack</h2>
+  <p>
+    Scali surfaces in the watchOS Smart Stack when weight was logged recently (morning weigh-in habit),
+    when approaching the target zone, or based on daily patterns. Uses <code>RelevanceConfiguration</code>
+    (watchOS 26+, <code>@available</code>-gated) to provide contextual relevance hints to the system.
+  </p>
+</section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Scali</span> &mdash; Weight Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>

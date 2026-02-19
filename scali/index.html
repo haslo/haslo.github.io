@@ -1,0 +1,151 @@
+<!--
+  LLM INSTRUCTIONS — Scali Concept: TL;DR (Landing Page)
+  =======================================================
+
+  FILE MAP (docs/scali/):
+    styles.css    — Shared CSS (colors, layout, components)
+    index.html    — THIS FILE. TL;DR landing page.
+    product.html  — Product (vision, features, configuration, monetization)
+    widgets.html  — Widgets &amp; Design (chart showcase, widget inventory, design language)
+    watch.html    — Watch (complications, watch app, Smart Stack)
+    cute.html     — Cute Mode (OFF/ON comparisons, heart placement guide)
+    tech.html     — Tech (architecture, shared infra, data storage)
+    ../ecosystem/         — Ecosystem overview (index.html) + new project setup guide
+
+  THIS FILE: Landing page with elevator pitch, weight chart SVG, and feature pills.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - Hero, nav, and footer are shared across all 6 pages — edit all 6 if changing these.
+  - The weight chart SVG uses CSS animations defined in styles.css.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scali — TL;DR</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <a href="../ecosystem/index.html" class="ecosystem-link">&larr; Gwen Widgets</a>
+  <h1><span class="drop">&#x2696;&#xFE0F;</span> Scali</h1>
+  <div class="tagline">"Weight, beautifully."</div>
+  <p class="pitch">
+    The weight tracker that makes your data gorgeous. Beautiful charts, smart status emojis,
+    and widgets that turn your weight journey into something you actually want to look at.
+    No complexity &mdash; just your weight, visualized.
+  </p>
+  <div class="platforms">
+    <span class="platform-badge">iPhone</span>
+    <span class="platform-badge">Apple Watch</span>
+    <span class="platform-badge">iPad</span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="tab-btn active" href="index.html">TL;DR</a>
+  <a class="tab-btn" href="product.html">Product</a>
+  <a class="tab-btn" href="widgets.html">Widgets &amp; Design</a>
+  <a class="tab-btn" href="watch.html">Watch</a>
+  <a class="tab-btn" href="cute.html">Cute Mode</a>
+  <a class="tab-btn" href="tech.html">Tech</a>
+</nav>
+
+<div class="container">
+  <section>
+    <h2><span class="emoji">&#x26A1;</span> TL;DR</h2>
+    <p style="font-size:1.15em; max-width:640px;">
+      <strong>Scali</strong> is a weight tracker for iOS. You log your weight, and the app
+      turns it into beautiful charts with rolling averages, trend lines, and smart status emojis
+      that tell you how you&rsquo;re doing at a glance.
+    </p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; margin:32px 0; align-items:center;">
+      <!-- Key visual: Weight Chart -->
+      <div style="text-align:center;">
+        <svg width="220" height="160" viewBox="0 0 220 160">
+          <!-- Grid lines -->
+          <line x1="20" y1="20" x2="200" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+          <line x1="20" y1="50" x2="200" y2="50" stroke="#F1F5F9" stroke-width="1"/>
+          <line x1="20" y1="80" x2="200" y2="80" stroke="#F1F5F9" stroke-width="1"/>
+          <line x1="20" y1="110" x2="200" y2="110" stroke="#F1F5F9" stroke-width="1"/>
+          <!-- Area fill under 14d avg -->
+          <polygon points="20,85 34,82 48,80 62,78 76,76 90,74 104,72 118,71 132,70 146,68 160,67 174,66 188,65 200,64 200,130 20,130"
+            fill="url(#chartGrad)" opacity="0.3"/>
+          <!-- 14d avg line (pink) -->
+          <polyline points="20,85 34,82 48,80 62,78 76,76 90,74 104,72 118,71 132,70 146,68 160,67 174,66 188,65 200,64"
+            fill="none" stroke="#EC4899" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- 7d avg line (dark red) -->
+          <polyline points="20,88 34,84 48,78 62,80 76,74 90,72 104,70 118,68 132,67 146,65 160,64 174,62 188,61 200,60"
+            fill="none" stroke="#991B1B" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Daily weight line (red, thinner) -->
+          <polyline points="20,92 34,75 48,88 62,72 76,80 90,68 104,76 118,64 132,72 146,60 160,68 174,58 188,64 200,56"
+            fill="none" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Data dots -->
+          <circle cx="20" cy="92" r="2.5" fill="#DC2626"/>
+          <circle cx="34" cy="75" r="2.5" fill="#DC2626"/>
+          <circle cx="48" cy="88" r="2.5" fill="#DC2626"/>
+          <circle cx="62" cy="72" r="2.5" fill="#DC2626"/>
+          <circle cx="76" cy="80" r="2.5" fill="#DC2626"/>
+          <circle cx="90" cy="68" r="2.5" fill="#DC2626"/>
+          <circle cx="104" cy="76" r="2.5" fill="#DC2626"/>
+          <circle cx="118" cy="64" r="2.5" fill="#DC2626"/>
+          <circle cx="132" cy="72" r="2.5" fill="#DC2626"/>
+          <circle cx="146" cy="60" r="2.5" fill="#DC2626"/>
+          <circle cx="160" cy="68" r="2.5" fill="#DC2626"/>
+          <circle cx="174" cy="58" r="2.5" fill="#DC2626"/>
+          <circle cx="188" cy="64" r="2.5" fill="#DC2626"/>
+          <circle cx="200" cy="56" r="2.5" fill="#DC2626"/>
+          <!-- Endpoint dots (outlined) -->
+          <circle cx="200" cy="56" r="5" fill="white" stroke="#DC2626" stroke-width="2"/>
+          <circle cx="200" cy="60" r="5" fill="white" stroke="#991B1B" stroke-width="2"/>
+          <circle cx="200" cy="64" r="5" fill="white" stroke="#EC4899" stroke-width="2"/>
+          <!-- Gradient def -->
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#EC4899" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#EC4899" stop-opacity="0.05"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div style="font-size:0.8em; color:var(--text-secondary); margin-top:8px;">The Weight Chart &mdash; your data, beautifully</div>
+      </div>
+
+      <!-- Elevator pitch bullets -->
+      <div>
+        <ul>
+          <li><strong>Beautiful weight charts.</strong> 7-day and 14-day rolling averages with trend lines and gradient fills.</li>
+          <li><strong>Smart status emojis.</strong> &#x2728; when you hit your target zone, &#x1F60A; when trending right, &#x26A0;&#xFE0F;&#x1F6A8; when drifting &mdash; works for both gaining and losing goals.</li>
+          <li><strong>Target tracking.</strong> Set your goal, see your journey from origin to target on every widget.</li>
+          <li><strong>Two color themes.</strong> Rose/Red (default) or Ocean/Cyan &mdash; pick what feels right.</li>
+          <li><strong>Watch complications.</strong> Current weight, trend arrow, and mini charts on your wrist.</li>
+          <li><strong>No subscription.</strong> Core app free forever. One-time premium for interactive widgets (~$3-5).</li>
+          <li><strong>HealthKit native.</strong> Part of the Gwen Widgets ecosystem, sharing <code>HealthWidgetsCore</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick-glance feature pills -->
+    <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:24px 0;">
+      <span class="urgency-pill" style="background:var(--weight-light); color:var(--weight); cursor:default;"><span class="pill-emoji">&#x2696;&#xFE0F;</span> Weight Tracking</span>
+      <span class="urgency-pill" style="background:#E0F2FE; color:#0284C7; cursor:default;"><span class="pill-emoji">&#x1F4CA;</span> 14+ Widgets</span>
+      <span class="urgency-pill" style="background:var(--target-light); color:var(--target); cursor:default;"><span class="pill-emoji">&#x1F3AF;</span> Target Progress</span>
+      <span class="urgency-pill" style="background:#EDE9FE; color:#7C3AED; cursor:default;"><span class="pill-emoji">&#x231A;</span> Watch</span>
+      <span class="urgency-pill" style="background:#FCE7F3; color:#DB2777; cursor:default;"><span class="pill-emoji">&#x1F497;</span> Cute Mode</span>
+    </div>
+
+    <div style="text-align:center; margin-top:8px; font-size:0.82em; color:var(--text-secondary);">
+      Bundle ID: <code style="font-size:0.95em;">com.cybergwen.Scali</code>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Scali</span> &mdash; Weight Tracker &middot; Concept Document &middot; February 2026
+</footer>
+
+</body>
+</html>
