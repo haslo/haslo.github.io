@@ -1051,6 +1051,21 @@ tbody tr:hover { background: #FAFCFE; }
   margin-bottom: 12px;
 }
 
+/* Ecosystem back-link */
+.ecosystem-link {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.ecosystem-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
 @media (max-width: 700px) {
   .feature-grid, .pricing-grid, .diagram-grid, .tech-grid, .design-principles, .circle-showcase, .score-breakdown, .widget-cards, .cc-ls-grid, .source-grid {
     grid-template-columns: 1fr;

@@ -1,0 +1,185 @@
+<!--
+  LLM INSTRUCTIONS — Gwen Widgets Ecosystem Overview
+  ====================================================
+
+  FILE MAP (docs/ecosystem/):
+    styles.css              — Shared CSS for ecosystem-level docs
+    index.html              — THIS FILE. Ecosystem overview, app cards, links.
+    new_project_setup.html  — Step-by-step Xcode project setup for new apps.
+
+  SIBLING DIRECTORIES (docs/):
+    pipi/                   — Pipi concept docs (7 tabs: TL;DR, Product, Widgets, Cute, Science, Maths, Tech)
+    schlafi/                — Schlafi concept docs (6 tabs: TL;DR, Science, Maths, Watch, Sound, ML)
+    architecture.md         — Technical architecture documentation
+    howtos.md               — Implementation patterns and workarounds
+
+  THIS FILE: Landing page for the Gwen Widgets ecosystem. Describes what the ecosystem
+  is, what apps share, and provides cards linking to each app's concept docs.
+
+  EDITING:
+  - Content lives inside <div class="container">. Styles come from styles.css.
+  - App cards use .app-card-grid > .app-card. To add a new app, duplicate a card.
+  - Hero and footer are standalone to this page (not shared with app concept docs).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gwen Widgets &mdash; Ecosystem Overview</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1><span class="icon">&#x1F331;</span> Gwen Widgets</h1>
+  <div class="tagline">"Health tracking, widget by widget."</div>
+  <p class="pitch">
+    An ecosystem of health-tracking iOS apps powered by HealthKit, SwiftUI, WidgetKit,
+    and Swift Charts &mdash; sharing a common SPM package for models, services, logic,
+    theming, and chart axis layout.
+  </p>
+</header>
+
+<div class="container">
+
+<!-- ==================== THE ECOSYSTEM ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F3D7;</span>The Ecosystem</h2>
+  <p>
+    Every app in the Gwen Widgets family shares a common foundation. This means new apps
+    get HealthKit integration, caching, persistent storage, theming, and chart layout for free
+    &mdash; and improvements to the shared package benefit every app at once.
+  </p>
+
+  <h3>Shared Infrastructure</h3>
+  <ul>
+    <li><strong>HealthWidgetsCore</strong> SPM package at <code>Packages/HealthWidgetsCore/</code> &mdash; models, services, logic, theme, chart axis layout</li>
+    <li><strong>App Group</strong> <code>group.com.cybergwen.HealthWidgets</code> &mdash; shared data across all apps, widget extensions, and watch apps</li>
+    <li><strong>HealthKit</strong> for all health data &mdash; weight, nutrition, activity, sleep, workouts, water</li>
+    <li><strong>Actor-isolated services</strong> with cache layer (<code>CacheStorage</code>) and persistent storage (<code>AppDataStorage</code>)</li>
+    <li><strong>GitHub repo</strong>: <a href="https://github.com/haslo/health_widgets" style="color: var(--primary-dark);">haslo/health_widgets</a></li>
+  </ul>
+</section>
+
+<!-- ==================== APPS ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F4F1;</span>Apps</h2>
+
+  <div class="app-card-grid">
+
+    <div class="app-card omniwidget">
+      <span class="card-emoji">&#x2699;&#xFE0F;</span>
+      <h3>OmniWidget <span class="status-badge playground">Playground</span></h3>
+      <p>
+        Proof of concept and prototype. All widget types and architecture patterns are
+        prototyped here. Device display name: &ldquo;Gwen Widgets&rdquo;. Not for distribution.
+      </p>
+      <div class="card-meta">16+ widget types &middot; Weight, nutrition, activity, sleep, energy</div>
+    </div>
+
+    <div class="app-card pipi">
+      <span class="card-emoji">&#x1F4A7;</span>
+      <h3>Pipi <span class="status-badge active">App Store</span></h3>
+      <p>
+        Water + pee tracker. The only app that tracks both sides of hydration.
+      </p>
+      <div class="card-links">
+        <a href="../pipi/">Concept Docs</a> &middot;
+        <a href="https://haslo.github.io/pipi/">GitHub Pages</a>
+      </div>
+      <div class="card-meta">iPhone + Apple Watch + iPad &middot; 7 concept tabs</div>
+    </div>
+
+    <div class="app-card schlafi">
+      <span class="card-emoji">&#x1F319;</span>
+      <h3>Schlafi <span class="status-badge concept">Concept Phase</span></h3>
+      <p>
+        Sleep tracker using phone-on-mattress actigraphy. Movement-based sleep detection
+        backed by 40 years of research.
+      </p>
+      <div class="card-links">
+        <a href="../schlafi/">Concept Docs</a> &middot;
+        <a href="https://haslo.github.io/schlafi/">GitHub Pages</a>
+      </div>
+      <div class="card-meta">iPhone + Apple Watch &middot; 6 concept tabs</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== DEVELOPER RESOURCES ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F4DA;</span>Developer Resources</h2>
+
+  <div class="resource-grid">
+    <a href="new_project_setup.html" class="resource-card">
+      <span class="resource-emoji">&#x1F680;</span>
+      <div class="resource-title">New Project Setup</div>
+      <div class="resource-desc">Step-by-step guide for adding a new app to the ecosystem</div>
+    </a>
+    <a href="../architecture.md" class="resource-card">
+      <span class="resource-emoji">&#x1F3D7;</span>
+      <div class="resource-title">Architecture</div>
+      <div class="resource-desc">Services, models, cache keys, widget table, file tree</div>
+    </a>
+    <a href="../howtos.md" class="resource-card">
+      <span class="resource-emoji">&#x1F527;</span>
+      <div class="resource-title">How-Tos</div>
+      <div class="resource-desc">Implementation patterns and workarounds</div>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== QUICK REFERENCE ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F4CB;</span>Quick Reference</h2>
+
+  <h3>Bundle IDs</h3>
+  <table>
+    <thead>
+      <tr><th>Target</th><th>Bundle ID</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>OmniWidget</td><td><code>com.cybergwen.WeightWidget</code></td></tr>
+      <tr><td>OmniWidget Widgets</td><td><code>com.cybergwen.WeightWidget.WeightChartWidget</code></td></tr>
+      <tr><td>Pipi</td><td><code>com.cybergwen.Pipi</code></td></tr>
+      <tr><td>Pipi Widgets</td><td><code>com.cybergwen.Pipi.PipiWidgets</code></td></tr>
+      <tr><td>Pipi Watch</td><td><code>com.cybergwen.Pipi.PipiWatch</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Build Commands</h3>
+  <table>
+    <thead>
+      <tr><th>Target</th><th>Command</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OmniWidget iOS</td>
+        <td><code>cd OmniWidget &amp;&amp; xcodebuild -scheme OmniWidget -destination 'platform=iOS Simulator,name=iPhone 17' build</code></td>
+      </tr>
+      <tr>
+        <td>Pipi iOS</td>
+        <td><code>cd Pipi &amp;&amp; xcodebuild -scheme Pipi -destination 'platform=iOS Simulator,name=iPhone 17' build</code></td>
+      </tr>
+      <tr>
+        <td>PipiWatch</td>
+        <td><code>cd Pipi &amp;&amp; xcodebuild -scheme 'PipiWatch Watch App' -destination 'platform=watchOS Simulator,name=Apple Watch Series 11 (46mm)' build</code></td>
+      </tr>
+      <tr>
+        <td>Unit Tests</td>
+        <td><code>cd Packages/HealthWidgetsCore &amp;&amp; xcodebuild test -scheme HealthWidgetsCore -destination 'platform=iOS Simulator,name=iPhone 17'</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">Gwen Widgets</span> &mdash; Health Tracking Ecosystem &middot; February 2026
+</footer>
+
+</body>
+</html>
