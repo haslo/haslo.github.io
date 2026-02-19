@@ -12,7 +12,11 @@ while true; do
     git push origin main
     echo "[$(date '+%H:%M:%S')] Pushed changes."
   else
-    echo "[$(date '+%H:%M:%S')] No changes."
+    if [ "$INTERVAL" -lt 600 ]; then
+      printf "."
+    else
+      echo "[$(date '+%H:%M:%S')] No changes."
+    fi
   fi
   sleep "$INTERVAL"
 done
