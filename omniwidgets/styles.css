@@ -1,0 +1,246 @@
+/*
+  LLM INSTRUCTIONS — OmniWidget Widget Catalog: Stylesheet
+  ==========================================================
+
+  FILE MAP (docs/omniwidgets/):
+    styles.css              — THIS FILE. CSS for the widget catalog page.
+    widgets.html            — Single-page widget catalog.
+
+  SIBLING DIRECTORIES (docs/):
+    ecosystem/              — Ecosystem overview, setup guide
+    pipi/                   — Pipi concept docs
+    schlafi/                — Schlafi concept docs
+    scali/                  — Scali concept docs
+
+  EDITING GUIDE:
+  - Gray/silver tone for "playground" identity (vs green ecosystem, blue Pipi, etc.)
+  - Widget cards use .wcard pattern from Pipi concept docs.
+  - Size tags use .size-tag pattern.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #64748B;
+  --primary-light: #F1F5F9;
+  --primary-dark: #475569;
+  --accent: #94A3B8;
+  --accent-light: #F8FAFC;
+  --bg: #FAFCFE;
+  --text: #1E293B;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
+  --card-bg: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #334155 0%, #475569 40%, #64748B 100%);
+  color: white;
+  padding: 50px 40px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.hero h1 {
+  font-size: 2.8em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+  position: relative;
+}
+.hero h1 .icon { font-size: 0.8em; }
+.hero .tagline {
+  font-size: 1.2em;
+  font-weight: 300;
+  opacity: 0.9;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero .pitch {
+  font-size: 1em;
+  max-width: 580px;
+  margin: 0 auto;
+  opacity: 0.85;
+  line-height: 1.7;
+  position: relative;
+}
+
+/* Ecosystem back-link */
+.ecosystem-link {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.ecosystem-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Layout */
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+section { padding: 40px 0 28px; }
+section + section { border-top: 1px solid var(--border); }
+
+h2 {
+  font-size: 1.6em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+h2 .emoji { margin-right: 8px; }
+
+/* Widget cards */
+.widget-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.wcard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: box-shadow 0.2s;
+}
+.wcard:hover { box-shadow: 0 3px 16px rgba(0,0,0,0.05); }
+
+.wcard h3 {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.wcard-info {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.wcard-sizes {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.size-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.72em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.68em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.status-badge.implemented {
+  background: #D1FAE5;
+  color: #047857;
+}
+
+/* Section count */
+.section-count {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0 24px;
+  font-size: 0.88em;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+thead { background: linear-gradient(135deg, #F8FAFC, #F1F5F9); }
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+td { padding: 8px 14px; border-bottom: 1px solid #F1F5F9; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #FAFCFE; }
+td code {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  background: #F1F5F9;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  color: var(--primary-dark);
+}
+
+/* Footer */
+.footer {
+  text-align: center; padding: 36px 32px;
+  color: var(--text-secondary); font-size: 0.85em;
+  border-top: 1px solid var(--border);
+}
+.footer-brand {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+/* Print */
+@media print {
+  body { font-size: 11pt; background: white; }
+  .hero { padding: 30px 24px; break-after: avoid; }
+  .wcard { break-inside: avoid; box-shadow: none !important; }
+  h2 { break-after: avoid; }
+}
+
+@media (max-width: 600px) {
+  .widget-cards { grid-template-columns: 1fr; }
+  .hero { padding: 36px 20px; }
+  .hero h1 { font-size: 2em; }
+  .container { padding: 0 16px; }
+}

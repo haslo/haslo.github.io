@@ -1,0 +1,281 @@
+<!--
+  LLM INSTRUCTIONS — OmniWidget Widget Catalog
+  ================================================
+
+  FILE MAP (docs/omniwidgets/):
+    styles.css              — CSS for this page (gray/silver playground theme).
+    widgets.html            — THIS FILE. Single-page widget catalog for OmniWidget.
+
+  SIBLING DIRECTORIES (docs/):
+    ecosystem/              — Ecosystem overview (links here from OmniWidget card)
+    pipi/, schlafi/, scali/ — App concept docs
+
+  THIS FILE: Lists all 24 OmniWidget widgets grouped by domain, with display
+  names, supported sizes, and short descriptions.
+
+  EDITING:
+  - Widget cards use .wcard / .wcard-info / .size-tag classes from styles.css.
+  - To add a widget: duplicate a .wcard block in the relevant domain section.
+  - To add a domain: duplicate a <section> block.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniWidget &mdash; Widget Catalog</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <a href="../ecosystem/index.html" class="ecosystem-link">&larr; Ecosystem</a>
+  <h1><span class="icon">&#x2699;&#xFE0F;</span> OmniWidget</h1>
+  <div class="tagline">Widget Catalog</div>
+  <p class="pitch">
+    24 widgets across 6 domains. Proof of concept and playground for the
+    Gwen Widgets ecosystem. Not for distribution.
+  </p>
+</header>
+
+<div class="container">
+
+<!-- ==================== WEIGHT ==================== -->
+<section>
+  <h2><span class="emoji">&#x2696;&#xFE0F;</span>Weight<span class="section-count">(1 widget)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Weight Trend <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">14-day weight line chart with target range</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+        <span class="size-tag">XL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CALORIES ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F525;</span>Calories<span class="section-count">(4 widgets)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Calorie Budget <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">14-day calorie bars, deviation from target</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Today's Calories <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Gauge: today's intake vs target range</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Calorie Table <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">14-day table with ranges and emojis</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Weight + Calorie Budget <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Weight trend and calorie budget side by side</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+        <span class="size-tag">XL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ENERGY ==================== -->
+<section>
+  <h2><span class="emoji">&#x26A1;</span>Energy<span class="section-count">(3 widgets)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Energy Balance <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly net energy curve with target zone</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Energy + Burn &amp; Dietary <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Energy balance + burn and dietary breakdown</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Calories + Energy Balance <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Weekly calorie budget + today's energy</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ACTIVITY ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F3C3;</span>Activity<span class="section-count">(8 widgets)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Steps <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly steps vs 7-day average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Distance <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly distance vs 7-day average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Stairs <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly flights climbed vs 7-day average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Water <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly water intake vs 3L target</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Active Burn <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly active energy burn vs 7-day average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Dietary Intake <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly dietary energy vs 7-day average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Water + Steps &amp; Stairs <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Water (top) + steps and stairs (bottom)</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Water &middot; Steps &middot; Stairs <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Water, steps, and stairs side by side</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NUTRITION ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F957;</span>Nutrition<span class="section-count">(5 widgets)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Macro Pies <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Daily macronutrient pie charts</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Macro Stacked Area <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Today's fat, protein, carbs as stacked area</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Carbs &middot; Protein &middot; Fat <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Three macros side by side</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Macro Area + Individual <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Stacked area + individual macro charts</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Dietary + Macros <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Dietary intake with macro breakdown</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLEEP ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F634;</span>Sleep<span class="section-count">(3 widgets)</span></h2>
+  <div class="widget-cards">
+    <div class="wcard">
+      <h3>Sleep Duration <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">7-night bar chart with target and average</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Sleep Schedule <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">7-night bedtime-to-wake Gantt chart</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Sleep Phases <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Last night's phases with quality score</div>
+      <div class="wcard-sizes">
+        <span class="size-tag">M</span>
+        <span class="size-tag">L</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">OmniWidget</span> &mdash; Gwen Widgets Ecosystem &middot; February 2026
+</footer>
+
+</body>
+</html>
