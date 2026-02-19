@@ -10,8 +10,7 @@
   SIBLING DIRECTORIES (docs/):
     pipi/                   — Pipi concept docs (7 tabs: TL;DR, Product, Widgets, Cute, Science, Maths, Tech)
     schlafi/                — Schlafi concept docs (6 tabs: TL;DR, Science, Maths, Watch, Sound, ML)
-    architecture.md         — Technical architecture documentation
-    howtos.md               — Implementation patterns and workarounds
+    llm_context/            — LLM context files (architecture.md, howtos.md) — not human-readable docs
 
   THIS FILE: Landing page for the Gwen Widgets ecosystem. Describes what the ecosystem
   is, what apps share, and provides cards linking to each app's concept docs.
@@ -80,7 +79,7 @@
 
     <div class="app-card pipi">
       <span class="card-emoji">&#x1F4A7;</span>
-      <h3>Pipi <span class="status-badge active">App Store</span></h3>
+      <h3>Pipi <span class="status-badge active">In Development</span></h3>
       <p>
         Water + pee tracker. The only app that tracks both sides of hydration.
       </p>
@@ -112,21 +111,11 @@
 <section>
   <h2><span class="emoji">&#x1F4DA;</span>Developer Resources</h2>
 
-  <div class="resource-grid">
+  <div class="resource-grid" style="grid-template-columns: 1fr;">
     <a href="new_project_setup.html" class="resource-card">
       <span class="resource-emoji">&#x1F680;</span>
       <div class="resource-title">New Project Setup</div>
       <div class="resource-desc">Step-by-step guide for adding a new app to the ecosystem</div>
-    </a>
-    <a href="../architecture.md" class="resource-card">
-      <span class="resource-emoji">&#x1F3D7;</span>
-      <div class="resource-title">Architecture</div>
-      <div class="resource-desc">Services, models, cache keys, widget table, file tree</div>
-    </a>
-    <a href="../howtos.md" class="resource-card">
-      <span class="resource-emoji">&#x1F527;</span>
-      <div class="resource-title">How-Tos</div>
-      <div class="resource-desc">Implementation patterns and workarounds</div>
     </a>
   </div>
 </section>

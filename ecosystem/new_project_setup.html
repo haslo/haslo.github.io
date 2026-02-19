@@ -10,15 +10,14 @@
   SIBLING DIRECTORIES (docs/):
     pipi/                   — Pipi concept docs (7 tabs: TL;DR, Product, Widgets, Cute, Science, Maths, Tech)
     schlafi/                — Schlafi concept docs (6 tabs: TL;DR, Science, Maths, Watch, Sound, ML)
-    architecture.md         — Technical architecture documentation
-    howtos.md               — Implementation patterns and workarounds
+    llm_context/            — LLM context files (architecture.md, howtos.md) — not human-readable docs
 
   THIS FILE: Complete guide for creating a new app in the Gwen Widgets ecosystem.
-  Covers Xcode project creation, HealthWidgetsCore integration, capabilities,
-  widget extension, watch app, test targets, and configuration.
+  Two parts: Part A (human Xcode GUI work, steps 1-7) and Part B (LLM-automatable, steps 1-8).
+  Human part is pure GUI clicks. LLM part verifies setup, writes code, updates docs, and builds.
 
   EDITING:
-  - Each step is a <section class="step-section"> with .step-number + .step-title.
+  - Each step is a <div class="step-compact"> with .step-num + content.
   - Warning callouts use .warning-note, tips use .success-note, info uses .info-note.
   - Code blocks use <pre class="code-block">. Inline code uses <code>.
   - Menu paths use <span class="menu-path">.
@@ -30,6 +29,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gwen Widgets &mdash; New Project Setup</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+  .part-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .part-label {
+    padding: 4px 12px; border-radius: 8px; font-size: 0.75em; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+  }
+  .part-label.human { background: #DBEAFE; color: #1D4ED8; }
+  .part-label.llm { background: #F3E8FF; color: #7C3AED; }
+  .step-compact { margin-bottom: 20px; }
+  .step-compact .step-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px;
+  }
+  .step-compact .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; display: flex; align-items: center; justify-content: center;
+    font-size: 0.85em; font-weight: 800; flex-shrink: 0;
+  }
+  .step-compact .step-name { font-size: 1.1em; font-weight: 700; }
+  .step-compact .step-body { margin-left: 38px; }
+  .step-compact .step-body p { margin-bottom: 6px; }
+  .step-compact .step-body ul { margin-bottom: 8px; }
+  .step-compact + .step-compact { padding-top: 16px; border-top: 1px solid #F1F5F9; }
+  .divider-section {
+    background: linear-gradient(135deg, #F8FAFC, #F0F9FF);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 20px; margin: 24px 0;
+  }
+  .divider-section h3 { margin-top: 0; margin-bottom: 8px; }
+</style>
 </head>
 <body>
 
@@ -37,9 +66,8 @@
   <h1><span class="icon">&#x1F680;</span> New Project Setup</h1>
   <div class="tagline">"Yes, all of this is GUI-only. No, Apple still hasn't given us a CLI. Deep breaths."</div>
   <p class="pitch">
-    A step-by-step guide for adding a new app to the Gwen Widgets ecosystem.
-    Steps 1&ndash;6 are Xcode GUI work. Steps 7&ndash;10 are LLM-automatable.
-    Step 11 verifies everything builds.
+    Adding a new app to the Gwen Widgets ecosystem. Part A is Xcode GUI work (human).
+    Part B is verification, code &amp; config (Claude).
   </p>
 </header>
 
@@ -49,246 +77,180 @@
 <section>
   <h2><span class="emoji">&#x2705;</span>Before You Start</h2>
   <ul>
-    <li><strong>Xcode 16+</strong> installed with iOS 18+ and watchOS 11+ SDKs</li>
+    <li><strong>Xcode 16+</strong> with iOS 18+ and watchOS 11+ SDKs</li>
     <li><strong>Repository cloned</strong> at <code>/Users/haslo/projects/health_widgets/</code></li>
     <li><strong>Apple Developer account</strong> with team ID <code>9SXAEFW8AN</code></li>
-    <li><strong>Inner peace</strong> with the fact that Xcode project creation is GUI-only</li>
   </ul>
 </section>
 
-<!-- ==================== STEP 1 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">1</div>
-    <div>
-      <div class="step-title">Create Xcode Project</div>
-      <div class="step-subtitle">GUI &mdash; Xcode only</div>
-    </div>
-  </div>
-
-  <p>
-    <span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Project <span class="menu-arrow">&rarr;</span> iOS <span class="menu-arrow">&rarr;</span> App</span>
-  </p>
-  <ul>
-    <li><strong>Product Name:</strong> <code>NewApp</code></li>
-    <li><strong>Organization Identifier:</strong> <code>com.cybergwen</code></li>
-    <li><strong>Interface:</strong> SwiftUI</li>
-    <li><strong>Language:</strong> Swift</li>
-    <li><strong>Storage:</strong> None</li>
-    <li><strong>Save location:</strong> <code>/Users/haslo/projects/health_widgets/</code></li>
-  </ul>
-  <p>
-    This creates <code>NewApp/NewApp.xcodeproj</code> and <code>NewApp/NewApp/</code>.
-  </p>
-
-  <div class="info-note">
-    <div class="note-label">Auto File Discovery</div>
-    <p>Xcode uses <code>PBXFileSystemSynchronizedRootGroup</code> &mdash; new Swift files added to
-    <code>NewApp/NewApp/</code> are automatically picked up by the build. No pbxproj edits needed.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 2 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">2</div>
-    <div>
-      <div class="step-title">Add HealthWidgetsCore SPM Package</div>
-      <div class="step-subtitle">GUI &mdash; Xcode only</div>
-    </div>
-  </div>
-
-  <p>
-    Select the project (blue icon) in the navigator, then:
-  </p>
-  <p>
-    <span class="menu-path">Package Dependencies tab <span class="menu-arrow">&rarr;</span> + <span class="menu-arrow">&rarr;</span> Add Local...</span>
-  </p>
-  <ul>
-    <li>Navigate to <code>Packages/HealthWidgetsCore</code> (relative path: <code>../Packages/HealthWidgetsCore</code>)</li>
-    <li>When prompted, select the <strong>NewApp</strong> target</li>
-  </ul>
-
-  <div class="warning-note">
-    <div class="note-label">Widget &amp; Watch Targets</div>
-    <p>You must also link HealthWidgetsCore to the widget extension and watch app targets later.
-    For each target: <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks, Libraries, and Embedded Content <span class="menu-arrow">&rarr;</span> +</span>
-    and select <code>HealthWidgetsCore</code>.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 3 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">3</div>
-    <div>
-      <div class="step-title">Add App Group + HealthKit Capabilities</div>
-      <div class="step-subtitle">GUI &mdash; Xcode only</div>
-    </div>
-  </div>
-
-  <p>Select the <strong>NewApp</strong> target, then:</p>
-  <p>
-    <span class="menu-path">Signing &amp; Capabilities <span class="menu-arrow">&rarr;</span> + Capability <span class="menu-arrow">&rarr;</span> App Groups</span>
-  </p>
-  <ul>
-    <li>Add: <code>group.com.cybergwen.HealthWidgets</code></li>
-  </ul>
-  <p>Then add HealthKit:</p>
-  <p>
-    <span class="menu-path">+ Capability <span class="menu-arrow">&rarr;</span> HealthKit</span>
-  </p>
-
-  <p>The resulting entitlements file should contain:</p>
-<pre class="code-block">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;com.apple.developer.healthkit&lt;/key&gt;
-    &lt;true/&gt;
-    &lt;key&gt;com.apple.security.application-groups&lt;/key&gt;
-    &lt;array&gt;
-        &lt;string&gt;group.com.cybergwen.HealthWidgets&lt;/string&gt;
-    &lt;/array&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;</pre>
-
-  <div class="warning-note">
-    <div class="note-label">Same App Group Everywhere</div>
-    <p>Use the exact same app group (<code>group.com.cybergwen.HealthWidgets</code>) on ALL targets &mdash;
-    app, widget extension, watch app. The cache and persistent storage depend on it.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 4 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">4</div>
-    <div>
-      <div class="step-title">Create Widget Extension Target</div>
-      <div class="step-subtitle">GUI &mdash; Xcode only</div>
-    </div>
-  </div>
-
-  <p>
-    <span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> Widget Extension</span>
-  </p>
-  <ul>
-    <li><strong>Product Name:</strong> <code>NewAppWidgets</code></li>
-  </ul>
-
-  <p>Then configure the new target:</p>
-  <ul>
-    <li>Add <strong>App Groups</strong> capability with <code>group.com.cybergwen.HealthWidgets</code></li>
-    <li>Add <strong>HealthKit</strong> capability</li>
-    <li>Link <strong>HealthWidgetsCore</strong> via <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks</span></li>
-  </ul>
-
-  <p>Verify the widget Info.plist contains:</p>
-<pre class="code-block">&lt;key&gt;NSExtension&lt;/key&gt;
-&lt;dict&gt;
-    &lt;key&gt;NSExtensionPointIdentifier&lt;/key&gt;
-    &lt;string&gt;com.apple.widgetkit-extension&lt;/string&gt;
-&lt;/dict&gt;</pre>
-
-  <div class="warning-note">
-    <div class="note-label">Entitlements Location</div>
-    <p>The widget entitlements file goes at the <strong>project root</strong>
-    (e.g., <code>NewApp/NewAppWidgetsExtension.entitlements</code>), not nested inside the widget folder.
-    If builds fail with entitlements errors, check <code>CODE_SIGN_ENTITLEMENTS</code> in build settings.</p>
-  </div>
-
-  <div class="info-note">
-    <div class="note-label">Info.plist</div>
-    <p>The widget Info.plist should be excluded from file sync automatically. If you see build errors
-    about Info.plist being compiled as source, verify its build phase membership.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 5 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">5</div>
-    <div>
-      <div class="step-title">Create Watch App Target</div>
-      <div class="step-subtitle">GUI &mdash; Xcode only (optional)</div>
-    </div>
-  </div>
-
-  <p>
-    <span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> watchOS <span class="menu-arrow">&rarr;</span> App</span>
-  </p>
-  <ul>
-    <li><strong>Product Name:</strong> <code>NewAppWatch Watch App</code></li>
-    <li><strong>Interface:</strong> SwiftUI</li>
-  </ul>
-
-  <p>Then configure:</p>
-  <ul>
-    <li>Add <strong>App Groups</strong> capability with <code>group.com.cybergwen.HealthWidgets</code></li>
-    <li>Add <strong>HealthKit</strong> capability</li>
-    <li>Link <strong>HealthWidgetsCore</strong> via <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks</span></li>
-  </ul>
-
-  <div class="info-note">
-    <div class="note-label">Device Family</div>
-    <p><code>TARGETED_DEVICE_FAMILY = 4</code> should be set automatically for watch targets.
-    If the watch build fails, verify this in the target's build settings.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 6 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">6</div>
-    <div>
-      <div class="step-title">Test Targets</div>
-      <div class="step-subtitle">Mostly automatic</div>
-    </div>
-  </div>
-
-  <p>
-    Xcode auto-creates <code>NewAppTests</code> and <code>NewAppUITests</code> targets when you create the project.
-    Watch test targets are also created with the watch app.
-  </p>
-  <ul>
-    <li>Bundle ID pattern: <code>com.cybergwen.NewAppTests</code>, <code>com.cybergwen.NewAppUITests</code></li>
-    <li>Package unit tests stay at <code>Packages/HealthWidgetsCore/Tests/</code></li>
-    <li>App-specific integration tests go in <code>NewApp/NewAppTests/</code></li>
-  </ul>
-</section>
-
-<!-- ==================== WHAT CLAUDE CAN DO ==================== -->
+<!-- ==================== PART A: HUMAN ==================== -->
 <section>
-  <h2><span class="emoji">&#x1F916;</span>What Claude Can Do</h2>
-  <p>
-    Steps 1&ndash;6 above require the Xcode GUI. Once those are done, steps 7&ndash;11 below
-    are fully automatable. Here&rsquo;s a prompt you can paste:
-  </p>
-  <div class="success-note">
-    <div class="note-label">Copy-Paste Prompt</div>
-    <p>
-      &ldquo;I&rsquo;ve created NewApp in Xcode with widget and watch targets and added capabilities.
-      Please write the entry points with configure(), add it to the workspace, and verify builds.&rdquo;
-    </p>
+  <div class="part-header">
+    <h2><span class="emoji">&#x1F9D1;&#x200D;&#x1F4BB;</span>Part A: Xcode Setup</h2>
+    <span class="part-label human">Human</span>
   </div>
-</section>
 
-<!-- ==================== STEP 7 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">7</div>
-    <div>
-      <div class="step-title">Write Entry Points with configure()</div>
-      <div class="step-subtitle">LLM-automatable</div>
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-name">Create Xcode Project</div>
+    </div>
+    <div class="step-body">
+      <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Project <span class="menu-arrow">&rarr;</span> iOS <span class="menu-arrow">&rarr;</span> App</span></p>
+      <p>Product Name: <code>NewApp</code>, Org: <code>com.cybergwen</code>, SwiftUI, Swift, No storage.
+        Save to <code>/Users/haslo/projects/health_widgets/</code>.</p>
     </div>
   </div>
 
-  <p>Every process (app, widget extension, watch app) must call <code>HealthWidgetsCore.configure()</code>
-  in its <code>@main</code> struct's <code>init()</code>.</p>
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-name">Create Widget Extension</div>
+    </div>
+    <div class="step-body">
+      <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> Widget Extension</span>
+        &mdash; Name: <code>NewAppWidgets</code></p>
+      <p>Widget entitlements go at project root (<code>NewApp/NewAppWidgetsExtension.entitlements</code>).</p>
+    </div>
+  </div>
 
-  <h3>Main App &mdash; <code>NewApp/NewApp/NewAppApp.swift</code></h3>
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-name">Create Watch App (optional)</div>
+    </div>
+    <div class="step-body">
+      <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> watchOS <span class="menu-arrow">&rarr;</span> App</span>
+        &mdash; Name: <code>NewAppWatch Watch App</code>, SwiftUI.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-name">Add HealthWidgetsCore Package</div>
+    </div>
+    <div class="step-body">
+      <p>Select project &rarr; <span class="menu-path">Package Dependencies <span class="menu-arrow">&rarr;</span> + <span class="menu-arrow">&rarr;</span> Add Local...</span>
+        &rarr; <code>Packages/HealthWidgetsCore</code>. Link to ALL targets:
+        <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks <span class="menu-arrow">&rarr;</span> +</span> &rarr; <code>HealthWidgetsCore</code> on each.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">5</div>
+      <div class="step-name">Add Capabilities to All Targets</div>
+    </div>
+    <div class="step-body">
+      <p>On <strong>every target</strong> (app, widget, watch):
+        <span class="menu-path">Signing &amp; Capabilities <span class="menu-arrow">&rarr;</span> + Capability</span></p>
+      <ul>
+        <li><strong>App Groups</strong> &rarr; <code>group.com.cybergwen.HealthWidgets</code></li>
+        <li><strong>HealthKit</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">6</div>
+      <div class="step-name">Test Targets</div>
+    </div>
+    <div class="step-body">
+      <p>Auto-created by Xcode. App integration tests go in <code>NewApp/NewAppTests/</code>;
+        package unit tests stay at <code>Packages/HealthWidgetsCore/Tests/</code>.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">7</div>
+      <div class="step-name">Add to Workspace</div>
+    </div>
+    <div class="step-body">
+      <p>Open <code>HealthWidgets.xcworkspace</code>, then:
+        <span class="menu-path">File <span class="menu-arrow">&rarr;</span> Add Files to "HealthWidgets"</span>
+        &rarr; select <code>NewApp/NewApp.xcodeproj</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HANDOFF ==================== -->
+<div class="divider-section">
+  <h3><span class="emoji">&#x1F916;</span> Hand Off to Claude</h3>
+  <p>Xcode setup is done. Paste this prompt:</p>
+  <div class="success-note" style="margin-bottom: 0;">
+    <div class="note-label">Copy-Paste Prompt</div>
+    <p>&ldquo;I&rsquo;ve created NewApp in Xcode with widget and watch targets, added capabilities, and added it to the workspace. Please verify the setup, write entry points with configure(), update docs, and verify builds.&rdquo;</p>
+  </div>
+</div>
+
+<!-- ==================== PART B: CLAUDE ==================== -->
+<section>
+  <div class="part-header">
+    <h2><span class="emoji">&#x1F916;</span>Part B: Verification, Code &amp; Config</h2>
+    <span class="part-label llm">Claude</span>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-name">Verify Project Structure</div>
+    </div>
+    <div class="step-body">
+      <p>Mirrors A.1&ndash;3. Check <code>NewApp/NewApp.xcodeproj</code> exists and contains expected targets (app, widget, watch).</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-name">Verify Package Linking</div>
+    </div>
+    <div class="step-body">
+      <p>Mirrors A.4. Confirm <code>HealthWidgetsCore</code> is linked to ALL targets (app, widget, watch)
+        in the pbxproj.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-name">Verify Capabilities &amp; Entitlements</div>
+    </div>
+    <div class="step-body">
+      <p>Mirrors A.5. For each target, check entitlements contain:</p>
+      <ul>
+        <li><code>com.apple.developer.healthkit</code> = <code>true</code></li>
+        <li><code>com.apple.security.application-groups</code> includes <code>group.com.cybergwen.HealthWidgets</code></li>
+      </ul>
+      <p>Widget entitlements must be at project root (<code>NewApp/NewAppWidgetsExtension.entitlements</code>), not nested.
+        Widget Info.plist must contain <code>com.apple.widgetkit-extension</code> extension point.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-name">Verify Workspace</div>
+    </div>
+    <div class="step-body">
+      <p>Mirrors A.7. Confirm <code>HealthWidgets.xcworkspace/contents.xcworkspacedata</code> includes
+        <code>group:NewApp/NewApp.xcodeproj</code>.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">5</div>
+      <div class="step-name">Replace Entry Points with configure()</div>
+    </div>
+    <div class="step-body">
+      <p>Replace Xcode&rsquo;s auto-generated boilerplate in each <code>@main</code> struct.
+        Every process must call <code>HealthWidgetsCore.configure()</code> in <code>init()</code>.</p>
+
+      <h3>Main App &mdash; <code>NewApp/NewApp/NewAppApp.swift</code></h3>
 <pre class="code-block"><span class="code-keyword">import</span> <span class="code-type">SwiftUI</span>
 <span class="code-keyword">import</span> <span class="code-type">HealthWidgetsCore</span>
 
@@ -300,15 +262,12 @@
             loggerSubsystem: <span class="code-string">"com.cybergwen.NewApp"</span>
         ))
     }
-
     <span class="code-keyword">var</span> body: <span class="code-keyword">some</span> <span class="code-type">Scene</span> {
-        <span class="code-type">WindowGroup</span> {
-            <span class="code-type">ContentView</span>()
-        }
+        <span class="code-type">WindowGroup</span> { <span class="code-type">ContentView</span>() }
     }
 }</pre>
 
-  <h3>Widget Extension &mdash; <code>NewApp/NewAppWidgets/NewAppWidgetsBundle.swift</code></h3>
+      <h3>Widget Extension &mdash; <code>NewApp/NewAppWidgets/NewAppWidgetsBundle.swift</code></h3>
 <pre class="code-block"><span class="code-keyword">import</span> <span class="code-type">SwiftUI</span>
 <span class="code-keyword">import</span> <span class="code-type">WidgetKit</span>
 <span class="code-keyword">import</span> <span class="code-type">HealthWidgetsCore</span>
@@ -321,13 +280,12 @@
             loggerSubsystem: <span class="code-string">"com.cybergwen.NewApp.Widgets"</span>
         ))
     }
-
     <span class="code-keyword">var</span> body: <span class="code-keyword">some</span> <span class="code-type">Widget</span> {
         <span class="code-comment">// Add widgets here</span>
     }
 }</pre>
 
-  <h3>Watch App &mdash; <code>NewApp/NewAppWatch Watch App/NewAppWatchApp.swift</code></h3>
+      <h3>Watch App &mdash; <code>NewApp/NewAppWatch Watch App/NewAppWatchApp.swift</code></h3>
 <pre class="code-block"><span class="code-keyword">import</span> <span class="code-type">SwiftUI</span>
 <span class="code-keyword">import</span> <span class="code-type">HealthWidgetsCore</span>
 
@@ -339,115 +297,55 @@
             loggerSubsystem: <span class="code-string">"com.cybergwen.NewApp.Watch"</span>
         ))
     }
-
     <span class="code-keyword">var</span> body: <span class="code-keyword">some</span> <span class="code-type">Scene</span> {
-        <span class="code-type">WindowGroup</span> {
-            <span class="code-type">ContentView</span>()
-        }
+        <span class="code-type">WindowGroup</span> { <span class="code-type">ContentView</span>() }
     }
 }</pre>
 
-  <div class="warning-note">
-    <div class="note-label">Missing configure() = Fatal Crash</div>
-    <p>Each process (app, widget, watch) runs independently. If ANY of them is missing the
-    <code>configure()</code> call, it will crash at runtime when accessing the app group container or logger.</p>
-  </div>
-</section>
-
-<!-- ==================== STEP 8 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">8</div>
-    <div>
-      <div class="step-title">Add to Workspace</div>
-      <div class="step-subtitle">LLM-automatable</div>
+      <div class="warning-note">
+        <div class="note-label">Missing configure() = Fatal Crash</div>
+        <p>Each process runs independently. Missing <code>configure()</code> = crash on app group / logger access.</p>
+      </div>
     </div>
   </div>
 
-  <p>
-    Edit <code>HealthWidgets.xcworkspace/contents.xcworkspacedata</code> to include the new project.
-  </p>
-
-  <h3>Before</h3>
-<pre class="code-block">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Workspace version = "1.0"&gt;
-   &lt;FileRef location = "group:OmniWidget/OmniWidget.xcodeproj"&gt;&lt;/FileRef&gt;
-   &lt;FileRef location = "group:Pipi/Pipi.xcodeproj"&gt;&lt;/FileRef&gt;
-&lt;/Workspace&gt;</pre>
-
-  <h3>After</h3>
-<pre class="code-block">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Workspace version = "1.0"&gt;
-   &lt;FileRef location = "group:OmniWidget/OmniWidget.xcodeproj"&gt;&lt;/FileRef&gt;
-   &lt;FileRef location = "group:Pipi/Pipi.xcodeproj"&gt;&lt;/FileRef&gt;
-   &lt;FileRef location = "group:NewApp/NewApp.xcodeproj"&gt;&lt;/FileRef&gt;
-&lt;/Workspace&gt;</pre>
-</section>
-
-<!-- ==================== STEP 9 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">9</div>
-    <div>
-      <div class="step-title">Add Storage Keys</div>
-      <div class="step-subtitle">LLM-automatable (if needed)</div>
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">6</div>
+      <div class="step-name">Add Storage Keys (if needed)</div>
     </div>
-  </div>
-
-  <p>
-    Only needed if the app uses <code>AppDataStorage</code> for source-of-truth data (like Pipi uses
-    for pee logs and pattern profiles).
-  </p>
-  <p>
-    Add a nested enum to <code>StorageConfiguration.Key</code> in
-    <code>Packages/HealthWidgetsCore/Sources/HealthWidgetsCore/Services/Storage/StorageConfiguration.swift</code>:
-  </p>
-<pre class="code-block"><span class="code-keyword">public enum</span> <span class="code-type">Key</span> {
-    <span class="code-keyword">public enum</span> <span class="code-type">Pipi</span> {
-        <span class="code-keyword">public static let</span> peeLog = <span class="code-string">"appdata.pipi.peelog"</span>
-        <span class="code-comment">// ...</span>
-    }
-
-    <span class="code-comment">// Add for new app:</span>
-    <span class="code-keyword">public enum</span> <span class="code-type">NewApp</span> {
-        <span class="code-keyword">public static let</span> someData = <span class="code-string">"appdata.newapp.somedata"</span>
-    }
+    <div class="step-body">
+      <p>Only if the app uses <code>AppDataStorage</code>. Add a nested enum to <code>StorageConfiguration.Key</code>:</p>
+<pre class="code-block"><span class="code-keyword">public enum</span> <span class="code-type">NewApp</span> {
+    <span class="code-keyword">public static let</span> someData = <span class="code-string">"appdata.newapp.somedata"</span>
 }</pre>
-</section>
-
-<!-- ==================== STEP 10 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">10</div>
-    <div>
-      <div class="step-title">Update Documentation</div>
-      <div class="step-subtitle">LLM-automatable</div>
     </div>
   </div>
 
-  <p>Keep these files in sync with the new app:</p>
-  <ul>
-    <li><strong><code>docs/ecosystem/index.html</code></strong> &mdash; Add an app card</li>
-    <li><strong><code>docs/architecture.md</code></strong> &mdash; Update services, models, file tree</li>
-    <li><strong><code>CLAUDE.md</code></strong> &mdash; Add build commands, service listings</li>
-    <li><strong><code>docs/newapp/</code></strong> &mdash; Create concept docs if needed</li>
-  </ul>
-</section>
-
-<!-- ==================== STEP 11 ==================== -->
-<section class="step-section">
-  <div class="step-header">
-    <div class="step-number">11</div>
-    <div>
-      <div class="step-title">Verify Builds</div>
-      <div class="step-subtitle">LLM-automatable</div>
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">7</div>
+      <div class="step-name">Update Documentation</div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><code>docs/ecosystem/index.html</code> &mdash; Add app card</li>
+        <li><code>docs/llm_context/architecture.md</code> &mdash; Services, models, file tree</li>
+        <li><code>CLAUDE.md</code> &mdash; Build commands, service listings</li>
+        <li><code>docs/newapp/</code> &mdash; Concept docs if needed</li>
+      </ul>
     </div>
   </div>
 
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">8</div>
+      <div class="step-name">Verify Builds</div>
+    </div>
+    <div class="step-body">
 <pre class="code-block"><span class="code-comment"># iOS app</span>
 cd /Users/haslo/projects/health_widgets/NewApp && \
-  xcodebuild -scheme NewApp \
-  -destination 'platform=iOS Simulator,name=iPhone 17' build
+  xcodebuild -scheme NewApp -destination 'platform=iOS Simulator,name=iPhone 17' build
 
 <span class="code-comment"># watchOS app</span>
 cd /Users/haslo/projects/health_widgets/NewApp && \
@@ -456,14 +354,12 @@ cd /Users/haslo/projects/health_widgets/NewApp && \
 
 <span class="code-comment"># Package tests (unchanged)</span>
 cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
-  xcodebuild test -scheme HealthWidgetsCore \
-  -destination 'platform=iOS Simulator,name=iPhone 17'</pre>
-
-  <div class="warning-note">
-    <div class="note-label">Build Directory Matters</div>
-    <p>You MUST run <code>xcodebuild</code> from the app&rsquo;s directory (e.g., <code>cd NewApp/</code>),
-    not the project root. The project root contains the SPM workspace which confuses <code>xcodebuild</code>
-    into looking for the wrong scheme.</p>
+  xcodebuild test -scheme HealthWidgetsCore -destination 'platform=iOS Simulator,name=iPhone 17'</pre>
+      <div class="warning-note">
+        <div class="note-label">Build Directory Matters</div>
+        <p>Run <code>xcodebuild</code> from <code>NewApp/</code>, not the project root. The root&rsquo;s SPM workspace confuses scheme resolution.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -478,7 +374,7 @@ cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
     <tbody>
       <tr>
         <td class="pitfall-symptom">Fatal crash on widget launch</td>
-        <td>Missing <code>configure()</code> in widget bundle <code>init()</code></td>
+        <td>Missing <code>configure()</code> in widget <code>init()</code></td>
         <td class="pitfall-fix">Add <code>HealthWidgetsCore.configure()</code></td>
       </tr>
       <tr>
@@ -487,9 +383,9 @@ cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
         <td class="pitfall-fix">Verify <code>group.com.cybergwen.HealthWidgets</code> on all targets</td>
       </tr>
       <tr>
-        <td class="pitfall-symptom">&ldquo;does not contain a scheme named NewApp&rdquo;</td>
+        <td class="pitfall-symptom">&ldquo;does not contain a scheme&rdquo;</td>
         <td>Running xcodebuild from project root</td>
-        <td class="pitfall-fix"><code>cd</code> into <code>NewApp/</code> directory first</td>
+        <td class="pitfall-fix"><code>cd</code> into <code>NewApp/</code> first</td>
       </tr>
       <tr>
         <td class="pitfall-symptom">Widget entitlements not found</td>
@@ -502,7 +398,7 @@ cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
         <td class="pitfall-fix">Exclude Info.plist from build phase membership</td>
       </tr>
       <tr>
-        <td class="pitfall-symptom">Watch build fails with wrong device</td>
+        <td class="pitfall-symptom">Watch build: wrong device family</td>
         <td><code>TARGETED_DEVICE_FAMILY</code> not 4</td>
         <td class="pitfall-fix">Check build settings for watch targets</td>
       </tr>

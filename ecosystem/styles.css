@@ -10,8 +10,7 @@
   SIBLING DIRECTORIES (docs/):
     pipi/                   — Pipi concept docs (7 tabs)
     schlafi/                — Schlafi concept docs (6 tabs)
-    architecture.md         — Technical architecture documentation
-    howtos.md               — Implementation patterns and workarounds
+    llm_context/            — LLM context files (architecture.md, howtos.md)
 
   EDITING GUIDE:
   - Both ecosystem pages link to this stylesheet via <link rel="stylesheet" href="styles.css">.
