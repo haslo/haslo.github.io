@@ -1,5 +1,5 @@
 /*
-  LLM INSTRUCTIONS — Scali Concept Document: Shared Stylesheet
+  LLM INSTRUCTIONS — Gwichti Concept Document: Shared Stylesheet
   =============================================================
 
   FILE MAP (docs/scali/):
@@ -270,7 +270,7 @@ tbody tr:hover { background: #FAFCFE; }
   min-height: 180px;
 }
 
-/* Scali-specific animations */
+/* Gwichti-specific animations */
 @keyframes drawLine {
   from { stroke-dashoffset: 500; }
   to { stroke-dashoffset: 0; }
