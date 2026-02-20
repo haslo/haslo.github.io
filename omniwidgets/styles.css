@@ -160,6 +160,16 @@ h2 .emoji { margin-right: 8px; }
   color: var(--primary-dark);
 }
 
+/* Widget preview images */
+.wcard-preview {
+  margin: 8px 0;
+}
+.wcard-preview img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
 /* Status badge */
 .status-badge {
   display: inline-block;

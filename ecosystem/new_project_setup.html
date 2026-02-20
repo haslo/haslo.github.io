@@ -13,8 +13,9 @@
     llm_context/            — LLM context files (architecture.md, howtos.md) — not human-readable docs
 
   THIS FILE: Complete guide for creating a new app in the Gwen Widgets ecosystem.
-  Two parts: Part A (human Xcode GUI work, steps 1-7) and Part B (LLM-automatable, steps 1-8).
-  Human part is pure GUI clicks. LLM part verifies setup, writes code, updates docs, and builds.
+  Three parts: Part A (human Xcode GUI work, steps 1-7), Part B (LLM-automatable, steps 1-8),
+  and Part C (icon generation, steps 1-4).
+  Human part is pure GUI clicks. LLM parts verify setup, write code, generate icons, update docs, and build.
 
   EDITING:
   - Each step is a <div class="step-compact"> with .step-num + content.
@@ -99,7 +100,7 @@
     <div class="step-body">
       <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Project <span class="menu-arrow">&rarr;</span> iOS <span class="menu-arrow">&rarr;</span> App</span></p>
       <p>Product Name: <code>NewApp</code>, Org: <code>com.cybergwen</code>, SwiftUI, Swift, No storage.
-        Save to <code>/Users/haslo/projects/health_widgets/</code>.</p>
+        Save to <code>/Users/haslo/projects/health_widgets/</code> and add to <code>HealthWidgets.xcworkspace</code>.</p>
     </div>
   </div>
 
@@ -109,8 +110,16 @@
       <div class="step-name">Create Widget Extension</div>
     </div>
     <div class="step-body">
-      <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> Widget Extension</span>
+      <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> iOS <span class="menu-arrow">&rarr;</span> Widget Extension</span>
         &mdash; Name: <code>NewAppWidgets</code></p>
+      <table>
+        <thead><tr><th>Checkbox</th><th>What it does</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Include Live Activity</strong></td><td>Lock screen &amp; Dynamic Island real-time updates (ActivityKit)</td><td>Yes</td></tr>
+          <tr><td><strong>Include App Intent</strong></td><td>Interactive widget buttons/toggles, Siri &amp; Shortcuts</td><td>Yes</td></tr>
+          <tr><td><strong>Include Control</strong></td><td>Control Center toggles/buttons (iOS 18+)</td><td>No</td></tr>
+        </tbody>
+      </table>
       <p>Widget entitlements go at project root (<code>NewApp/NewAppWidgetsExtension.entitlements</code>).</p>
     </div>
   </div>
@@ -118,11 +127,11 @@
   <div class="step-compact">
     <div class="step-head">
       <div class="step-num">3</div>
-      <div class="step-name">Create Watch App (optional)</div>
+      <div class="step-name">Create Watch App</div>
     </div>
     <div class="step-body">
       <p><span class="menu-path">File <span class="menu-arrow">&rarr;</span> New <span class="menu-arrow">&rarr;</span> Target <span class="menu-arrow">&rarr;</span> watchOS <span class="menu-arrow">&rarr;</span> App</span>
-        &mdash; Name: <code>NewAppWatch Watch App</code>, SwiftUI.</p>
+        &mdash; Name: <code>NewAppWatch</code>, SwiftUI. (Xcode appends &ldquo; Watch App&rdquo; automatically.)</p>
     </div>
   </div>
 
@@ -133,8 +142,14 @@
     </div>
     <div class="step-body">
       <p>Select project &rarr; <span class="menu-path">Package Dependencies <span class="menu-arrow">&rarr;</span> + <span class="menu-arrow">&rarr;</span> Add Local...</span>
-        &rarr; <code>Packages/HealthWidgetsCore</code>. Link to ALL targets:
-        <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks <span class="menu-arrow">&rarr;</span> +</span> &rarr; <code>HealthWidgetsCore</code> on each.</p>
+        &rarr; <code>Packages/HealthWidgetsCore</code>. Then link to each target individually:
+        <span class="menu-path">General <span class="menu-arrow">&rarr;</span> Frameworks <span class="menu-arrow">&rarr;</span> +</span> &rarr; <code>HealthWidgetsCore</code> on:</p>
+      <ul>
+        <li>App (NewApp)</li>
+        <li>Widget Extension (NewAppWidgets)</li>
+        <li>Watch App (NewAppWatch Watch App)</li>
+      </ul>
+      <p>Test targets do not need the framework linked.</p>
     </div>
   </div>
 
@@ -167,14 +182,18 @@
   <div class="step-compact">
     <div class="step-head">
       <div class="step-num">7</div>
-      <div class="step-name">Add to Workspace</div>
+      <div class="step-name">Close Xcode</div>
     </div>
     <div class="step-body">
-      <p>Open <code>HealthWidgets.xcworkspace</code>, then:
-        <span class="menu-path">File <span class="menu-arrow">&rarr;</span> Add Files to "HealthWidgets"</span>
-        &rarr; select <code>NewApp/NewApp.xcodeproj</code>.</p>
+      <p>Close the project so Claude can safely edit files without Xcode conflicts.</p>
     </div>
   </div>
+
+  <div class="warning-note">
+    <div class="note-label">Git Staging</div>
+    <p>Xcode stages changes to git during project creation. Developer should be wary of that when doing git operations at this point.</p>
+  </div>
+
 </section>
 
 <!-- ==================== HANDOFF ==================== -->
@@ -183,7 +202,11 @@
   <p>Xcode setup is done. Paste this prompt:</p>
   <div class="success-note" style="margin-bottom: 0;">
     <div class="note-label">Copy-Paste Prompt</div>
-    <p>&ldquo;I&rsquo;ve created NewApp in Xcode with widget and watch targets, added capabilities, and added it to the workspace. Please verify the setup, write entry points with configure(), update docs, and verify builds.&rdquo;</p>
+    <p>&ldquo;I&rsquo;ve created a new app in Xcode with widget and watch targets, added capabilities, and added it to the workspace.
+      <br/><br/>
+      The new app is called NewApp.
+      <br/><br/>
+      Please now follow the instructions in docs/ecosystem/new_project_setup.html in Part B: Verification, Code &amp; Config.&rdquo;</p>
   </div>
 </div>
 
@@ -221,13 +244,23 @@
       <div class="step-name">Verify Capabilities &amp; Entitlements</div>
     </div>
     <div class="step-body">
-      <p>Mirrors A.5. For each target, check entitlements contain:</p>
+      <p>Mirrors A.5. Verify all 3 entitlement files exist and contain both keys:</p>
       <ul>
         <li><code>com.apple.developer.healthkit</code> = <code>true</code></li>
         <li><code>com.apple.security.application-groups</code> includes <code>group.com.cybergwen.HealthWidgets</code></li>
       </ul>
-      <p>Widget entitlements must be at project root (<code>NewApp/NewAppWidgetsExtension.entitlements</code>), not nested.
-        Widget Info.plist must contain <code>com.apple.widgetkit-extension</code> extension point.</p>
+      <p>Expected entitlement file locations:</p>
+      <table>
+        <thead><tr><th>Target</th><th>File</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td>App</td><td><code>NewApp.entitlements</code></td><td><code>NewApp/NewApp/</code></td></tr>
+          <tr><td>Widget Extension</td><td><code>NewAppWidgetsExtension.entitlements</code></td><td><code>NewApp/</code> (project root)</td></tr>
+          <tr><td>Watch App</td><td><code>NewAppWatch Watch App.entitlements</code></td><td><code>NewApp/NewAppWatch Watch App/</code></td></tr>
+        </tbody>
+      </table>
+      <p>Widget Info.plist must contain <code>com.apple.widgetkit-extension</code> extension point.</p>
+      <p>Verify generated boilerplate files exist in the widget extension folder:
+        <code>NewAppWidgets.swift</code>, <code>NewAppWidgetsLiveActivity.swift</code>, <code>AppIntent.swift</code>.</p>
     </div>
   </div>
 
@@ -237,7 +270,7 @@
       <div class="step-name">Verify Workspace</div>
     </div>
     <div class="step-body">
-      <p>Mirrors A.7. Confirm <code>HealthWidgets.xcworkspace/contents.xcworkspacedata</code> includes
+      <p>Mirrors A.1. Confirm <code>HealthWidgets.xcworkspace/contents.xcworkspacedata</code> includes
         <code>group:NewApp/NewApp.xcodeproj</code>.</p>
     </div>
   </div>
@@ -282,7 +315,8 @@
         ))
     }
     <span class="code-keyword">var</span> body: <span class="code-keyword">some</span> <span class="code-type">Widget</span> {
-        <span class="code-comment">// Add widgets here</span>
+        <span class="code-type">NewAppWidgets</span>()
+        <span class="code-type">NewAppWidgetsLiveActivity</span>()
     }
 }</pre>
 
@@ -307,18 +341,27 @@
         <div class="note-label">Missing configure() = Fatal Crash</div>
         <p>Each process runs independently. Missing <code>configure()</code> = crash on app group / logger access.</p>
       </div>
+
+      <div class="success-note">
+        <div class="note-label">Xcode-Generated Boilerplate</div>
+        <p>Xcode also generates <code>NewAppWidgets.swift</code>, <code>NewAppWidgetsLiveActivity.swift</code>, and
+          <code>AppIntent.swift</code> in the widget extension folder. These are starter boilerplate &mdash; leave them as-is.
+          They don&rsquo;t need <code>configure()</code> because they run in the widget extension process, which already
+          calls it in the bundle&rsquo;s <code>init()</code>.</p>
+      </div>
     </div>
   </div>
 
   <div class="step-compact">
     <div class="step-head">
       <div class="step-num">6</div>
-      <div class="step-name">Add Storage Keys (if needed)</div>
+      <div class="step-name">Add Storage Keys</div>
     </div>
     <div class="step-body">
-      <p>Only if the app uses <code>AppDataStorage</code>. Add a nested enum to <code>StorageConfiguration.Key</code>:</p>
+      <p>Add a nested enum to <code>StorageConfiguration.Key</code> with the standard preference keys (<code>colorScheme</code>, <code>cuteMode</code>) and any app-specific data keys:</p>
 <pre class="code-block"><span class="code-keyword">public enum</span> <span class="code-type">NewApp</span> {
-    <span class="code-keyword">public static let</span> someData = <span class="code-string">"appdata.newapp.somedata"</span>
+    <span class="code-keyword">public static let</span> colorScheme = <span class="code-string">"appdata.newapp.colorScheme"</span>
+    <span class="code-keyword">public static let</span> cuteMode = <span class="code-string">"appdata.newapp.cuteMode"</span>
 }</pre>
     </div>
   </div>
@@ -334,6 +377,7 @@
         <li><code>docs/llm_context/architecture.md</code> &mdash; Services, models, file tree</li>
         <li><code>CLAUDE.md</code> &mdash; Build commands, service listings</li>
         <li><code>docs/newapp/</code> &mdash; Concept docs if needed</li>
+        <li><code>MEMORY.md</code> &mdash; Project identity, bundle IDs, concept docs listing</li>
       </ul>
     </div>
   </div>
@@ -364,6 +408,71 @@ cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
   </div>
 </section>
 
+<!-- ==================== PART C: ICON GENERATION ==================== -->
+<section>
+  <div class="part-header">
+    <h2><span class="emoji">&#x1F3A8;</span>Part C: Icon Generation</h2>
+    <span class="part-label llm">Claude</span>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-name">Create App Icon Module</div>
+    </div>
+    <div class="step-body">
+      <p>Create <code>icon_builder/apps/newapp.js</code> exporting:</p>
+<pre class="code-block"><span class="code-keyword">module.exports</span> = {
+  name: <span class="code-string">"NewApp"</span>,
+  draw(ctx, variant, size) { <span class="code-comment">/* all app-specific drawing */</span> },
+  outputDirs: [
+    <span class="code-string">"NewApp/NewApp/Assets.xcassets/AppIcon.appiconset"</span>,
+    <span class="code-string">"NewApp/NewAppWidgets/Assets.xcassets/AppIcon.appiconset"</span>,
+  ],
+  watchOutputDirs: [
+    <span class="code-string">"NewApp/NewAppWatch Watch App/Assets.xcassets/AppIcon.appiconset"</span>,
+  ],
+};</pre>
+      <p>The <code>draw(ctx, variant, size)</code> function receives a canvas 2D context, a variant string
+        (<code>"light"</code>, <code>"dark"</code>, or <code>"tinted"</code>), and the icon size (1024).
+        Use helpers from <code>shared.js</code> for drawing primitives. See existing app modules for reference.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-name">Register in generate.js</div>
+    </div>
+    <div class="step-body">
+      <p>Add <code>require("./apps/newapp")</code> to the <code>apps</code> array in <code>icon_builder/generate.js</code>.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-name">Generate Icons</div>
+    </div>
+    <div class="step-body">
+<pre class="code-block">cd /Users/haslo/projects/health_widgets/icon_builder && npm run generate</pre>
+      <p>This generates iOS icons (light, dark, tinted PNGs + Contents.json) and watchOS icons (light PNG + Contents.json)
+        into all specified asset catalog directories.</p>
+    </div>
+  </div>
+
+  <div class="step-compact">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-name">Verify Icons</div>
+    </div>
+    <div class="step-body">
+      <p>Open the generated PNGs to verify all 3 variants look correct.
+        Build the app to confirm Xcode picks up the icons from the asset catalogs.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== COMMON PITFALLS ==================== -->
 <section>
   <h2><span class="emoji">&#x26A0;&#xFE0F;</span>Common Pitfalls</h2>
@@ -390,8 +499,8 @@ cd /Users/haslo/projects/health_widgets/Packages/HealthWidgetsCore && \
       </tr>
       <tr>
         <td class="pitfall-symptom">Widget entitlements not found</td>
-        <td>Entitlements nested in widget folder</td>
-        <td class="pitfall-fix">Move to project root, update <code>CODE_SIGN_ENTITLEMENTS</code></td>
+        <td>Widget entitlements nested in widget folder</td>
+        <td class="pitfall-fix">Widget extension entitlements must be at project root; move and update <code>CODE_SIGN_ENTITLEMENTS</code></td>
       </tr>
       <tr>
         <td class="pitfall-symptom">Info.plist compiled as source</td>

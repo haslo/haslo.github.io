@@ -5,18 +5,21 @@
   FILE MAP (docs/omniwidgets/):
     styles.css              — CSS for this page (gray/silver playground theme).
     widgets.html            — THIS FILE. Single-page widget catalog for OmniWidget.
+    images/                 — Auto-generated PNG screenshots (24 files, one per widget).
+    generate_screenshots.sh — Shell script to regenerate all screenshots.
 
   SIBLING DIRECTORIES (docs/):
     ecosystem/              — Ecosystem overview (links here from OmniWidget card)
     pipi/, schlafi/, gwichti/ — App concept docs
 
   THIS FILE: Lists all 24 OmniWidget widgets grouped by domain, with display
-  names, supported sizes, and short descriptions.
+  names, supported sizes, short descriptions, and preview screenshots.
 
   EDITING:
-  - Widget cards use .wcard / .wcard-info / .size-tag classes from styles.css.
+  - Widget cards use .wcard / .wcard-info / .wcard-preview / .size-tag classes from styles.css.
   - To add a widget: duplicate a .wcard block in the relevant domain section.
   - To add a domain: duplicate a <section> block.
+  - To regenerate screenshots: run generate_screenshots.sh (or the OmniWidget test suite).
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +50,7 @@
     <div class="wcard">
       <h3>Weight Trend <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">14-day weight line chart with target range</div>
+      <div class="wcard-preview"><img src="images/weight_trend.png" alt="Weight Trend widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -64,6 +68,7 @@
     <div class="wcard">
       <h3>Calorie Budget <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">14-day calorie bars, deviation from target</div>
+      <div class="wcard-preview"><img src="images/calorie_budget.png" alt="Calorie Budget widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -73,6 +78,7 @@
     <div class="wcard">
       <h3>Today's Calories <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Gauge: today's intake vs target range</div>
+      <div class="wcard-preview"><img src="images/today_calories.png" alt="Today's Calories widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
       </div>
@@ -80,6 +86,7 @@
     <div class="wcard">
       <h3>Calorie Table <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">14-day table with ranges and emojis</div>
+      <div class="wcard-preview"><img src="images/calorie_table.png" alt="Calorie Table widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -87,6 +94,7 @@
     <div class="wcard">
       <h3>Weight + Calorie Budget <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Weight trend and calorie budget side by side</div>
+      <div class="wcard-preview"><img src="images/weight_calorie_budget.png" alt="Weight + Calorie Budget widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
         <span class="size-tag">XL</span>
@@ -102,6 +110,7 @@
     <div class="wcard">
       <h3>Energy Balance <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly net energy curve with target zone</div>
+      <div class="wcard-preview"><img src="images/energy_balance.png" alt="Energy Balance widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -111,6 +120,7 @@
     <div class="wcard">
       <h3>Energy + Burn &amp; Dietary <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Energy balance + burn and dietary breakdown</div>
+      <div class="wcard-preview"><img src="images/energy_burn_dietary.png" alt="Energy + Burn & Dietary widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -118,6 +128,7 @@
     <div class="wcard">
       <h3>Calories + Energy Balance <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Weekly calorie budget + today's energy</div>
+      <div class="wcard-preview"><img src="images/calories_energy_balance.png" alt="Calories + Energy Balance widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -132,6 +143,7 @@
     <div class="wcard">
       <h3>Steps <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly steps vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/steps.png" alt="Steps widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -140,6 +152,7 @@
     <div class="wcard">
       <h3>Distance <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly distance vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/distance.png" alt="Distance widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -148,6 +161,7 @@
     <div class="wcard">
       <h3>Stairs <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly flights climbed vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/stairs.png" alt="Stairs widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -156,6 +170,7 @@
     <div class="wcard">
       <h3>Water <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly water intake vs 3L target</div>
+      <div class="wcard-preview"><img src="images/water.png" alt="Water widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -164,6 +179,7 @@
     <div class="wcard">
       <h3>Active Burn <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly active energy burn vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/active_burn.png" alt="Active Burn widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -172,6 +188,7 @@
     <div class="wcard">
       <h3>Dietary Intake <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Hourly dietary energy vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/dietary_intake.png" alt="Dietary Intake widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -180,6 +197,7 @@
     <div class="wcard">
       <h3>Water + Steps &amp; Stairs <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Water (top) + steps and stairs (bottom)</div>
+      <div class="wcard-preview"><img src="images/water_steps_stairs.png" alt="Water + Steps & Stairs widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -187,6 +205,7 @@
     <div class="wcard">
       <h3>Water &middot; Steps &middot; Stairs <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Water, steps, and stairs side by side</div>
+      <div class="wcard-preview"><img src="images/water_steps_stairs_trio.png" alt="Water Steps Stairs Trio widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">M</span>
       </div>
@@ -201,6 +220,7 @@
     <div class="wcard">
       <h3>Macro Pies <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Daily macronutrient pie charts</div>
+      <div class="wcard-preview"><img src="images/macro_pies.png" alt="Macro Pies widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -210,6 +230,7 @@
     <div class="wcard">
       <h3>Macro Stacked Area <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Today's fat, protein, carbs as stacked area</div>
+      <div class="wcard-preview"><img src="images/macro_area.png" alt="Macro Stacked Area widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -219,6 +240,7 @@
     <div class="wcard">
       <h3>Carbs &middot; Protein &middot; Fat <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Three macros side by side</div>
+      <div class="wcard-preview"><img src="images/carbs_protein_fat.png" alt="Carbs Protein Fat widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">M</span>
       </div>
@@ -226,6 +248,7 @@
     <div class="wcard">
       <h3>Macro Area + Individual <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Stacked area + individual macro charts</div>
+      <div class="wcard-preview"><img src="images/macro_area_detail.png" alt="Macro Area + Individual widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -233,6 +256,7 @@
     <div class="wcard">
       <h3>Dietary + Macros <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Dietary intake with macro breakdown</div>
+      <div class="wcard-preview"><img src="images/dietary_macros.png" alt="Dietary + Macros widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">L</span>
       </div>
@@ -247,6 +271,7 @@
     <div class="wcard">
       <h3>Sleep Duration <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">7-night bar chart with target and average</div>
+      <div class="wcard-preview"><img src="images/sleep_duration.png" alt="Sleep Duration widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
         <span class="size-tag">M</span>
@@ -255,6 +280,7 @@
     <div class="wcard">
       <h3>Sleep Schedule <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">7-night bedtime-to-wake Gantt chart</div>
+      <div class="wcard-preview"><img src="images/sleep_schedule.png" alt="Sleep Schedule widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">M</span>
         <span class="size-tag">L</span>
@@ -263,6 +289,7 @@
     <div class="wcard">
       <h3>Sleep Phases <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Last night's phases with quality score</div>
+      <div class="wcard-preview"><img src="images/sleep_phases.png" alt="Sleep Phases widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">M</span>
         <span class="size-tag">L</span>

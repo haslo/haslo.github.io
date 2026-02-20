@@ -9,6 +9,7 @@
 
   SIBLING DIRECTORIES (docs/):
     pipi/                   — Pipi concept docs (7 tabs)
+    powerli/                — Powerli concept docs (2 tabs)
     schlafi/                — Schlafi concept docs (6 tabs)
     llm_context/            — LLM context files (architecture.md, howtos.md)
 
@@ -159,6 +160,7 @@ code {
 .app-card.omniwidget { border-top: 3px solid #94A3B8; }
 .app-card.pipi { border-top: 3px solid #22B8CF; }
 .app-card.gwichti { border-top: 3px solid #DC2626; }
+.app-card.powerli { border-top: 3px solid #22C55E; }
 .app-card.schlafi { border-top: 3px solid #7C3AED; }
 .app-card h3 { margin-top: 0; }
 .app-card .card-emoji { font-size: 1.6em; margin-bottom: 8px; display: block; }
