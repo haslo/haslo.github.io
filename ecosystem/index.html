@@ -10,7 +10,6 @@
   SIBLING DIRECTORIES (docs/):
     gwichti/                — Gwichti concept docs (6 tabs: TL;DR, Product, Widgets, Watch, Cute, Tech)
     pipi/                   — Pipi concept docs (7 tabs: TL;DR, Product, Widgets, Cute, Science, Maths, Tech)
-    powerli/                — Powerli concept docs (2 tabs: TL;DR, Widgets)
     schlafi/                — Schlafi concept docs (6 tabs: TL;DR, Science, Maths, Watch, Sound, ML)
     llm_context/            — LLM context files (architecture.md, howtos.md) — not human-readable docs
 
@@ -93,17 +92,6 @@
       <div class="card-meta">iPhone + Apple Watch + iPad &middot; 7 concept tabs</div>
     </div>
 
-    <div class="app-card powerli">
-      <span class="card-emoji">&#x1F50B;</span>
-      <h3><a href="../powerli/index.html" style="color: inherit; text-decoration: none;">Powerli</a> <span class="status-badge concept">Concept Phase</span></h3>
-      <p>
-        Battery widgets iOS should have shipped. Charge charts, device grid, screen time, charging speed, health trends.
-      </p>
-      <div class="card-bundle">com.cybergwen.Powerli (planned)</div>
-      <a href="../powerli/index.html" class="card-button">Concept Docs</a>
-      <div class="card-meta">iPhone + iPad &middot; 2 concept tabs</div>
-    </div>
-
     <div class="app-card schlafi">
       <span class="card-emoji">&#x1F319;</span>
       <h3><a href="../schlafi/index.html" style="color: inherit; text-decoration: none;">Schlafi</a> <span class="status-badge concept">Concept Phase</span></h3>
@@ -144,6 +132,40 @@
   </div>
 </section>
 
+<!-- ==================== SHELVED ==================== -->
+<section>
+  <h2><span class="emoji">&#x1F4E6;</span>Shelved</h2>
+
+  <div class="app-card-grid" style="grid-template-columns: 1fr;">
+
+    <div class="app-card powerli shelved-card">
+      <span class="card-emoji">&#x1F50B;</span>
+      <h3>Powerli <span class="status-badge shelved">Shelved</span></h3>
+      <p>
+        Battery/power widget app &mdash; explored but dropped due to iOS API limitations.
+        Nearly all planned features require private system APIs unavailable to third-party apps.
+      </p>
+      <table style="margin-top: 12px; font-size: 0.88em;">
+        <thead>
+          <tr><th>Feature</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Connected device batteries (AirPods, Watch&hellip;)</td><td>Private API &mdash; Apple&rsquo;s Batteries widget uses system-only APIs</td></tr>
+          <tr><td>Screen time</td><td>Private &mdash; ScreenTime framework is parental-controls only</td></tr>
+          <tr><td>Charging speed (watts)</td><td>Private API</td></tr>
+          <tr><td>Charge cycles</td><td>Private API</td></tr>
+          <tr><td>Battery health (max capacity&nbsp;%)</td><td>Private API</td></tr>
+          <tr><td>Host-device battery level</td><td>5&nbsp;% steps only (iOS&nbsp;17+) &mdash; too coarse for useful charts</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 8px; font-size: 0.88em;">
+        The only feasible data (host battery at 5&nbsp;% resolution, charging state, Low Power Mode, thermal state) is too thin for a standalone app.
+      </p>
+    </div>
+
+  </div>
+</section>
+
 <!-- ==================== QUICK REFERENCE ==================== -->
 <section>
   <h2><span class="emoji">&#x1F4CB;</span>Quick Reference</h2>
@@ -159,7 +181,6 @@
       <tr><td>Pipi</td><td><code>com.cybergwen.Pipi</code></td></tr>
       <tr><td>Pipi Widgets</td><td><code>com.cybergwen.Pipi.PipiWidgets</code></td></tr>
       <tr><td>Pipi Watch</td><td><code>com.cybergwen.Pipi.PipiWatch</code></td></tr>
-      <tr><td>Powerli</td><td><code>com.cybergwen.Powerli</code> (planned)</td></tr>
       <tr><td>Gwichti</td><td><code>com.cybergwen.Gwichti</code> (planned)</td></tr>
       <tr><td>Gwichti Widgets</td><td><code>com.cybergwen.Gwichti.GwichtiWidgets</code> (planned)</td></tr>
       <tr><td>Gwichti Watch</td><td><code>com.cybergwen.Gwichti.GwichtiWatch</code> (planned)</td></tr>

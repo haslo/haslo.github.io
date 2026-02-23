@@ -12,7 +12,7 @@
     ecosystem/              — Ecosystem overview (links here from OmniWidget card)
     pipi/, schlafi/, gwichti/ — App concept docs
 
-  THIS FILE: Lists all 24 OmniWidget widgets grouped by domain, with display
+  THIS FILE: Lists all 27 OmniWidget widgets grouped by domain, with display
   names, supported sizes, short descriptions, and preview screenshots.
 
   EDITING:
@@ -36,7 +36,7 @@
   <h1><span class="icon">&#x2699;&#xFE0F;</span> OmniWidget</h1>
   <div class="tagline">Widget Catalog</div>
   <p class="pitch">
-    24 widgets across 6 domains. Proof of concept and playground for the
+    27 widgets across 6 domains. Proof of concept and playground for the
     Gwen Widgets ecosystem. Not for distribution.
   </p>
 </header>
@@ -138,7 +138,7 @@
 
 <!-- ==================== ACTIVITY ==================== -->
 <section>
-  <h2><span class="emoji">&#x1F3C3;</span>Activity<span class="section-count">(8 widgets)</span></h2>
+  <h2><span class="emoji">&#x1F3C3;</span>Activity<span class="section-count">(10 widgets)</span></h2>
   <div class="widget-cards">
     <div class="wcard">
       <h3>Steps <span class="status-badge implemented">Implemented</span></h3>
@@ -195,6 +195,15 @@
       </div>
     </div>
     <div class="wcard">
+      <h3>Workouts <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Hourly workout count vs 7-day average</div>
+      <div class="wcard-preview"><img src="images/workouts.png" alt="Workouts widget" loading="lazy"></div>
+      <div class="wcard-sizes">
+        <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
       <h3>Water + Steps &amp; Stairs <span class="status-badge implemented">Implemented</span></h3>
       <div class="wcard-info">Water (top) + steps and stairs (bottom)</div>
       <div class="wcard-preview"><img src="images/water_steps_stairs.png" alt="Water + Steps & Stairs widget" loading="lazy"></div>
@@ -208,6 +217,14 @@
       <div class="wcard-preview"><img src="images/water_steps_stairs_trio.png" alt="Water Steps Stairs Trio widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Activity Overview <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">Burn, workouts, steps, and stairs in a 2&times;2 grid</div>
+      <div class="wcard-preview"><img src="images/activity_quad.png" alt="Activity Overview widget" loading="lazy"></div>
+      <div class="wcard-sizes">
+        <span class="size-tag">L</span>
       </div>
     </div>
   </div>
@@ -266,7 +283,7 @@
 
 <!-- ==================== SLEEP ==================== -->
 <section>
-  <h2><span class="emoji">&#x1F634;</span>Sleep<span class="section-count">(3 widgets)</span></h2>
+  <h2><span class="emoji">&#x1F634;</span>Sleep<span class="section-count">(4 widgets)</span></h2>
   <div class="widget-cards">
     <div class="wcard">
       <h3>Sleep Duration <span class="status-badge implemented">Implemented</span></h3>
@@ -274,6 +291,14 @@
       <div class="wcard-preview"><img src="images/sleep_duration.png" alt="Sleep Duration widget" loading="lazy"></div>
       <div class="wcard-sizes">
         <span class="size-tag">S</span>
+        <span class="size-tag">M</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <h3>Sleep Duration (14d) <span class="status-badge implemented">Implemented</span></h3>
+      <div class="wcard-info">14-night bar chart with target and average</div>
+      <div class="wcard-preview"><img src="images/sleep_duration_14.png" alt="Sleep Duration 14d widget" loading="lazy"></div>
+      <div class="wcard-sizes">
         <span class="size-tag">M</span>
       </div>
     </div>
@@ -302,7 +327,7 @@
 
 <!-- ==================== KIND STRING REFERENCE ==================== -->
 <section>
-  <h2><span class="emoji">&#x1F511;</span>Widget Kind Strings<span class="section-count">(24 widgets)</span></h2>
+  <h2><span class="emoji">&#x1F511;</span>Widget Kind Strings<span class="section-count">(27 widgets)</span></h2>
   <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 16px;">
     WidgetKit uses the <code>kind</code> string to identify widgets on the home screen.
     These are preserved from the original file names to keep existing placements intact after renaming.
@@ -326,14 +351,17 @@
       <tr><td>Water</td><td><code>WaterWidget</code></td><td><code>WaterWidget.swift</code></td></tr>
       <tr><td>Active Burn</td><td><code>BurnWidget</code></td><td><code>ActiveBurnWidget.swift</code></td></tr>
       <tr><td>Dietary Intake</td><td><code>DietaryWidget</code></td><td><code>DietaryIntakeWidget.swift</code></td></tr>
+      <tr><td>Workouts</td><td><code>WorkoutsWidget</code></td><td><code>WorkoutsWidget.swift</code></td></tr>
       <tr><td>Water + Steps &amp; Stairs</td><td><code>CombinedWaterStepsStairsWidget</code></td><td><code>Combined/WaterStepsStairsWidget.swift</code></td></tr>
       <tr><td>Water &middot; Steps &middot; Stairs</td><td><code>CombinedWaterStepsStairsTrioWidget</code></td><td><code>Combined/WaterStepsStairsTrioWidget.swift</code></td></tr>
+      <tr><td>Activity Overview</td><td><code>ActivityQuadWidget</code></td><td><code>Combined/ActivityQuadWidget.swift</code></td></tr>
       <tr><td>Macro Pies</td><td><code>MacronutrientWidget</code></td><td><code>MacroPieWidget.swift</code></td></tr>
       <tr><td>Macro Stacked Area</td><td><code>MacronutrientAreaWidget</code></td><td><code>MacroAreaWidget.swift</code></td></tr>
       <tr><td>Carbs &middot; Protein &middot; Fat</td><td><code>CombinedMacroTrioWidget</code></td><td><code>Combined/CarbsProteinFatWidget.swift</code></td></tr>
       <tr><td>Macro Area + Individual</td><td><code>CombinedMacroDetailWidget</code></td><td><code>Combined/MacroAreaDetailWidget.swift</code></td></tr>
       <tr><td>Dietary + Macros</td><td><code>CombinedDietaryMacroWidget</code></td><td><code>Combined/DietaryMacroWidget.swift</code></td></tr>
       <tr><td>Sleep Duration</td><td><code>SleepDurationWidget</code></td><td><code>SleepDurationWidget.swift</code></td></tr>
+      <tr><td>Sleep Duration (14d)</td><td><code>SleepDuration14Widget</code></td><td><code>SleepDuration14Widget.swift</code></td></tr>
       <tr><td>Sleep Schedule</td><td><code>SleepConsistencyWidget</code></td><td><code>SleepScheduleWidget.swift</code></td></tr>
       <tr><td>Sleep Phases</td><td><code>SleepPhaseWidget</code></td><td><code>SleepPhasesWidget.swift</code></td></tr>
     </tbody>
