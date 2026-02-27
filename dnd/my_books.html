@@ -146,8 +146,16 @@
   }
 
   @media print {
-    body { padding: 8mm; font-size: 8.5pt; }
-    @page { size: landscape; margin: 6mm; }
+    body { padding: 0; font-size: 8.5pt; max-width: none; background: white; }
+    @page { size: A4 landscape; margin: 10mm; }
+    h1 { font-size: 14pt; }
+    table { box-shadow: none; font-size: 8pt; }
+    thead th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 7.5pt; }
+    tbody tr:nth-child(even) { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tag, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 6.5pt; }
+    .skipped, .still, .reach { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .ov { font-size: 8pt; }
+    .legend { font-size: 8pt; }
   }
 </style>
 </head>
