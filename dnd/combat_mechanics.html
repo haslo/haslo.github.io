@@ -33,6 +33,19 @@
     Section headers: .section-head with color variants (.red, .alt, .pur, .teal)
     Callouts: .gotcha (gold background, bold)
     Formula text: monospace with colored left border
+
+  MOBILE (max-width 768px):
+    Two-col grids collapse to single column.
+    CSS order reordering via display:contents on .two-col children:
+      - Weapon: Step1 diagram → Step2 diagram → reference tables
+      - Spells: Path A diagram → Path B diagram → gotcha boxes
+      Uses :has(+ .diagram) to distinguish diagram sub-heads (order:1) from table sub-heads (order:10).
+    Wide tables replaced with card layouts via .mobile-cards / .desktop-only toggle:
+      - Cheat table → .m-bonus-card (one card per bonus type, rows list contexts)
+      - Ability Score → .m-mod-grid (compact grid of score:modifier pairs)
+      - Proficiency → .m-mod-grid (level:bonus pairs)
+      - Expertise → .m-feat-card (one card per feature)
+    SVG diagrams auto-scale via viewBox.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -200,6 +213,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     padding: 0 4px;
     color: #1a4a2a;
   }
+  .magic-box {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    background: #c5c2e0;
+    border: 1px solid #9b97c0;
+    border-radius: 3px;
+    padding: 0 4px;
+    color: #2d2960;
+  }
 
   /* ── Tables ── */
   table {
@@ -307,6 +331,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     color: var(--accent);
   }
 
+  /* ── Mobile content (hidden by default, shown in mobile media query) ── */
+  .mobile-cards { display: none; }
+
   /* ── Print ── */
   @page { size: A4 portrait; margin: 6mm; }
   @media print {
@@ -317,6 +344,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       padding: 0;
       font-size: 9pt;
     }
+    .mobile-cards { display: none; }
   }
 
   /* ── Screen comfort ── */
@@ -335,10 +363,104 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .formula { font-size: 10.5pt; }
     .gotcha { font-size: 11pt; }
     .example { font-size: 11pt; }
-    .dc-box, .roll-box, .prof-box { font-size: 10.5pt; }
+    .dc-box, .roll-box, .prof-box, .magic-box { font-size: 10.5pt; }
     .who { font-size: 9pt; }
     .note-text { font-size: 10pt; }
     .ability-key { font-size: 10.5pt; }
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 768px) {
+    body { padding: 10px 10px; }
+    .title { font-size: 17pt; letter-spacing: 0.5px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    section { margin-bottom: 14px; }
+    .sub-head { margin-top: 10px; }
+
+    /* Show mobile card content, hide wide desktop tables */
+    .mobile-cards { display: block; }
+    .desktop-only { display: none; }
+
+    /* Card styles for mobile cheat table — compact 2-col grid */
+    .m-bonus-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin: 6px 0;
+    }
+    .m-bonus-card .m-bonus-title {
+      font-size: 11pt;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .m-bonus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 12px;
+    }
+    .m-bonus-grid .m-cell {
+      font-size: 11pt;
+      padding: 1px 0;
+    }
+
+    /* Modifier grid — compact key:value pairs */
+    .m-mod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      gap: 3px;
+      margin: 4px 0;
+    }
+    .m-mod-grid .m-mod-item {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 3px 6px;
+      text-align: center;
+      font-size: 10pt;
+    }
+    .m-mod-grid .m-mod-item .m-score { font-size: 8pt; color: var(--text-dim); }
+
+    /* Expertise cards */
+    .m-feat-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px 8px;
+      margin: 4px 0;
+      font-size: 10pt;
+    }
+    .m-feat-card b { color: var(--accent2); }
+    .m-feat-card .m-who { font-size: 9pt; color: var(--text-dim); }
+
+    /* SVG diagrams */
+    .diagram { margin: 6px 0; }
+    .gotcha { margin: 6px 0; }
+
+    /*
+     * Reorder on mobile: diagrams first, reference content after.
+     * Make two-col children transparent so their contents become grid items,
+     * then assign order values. Higher order = appears later.
+     *
+     * Weapon section: Step1 (diagram+key) → Step2 (diagram) → Who Rolls table → AC table
+     * Spells section: Path A (diagram) → Path B (diagram) → all gotcha boxes
+     */
+    section > .two-col > div {
+      display: contents;
+    }
+    /* Default: everything gets order 10 (reference content) */
+    section > .two-col > div > * {
+      order: 10;
+    }
+    /* Diagrams and their sub-heads get order 1 (come first).
+       :has(+ .diagram) ensures only sub-heads before diagrams, not before tables. */
+    section > .two-col > div > .sub-head:has(+ .diagram),
+    section > .two-col > div > .sub-head:has(+ div[style*="font-size:8pt"]),
+    section > .two-col > div > .diagram,
+    section > .two-col > div > .ability-key,
+    section > .two-col > div > div[style*="font-size:8pt"] {
+      order: 1;
+    }
   }
 </style>
 </head>
@@ -468,7 +590,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ════════════════════════════════════════════════════════ -->
 <section>
   <div class="section-head gold">Where Does Each Bonus Go? — The Cheat Table</div>
-  <table>
+  <table class="desktop-only">
     <tr>
       <th style="width:18%">Bonus</th>
       <th>Weapon Attack</th>
@@ -492,7 +614,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <tr>
       <td><b class="dc-box">Ability Mod</b></td>
       <td><span class="chk">✓</span> STR / DEX</td>
-      <td><span class="chk">✓</span> same as attack</td>
+      <td><span class="chk">✓</span> STR / DEX</td>
       <td><span class="chk">✓</span> casting ability</td>
       <td><span class="nope">✗</span> <span class="note-text">usually not</span></td>
       <td><span class="chk">✓</span> casting ability</td>
@@ -500,9 +622,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td><span class="chk">✓</span> <span class="note-text">DEX (most armor)</span></td>
     </tr>
     <tr>
-      <td><b style="display:inline-block;font-size:8pt;font-weight:700;background:#c5c2e0;border:1px solid #9b97c0;border-radius:3px;padding:0 4px;color:#2d2960;">Magic +X</b></td>
+      <td><b class="magic-box">Magic +X</b></td>
       <td><span class="chk">✓</span> <span class="note-text">+1/+2/+3 weapon</span></td>
-      <td><span class="chk">✓</span> <span class="note-text">same +X</span></td>
+      <td><span class="chk">✓</span> <span class="note-text">+1/+2/+3</span></td>
       <td><span class="nope">✗</span> <span class="note-text">rare items</span></td>
       <td><span class="nope">✗</span></td>
       <td><span class="nope">✗</span></td>
@@ -510,8 +632,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td><span class="chk">✓</span> <span class="note-text">+X armor/shield</span></td>
     </tr>
   </table>
+
+  <!-- Mobile cheat cards (one card per bonus type, 2-col grid inside) -->
+  <div class="mobile-cards">
+    <div class="m-bonus-card">
+      <div class="m-bonus-title"><span class="prof-box">Proficiency</span></div>
+      <div class="m-bonus-grid">
+        <div class="m-cell"><span class="chk">✓</span> Weapon Atk <span class="note-text">if prof</span></div>
+        <div class="m-cell"><span class="nope">✗</span> Weapon Dmg</div>
+        <div class="m-cell"><span class="chk">✓</span> Spell Atk</div>
+        <div class="m-cell"><span class="nope">✗</span> Spell Dmg</div>
+        <div class="m-cell"><span class="chk">✓</span> Spell DC</div>
+        <div class="m-cell"><span class="chk">✓</span> Save <span class="note-text">if prof</span></div>
+        <div class="m-cell"><span class="nope">✗</span> AC</div>
+      </div>
+    </div>
+    <div class="m-bonus-card">
+      <div class="m-bonus-title"><span class="dc-box">Ability Mod</span></div>
+      <div class="m-bonus-grid">
+        <div class="m-cell"><span class="chk">✓</span> Weapon Atk <span class="note-text">STR/DEX</span></div>
+        <div class="m-cell"><span class="chk">✓</span> Weapon Dmg <span class="note-text">STR/DEX</span></div>
+        <div class="m-cell"><span class="chk">✓</span> Spell Atk <span class="note-text">INT/WIS/CHA</span></div>
+        <div class="m-cell"><span class="nope">✗</span> Spell Dmg <span class="note-text">usually not</span></div>
+        <div class="m-cell"><span class="chk">✓</span> Spell DC <span class="note-text">INT/WIS/CHA</span></div>
+        <div class="m-cell"><span class="chk">✓</span> Save <span class="note-text">relevant ability</span></div>
+        <div class="m-cell"><span class="chk">✓</span> AC <span class="note-text">DEX</span></div>
+      </div>
+    </div>
+    <div class="m-bonus-card">
+      <div class="m-bonus-title"><b class="magic-box">Magic +X</b></div>
+      <div class="m-bonus-grid">
+        <div class="m-cell"><span class="chk">✓</span> Weapon Atk <span class="note-text">+1/2/3</span></div>
+        <div class="m-cell"><span class="chk">✓</span> Weapon Dmg <span class="note-text">+1/2/3</span></div>
+        <div class="m-cell"><span class="nope">✗</span> Spell Atk <span class="note-text">rare items</span></div>
+        <div class="m-cell"><span class="nope">✗</span> Spell Dmg</div>
+        <div class="m-cell"><span class="nope">✗</span> Spell DC</div>
+        <div class="m-cell"><span class="nope">✗</span> Save</div>
+        <div class="m-cell"><span class="chk">✓</span> AC <span class="note-text">+X armor</span></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Lookup Tables -->
-  <div class="two-col" style="margin-top:4px; gap:8px;">
+  <div class="two-col desktop-only" style="margin-top:4px; gap:8px;">
     <div>
       <div class="sub-head">Ability Score → Modifier</div>
       <table>
@@ -536,6 +699,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <tr><td><b>Aura of Protection</b></td><td>+CHA mod to all saving throws (you + allies nearby)</td><td>Paladin (level 6)</td></tr>
       </table>
     </div>
+  </div>
+
+  <!-- Mobile lookup cards -->
+  <div class="mobile-cards">
+    <div class="sub-head">Ability Score → Modifier</div>
+    <div class="m-mod-grid">
+      <div class="m-mod-item"><div class="m-score">1</div><b>−5</b></div>
+      <div class="m-mod-item"><div class="m-score">2–3</div><b>−4</b></div>
+      <div class="m-mod-item"><div class="m-score">4–5</div><b>−3</b></div>
+      <div class="m-mod-item"><div class="m-score">6–7</div><b>−2</b></div>
+      <div class="m-mod-item"><div class="m-score">8–9</div><b>−1</b></div>
+      <div class="m-mod-item"><div class="m-score">10–11</div><b>+0</b></div>
+      <div class="m-mod-item"><div class="m-score">12–13</div><b>+1</b></div>
+      <div class="m-mod-item"><div class="m-score">14–15</div><b>+2</b></div>
+      <div class="m-mod-item"><div class="m-score">16–17</div><b>+3</b></div>
+      <div class="m-mod-item"><div class="m-score">18–19</div><b>+4</b></div>
+      <div class="m-mod-item"><div class="m-score">20</div><b>+5</b></div>
+    </div>
+    <div class="note-text">Formula: modifier = floor((score − 10) / 2). Most PCs have 8–20.</div>
+
+    <div class="sub-head">Proficiency Bonus by Level</div>
+    <div class="m-mod-grid">
+      <div class="m-mod-item"><div class="m-score">Lvl 1–4</div><span class="prof-box">+2</span></div>
+      <div class="m-mod-item"><div class="m-score">Lvl 5–8</div><span class="prof-box">+3</span></div>
+      <div class="m-mod-item"><div class="m-score">Lvl 9–12</div><span class="prof-box">+4</span></div>
+      <div class="m-mod-item"><div class="m-score">Lvl 13–16</div><span class="prof-box">+5</span></div>
+      <div class="m-mod-item"><div class="m-score">Lvl 17–20</div><span class="prof-box">+6</span></div>
+    </div>
+    <div class="note-text">Prof <b>never</b> appears in damage. Expertise applies to <b>skill/tool checks only</b>, not to attack rolls or saves.</div>
+
+    <div class="sub-head">Expertise &amp; Other Prof Multipliers</div>
+    <div class="m-feat-card"><b>Expertise</b> — Double prof on chosen skills/tools<br><span class="m-who">Rogue, Bard, Ranger (Deft Explorer)</span></div>
+    <div class="m-feat-card"><b>Jack of All Trades</b> — +½ prof to ability checks without prof<br><span class="m-who">Bard (level 2)</span></div>
+    <div class="m-feat-card"><b>Remarkable Athlete</b> — +½ prof to STR/DEX/CON checks without prof<br><span class="m-who">Champion Fighter</span></div>
+    <div class="m-feat-card"><b>Aura of Protection</b> — +CHA mod to all saves (you + allies nearby)<br><span class="m-who">Paladin (level 6)</span></div>
   </div>
 </section>
 

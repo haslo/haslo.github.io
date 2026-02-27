@@ -153,6 +153,48 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     flex-wrap: wrap;
   }
 
+  /* ── Mobile: cards ── */
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    h1 { font-size: 14pt; }
+    table, thead, tbody, th, td, tr { display: block; }
+    thead { display: none; }
+    tbody tr {
+      background: var(--panel-bg) !important;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    tbody tr:nth-child(even) { background: var(--panel-bg) !important; }
+    tbody td {
+      display: block;
+      border-bottom: none;
+      padding: 0;
+    }
+    /* Book title cell */
+    tbody td:first-child {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .book-title { font-size: 12pt; }
+    .ordered { margin-top: 6px; }
+    /* Overview cell */
+    tbody td:nth-child(2) {
+      margin-bottom: 10px;
+    }
+    .pills { margin-bottom: 8px; }
+    .reach { margin-top: 8px; }
+    /* Status cell */
+    tbody td:last-child {
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .legend { flex-direction: column; gap: 6px; }
+  }
+
   @media print {
     body { padding: 0; font-size: 8.5pt; max-width: none; background: white; }
     @page { size: A4 landscape; margin: 10mm; }

@@ -567,6 +567,71 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     a.xref { color: var(--accent); text-decoration: underline dotted; text-underline-offset: 2px; }
   }
 
+  /* ── Mobile ── */
+  @media screen and (max-width: 768px) {
+    body { font-size: 14pt; }
+    .page { padding: 16px 14px; max-width: 100%; }
+
+    /* Cover */
+    .cover { min-height: 80vh; }
+    .cover::before, .cover::after { display: none; }
+    .cover-corner { display: none; }
+    .cover-inner { padding: 0 16px; }
+    .cover h1 { font-size: 24pt; letter-spacing: 4px; }
+    .cover .subtitle { font-size: 10pt; letter-spacing: 3px; }
+    .cover .tagline { font-size: 13pt; }
+    .cover-emblem { width: 140px; height: 140px; }
+    .cover-rule { width: 140px; }
+    .cover-rule.wide { width: 200px; }
+    .cover .toc ol { columns: 1; }
+    .cover .toc li { font-size: 12pt; }
+    .cover .toc h2 { font-size: 11pt; }
+    .cover-corner { width: 24px; height: 24px; }
+
+    /* TOC */
+    .toc ol { columns: 1; }
+    .toc li { font-size: 13pt; }
+
+    /* Headings */
+    h2 { font-size: 13pt; letter-spacing: 1px; }
+    h3 { font-size: 11pt; }
+
+    /* Callouts */
+    .callout { font-size: 13pt; padding: 12px 14px; }
+
+    /* Tables */
+    table { font-size: 13pt; }
+    thead th { font-size: 8pt; padding: 6px 8px; }
+    tbody td { padding: 5px 8px; }
+    tbody td:first-child { white-space: normal; }
+
+    /* Floated images → full width */
+    .lore-float-r, .lore-float-l {
+      float: none;
+      width: 100%;
+      max-width: 280px;
+      margin: 12px auto;
+    }
+    .sharn-float { width: 100%; max-width: 300px; float: none; margin: 12px auto; }
+
+    /* Artwork */
+    .artwork-emblem { width: 120px; height: 120px; }
+    .artwork-orrery { max-width: 100%; }
+    .artwork-shards { width: 100%; max-width: 280px; }
+    .artwork-full { width: 100%; }
+    .divider-ornate img { width: 280px; }
+
+    /* Map figures */
+    .map-figure.aside { float: none; max-width: 100%; margin: 12px auto; }
+
+    /* Sigil cells in tables */
+    .sigil-cell { width: 50px; }
+    .sigil-cell img { width: 40px; height: 40px; }
+
+    /* Back-to-top */
+    .back-to-top { bottom: 16px; right: 16px; width: 34px; height: 34px; font-size: 16px; }
+  }
+
   /* PRINT */
   @media print {
     body { background: white; font-size: 12pt; }

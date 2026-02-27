@@ -7,7 +7,7 @@
 
   PANELS (5, each a full landscape page when printed):
     1. Combat — Actions & Economy (red, ⚔)
-       - Grid: actions table (1fr) + Turn Flow SVG (230px) with Heroic Inspiration below
+       - Grid: actions table (1fr) + Turn Flow SVG (230px, hub/pool diagram — NOT sequential) with Heroic Inspiration below
        - Full-width pills: OA, Readied Action, Reaction Spells, Free Interaction
        - Grid2: Combat Extras | Surprise & Initiative
        - Full-width: Weapon Masteries (4+4 grid)
@@ -16,7 +16,7 @@
        - Grapple/shove mechanics, escape grapple (Action + check)
        - Mounted combat, underwater combat
     3. Conditions (green, 🎭)
-       - Flexbox 3-column layout (NOT grid — columns stack independently for even whitespace)
+       - CSS columns: 3 layout (fills top-to-bottom per column, collapses to 1 on mobile)
        - Exhaustion table with causes and recovery
        - Object AC and HP tables
     4. Saves, Spells & Damage (purple, 📋)
@@ -39,6 +39,9 @@
     DC boxes: .dc-box (inline monospace badge)
     Layout: .spread (flex row on screen), .panel (flex:1 card with shadow)
     Body font: 10pt Source Sans 3. Tables: 9.5pt.
+    Mobile (≤768px): all grids collapse to 1fr, cond-grid to 1-col, inline SVGs capped at 40px,
+      AoE shapes become horizontal (img left + text right), turn flow scales to max-width.
+      No inline styles on grids — all use CSS classes.
 
   PRINT LAYOUT:
     @page landscape, 6mm margins
@@ -65,7 +68,7 @@
     - Escape Grapple: Action + STR (Athletics) or DEX (Acrobatics) check vs escape DC (8+STR+Prof)
     - Invisible: Adv/Disadv only if attacker can't see you (Truesight/See Invis negate)
     - Heroic Inspiration: reroll any die immediately after rolling, Nat 20 grants one, max 1
-    - Turn Flow: MOVE is "any time" (can be split), not serial with Action
+    - Turn Flow: Action, BA, Move, Free Interaction are in ANY ORDER (hub/pool diagram, not flowchart)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -216,6 +219,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* ── Layouts ── */
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; break-inside: avoid; }
   .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; break-inside: avoid; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 10px; margin-top: 4px; align-items: start; break-inside: avoid; }
+  .grid-actions-flow { display: grid; grid-template-columns: 1fr 230px; gap: 8px; align-items: start; }
+  .gap-xs { gap: 2px 8px; }
+  .gap-sm { gap: 2px 10px; }
+  .gap-md { gap: 4px 10px; }
+  .gap-tight { gap: 4px; }
+  .mt-4 { margin-top: 4px; }
 
   /* ── DC / value boxes ── */
   .dc-box {
@@ -243,7 +253,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .act-util  { background: #c9dce8; color: #2a4d63; }
 
   /* ── Conditions ── */
-  .cond-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px 8px; }
+  .cond-grid { columns: 3; column-gap: 8px; line-height: 1.25; }
   .cond-item { padding: 3px 0; }
   .cond-name {
     font-weight: 800;
@@ -293,10 +303,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .flex-center { display: flex; gap: 8px; align-items: center; }
   .flex-shrink-0 { flex-shrink: 0; }
   .flex-1 { flex: 1; }
+  .gap-icon { gap: 5px; }
+  .gap-icon-sm { gap: 4px; }
+  .flex-wrap-center { flex-wrap: wrap; align-items: center; }
+  .aoe-row { gap: 8px; flex-wrap: wrap; }
   .sep { margin-top: 6px; border-top: 1px solid rgba(201,185,154,0.4); padding-top: 4px; }
   .spell-card-sm { padding: 4px 6px; }
   .aoe-shape { text-align: center; font-size: 8.5pt; }
   .ac-line { margin-bottom: 1px; }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 768px) {
+    body { font-size: 10pt; }
+    .panel { padding: 12px 14px; }
+    .panel-title { font-size: 12pt; padding: 5px 10px; }
+    .panel-title .icon { font-size: 14pt; }
+
+    /* 1. Spacing between sections — generous breathing room */
+    .section { margin-bottom: 14px; }
+    .section-head { margin-bottom: 6px; }
+
+    /* 2. Collapse all multi-column grids to single column */
+    .grid2, .grid3, .grid4, .grid-actions-flow { grid-template-columns: 1fr; }
+
+    /* 3. Conditions: single column on mobile */
+    .cond-grid { columns: 1; }
+
+    /* 4. Inline SVG images: cap so they don't dominate on small screens */
+    .panel img[src*="dm_screen"] { max-width: 40px; height: auto; }
+    /* Exception: .img-full for content images that should use available width */
+    .panel img.img-full { max-width: 100%; width: 100%; margin: 4px auto; }
+    /* Section-top images (panel 5): keep beside title but smaller */
+    .section-top img[src*="dm_screen"] { max-width: none; max-height: 30px; }
+
+    /* 7. AoE shapes: image left, text right per shape, stacked vertically */
+    .aoe-row { flex-direction: column; gap: 6px; }
+    .aoe-shape {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+    }
+    .aoe-shape img { max-width: 36px; }
+
+    /* Tables */
+    table { font-size: 9.5pt; }
+
+    /* Spell cards */
+    .spell-card { margin-bottom: 4px; }
+  }
 </style>
 </head>
 <body>
@@ -312,7 +367,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="panel-title red"><span class="icon">⚔</span> Combat — Actions &amp; Economy</div>
 
   <!-- TOP GRID: ACTIONS + TURN FLOW -->
-  <div style="display:grid; grid-template-columns: 1fr 230px; gap:8px; align-items:start;">
+  <div class="grid-actions-flow">
     <!-- LEFT: ACTIONS TABLE -->
     <div class="section">
       <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><line x1="2" y1="12" x2="12" y2="2" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="12" x2="2" y2="2" stroke="currentColor" stroke-width="1.5"/><polygon points="11,2 13,2 13,4" fill="currentColor"/><polygon points="11,12 13,12 13,10" fill="currentColor"/></svg> Your Turn: Move + Action + Bonus Action (BA) + Free</div>
@@ -335,7 +390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- RIGHT: TURN FLOW SIDEBAR (COMPACT) -->
     <div class="section mb-0">
       <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="7" y1="3.5" x2="7" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="7" y1="7" x2="10" y2="8.5" stroke="currentColor" stroke-width="1"/></svg> Turn Flow</div>
-      <img src="media/dm_screen/01_turn_flow_diagram.svg" width="210" height="220" style="display:block;">
+      <img class="img-full" src="media/dm_screen/01_turn_flow_diagram.svg" width="210" height="220" style="display:block;">
       <div style="margin-top:3px; font-size:8.5pt; line-height:1.3; padding:3px 4px; background:rgba(45,90,61,0.08); border-radius:3px; border:1px solid #b8dbc5;">
         <b style="color:var(--accent3);">Heroic Inspiration</b> — <b>DM</b> rewards compelling roleplay, adhering to character, creative/heroic actions — <b>player</b> spends to <b>reroll any die</b> immediately after rolling. Nat 1 grants one. Max 1 (or pass on).
       </div>
@@ -351,7 +406,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- COMBAT EXTRAS + SURPRISE & INITIATIVE -->
-  <div class="grid2" style="gap:4px 10px;">
+  <div class="grid2 gap-md">
     <div class="section mb-0">
       <div class="section-head"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M7,2 L9,5 L7,4 L5,5 Z" fill="currentColor" opacity="0.7"/><rect x="6" y="5" width="2" height="6" rx="0.5" fill="currentColor" opacity="0.5"/><line x1="4" y1="12" x2="10" y2="12" stroke="currentColor" stroke-width="1.2"/></svg> Combat Extras</div>
       <ul class="compact-list">
@@ -374,7 +429,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- WEAPON MASTERIES -->
   <div class="section mb-0">
     <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M7,1 L9,3 L7,2.5 L5,3 Z" fill="currentColor" opacity="0.7"/><rect x="6.2" y="3" width="1.6" height="8" rx="0.3" fill="currentColor" opacity="0.5"/><line x1="3" y1="12" x2="11" y2="12" stroke="currentColor" stroke-width="1"/></svg> Weapon Masteries</div>
-    <div class="grid2" style="gap:2px 10px;">
+    <div class="grid2 gap-sm">
       <div>
         <div><b class="highlight">Cleave</b> — hit → free attack on adj. creature (same mod, no extra dmg dice)</div>
         <div><b class="warn">Graze</b> — miss → deal ability mod as dmg anyway</div>
@@ -421,7 +476,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="section">
         <div class="section-head"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><line x1="7" y1="12" x2="7" y2="4" stroke="currentColor" stroke-width="1.5"/><polygon points="4.5,6 7,2 9.5,6" fill="currentColor" opacity="0.6"/></svg> Jumping</div>
-        <div class="grid2" style="gap:2px 8px;">
+        <div class="grid2 gap-xs">
           <div class="flex-row">
             <div>
               <b class="note">Long Jump</b><br>
@@ -474,7 +529,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="section">
         <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><line x1="7" y1="2" x2="7" y2="10" stroke="currentColor" stroke-width="1.5"/><polygon points="4.5,8 7,12 9.5,8" fill="currentColor" opacity="0.6"/></svg> Falling</div>
-        <div class="flex-row" style="gap:5px;">
+        <div class="flex-row gap-icon">
           <img src="media/dm_screen/04_falling_figure.svg" width="18" height="28" style="display:block;">
           <span>Fall <b>500 ft instantly</b>. Take <span class="highlight">1d6 per 10 ft</span> (max <b>20d6</b>). Land <b>Prone</b>.</span>
         </div>
@@ -482,7 +537,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="section">
         <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M1,8 Q3.5,5 7,8 Q10.5,11 13,8" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M1,4 Q3.5,1 7,4 Q10.5,7 13,4" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg> Underwater</div>
-        <div class="flex-row" style="gap:5px;">
+        <div class="flex-row gap-icon">
           <img src="media/dm_screen/05_underwater_bubbles.svg" width="20" height="32" style="display:block;">
           <ul class="compact-list">
             <li><b>Breath</b>: 1 + CON mod min (min 30 sec). Then → 1 Exhaustion/turn.</li>
@@ -524,27 +579,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="panel">
   <div class="panel-title green"><span class="icon">🎭</span> Conditions</div>
 
-  <div style="display:flex; gap:8px; line-height:1.25;">
-    <div style="flex:1;">
-      <div class="cond-item"><span class="cond-name cond-blue">Blinded</span> — Can't see. Auto-fail sight checks. Atks Disadv. Atks against Adv.</div>
-      <div class="cond-item"><span class="cond-name cond-purple">Charmed</span> — Can't attack/harm charmer. Charmer Adv on social checks.</div>
-      <div class="cond-item"><span class="cond-name cond-blue">Deafened</span> — Can't hear. Auto-fail hearing checks.</div>
-      <div class="cond-item"><span class="cond-name cond-amber">Frightened</span> — Disadv atks &amp; checks while source visible. Can't approach.</div>
-      <div class="cond-item"><span class="cond-name cond-amber">Grappled</span> — Speed 0. Ends if grappler Incap. or forced apart, or target succeeds escape action.</div>
-    </div>
-    <div style="flex:1;">
-      <div class="cond-item"><span class="cond-name cond-red">Incapacitated</span> — No actions, bonus actions, or reactions. Concentration broken.</div>
-      <div class="cond-item"><span class="cond-name cond-purple">Invisible</span> — Can't be seen. Atks Adv, atks against Disadv — <b>only if attacker can't see you</b> (Truesight/See Invis. negate).</div>
-      <div class="cond-item"><span class="cond-name cond-red">Paralyzed</span> — Incap. Can't move/speak. Auto-fail STR/DEX. <span class="highlight">5 ft hit = Crit.</span></div>
-      <div class="cond-item"><span class="cond-name cond-grey">Petrified</span> — Incap. Auto-fail STR/DEX. <b>Resist all dmg.</b> Immune poison/disease.</div>
-      <div class="cond-item"><span class="cond-name cond-amber">Poisoned</span> — Disadv on atks &amp; ability checks.</div>
-    </div>
-    <div style="flex:1;">
-      <div class="cond-item"><span class="cond-name cond-amber">Prone</span> — Crawl only. Disadv atks. Melee vs Adv, ranged vs Disadv. Stand = ½ Speed.</div>
-      <div class="cond-item"><span class="cond-name cond-amber">Restrained</span> — Speed 0. Atks Disadv. Atks against Adv. Disadv DEX saves.</div>
-      <div class="cond-item"><span class="cond-name cond-red">Stunned</span> — Incap. Can't move. Auto-fail STR/DEX. Atks against Adv.</div>
-      <div class="cond-item"><span class="cond-name cond-red">Unconscious</span> — Incap. Drop items, Prone. Auto-fail STR/DEX. <span class="highlight">5 ft = Crit.</span></div>
-    </div>
+  <div class="cond-grid">
+    <div class="cond-item"><span class="cond-name cond-blue">Blinded</span> — Can't see. Auto-fail sight checks. Atks Disadv. Atks against Adv.</div>
+    <div class="cond-item"><span class="cond-name cond-purple">Charmed</span> — Can't attack/harm charmer. Charmer Adv on social checks.</div>
+    <div class="cond-item"><span class="cond-name cond-blue">Deafened</span> — Can't hear. Auto-fail hearing checks.</div>
+    <div class="cond-item"><span class="cond-name cond-amber">Frightened</span> — Disadv atks &amp; checks while source visible. Can't approach.</div>
+    <div class="cond-item"><span class="cond-name cond-amber">Grappled</span> — Speed 0. Ends if grappler Incap. or forced apart, or target succeeds escape action.</div>
+    <div class="cond-item"><span class="cond-name cond-red">Incapacitated</span> — No actions, bonus actions, or reactions. Concentration broken.</div>
+    <div class="cond-item"><span class="cond-name cond-purple">Invisible</span> — Can't be seen. Atks Adv, atks against Disadv — <b>only if attacker can't see you</b> (Truesight/See Invis. negate).</div>
+    <div class="cond-item"><span class="cond-name cond-red">Paralyzed</span> — Incap. Can't move/speak. Auto-fail STR/DEX. <span class="highlight">5 ft hit = Crit.</span></div>
+    <div class="cond-item"><span class="cond-name cond-grey">Petrified</span> — Incap. Auto-fail STR/DEX. <b>Resist all dmg.</b> Immune poison/disease.</div>
+    <div class="cond-item"><span class="cond-name cond-amber">Poisoned</span> — Disadv on atks &amp; ability checks.</div>
+    <div class="cond-item"><span class="cond-name cond-amber">Prone</span> — Crawl only. Disadv atks. Melee vs Adv, ranged vs Disadv. Stand = ½ Speed.</div>
+    <div class="cond-item"><span class="cond-name cond-amber">Restrained</span> — Speed 0. Atks Disadv. Atks against Adv. Disadv DEX saves.</div>
+    <div class="cond-item"><span class="cond-name cond-red">Stunned</span> — Incap. Can't move. Auto-fail STR/DEX. Atks against Adv.</div>
+    <div class="cond-item"><span class="cond-name cond-red">Unconscious</span> — Incap. Drop items, Prone. Auto-fail STR/DEX. <span class="highlight">5 ft = Crit.</span></div>
   </div>
 
   <div class="section" style="margin-top:4px">
@@ -560,10 +609,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="dim" style="font-size:9.5pt;"><b>Caused by:</b> forced march, starvation, dehydration, extreme heat/cold, spells &amp; abilities. <b>Recovery:</b> −1 lvl per Long Rest (with food &amp; water). <i>Greater Restoration</i> removes 1 lvl.</div>
   </div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:4px 10px; margin-top:4px; align-items:start;">
+  <div class="grid4">
     <div>
       <div class="section-head alt"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M7,1 L12,3 L12,7 Q12,11 7,13 Q2,11 2,7 L2,3 Z" fill="currentColor" opacity="0.25" stroke="currentColor" stroke-width="0.8"/></svg> Armor Class (AC)</div>
-      <div class="flex-row" style="gap:4px;">
+      <div class="flex-row gap-icon-sm">
         <img src="media/dm_screen/07_armor_class_shield.svg" width="28" height="34" style="display:block;">
         <div>
           <div class="ac-line"><b>Unarm:</b> <span class="dc-box">10+DEX</span></div>
@@ -609,24 +658,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:4px 12px; margin-top:4px;">
+  <div class="grid3 mt-4">
     <div class="section mb-0">
       <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M7,2 Q9,5 8.5,8 Q8,10 7,10.5 Q6,10 5.5,8 Q5,5 7,2Z" fill="currentColor" opacity="0.5"/><line x1="4" y1="11.5" x2="10" y2="11.5" stroke="currentColor" stroke-width="1"/></svg> Short Rest</div>
-      <div class="flex-row" style="gap:5px;">
+      <div class="flex-row gap-icon">
         <img src="media/dm_screen/08_rest_icon_sleeping.svg" width="24" height="26" style="display:block;">
         <div><b>1 hour.</b> Spend Hit Dice: roll HD + CON mod → regain HP. Recharge some class features.</div>
       </div>
     </div>
     <div class="section mb-0">
       <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M9,2 A5,5 0 1,0 9,12 A3.5,3.5 0 1,1 9,2Z" fill="currentColor" opacity="0.5"/></svg> Long Rest</div>
-      <div class="flex-row" style="gap:5px;">
+      <div class="flex-row gap-icon">
         <img src="media/dm_screen/09_rest_icon_sleeping_alt.svg" width="24" height="26" style="display:block;">
         <div><b>8 hours</b> (6 sleeping). Regain <b>all HP</b> + half max HD (rounded down). Reset features. Max 1/24h.</div>
       </div>
     </div>
     <div class="section mb-0">
       <div class="section-head alt"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><rect x="5.5" y="2" width="3" height="10" rx="1" fill="currentColor" opacity="0.45"/><rect x="2" y="5.5" width="10" height="3" rx="1" fill="currentColor" opacity="0.45"/></svg> Stabilizing</div>
-      <div class="flex-row" style="gap:5px;">
+      <div class="flex-row gap-icon">
         <img src="media/dm_screen/10_stabilizing_icon.svg" width="22" height="26" style="display:block;">
         <div><span class="dc-box">DC 10</span> WIS (Medicine) → stable (no more death saves). <b>Spare the Dying</b> auto-stabilizes.</div>
       </div>
@@ -641,7 +690,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="grid2 section">
     <div class="section">
-      <div class="section-head red flex-row" style="gap:5px; align-items:center;">
+      <div class="section-head red flex-row gap-icon">
         <svg width="18" height="18" viewBox="0 0 18 18" class="flex-shrink-0">
           <!-- Skull -->
           <ellipse cx="9" cy="7" rx="6.5" ry="6" fill="#f0e0d0" stroke="#8b3a3a" stroke-width="0.8"/>
@@ -661,7 +710,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="section">
-      <div class="section-head pur flex-row" style="gap:5px; align-items:center;">
+      <div class="section-head pur flex-row gap-icon">
         <svg width="18" height="18" viewBox="0 0 18 18" class="flex-shrink-0">
           <!-- Glowing eye / focus -->
           <circle cx="9" cy="9" r="7" fill="none" stroke="#3b3678" stroke-width="0.8" opacity="0.5"/>
@@ -734,7 +783,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="section">
     <div class="section-head"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><polygon points="7,1 9,5 13,5 10,8 11,13 7,10 3,13 4,8 1,5 5,5" fill="none" stroke="currentColor" stroke-width="0.9"/></svg> Damage Types</div>
-    <div class="flex-row" style="flex-wrap:wrap; align-items:center;">
+    <div class="flex-row flex-wrap-center">
       <b style="color:var(--text-dim)">Physical:</b>
       <span class="dmg-group"><span class="dmg-pill dmg-phys">Bludg.</span><span class="dmg-pill dmg-phys">Pierce</span><span class="dmg-pill dmg-phys">Slash</span></span>
       <b style="color:var(--accent2)">Elemental:</b>
@@ -746,7 +795,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="section">
     <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><line x1="7" y1="1" x2="7" y2="10" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="1" r="1.5" fill="currentColor" opacity="0.5"/><path d="M5,10 Q7,13 9,10" fill="currentColor" opacity="0.3"/></svg> Spellcasting Quick Ref</div>
-    <div class="grid3" style="gap:4px;">
+    <div class="grid3 gap-tight">
       <div class="spell-card spell-card-sm">
         <b>Spell Attack</b><br>
         d20 + Prof + spell mod
@@ -762,7 +811,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px 12px;">
+  <div class="grid2">
     <div class="section mb-0">
       <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><polygon points="8,1 5.5,5 8,5 6,13 10.5,6 8,6" fill="currentColor" opacity="0.6"/></svg> Improvised Damage</div>
       <table>
@@ -775,7 +824,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="section mb-0">
       <div class="section-head alt"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="7" cy="7" r="5.5" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="0.8"/><circle cx="7" cy="7" r="3" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1.5,1.5"/><circle cx="7" cy="7" r="1" fill="currentColor" opacity="0.5"/></svg> Area of Effect Shapes</div>
-      <div class="flex-row" style="gap:8px; flex-wrap:wrap;">
+      <div class="flex-row aoe-row">
         <!-- Cone — 3D: top/bottom edges + dashed back-face -->
         <div class="aoe-shape">
           <img src="media/dm_screen/13_condition_poisoned.svg" width="56" height="50" style="display:block;">
@@ -822,7 +871,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="panel-title teal"><span class="icon">🎲</span> Scene Texture — Improvisation Engine</div>
 
   <!-- ROW 1: three columns -->
-  <div class="grid3 section" style="gap:4px 10px;">
+  <div class="grid3 section gap-md">
     <div class="section">
       <div class="section-top">
         <div class="section-head teal"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><polygon points="7,1 13,4 13,10 7,13 1,10 1,4" fill="currentColor" opacity="0.25" stroke="currentColor" stroke-width="0.8"/><text x="7" y="9" text-anchor="middle" font-size="6" fill="currentColor" font-weight="700">8</text></svg> Pressure <span class="dim" style="font-weight:400; text-transform:none;">(d8)</span></div>
@@ -881,7 +930,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- ROW 2: three columns -->
-  <div class="grid3 section mb-0" style="gap:4px 10px;">
+  <div class="grid3 section mb-0 gap-md">
     <div class="section">
       <div class="section-top">
         <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="7" cy="4" r="3" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M2,12 Q2,8 7,8 Q12,8 12,12" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="0.8"/></svg> What Do They Want? <span class="dim" style="font-weight:400; text-transform:none;">(d8)</span></div>

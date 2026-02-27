@@ -20,16 +20,16 @@
         Storm Sorcery (weak flavour pick), Order (armor gap levels 1-2)
 
   CSS CONVENTIONS:
-    Fonts: Crimson Pro (headings), Source Sans 3 (body)
-    Colors: --accent (#7b2d26), --bg-a (#f6f6f6), --bg-b (#fff), --hdr (#2c2c2c)
-    Row alternation: .ga (grey bg) and .gb (white bg) classes on <tr>, NOT nth-child
-      — because rowspan groups break nth-child. Manually alternate per book group.
-    Book names: .bk cell with year on new line via <br><span class="yr">YYYY</span>
-    Class names: .cl cell (bold, nowrap, min-width 62px)
-    Supersedes column: .sp (grey italic, 10px)
-    New badges: <span class="n">new</span> (accent border, 8px uppercase)
+    Fonts: Cinzel (headings), Crimson Pro (book names), Source Sans 3 (body)
+    Colors: parchment palette matching other dnd/ docs — --accent (#8b2500), --gold, --muted, --parchment
+    Row alternation: .ga and .gb classes on <tr>, NOT nth-child (rowspan breaks nth-child)
+    Book names: .bk cell + data-book attribute on <tr> + .book-start on first <tr> per book group
+    Tables: .species-table and .classes-table classes for targeted mobile styling
     Notes box: .notes with .notes h3 sub-headers
-    Print: A4 landscape, 10px body, .ga uses #f2f2f2
+    Mobile (≤768px): species table → cards. Classes use SEPARATE MARKUP (.mobile-classes div) — one card
+      per BOOK (mirroring species layout), class rows inside each card. Desktop table hidden, mobile div
+      shown. KEEP BOTH IN SYNC. Supersedes collected at bottom of each book card.
+    Print: A4 landscape, compact vertical spacing, goal = fit on ONE landscape page. .ga uses #f2f2f2, notes hidden
 
   TABLE LAYOUT (Classes):
     6 columns: Book (14%) | Class (7%) | Subclasses (24%) | Class (7%) | Subclasses (24%) | Supersedes (24%)
@@ -54,40 +54,138 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
 <!-- End Google Tag Manager -->
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root { --accent: #7b2d26; --bg-a: #f6f6f6; --bg-b: #fff; --hdr: #2c2c2c; }
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --panel: #fffdf8;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --green: #2d5a3d;
+    --bg-a: #ede7dc;
+    --bg-b: #f9f5ee;
+    --hdr: #3a3028;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font: 11.5px/1.35 'Source Sans 3', sans-serif; color: #1a1a1a; padding: 14px 20px; max-width: 1200px; margin: 0 auto; }
-  h1 { font: 700 20px/1.2 'Crimson Pro', Georgia, serif; color: var(--accent); margin-bottom: 1px; }
-  .sub { font-size: 10px; color: #777; margin-bottom: 10px; }
-  h2 { font: 700 14px/1.2 'Crimson Pro', Georgia, serif; color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; margin: 12px 0 4px; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
-  th { background: var(--hdr); color: #eee; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 3px 5px; text-align: left; }
-  td { padding: 2px 5px; border-bottom: 1px solid #ddd; vertical-align: top; }
-  .bk { font-weight: 600; white-space: nowrap; }
-  .yr { font-weight: 400; font-size: 9px; color: #888; }
+  body { font: 13.5px/1.35 'Source Sans 3', sans-serif; color: var(--ink); background: var(--parchment); padding: 20px 24px; max-width: 1400px; margin: 0 auto; }
+  h1 { font: 700 26px/1.2 'Cinzel', serif; color: var(--accent); margin-bottom: 2px; letter-spacing: 1px; }
+  .sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+  h2 {
+    font: 600 15px/1.2 'Cinzel', serif;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    margin: 16px 0 6px;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--divider) 0%, transparent 100%); }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 13px; background: var(--panel); border: 1px solid var(--divider); border-radius: 4px; overflow: hidden; }
+  th { background: var(--hdr); color: #eee; font: 600 10px/1.3 'Cinzel', serif; text-transform: uppercase; letter-spacing: .6px; padding: 6px 8px; text-align: left; }
+  td { padding: 4px 8px; border-bottom: 1px solid var(--divider); vertical-align: top; }
+  .bk { font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 13.5px; white-space: nowrap; color: var(--accent); }
+  .yr { font-weight: 400; font-size: 10.5px; color: var(--muted); }
   .cl { font-weight: 600; white-space: nowrap; min-width: 62px; }
-  .sc { }
-  .sp { color: #888; font-size: 10px; font-style: italic; }
-  .n { display: inline-block; font-size: 8px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 2px; margin-left: 1px; vertical-align: middle; line-height: 1.4; text-transform: uppercase; letter-spacing: .2px; }
+  .sp { color: var(--muted); font-size: 12px; font-style: italic; }
+  .n { display: inline-block; font: 700 8px/1.4 'Cinzel', serif; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 3px; margin-left: 2px; vertical-align: middle; text-transform: uppercase; letter-spacing: .3px; }
   .ga td { background: var(--bg-a); }
   .gb td { background: var(--bg-b); }
-  .notes { background: #f5f0e8; border: 1px solid #d9d0c0; border-radius: 3px; padding: 8px 12px; margin-top: 8px; font-size: 10.5px; line-height: 1.4; }
-  .notes h3 { font: 700 12px 'Crimson Pro', Georgia, serif; color: var(--accent); margin-bottom: 4px; }
+  .notes { background: var(--bg-b); border: 1px solid var(--divider); border-radius: 4px; padding: 12px 16px; margin-top: 12px; font-size: 12.5px; line-height: 1.45; }
+  .notes h3 { font: 700 14px 'Cinzel', serif; color: var(--accent); margin-bottom: 4px; letter-spacing: 0.5px; }
   .notes ul { margin: 2px 0 5px 14px; }
   .notes li { margin-bottom: 1px; }
-  .notes p { margin-bottom: 4px; }
+  .notes p { margin-bottom: 5px; }
+  .mc-note { background: var(--bg-b); border: 1px solid var(--divider); border-left: 3px solid var(--gold); border-radius: 3px; padding: 8px 14px; margin-bottom: 14px; font-size: 13px; }
+  .mc-note b { color: var(--accent); }
+
+  /* ── Mobile-only classes markup (hidden on desktop/print) ── */
+  .mobile-classes { display: none; }
+  .mobile-classes .book-card {
+    background: var(--panel);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .mobile-classes .book-card .book-name { font: 700 13px/1.3 'Crimson Pro', serif; color: var(--accent); }
+  .mobile-classes .book-card .yr { font-weight: 400; font-size: 10px; color: var(--muted); }
+  .mobile-classes .book-card .class-row { padding: 4px 0; border-bottom: 1px solid var(--divider); }
+  .mobile-classes .book-card .class-row:last-of-type { border-bottom: none; }
+  .mobile-classes .book-card .class-row .cl { font-weight: 700; display: inline; }
+  .mobile-classes .book-card .class-row .subs { display: inline; }
+  .mobile-classes .book-card .sp-section { color: var(--muted); font-size: 11px; font-style: italic; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
+  .mobile-classes .book-card .sp-section::before { content: 'Supersedes: '; font-style: normal; font-weight: 600; }
+
+  /* ── Mobile: cards ── */
+  @media screen and (max-width: 768px) {
+    body { padding: 14px; }
+    h1 { font-size: 18px; }
+    h2 { font-size: 12px; }
+
+    /* Species table → cards */
+    .species-table, .species-table thead, .species-table tbody,
+    .species-table th, .species-table td, .species-table tr { display: block; }
+    .species-table thead { display: none; }
+    .species-table { background: transparent; border: none; padding: 0; margin-bottom: 0; }
+    .species-table tr {
+      background: var(--panel) !important;
+      border: 1px solid var(--divider);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+    }
+    .species-table td {
+      display: block;
+      border-bottom: none;
+      padding: 0;
+      background: transparent !important;
+    }
+    /* Book name + year on one line */
+    .species-table td:first-child { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid var(--divider); }
+    .species-table .bk { white-space: normal; }
+    .species-table .bk br { display: none; }
+    .species-table .yr { margin-left: 4px; }
+    /* Species list */
+    .species-table td:nth-child(2) { padding: 4px 0; }
+    /* Supersedes with label */
+    .species-table td:last-child { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
+    .species-table td.sp::before { content: 'Supersedes: '; font-style: normal; font-weight: 600; color: var(--muted); }
+    .species-table .sp:empty { display: none; }
+    .species-table td:last-child:has(.sp:empty) { display: none; }
+
+    /* Classes: swap table for mobile-optimised markup */
+    .classes-table { display: none; }
+    .mobile-classes { display: block; }
+
+    .notes { font-size: 10px; padding: 10px 12px; }
+  }
+
+  /* ── Print — goal: fit on ONE A4 landscape page ── */
   @media print {
-    body { padding: 0; font-size: 10px; max-width: none; }
-    h1 { font-size: 17px; }
-    h2 { font-size: 12px; margin: 8px 0 3px; }
-    table { font-size: 9.5px; page-break-inside: auto; }
-    th { background: #333 !important; color: #fff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; font-size: 8.5px; }
+    body { padding: 0; font-size: 9.5px; line-height: 1.25; max-width: none; background: white; }
+    h1 { font-size: 15px; margin-bottom: 0; }
+    .sub { font-size: 8px; margin-bottom: 4px; }
+    .mc-note { padding: 3px 8px; margin-bottom: 5px; font-size: 8.5px; }
+    h2 { font-size: 10px; margin: 5px 0 2px; padding-bottom: 1px; }
+    h2::after { background: #999; }
+    table { font-size: 9px; page-break-inside: avoid; border-color: #ccc; margin-bottom: 5px; }
+    th { background: #333 !important; color: #fff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; font-size: 7.5px; padding: 2px 5px; }
+    td { padding: 2px 5px; }
+    .bk { font-size: 9.5px; }
+    .yr { font-size: 7.5px; }
+    .n { font-size: 6.5px; padding: 0 2px; }
+    .sp { font-size: 8px; }
     .ga td { background: #f2f2f2 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     .notes { display: none; }
-    .sub { margin-bottom: 6px; }
-    @page { margin: 1cm; size: A4 landscape; }
+    .mobile-classes { display: none; }
+    @page { margin: 0.7cm; size: A4 landscape; }
   }
 </style>
 </head>
@@ -99,12 +197,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h1>Allowed Races &amp; Classes with Dungeon Mistress CyberGwen</h1>
 <p class="sub">PHB 2024 · TCoE · XGtE · Fizban's · MotM · FR: Heroes of Faerûn · Eberron: Forge of the Artificer — duplicates &amp; superseded entries removed</p>
-<div class="notes" style="margin-bottom:10px; padding:5px 10px;">
-  <b style="color:var(--accent);">Multiclassing is allowed</b> — but class combinations need GM approval before play.
+<div class="mc-note">
+  <b>Multiclassing is allowed</b> — but class combinations need GM approval before play.
 </div>
 
 <h2>Species</h2>
-<table>
+<table class="species-table">
   <thead><tr><th style="width:18%">Book</th><th>Species</th><th style="width:22%">Supersedes</th></tr></thead>
   <tbody>
     <tr class="ga"><td class="bk">Player's Handbook<br><span class="yr">2024</span></td><td>Aasimar, Dragonborn, Dwarf, Elf (Drow/High/Wood), Gnome (Forest/Rock), Goliath, Halfling (Lightfoot/Stout), Human, Orc, Tiefling (Abyssal/Chthonic/Infernal)</td><td class="sp">Aasimar, Goliath, Orc from MotM · Chromatic &amp; Metallic Dragonborn from Fizban's</td></tr>
@@ -115,7 +213,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </table>
 
 <h2>Classes &amp; Subclasses</h2>
-<table>
+<table class="classes-table">
   <thead><tr>
     <th style="width:14%">Book</th>
     <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
@@ -124,71 +222,71 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </tr></thead>
   <tbody>
     <!-- PHB 2024: 12 classes = 6 rows -->
-    <tr class="ga">
+    <tr class="ga book-start" data-book="Player's Handbook · 2024">
       <td class="bk" rowspan="6">Player's Handbook<br><span class="yr">2024</span></td>
       <td class="cl">Barbarian</td><td>Berserker, Wild Heart, World Tree <span class="n">new</span>, Zealot</td>
       <td class="cl">Bard</td><td>Dance <span class="n">new</span>, Glamour, Lore, Valor</td>
       <td class="sp">Zealot (XGtE), Glamour (XGtE)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Player's Handbook · 2024">
       <td class="cl">Cleric</td><td>Life, Light, Trickery, War</td>
       <td class="cl">Druid</td><td>Land, Moon, Sea <span class="n">new</span>, Stars</td>
       <td class="sp">Stars (TCoE)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Player's Handbook · 2024">
       <td class="cl">Fighter</td><td>Battle Master, Champion, Eldritch Knight, Psi Warrior</td>
       <td class="cl">Monk</td><td>Mercy, Shadow, Elements, Open Hand</td>
       <td class="sp">Psi Warrior (TCoE), Mercy (TCoE)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Player's Handbook · 2024">
       <td class="cl">Paladin</td><td>Devotion, Glory, Ancients, Vengeance</td>
       <td class="cl">Ranger</td><td>Beast Master, Fey Wanderer, Gloom Stalker, Hunter</td>
       <td class="sp">Glory (TCoE), Fey Wanderer (TCoE), Gloom Stalker (XGtE)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Player's Handbook · 2024">
       <td class="cl">Rogue</td><td>Arcane Trickster, Assassin, Soulknife, Thief</td>
       <td class="cl">Sorcerer</td><td>Aberrant, Clockwork, Draconic, Wild Magic</td>
       <td class="sp">Soulknife (TCoE), Aberrant (TCoE), Clockwork (TCoE)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Player's Handbook · 2024">
       <td class="cl">Warlock</td><td>Archfey, Celestial, Fiend, Great Old One</td>
       <td class="cl">Wizard</td><td>Abjurer, Diviner, Evoker, Illusionist</td>
       <td class="sp">Celestial (XGtE)</td>
     </tr>
 
     <!-- Forge of the Artificer (2025): 1 class = 1 row -->
-    <tr class="gb">
+    <tr class="gb book-start" data-book="Eberron: Forge of the Artificer · 2025">
       <td class="bk">Eberron: Forge of the Artificer<br><span class="yr">2025</span></td>
       <td class="cl">Artificer</td><td>Alchemist, Armorer, Artillerist, Battle Smith, Cartographer <span class="n">new</span></td>
       <td></td><td></td>
       <td class="sp">Artificer + 4 subclasses (E:RftLW / TCoE)</td>
     </tr>
 
-    <!-- FR: Heroes of Faerûn<br><span class="yr">2025</span>: 8 classes = 4 rows -->
-    <tr class="ga">
+    <!-- FR: Heroes of Faerûn: 8 classes = 4 rows -->
+    <tr class="ga book-start" data-book="FR: Heroes of Faerûn · 2025">
       <td class="bk" rowspan="4">FR: Heroes of Faerûn<br><span class="yr">2025</span></td>
       <td class="cl">Bard</td><td>College of the Moon <span class="n">new</span></td>
       <td class="cl">Cleric</td><td>Knowledge Domain</td>
       <td class="sp">Knowledge Domain (2014 PHB)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="FR: Heroes of Faerûn · 2025">
       <td class="cl">Fighter</td><td>Banneret</td>
       <td class="cl">Paladin</td><td>Oath of the Noble Genies <span class="n">new</span></td>
       <td class="sp">Banneret / Purple Dragon Knight (SCAG)</td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="FR: Heroes of Faerûn · 2025">
       <td class="cl">Ranger</td><td>Winter Walker <span class="n">new</span></td>
       <td class="cl">Rogue</td><td>Scion of the Three <span class="n">new</span></td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="FR: Heroes of Faerûn · 2025">
       <td class="cl">Sorcerer</td><td>Spellfire Sorcery <span class="n">new</span></td>
       <td class="cl">Wizard</td><td>Bladesinger</td>
       <td class="sp">Bladesinger (TCoE / SCAG)</td>
     </tr>
 
     <!-- Fizban's (2021): 2 subclasses = 1 row -->
-    <tr class="gb">
+    <tr class="gb book-start" data-book="Fizban's Treasury of Dragons · 2021">
       <td class="bk">Fizban's Treasury of Dragons<br><span class="yr">2021</span></td>
       <td class="cl">Monk</td><td>Way of the Ascendant Dragon</td>
       <td class="cl">Ranger</td><td>Drakewarden</td>
@@ -196,72 +294,143 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </tr>
 
     <!-- TCoE (2020): 11 classes = 6 rows, only non-superseded subclasses -->
-    <tr class="ga">
+    <tr class="ga book-start" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="bk" rowspan="6">Tasha's Cauldron of Everything<br><span class="yr">2020</span></td>
       <td class="cl">Barbarian</td><td>Beast, Wild Magic</td>
       <td class="cl">Bard</td><td>Creation, Eloquence</td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="cl">Cleric</td><td>Order, Peace, Twilight</td>
       <td class="cl">Druid</td><td>Spores, Wildfire</td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="cl">Fighter</td><td>Rune Knight</td>
       <td class="cl">Monk</td><td>Astral Self</td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="cl">Paladin</td><td>Watchers</td>
       <td class="cl">Ranger</td><td>Swarmkeeper</td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="cl">Rogue</td><td>Phantom</td>
       <td class="cl">Warlock</td><td>Fathomless, Genie</td>
       <td class="sp"></td>
     </tr>
-    <tr class="ga">
+    <tr class="ga" data-book="Tasha's Cauldron of Everything · 2020">
       <td class="cl">Wizard</td><td>Order of Scribes</td>
       <td></td><td></td>
       <td class="sp"></td>
     </tr>
 
     <!-- XGtE (2017): 12 classes = 6 rows, only non-superseded subclasses -->
-    <tr class="gb">
+    <tr class="gb book-start" data-book="Xanathar's Guide to Everything · 2017">
       <td class="bk" rowspan="6">Xanathar's Guide to Everything<br><span class="yr">2017</span></td>
       <td class="cl">Barbarian</td><td>Ancestral Guardian, Storm Herald</td>
       <td class="cl">Bard</td><td>Swords, Whispers</td>
       <td class="sp"></td>
     </tr>
-    <tr class="gb">
+    <tr class="gb" data-book="Xanathar's Guide to Everything · 2017">
       <td class="cl">Cleric</td><td>Forge Domain, Grave Domain</td>
       <td class="cl">Druid</td><td>Dreams, Shepherd</td>
       <td class="sp"></td>
     </tr>
-    <tr class="gb">
+    <tr class="gb" data-book="Xanathar's Guide to Everything · 2017">
       <td class="cl">Fighter</td><td>Arcane Archer, Cavalier, Samurai</td>
       <td class="cl">Monk</td><td>Drunken Master, Kensei, Sun Soul</td>
       <td class="sp"></td>
     </tr>
-    <tr class="gb">
+    <tr class="gb" data-book="Xanathar's Guide to Everything · 2017">
       <td class="cl">Paladin</td><td>Conquest, Redemption</td>
       <td class="cl">Ranger</td><td>Horizon Walker, Monster Slayer</td>
       <td class="sp"></td>
     </tr>
-    <tr class="gb">
+    <tr class="gb" data-book="Xanathar's Guide to Everything · 2017">
       <td class="cl">Rogue</td><td>Inquisitive, Mastermind, Scout, Swashbuckler</td>
       <td class="cl">Sorcerer</td><td>Divine Soul, Shadow Magic, Storm Sorcery</td>
       <td class="sp"></td>
     </tr>
-    <tr class="gb">
+    <tr class="gb" data-book="Xanathar's Guide to Everything · 2017">
       <td class="cl">Warlock</td><td>Hexblade</td>
       <td class="cl">Wizard</td><td>War Magic</td>
       <td class="sp"></td>
     </tr>
   </tbody>
 </table>
+
+<!-- ── Mobile-only classes (one card per book, mirroring species layout) ── -->
+<div class="mobile-classes">
+  <div class="book-card">
+    <div class="book-name">Player's Handbook <span class="yr">2024</span></div>
+    <div class="class-row"><span class="cl">Barbarian:</span> <span class="subs">Berserker, Wild Heart, World Tree <span class="n">new</span>, Zealot</span></div>
+    <div class="class-row"><span class="cl">Bard:</span> <span class="subs">Dance <span class="n">new</span>, Glamour, Lore, Valor</span></div>
+    <div class="class-row"><span class="cl">Cleric:</span> <span class="subs">Life, Light, Trickery, War</span></div>
+    <div class="class-row"><span class="cl">Druid:</span> <span class="subs">Land, Moon, Sea <span class="n">new</span>, Stars</span></div>
+    <div class="class-row"><span class="cl">Fighter:</span> <span class="subs">Battle Master, Champion, Eldritch Knight, Psi Warrior</span></div>
+    <div class="class-row"><span class="cl">Monk:</span> <span class="subs">Mercy, Shadow, Elements, Open Hand</span></div>
+    <div class="class-row"><span class="cl">Paladin:</span> <span class="subs">Devotion, Glory, Ancients, Vengeance</span></div>
+    <div class="class-row"><span class="cl">Ranger:</span> <span class="subs">Beast Master, Fey Wanderer, Gloom Stalker, Hunter</span></div>
+    <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Arcane Trickster, Assassin, Soulknife, Thief</span></div>
+    <div class="class-row"><span class="cl">Sorcerer:</span> <span class="subs">Aberrant, Clockwork, Draconic, Wild Magic</span></div>
+    <div class="class-row"><span class="cl">Warlock:</span> <span class="subs">Archfey, Celestial, Fiend, Great Old One</span></div>
+    <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Abjurer, Diviner, Evoker, Illusionist</span></div>
+    <div class="sp-section">Zealot, Glamour (XGtE) · Stars (TCoE) · Psi Warrior, Mercy (TCoE) · Glory, Fey Wanderer (TCoE), Gloom Stalker (XGtE) · Soulknife, Aberrant, Clockwork (TCoE) · Celestial (XGtE)</div>
+  </div>
+  <div class="book-card">
+    <div class="book-name">Eberron: Forge of the Artificer <span class="yr">2025</span></div>
+    <div class="class-row"><span class="cl">Artificer:</span> <span class="subs">Alchemist, Armorer, Artillerist, Battle Smith, Cartographer <span class="n">new</span></span></div>
+    <div class="sp-section">Artificer + 4 subclasses (E:RftLW / TCoE)</div>
+  </div>
+  <div class="book-card">
+    <div class="book-name">FR: Heroes of Faerûn <span class="yr">2025</span></div>
+    <div class="class-row"><span class="cl">Bard:</span> <span class="subs">College of the Moon <span class="n">new</span></span></div>
+    <div class="class-row"><span class="cl">Cleric:</span> <span class="subs">Knowledge Domain</span></div>
+    <div class="class-row"><span class="cl">Fighter:</span> <span class="subs">Banneret</span></div>
+    <div class="class-row"><span class="cl">Paladin:</span> <span class="subs">Oath of the Noble Genies <span class="n">new</span></span></div>
+    <div class="class-row"><span class="cl">Ranger:</span> <span class="subs">Winter Walker <span class="n">new</span></span></div>
+    <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Scion of the Three <span class="n">new</span></span></div>
+    <div class="class-row"><span class="cl">Sorcerer:</span> <span class="subs">Spellfire Sorcery <span class="n">new</span></span></div>
+    <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Bladesinger</span></div>
+    <div class="sp-section">Knowledge Domain (2014 PHB) · Banneret / Purple Dragon Knight (SCAG) · Bladesinger (TCoE / SCAG)</div>
+  </div>
+  <div class="book-card">
+    <div class="book-name">Fizban's Treasury of Dragons <span class="yr">2021</span></div>
+    <div class="class-row"><span class="cl">Monk:</span> <span class="subs">Way of the Ascendant Dragon</span></div>
+    <div class="class-row"><span class="cl">Ranger:</span> <span class="subs">Drakewarden</span></div>
+  </div>
+  <div class="book-card">
+    <div class="book-name">Tasha's Cauldron of Everything <span class="yr">2020</span></div>
+    <div class="class-row"><span class="cl">Barbarian:</span> <span class="subs">Beast, Wild Magic</span></div>
+    <div class="class-row"><span class="cl">Bard:</span> <span class="subs">Creation, Eloquence</span></div>
+    <div class="class-row"><span class="cl">Cleric:</span> <span class="subs">Order, Peace, Twilight</span></div>
+    <div class="class-row"><span class="cl">Druid:</span> <span class="subs">Spores, Wildfire</span></div>
+    <div class="class-row"><span class="cl">Fighter:</span> <span class="subs">Rune Knight</span></div>
+    <div class="class-row"><span class="cl">Monk:</span> <span class="subs">Astral Self</span></div>
+    <div class="class-row"><span class="cl">Paladin:</span> <span class="subs">Watchers</span></div>
+    <div class="class-row"><span class="cl">Ranger:</span> <span class="subs">Swarmkeeper</span></div>
+    <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Phantom</span></div>
+    <div class="class-row"><span class="cl">Warlock:</span> <span class="subs">Fathomless, Genie</span></div>
+    <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Order of Scribes</span></div>
+  </div>
+  <div class="book-card">
+    <div class="book-name">Xanathar's Guide to Everything <span class="yr">2017</span></div>
+    <div class="class-row"><span class="cl">Barbarian:</span> <span class="subs">Ancestral Guardian, Storm Herald</span></div>
+    <div class="class-row"><span class="cl">Bard:</span> <span class="subs">Swords, Whispers</span></div>
+    <div class="class-row"><span class="cl">Cleric:</span> <span class="subs">Forge Domain, Grave Domain</span></div>
+    <div class="class-row"><span class="cl">Druid:</span> <span class="subs">Dreams, Shepherd</span></div>
+    <div class="class-row"><span class="cl">Fighter:</span> <span class="subs">Arcane Archer, Cavalier, Samurai</span></div>
+    <div class="class-row"><span class="cl">Monk:</span> <span class="subs">Drunken Master, Kensei, Sun Soul</span></div>
+    <div class="class-row"><span class="cl">Paladin:</span> <span class="subs">Conquest, Redemption</span></div>
+    <div class="class-row"><span class="cl">Ranger:</span> <span class="subs">Horizon Walker, Monster Slayer</span></div>
+    <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Inquisitive, Mastermind, Scout, Swashbuckler</span></div>
+    <div class="class-row"><span class="cl">Sorcerer:</span> <span class="subs">Divine Soul, Shadow Magic, Storm Sorcery</span></div>
+    <div class="class-row"><span class="cl">Warlock:</span> <span class="subs">Hexblade</span></div>
+    <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">War Magic</span></div>
+  </div>
+</div>
 
 <div class="notes">
   <h3>Using Legacy Content with 2024 Rules</h3>

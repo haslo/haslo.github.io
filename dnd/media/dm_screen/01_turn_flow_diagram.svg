@@ -1,31 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="210" height="220" viewBox="0 0 210 220" style="display:block;">
-        <rect x="20" y="2" width="160" height="20" rx="10" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.2"/>
-        <text x="100" y="15" text-anchor="middle" font-size="8" fill="#1a4a2a" font-weight="700">START OF TURN</text>
-        <line x1="100" y1="22" x2="100" y2="28" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,27 100,32 103,27" fill="#6b5d4f"/>
-        <rect x="20" y="32" width="160" height="18" rx="3" fill="rgba(139,26,26,0.08)" stroke="#c46060" stroke-width="1"/>
-        <text x="100" y="43" text-anchor="middle" font-size="7.5" fill="#8b1a1a" font-weight="600">Concentration (Conc.) checks, effects</text>
-        <line x1="100" y1="50" x2="100" y2="56" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,55 100,60 103,55" fill="#6b5d4f"/>
-        <rect x="20" y="60" width="160" height="20" rx="3" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.2"/>
-        <text x="100" y="73" text-anchor="middle" font-size="8" fill="#5a3a14" font-weight="700">MOVE (any time)</text>
-        <text x="195" y="73" text-anchor="middle" font-size="7" fill="#6b5d4f">↕ split</text>
-        <line x1="100" y1="80" x2="100" y2="86" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,85 100,90 103,85" fill="#6b5d4f"/>
-        <rect x="20" y="90" width="160" height="20" rx="3" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1.2"/>
-        <text x="100" y="103" text-anchor="middle" font-size="8" fill="#6b1515" font-weight="700">ACTION</text>
-        <line x1="100" y1="110" x2="100" y2="116" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,115 100,120 103,115" fill="#6b5d4f"/>
-        <rect x="20" y="120" width="160" height="20" rx="3" fill="#c5c2e0" stroke="#3b3678" stroke-width="1.2"/>
-        <text x="100" y="133" text-anchor="middle" font-size="8" fill="#2d2960" font-weight="700">BONUS ACTION</text>
-        <line x1="100" y1="140" x2="100" y2="146" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,145 100,150 103,145" fill="#6b5d4f"/>
-        <rect x="20" y="150" width="160" height="18" rx="3" fill="rgba(107,66,38,0.08)" stroke="#c9b99a" stroke-width="1"/>
-        <text x="100" y="161" text-anchor="middle" font-size="7" fill="#6b4226" font-weight="600">Free Interaction</text>
-        <line x1="100" y1="168" x2="100" y2="174" stroke="#6b5d4f" stroke-width="1"/>
-        <polygon points="97,173 100,178 103,173" fill="#6b5d4f"/>
-        <rect x="20" y="178" width="160" height="20" rx="10" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1.2"/>
-        <text x="100" y="191" text-anchor="middle" font-size="8" fill="#6b1515" font-weight="700">END OF TURN</text>
-        <rect x="2" y="75" width="16" height="60" rx="3" fill="#c9dce8" stroke="#2a4d63" stroke-width="0.8"/>
-        <text x="10" y="108" text-anchor="middle" font-size="6" fill="#2a4d63" font-weight="700" transform="rotate(-90 10 108)">REACTION</text>
-      </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="210" viewBox="0 0 210 210" style="display:block;">
+  <!-- START OF TURN -->
+  <rect x="25" y="2" width="160" height="20" rx="10" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.2"/>
+  <text x="105" y="15" text-anchor="middle" font-size="8" fill="#1a4a2a" font-weight="700" font-family="sans-serif">START OF TURN</text>
+  <text x="105" y="29" text-anchor="middle" font-size="6.5" fill="#6b5d4f" font-family="sans-serif">Concentration checks, triggered effects</text>
+
+  <!-- Arrow down into pool -->
+  <line x1="105" y1="33" x2="105" y2="39" stroke="#6b5d4f" stroke-width="1"/>
+  <polygon points="102,38 105,43 108,38" fill="#6b5d4f"/>
+
+  <!-- ANY ORDER pool box -->
+  <rect x="18" y="44" width="180" height="118" rx="8" fill="rgba(244,237,228,0.6)" stroke="#c9b99a" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="108" y="57" text-anchor="middle" font-size="6.5" fill="#6b5d4f" font-weight="700" font-family="sans-serif" letter-spacing="1.5">ANY ORDER · INTERLEAVE FREELY</text>
+
+  <!-- Action pill -->
+  <rect x="28" y="63" width="76" height="22" rx="3" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1"/>
+  <text x="66" y="78" text-anchor="middle" font-size="8.5" fill="#6b1515" font-weight="700" font-family="sans-serif">ACTION</text>
+
+  <!-- Bonus Action pill -->
+  <rect x="112" y="63" width="76" height="22" rx="3" fill="#c5c2e0" stroke="#3b3678" stroke-width="1"/>
+  <text x="150" y="78" text-anchor="middle" font-size="8.5" fill="#2d2960" font-weight="700" font-family="sans-serif">BONUS ACTION</text>
+
+  <!-- Move pill — two lines -->
+  <rect x="28" y="92" width="160" height="28" rx="3" fill="#dfc9a8" stroke="#6b4226" stroke-width="1"/>
+  <text x="108" y="105" text-anchor="middle" font-size="8.5" fill="#5a3a14" font-weight="700" font-family="sans-serif">MOVE</text>
+  <text x="108" y="115" text-anchor="middle" font-size="7" fill="#5a3a14" font-family="sans-serif">can split around other actions</text>
+
+  <!-- Free Interaction pill -->
+  <rect x="28" y="127" width="160" height="28" rx="3" fill="rgba(107,66,38,0.08)" stroke="#c9b99a" stroke-width="1"/>
+  <text x="108" y="140" text-anchor="middle" font-size="8" fill="#6b4226" font-weight="600" font-family="sans-serif">FREE INTERACTION</text>
+  <text x="108" y="150" text-anchor="middle" font-size="7" fill="#6b4226" font-family="sans-serif">draw/stow weapon, open door, etc.</text>
+
+  <!-- Arrow down out of pool -->
+  <line x1="105" y1="163" x2="105" y2="169" stroke="#6b5d4f" stroke-width="1"/>
+  <polygon points="102,168 105,173 108,168" fill="#6b5d4f"/>
+
+  <!-- END OF TURN -->
+  <rect x="25" y="174" width="160" height="20" rx="10" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1.2"/>
+  <text x="105" y="187" text-anchor="middle" font-size="8" fill="#6b1515" font-weight="700" font-family="sans-serif">END OF TURN</text>
+  <text x="105" y="201" text-anchor="middle" font-size="6.5" fill="#6b5d4f" font-family="sans-serif">Triggered effects, end-of-turn saves</text>
+
+  <!-- REACTION sidebar -->
+  <rect x="0" y="44" width="14" height="150" rx="3" fill="#c9dce8" stroke="#2a4d63" stroke-width="0.8"/>
+  <text x="7" y="100" text-anchor="middle" font-size="6" fill="#2a4d63" font-weight="700" font-family="sans-serif" transform="rotate(-90 7 100)">REACTION</text>
+  <text x="7" y="145" text-anchor="middle" font-size="5.5" fill="#2a4d63" font-family="sans-serif" transform="rotate(-90 7 145)">1/round, on any turn</text>
+</svg>
