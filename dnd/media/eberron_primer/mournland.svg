@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mournlandGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7a8f7e;stop-opacity:0.9" />
+      <stop offset="40%" style="stop-color:#6b7f6e;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#4a5a4d;stop-opacity:0.7" />
+    </linearGradient>
+    <radialGradient id="mistGlow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" style="stop-color:#c4b8a8;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:0" />
+    </radialGradient>
+    <filter id="mournlandMist">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="15"/>
+    </filter>
+  </defs>
+
+  <!-- Sky gradient -->
+  <rect width="700" height="180" fill="url(#mournlandGradient)"/>
+
+  <!-- Mist overlay -->
+  <ellipse cx="350" cy="40" rx="400" ry="60" fill="url(#mistGlow)"/>
+
+  <!-- Swirling mist patterns -->
+  <path d="M 0 80 Q 175 60 350 85 T 700 80 L 700 120 Q 525 100 350 110 T 0 105 Z" fill="#5a6a5d" opacity="0.4" filter="url(#mournlandMist)"/>
+  <path d="M 0 100 Q 175 85 350 105 T 700 95 L 700 180 L 0 180 Z" fill="#3a4a3d" opacity="0.6"/>
+
+  <!-- Cracked earth pattern -->
+  <g stroke="#1a1a1a" stroke-width="0.5" fill="none" opacity="0.5">
+    <path d="M 50 150 L 120 160 L 140 155 L 200 165"/>
+    <path d="M 150 170 L 220 155 L 280 170 L 350 160"/>
+    <path d="M 300 165 L 380 155 L 450 168 L 520 158"/>
+    <path d="M 480 170 L 550 160 L 620 170 L 680 155"/>
+    <path d="M 100 140 L 180 148 L 250 138 L 320 145"/>
+    <path d="M 380 142 L 460 135 L 540 140 L 620 132"/>
+  </g>
+
+  <!-- Dead trees -->
+  <g stroke="#2a3a2d" stroke-width="2" fill="none">
+    <!-- Tree 1 -->
+    <path d="M 80 160 L 70 120 L 65 80 L 62 40" stroke-linecap="round"/>
+    <path d="M 70 120 L 55 95 M 70 120 L 85 100"/>
+    <path d="M 65 80 L 50 65 M 65 80 L 80 70"/>
+
+    <!-- Tree 2 -->
+    <path d="M 600 165 L 620 115 L 625 70 L 630 35" stroke-linecap="round" opacity="0.7"/>
+    <path d="M 620 115 L 605 90 M 620 115 L 635 95"/>
+
+    <!-- Tree 3 (partial) -->
+    <path d="M 300 170 L 310 130 L 315 90" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Distant ruins silhouette -->
+  <g fill="#1a1a1a" opacity="0.4">
+    <polygon points="150,140 170,100 180,140"/>
+    <polygon points="200,145 240,80 245,145"/>
+    <polygon points="450,150 480,85 510,150"/>
+    <polygon points="550,148 570,110 580,148"/>
+  </g>
+</svg>

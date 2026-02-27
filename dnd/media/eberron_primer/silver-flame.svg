@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="500" fill="#f5f0e8"/>
+
+  <!-- Orbital rings -->
+  <g fill="none" stroke="#c4b8a8" opacity="0.5">
+    <circle cx="250" cy="250" r="80" stroke-width="1.0"/>
+    <circle cx="250" cy="250" r="135" stroke-width="1.0" stroke-dasharray="4,4"/>
+    <circle cx="250" cy="250" r="190" stroke-width="1.0"/>
+  </g>
+
+  <!-- Radial lines -->
+  <g stroke="#c4b8a8" stroke-width="0.5" opacity="0.4">
+    <line x1="250" y1="250" x2="250" y2="60"/><line x1="250" y1="250" x2="379" y2="79"/>
+    <line x1="250" y1="250" x2="440" y2="145"/><line x1="250" y1="250" x2="440" y2="250"/>
+    <line x1="250" y1="250" x2="440" y2="355"/><line x1="250" y1="250" x2="379" y2="421"/>
+    <line x1="250" y1="250" x2="250" y2="440"/><line x1="250" y1="250" x2="121" y2="421"/>
+    <line x1="250" y1="250" x2="60" y2="355"/><line x1="250" y1="250" x2="60" y2="250"/>
+    <line x1="250" y1="250" x2="60" y2="145"/><line x1="250" y1="250" x2="121" y2="79"/>
+    <line x1="250" y1="250" x2="250" y2="170"/>
+  </g>
+
+  <!-- EBERRON center -->
+  <circle cx="250" cy="250" r="50" fill="#ddd4c2" stroke="#8b2500" stroke-width="2.2" opacity="1.0"/>
+  <circle cx="250" cy="250" r="40" fill="#e8e0d2" stroke="#b8860b" stroke-width="1.0"/>
+  <text x="250" y="244" text-anchor="middle" font-family="Cinzel,serif" font-size="13" fill="#8b2500" font-weight="700">EBERRON</text>
+  <text x="250" y="260" text-anchor="middle" font-size="7.5" fill="#6b5e50">Material Plane</text>
+
+  <!-- Dal Quor (blocked, inner ring) -->
+  <g transform="translate(250,170)">
+    <circle r="24" fill="#3a2a4a" opacity="0.6" stroke="#f5f0e8" stroke-width="1.0" stroke-dasharray="2,2"/>
+    <text y="2" text-anchor="middle" font-size="8.5" fill="#f5f0e8" font-weight="600">Dal Quor</text>
+    <text y="22" text-anchor="middle" font-size="7.5" fill="#6b5e50">Dreams (BLOCKED)</text>
+  </g>
+
+  <!-- 12 planes around the orrery -->
+  <g transform="translate(250,60)"><circle r="39" fill="#7baad4" opacity="0.35" stroke="#7baad4" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#4a6a8a" font-weight="600">Syrania</text><text y="14" text-anchor="middle" font-size="7.5" fill="#2a4a6a">Azure Sky</text></g>
+  <g transform="translate(379,79)"><circle r="39" fill="#c4501a" opacity="0.35" stroke="#c4501a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#8b2500" font-weight="600">Fernia</text><text y="14" text-anchor="middle" font-size="7.5" fill="#5a1500">Sea of Fire</text></g>
+  <g transform="translate(440,145)"><circle r="39" fill="#b8860b" opacity="0.35" stroke="#b8860b" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#8a6a0a" font-weight="600">Daanvi</text><text y="14" text-anchor="middle" font-size="7.5" fill="#5a4a00">Perfect Order</text></g>
+  <g transform="translate(440,250)"><circle r="39" fill="#5a5a5a" opacity="0.35" stroke="#5a5a5a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#2a2a2a" font-weight="600">Dolurrh</text><text y="14" text-anchor="middle" font-size="7.5" fill="#1a1a1a">Realm of Dead</text></g>
+  <g transform="translate(440,355)"><circle r="39" fill="#1a1a2a" opacity="0.35" stroke="#3a3a4a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#4a4a6a" font-weight="600">Mabar</text><text y="14" text-anchor="middle" font-size="7.5" fill="#2a2a4a">Endless Night</text></g>
+  <g transform="translate(379,421)"><circle r="39" fill="#a8c8d8" opacity="0.35" stroke="#8ab0c4" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#5a8090" font-weight="600">Risia</text><text y="14" text-anchor="middle" font-size="7.5" fill="#3a6070">Plain of Ice</text></g>
+  <g transform="translate(250,440)"><circle r="39" fill="#8b2500" opacity="0.35" stroke="#8b2500" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#8b2500" font-weight="600">Shavarath</text><text y="14" text-anchor="middle" font-size="7.5" fill="#5a1500">Eternal Battle</text></g>
+  <g transform="translate(121,421)"><circle r="39" fill="#4a8a4a" opacity="0.35" stroke="#4a8a4a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#2a5a2a" font-weight="600">Lamannia</text><text y="14" text-anchor="middle" font-size="7.5" fill="#1a4a1a">Twilight Forest</text></g>
+  <g transform="translate(60,355)"><circle r="39" fill="#6a3a6a" opacity="0.35" stroke="#6a3a6a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#6a3a6a" font-weight="600">Xoriat</text><text y="14" text-anchor="middle" font-size="7.5" fill="#4a1a4a">Realm of Madness</text></g>
+  <g transform="translate(60,250)"><circle r="39" fill="#d4a843" opacity="0.35" stroke="#d4a843" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#9a7a20" font-weight="600">Kythri</text><text y="14" text-anchor="middle" font-size="7.5" fill="#6a5a00">Churning Chaos</text></g>
+  <g transform="translate(60,145)"><circle r="39" fill="#e8d880" opacity="0.35" stroke="#d4c440" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#8a7a20" font-weight="600">Irian</text><text y="14" text-anchor="middle" font-size="7.5" fill="#5a5a00">Eternal Dawn</text></g>
+  <g transform="translate(121,79)"><circle r="39" fill="#6aaa8a" opacity="0.35" stroke="#4a8a6a" stroke-width="1.8"/><text y="0" text-anchor="middle" font-size="10" fill="#2a5a4a" font-weight="600">Thelanis</text><text y="14" text-anchor="middle" font-size="7.5" fill="#1a3a2a">Faerie Court</text></g>
+
+  <!-- Annotations -->
+  <g font-size="7.5" fill="#8b2500" font-style="italic" opacity="0.6">
+    <text x="280" y="48">Sharn's manifest zone ↓</text>
+    <text x="40" y="380">Daelkyr invasion source</text>
+  </g>
+</svg>

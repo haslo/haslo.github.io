@@ -1,0 +1,259 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: character_whitelist.html
+  PURPOSE: Player-facing allowed races/species and classes list for D&D 5e 2024 + legacy books.
+  OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct. Player-facing language.
+
+  STRUCTURE:
+    - Title + subtitle (book list)
+    - Multiclassing note (GM approval required)
+    - Species table: PHB 2024, MotM 2022, E:FotA 2025
+    - Classes & Subclasses table: PHB 2024 → E:FotA 2025 → FR:Heroes 2025 → TCoE 2020 → XGtE 2017
+      (ordered: PHB first, then newest first)
+    - Notes box: "Using Legacy Content with 2024 Rules"
+      • Species (MotM): ignore printed ASIs
+      • Subclasses (TCoE/XGtE): shift level 1 features to level 3, Extra Attack stacking rule
+      • Renamed Spells: Feeblemind→Befuddlement, Branding Smite→Shining Smite,
+        Summon Draconic Spirit→Summon Dragon
+      • Compatibility Notes: Hexblade (redundant — pick 2024 instead), Twilight/Peace (overpowered),
+        Storm Sorcery (weak flavour pick), Order (armor gap levels 1-2)
+
+  CSS CONVENTIONS:
+    Fonts: Crimson Pro (headings), Source Sans 3 (body)
+    Colors: --accent (#7b2d26), --bg-a (#f6f6f6), --bg-b (#fff), --hdr (#2c2c2c)
+    Row alternation: .ga (grey bg) and .gb (white bg) classes on <tr>, NOT nth-child
+      — because rowspan groups break nth-child. Manually alternate per book group.
+    Book names: .bk cell with year on new line via <br><span class="yr">YYYY</span>
+    Class names: .cl cell (bold, nowrap, min-width 62px)
+    Supersedes column: .sp (grey italic, 10px)
+    New badges: <span class="n">new</span> (accent border, 8px uppercase)
+    Notes box: .notes with .notes h3 sub-headers
+    Print: A4 landscape, 10px body, .ga uses #f2f2f2
+
+  TABLE LAYOUT (Classes):
+    6 columns: Book (14%) | Class (7%) | Subclasses (24%) | Class (7%) | Subclasses (24%) | Supersedes (24%)
+    Each book group uses rowspan on the Book cell.
+    Two class/subclass pairs per row (left and right).
+
+  CONTENT NOTES:
+    - This is PLAYER-FACING — avoid GM-speak
+    - Hexblade: "pick a 2024 Warlock subclass instead"
+    - TCoE/XGtE Cleric/Sorcerer/Warlock need level 1→3 shift (covered in general note)
+    - All other legacy subclasses already start at level 3, no issues
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Allowed Races & Classes with Dungeon Mistress Gwen</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #7b2d26; --bg-a: #f6f6f6; --bg-b: #fff; --hdr: #2c2c2c; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font: 11.5px/1.35 'Source Sans 3', sans-serif; color: #1a1a1a; padding: 14px 20px; max-width: 1200px; margin: 0 auto; }
+  h1 { font: 700 20px/1.2 'Crimson Pro', Georgia, serif; color: var(--accent); margin-bottom: 1px; }
+  .sub { font-size: 10px; color: #777; margin-bottom: 10px; }
+  h2 { font: 700 14px/1.2 'Crimson Pro', Georgia, serif; color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; margin: 12px 0 4px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
+  th { background: var(--hdr); color: #eee; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 3px 5px; text-align: left; }
+  td { padding: 2px 5px; border-bottom: 1px solid #ddd; vertical-align: top; }
+  .bk { font-weight: 600; white-space: nowrap; }
+  .yr { font-weight: 400; font-size: 9px; color: #888; }
+  .cl { font-weight: 600; white-space: nowrap; min-width: 62px; }
+  .sc { }
+  .sp { color: #888; font-size: 10px; font-style: italic; }
+  .n { display: inline-block; font-size: 8px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 2px; margin-left: 1px; vertical-align: middle; line-height: 1.4; text-transform: uppercase; letter-spacing: .2px; }
+  .ga td { background: var(--bg-a); }
+  .gb td { background: var(--bg-b); }
+  .notes { background: #f5f0e8; border: 1px solid #d9d0c0; border-radius: 3px; padding: 8px 12px; margin-top: 8px; font-size: 10.5px; line-height: 1.4; }
+  .notes h3 { font: 700 12px 'Crimson Pro', Georgia, serif; color: var(--accent); margin-bottom: 4px; }
+  .notes ul { margin: 2px 0 5px 14px; }
+  .notes li { margin-bottom: 1px; }
+  .notes p { margin-bottom: 4px; }
+  @media print {
+    body { padding: 0; font-size: 10px; max-width: none; }
+    h1 { font-size: 17px; }
+    h2 { font-size: 12px; margin: 8px 0 3px; }
+    table { font-size: 9.5px; page-break-inside: auto; }
+    th { background: #333 !important; color: #fff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; font-size: 8.5px; }
+    .ga td { background: #f2f2f2 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .notes { print-color-adjust: exact; -webkit-print-color-adjust: exact; font-size: 9.5px; }
+    .sub { margin-bottom: 6px; }
+    @page { margin: 1cm; size: A4 landscape; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Allowed Races &amp; Classes with Dungeon Mistress Gwen</h1>
+<p class="sub">PHB 2024 · TCoE · XGtE · MotM · FR: Heroes of Faerûn · Eberron: Forge of the Artificer — duplicates &amp; superseded entries removed</p>
+<div class="notes" style="margin-bottom:10px; padding:5px 10px;">
+  <b style="color:var(--accent);">Multiclassing is allowed</b> — but class combinations need GM approval before play.
+</div>
+
+<h2>Species</h2>
+<table>
+  <thead><tr><th style="width:18%">Book</th><th>Species</th><th style="width:22%">Supersedes</th></tr></thead>
+  <tbody>
+    <tr class="ga"><td class="bk">Player's Handbook<br><span class="yr">2024</span></td><td>Aasimar, Dragonborn, Dwarf, Elf (Drow/High/Wood), Gnome (Forest/Rock), Goliath, Halfling (Lightfoot/Stout), Human, Orc, Tiefling (Abyssal/Chthonic/Infernal)</td><td class="sp">Aasimar, Goliath, Orc from MotM</td></tr>
+    <tr class="gb"><td class="bk">Monsters of the Multiverse<br><span class="yr">2022</span></td><td>Aarakocra, Bugbear, Centaur, Deep Gnome, Duergar, Eladrin, Fairy, Firbolg, Genasi (Air/Earth/Fire/Water), Githyanki, Githzerai, Goblin, Harengon, Hobgoblin, Kenku, Kobold, Lizardfolk, Minotaur, Satyr, Sea Elf, Shadar-kai, Tabaxi, Tortle, Triton, Yuan-ti</td><td class="sp">25 listed (excl. Aasimar, Changeling, Goliath, Orc, Shifter — superseded by PHB 2024 / Forge)</td></tr>
+    <tr class="ga"><td class="bk">Eberron: Forge of the Artificer<br><span class="yr">2025</span></td><td>Changeling, Kalashtar, Khoravar <span class="n">new</span>, Shifter, Warforged</td><td class="sp">Changeling, Shifter from MotM</td></tr>
+  </tbody>
+</table>
+
+<h2>Classes &amp; Subclasses</h2>
+<table>
+  <thead><tr>
+    <th style="width:14%">Book</th>
+    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
+    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
+    <th style="width:24%">Supersedes (from XGtE / older)</th>
+  </tr></thead>
+  <tbody>
+    <!-- PHB 2024: 12 classes = 6 rows -->
+    <tr class="ga">
+      <td class="bk" rowspan="6">Player's Handbook<br><span class="yr">2024</span></td>
+      <td class="cl">Barbarian</td><td>Berserker, Wild Heart, World Tree <span class="n">new</span>, Zealot</td>
+      <td class="cl">Bard</td><td>Dance <span class="n">new</span>, Glamour, Lore, Valor</td>
+      <td class="sp">Zealot (XGtE), Glamour (XGtE)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Cleric</td><td>Life, Light, Trickery, War</td>
+      <td class="cl">Druid</td><td>Land, Moon, Sea <span class="n">new</span>, Stars</td>
+      <td class="sp">Stars (TCoE)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Fighter</td><td>Battle Master, Champion, Eldritch Knight, Psi Warrior</td>
+      <td class="cl">Monk</td><td>Mercy, Shadow, Elements, Open Hand</td>
+      <td class="sp">Psi Warrior (TCoE), Mercy (TCoE)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Paladin</td><td>Devotion, Glory, Ancients, Vengeance</td>
+      <td class="cl">Ranger</td><td>Beast Master, Fey Wanderer, Gloom Stalker, Hunter</td>
+      <td class="sp">Glory (TCoE), Fey Wanderer (TCoE), Gloom Stalker (XGtE)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Rogue</td><td>Arcane Trickster, Assassin, Soulknife, Thief</td>
+      <td class="cl">Sorcerer</td><td>Aberrant, Clockwork, Draconic, Wild Magic</td>
+      <td class="sp">Soulknife (TCoE), Aberrant (TCoE), Clockwork (TCoE)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Warlock</td><td>Archfey, Celestial, Fiend, Great Old One</td>
+      <td class="cl">Wizard</td><td>Abjurer, Diviner, Evoker, Illusionist</td>
+      <td class="sp">Celestial (XGtE)</td>
+    </tr>
+
+    <!-- Forge of the Artificer (2025): 1 class = 1 row -->
+    <tr class="gb">
+      <td class="bk">Eberron: Forge of the Artificer<br><span class="yr">2025</span></td>
+      <td class="cl">Artificer</td><td>Alchemist, Armorer, Artillerist, Battle Smith, Cartographer <span class="n">new</span></td>
+      <td></td><td></td>
+      <td class="sp">Artificer + 4 subclasses (E:RftLW / TCoE)</td>
+    </tr>
+
+    <!-- FR: Heroes of Faerûn<br><span class="yr">2025</span>: 8 classes = 4 rows -->
+    <tr class="ga">
+      <td class="bk" rowspan="4">FR: Heroes of Faerûn<br><span class="yr">2025</span></td>
+      <td class="cl">Bard</td><td>College of the Moon <span class="n">new</span></td>
+      <td class="cl">Cleric</td><td>Knowledge Domain</td>
+      <td class="sp">Knowledge Domain (2014 PHB)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Fighter</td><td>Banneret</td>
+      <td class="cl">Paladin</td><td>Oath of the Noble Genies <span class="n">new</span></td>
+      <td class="sp">Banneret / Purple Dragon Knight (SCAG)</td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Ranger</td><td>Winter Walker <span class="n">new</span></td>
+      <td class="cl">Rogue</td><td>Scion of the Three <span class="n">new</span></td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Sorcerer</td><td>Spellfire Sorcery <span class="n">new</span></td>
+      <td class="cl">Wizard</td><td>Bladesinger</td>
+      <td class="sp">Bladesinger (TCoE / SCAG)</td>
+    </tr>
+
+    <!-- TCoE (2020): 11 classes = 6 rows, only non-superseded subclasses -->
+    <tr class="gb">
+      <td class="bk" rowspan="6">Tasha's Cauldron of Everything<br><span class="yr">2020</span></td>
+      <td class="cl">Barbarian</td><td>Beast, Wild Magic</td>
+      <td class="cl">Bard</td><td>Creation, Eloquence</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="gb">
+      <td class="cl">Cleric</td><td>Order, Peace, Twilight</td>
+      <td class="cl">Druid</td><td>Spores, Wildfire</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="gb">
+      <td class="cl">Fighter</td><td>Rune Knight</td>
+      <td class="cl">Monk</td><td>Astral Self</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="gb">
+      <td class="cl">Paladin</td><td>Watchers</td>
+      <td class="cl">Ranger</td><td>Swarmkeeper</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="gb">
+      <td class="cl">Rogue</td><td>Phantom</td>
+      <td class="cl">Warlock</td><td>Fathomless, Genie</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="gb">
+      <td class="cl">Wizard</td><td>Order of Scribes</td>
+      <td></td><td></td>
+      <td class="sp"></td>
+    </tr>
+
+    <!-- XGtE (2017): 12 classes = 6 rows, only non-superseded subclasses -->
+    <tr class="ga">
+      <td class="bk" rowspan="6">Xanathar's Guide to Everything<br><span class="yr">2017</span></td>
+      <td class="cl">Barbarian</td><td>Ancestral Guardian, Storm Herald</td>
+      <td class="cl">Bard</td><td>Swords, Whispers</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Cleric</td><td>Forge Domain, Grave Domain</td>
+      <td class="cl">Druid</td><td>Dreams, Shepherd</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Fighter</td><td>Arcane Archer, Cavalier, Samurai</td>
+      <td class="cl">Monk</td><td>Drunken Master, Kensei, Sun Soul</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Paladin</td><td>Conquest, Redemption</td>
+      <td class="cl">Ranger</td><td>Horizon Walker, Monster Slayer</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Rogue</td><td>Inquisitive, Mastermind, Scout, Swashbuckler</td>
+      <td class="cl">Sorcerer</td><td>Divine Soul, Shadow Magic, Storm Sorcery</td>
+      <td class="sp"></td>
+    </tr>
+    <tr class="ga">
+      <td class="cl">Warlock</td><td>Hexblade</td>
+      <td class="cl">Wizard</td><td>War Magic</td>
+      <td class="sp"></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="notes">
+  <h3>Using Legacy Content with 2024 Rules</h3>
+  <p><strong>Species (MotM):</strong> Ignore printed ASIs — ability score bonuses now come from your Background (PHB 2024, p. 36). All other traits (resistances, darkvision, innate spellcasting) work as written. MotM already uses flexible ASI (+2/+1 any), so the change is minimal.</p>
+  <p><strong>Subclasses (TCoE / XGtE):</strong> All subclasses now start at level 3. TCoE and XGtE Cleric, Sorcerer, and Warlock subclasses originally started at level 1 — shift those features to level 3. Extra Attack from legacy subclasses doesn't stack with other sources (2024 PHB rule: you never gain Extra Attack more than once from any combination of class features).</p>
+  <p><strong>Renamed Spells (2014 → 2024):</strong> Feeblemind → <i>Befuddlement</i> · Branding Smite → <i>Shining Smite</i> · Summon Draconic Spirit → <i>Summon Dragon</i>. Many other spells were redesigned but kept their names; use the PHB 2024 versions.</p>
+  <h3 style="margin-top:8px;">Compatibility Notes</h3>
+  <p><strong>Hexblade</strong> (XGtE Warlock): Hex Warrior (CHA for weapon attacks, medium armor, shields) is now built into the 2024 Pact of the Blade invocation — the subclass's signature feature is redundant. Pick a 2024 Warlock subclass instead.</p>
+  <p><strong>Twilight, Peace</strong> (TCoE Cleric): These are <i>very</i> strong — Twilight Sanctuary's temp HP aura and Emboldening Bond are among the most powerful features in the game. Expect the GM to keep an eye on these and possibly adjust.</p>
+  <p><strong>Storm Sorcery</strong> (XGtE Sorcerer): On the weaker side — pick it for the flavour, not for optimisation.</p>
+  <p><strong>Order</strong> (TCoE Cleric): No heavy armor at levels 1–2 due to the level shift. Plan your early AC accordingly.</p>
+</div>
+
+</body>
+</html>

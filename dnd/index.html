@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGwen's D&D Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 16pt;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--parchment);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 28pt;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .rule {
+    width: 200px;
+    height: 1px;
+    margin: 0 auto 32px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+
+  a.card {
+    display: block;
+    padding: 20px 24px;
+    background: #eee8dc;
+    border-left: 3px solid var(--gold);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s, border-left-color 0.15s;
+  }
+
+  a.card:hover {
+    background: #e6ddd0;
+    border-left-color: var(--accent);
+  }
+
+  a.card .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13pt;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  a.card:hover .card-title {
+    color: var(--accent);
+  }
+
+  a.card .card-desc {
+    font-size: 12pt;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .footer {
+    margin-top: 40px;
+    font-size: 9pt;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    h1 { font-size: 20pt; letter-spacing: 3px; }
+    .subtitle { font-size: 9pt; }
+    a.card { padding: 16px 18px; }
+    a.card .card-title { font-size: 11pt; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>CyberGwen's</h1>
+  <div class="subtitle">D&D Table</div>
+  <div class="rule"></div>
+
+  <div class="cards">
+    <a class="card" href="eberron-primer.html">
+      <span class="card-title">Eberron Campaign Primer <span class="card-label">DM + Players</span></span>
+      <span class="card-desc">Setting overview, history, factions, nations, and everything you need before session one.</span>
+    </a>
+
+    <a class="card" href="character_whitelist.html">
+      <span class="card-title">Allowed Races & Classes <span class="card-label">Players</span></span>
+      <span class="card-desc">What's on the table and what's not — approved options for character creation.</span>
+    </a>
+
+    <a class="card" href="combat_mechanics.html">
+      <span class="card-title">Combat Mechanics <span class="card-label">Players</span></span>
+      <span class="card-desc">Who rolls what, when. The action economy, conditions, and combat flow.</span>
+    </a>
+
+    <a class="card" href="dm_screen_2024.html">
+      <span class="card-title">DM Screen — 2024 Rules <span class="card-label">DM</span></span>
+      <span class="card-desc">Quick reference for the 2024 revised rules — conditions, DCs, common lookups.</span>
+    </a>
+
+    <a class="card" href="my_books.html">
+      <span class="card-title">My Book Collection <span class="card-label">Reference</span></span>
+      <span class="card-desc">Which D&D 5e books are available at this table.</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    D&D 5e (2024) · Eberron Campaign Setting · Dungeon Mistress CyberGwen
+  </div>
+</div>
+
+</body>
+</html>

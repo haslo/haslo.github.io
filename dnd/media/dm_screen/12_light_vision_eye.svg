@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36" class="flex-shrink-0">
+          <!-- Bright: sun -->
+          <circle cx="14" cy="8" r="4" fill="#f0d060" stroke="#c4a030" stroke-width="0.7"/>
+          <line x1="14" y1="2" x2="14" y2="3.5" stroke="#c4a030" stroke-width="0.8"/>
+          <line x1="14" y1="12.5" x2="14" y2="14" stroke="#c4a030" stroke-width="0.8"/>
+          <line x1="8" y1="8" x2="9.5" y2="8" stroke="#c4a030" stroke-width="0.8"/>
+          <line x1="18.5" y1="8" x2="20" y2="8" stroke="#c4a030" stroke-width="0.8"/>
+          <!-- Dim: half circle -->
+          <circle cx="14" cy="22" r="4" fill="#a8a0c0" stroke="#6b5d4f" stroke-width="0.7"/>
+          <rect x="14" y="18" width="5" height="8" fill="#f0d890" opacity="0.6"/>
+          <circle cx="14" cy="22" r="4" fill="none" stroke="#6b5d4f" stroke-width="0.7"/>
+          <!-- Dark: X-eyes circle -->
+          <circle cx="14" cy="33" r="3" fill="#2c2416" stroke="#6b5d4f" stroke-width="0.7"/>
+          <line x1="12" y1="32" x2="13.5" y2="33.5" stroke="#8b1a1a" stroke-width="0.8"/>
+          <line x1="13.5" y1="32" x2="12" y2="33.5" stroke="#8b1a1a" stroke-width="0.8"/>
+          <line x1="14.5" y1="32" x2="16" y2="33.5" stroke="#8b1a1a" stroke-width="0.8"/>
+          <line x1="16" y1="32" x2="14.5" y2="33.5" stroke="#8b1a1a" stroke-width="0.8"/>
+        </svg>

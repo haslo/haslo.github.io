@@ -1,0 +1,1670 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: eberron-primer.html
+  PURPOSE: Eberron campaign primer for DM (Gwen) and players. Print-first, screen-second.
+  OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct.
+
+  STRUCTURE (15 chapters + preamble):
+    -- How to Read This Document (preamble: callout colour legend, navigation tips)
+    01 What Eberron Is (and Isn't)
+    02 Core Setting Philosophy
+    03 The Three Dragons & the Planes (creation myth, Progenitor Dragons, 13-plane table with manifest zone effects, languages callout)
+    04 History at a Glance (Age of Monsters, Kingdom of Galifar, Last War brief, Day of Mourning brief)
+    05 The Last War (deep chapter: timeline 894–996 YK, nation roles, character hooks, post-war tensions)
+    06 Magic as Technology (tech equivalence table, Lightning Rail, "what it feels like" vibe callout)
+    07 Dragonshards (three types: Siberys/Eberron/Khyber, uses, economy)
+    08 Dragonmarks (what they are, three tiers, aberrant marks)
+    09 The Thirteen Houses (13-house table with SVG sigils, DM advice, Cannith schism)
+    10 Nations of Khorvaire (table + Sharn deep-dive, Cyran Diaspora, Mror Holds callout, Beyond Khorvaire)
+    11 Factions & Power Blocs (Draconic Prophecy, 8 factions, Dreaming Dark lifecycle callout, Changeling personas callout)
+    12 Religion & the Divine (6 faiths, Undying Court vs Blood of Vol callout)
+    13 Group Patrons (8 patron types, "NPCs are never just NPCs" DM note, session zero framework)
+    14 Money & the Street (price table, ID papers, Jorasco healing economy)
+    15 Adventure Themes & Tone (12 genres, d12 flavour table, cinematic action DM note, session zero essentials)
+
+  COVER PAGE:
+    Decorative double-border frame (gold outer + thin inner), corner ornament SVGs
+    Vertically centered via flexbox, content in .cover-inner wrapper
+    Decorative rules (.cover-rule) above and below title group
+    TOC inside cover with transparent bg, thin top/bottom borders
+    Print: height: 100vh, break-after: page, frame tightens insets
+
+  CSS CONVENTIONS:
+    Fonts: Cinzel (headings, labels), Crimson Pro (body), JetBrains Mono (dates, codes)
+    Colors: --accent (#8b2500 red), --gold (#b8860b), --muted (#6b5e50), --parchment (#f5f0e8)
+    Callouts: .callout (red border, DM notes), .callout.gold (gold border, general/designer),
+              .callout.player (teal #2a6e7a border, #e8eff2 bg, player-facing notes),
+              .callout.summary (olive #5b6e50 border, #eaf0e6 bg, executive summaries at chapter start)
+    Labels: <span class="label">TYPE</span> — DM Note, DM Hint, DM Hook, DM Advice, Player Note,
+            Plot Hook, Designer's Intent, Tone Guide, Session Zero Essentials, etc.
+    Tables: Cinzel headers, accent bg, striped rows via nth-child(even), first-child bold
+    Timeline: .timeline with .event children, .date spans in JetBrains Mono
+    Dividers: .divider-ornate with <img src="media/eberron_primer/divider.svg">
+    Cross-links: a.xref — dotted underline on screen, invisible on print
+    Headings: h2 has id attrs (slugified), h3 may have ids for sub-sections
+    Images: .map-figure, .map-figure.aside (float right), .artwork-full/.artwork-half
+    New SVGs: .artwork-emblem (160px print → 240px screen), .artwork-orrery (500px print → 900px screen),
+              .artwork-shards (300px print → 500px screen). All SVGs need BOTH print base + @media screen override.
+
+  MEDIA FOLDER (media/eberron_primer/):
+    SVGs: cover-emblem.svg, divider.svg (reused ~8×), mournland.svg, sharn.svg,
+      factions.svg, silver-flame.svg, mark-{house}.svg (13 house icons),
+      progenitors.svg (creation myth), cosmology.svg (orrery of planes), dragonshards.svg (three shard types)
+    Maps: eberron.webp (world map), khorvaire.jpg (continent map)
+    Lore images (local copies): karrnathi_skeleton.webp, warforged_druid.jpg,
+      lightning_rail.webp, cannith_mark.png, sharn_street_view.webp,
+      cathedral_of_the_silver_flame.webp
+
+  SCREEN vs PRINT:
+    @media screen: body 19.5pt, tables 16.5pt, callouts 18pt (150% scale for readability)
+    @media print: body 12pt, white bg, .cover height: 100vh + break-after: page, a.xref hidden
+    External deps: Google Fonts, media/eberron_primer/ folder for SVGs and images
+
+  CONTENT NOTES:
+    - Player notes spread across different sections (not clustered with DM notes)
+    - The Mourning deliberately has no canon answer — 8 theories listed as DM options
+    - Chapter 05 (Last War) is the backstory foundation chapter
+    - Cyran Diaspora callout in ch09 is a key emotional hook
+    - Sharn section in ch09 is the most likely campaign start location
+    - Ch12 Group Patrons is the session zero framework — pick patron before character creation
+    - "NPCs are never just NPCs" DM note in ch12 is the key Eberron mindset shift
+    - Dreaming Dark lifecycle callout in ch10 explains quori self-preservation motive
+    - Two Faces of Undeath callout in ch11 contrasts Undying Court vs Blood of Vol
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eberron Campaign Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #8b2500;
+    --accent-light: #c4501a;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --table-stripe: #ece6da;
+    --sidebar-bg: #e8e0d2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13pt;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--parchment);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 40px 50px;
+  }
+
+  /* COVER */
+  .cover {
+    text-align: center;
+    padding: 0;
+    margin-bottom: 40px;
+    position: relative;
+    /* Fill the full page and center content vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* Decorative border frame — visible in print and screen */
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 24px;
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 28px;
+    border: 0.5px solid var(--divider);
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  /* Corner ornaments — four L-shaped gold brackets */
+  .cover-corner {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+  }
+  .cover-corner svg { width: 100%; height: 100%; }
+  .cover-corner.tl { top: 14px; left: 14px; }
+  .cover-corner.tr { top: 14px; right: 14px; transform: scaleX(-1); }
+  .cover-corner.bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+  .cover-corner.br { bottom: 14px; right: 14px; transform: scale(-1); }
+
+  .cover-inner {
+    position: relative;
+    z-index: 1;
+    padding: 0 60px;
+  }
+
+  /* Thin decorative rule above and below the title group */
+  .cover-rule {
+    width: 180px;
+    height: 1px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  }
+  .cover-rule.wide { width: 280px; margin-top: 20px; margin-bottom: 20px; }
+
+  .cover-emblem {
+    display: block;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+    filter: drop-shadow(0 2px 6px rgba(139, 37, 0, 0.2));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cover-emblem {
+      animation: gentle-glow 3s ease-in-out infinite;
+    }
+    @keyframes gentle-glow {
+      0%, 100% { filter: drop-shadow(0 2px 6px rgba(139, 37, 0, 0.2)); }
+      50% { filter: drop-shadow(0 4px 12px rgba(184, 134, 11, 0.3)); }
+    }
+  }
+
+  .cover h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 32pt;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .cover .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0;
+  }
+  .cover .tagline {
+    font-style: italic;
+    font-size: 11.5pt;
+    color: var(--muted);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .cover .sources {
+    margin-top: 18px;
+    font-size: 8.5pt;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  /* TOC when inside the cover — lighter, more elegant */
+  .cover .toc {
+    background: transparent;
+    border-left: none;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    padding: 14px 30px;
+  }
+  .cover .toc h2 {
+    color: var(--gold);
+    font-size: 9pt;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+  }
+  .cover .toc ol {
+    columns: 2;
+    column-gap: 40px;
+  }
+  .cover .toc li {
+    font-size: 10pt;
+    padding: 1.5px 0;
+    color: var(--muted);
+  }
+
+  /* TOC */
+  .toc {
+    margin-bottom: 36px;
+    padding: 20px 28px;
+    background: var(--sidebar-bg);
+    border-left: 3px solid var(--gold);
+  }
+  .toc h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .toc ol {
+    columns: 2;
+    column-gap: 32px;
+    list-style: none;
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    font-size: 11pt;
+    padding: 2px 0;
+    color: var(--ink);
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) ' ';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+
+  /* SECTIONS */
+  section { margin-bottom: 32px; }
+  section:last-of-type { margin-bottom: 0; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 14pt;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: none;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--divider) 0%, transparent 100%);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--gold);
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+
+  p { margin-bottom: 10px; }
+
+  strong { font-weight: 600; color: var(--accent); }
+
+  /* CALLOUT BOXES */
+  .callout {
+    background: #eaddd8;
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 12pt;
+  }
+  .callout.gold { border-left-color: var(--gold); background: #f0e8d0; }
+  .callout .label {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .callout.gold .label { color: var(--gold); }
+  .callout.player { border-left-color: #2a6e7a; background: #e8eff2; }
+  .callout.player .label { color: #2a6e7a; }
+  .callout.summary { border-left-color: #5b6e50; background: #eaf0e6; }
+  .callout.summary .label { color: #5b6e50; }
+
+  /* ARTWORK CONTAINERS */
+  .artwork {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .artwork-full {
+    width: 100%;
+    display: block;
+  }
+
+  .artwork-half {
+    width: 50%;
+    margin: 20px auto;
+    display: block;
+  }
+
+  /* New SVG artwork sizes (print base) */
+  .artwork-emblem {
+    display: block;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+  }
+  .artwork-orrery {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .artwork-shards {
+    display: block;
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+  thead th {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--accent);
+    padding: 8px 10px;
+    text-align: left;
+  }
+  tbody td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--table-stripe); }
+  tbody td:first-child { font-weight: 600; white-space: nowrap; }
+
+  .sigil-cell {
+    text-align: center;
+    width: 70px;
+  }
+
+  .sigil-cell img {
+    width: 54px;
+    height: 54px;
+    display: inline-block;
+  }
+
+  /* LORE IMAGES — floated mood art */
+  .lore-img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--divider);
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .lore-float-r {
+    float: right;
+    margin: 4px 0 12px 20px;
+    width: 180px;
+    text-align: center;
+  }
+  .lore-float-l {
+    float: left;
+    margin: 4px 20px 12px 0;
+    width: 180px;
+    text-align: center;
+  }
+  .lore-float-r figcaption,
+  .lore-float-l figcaption {
+    font-size: 8pt;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 14px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--divider);
+  }
+  .timeline .event {
+    position: relative;
+    margin-bottom: 12px;
+    font-size: 12pt;
+  }
+  .timeline .event::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--parchment);
+  }
+  .timeline .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    color: var(--accent);
+  }
+
+  /* DIVIDER */
+  .divider-ornate {
+    margin: 28px 0;
+    text-align: center;
+  }
+
+  /* INLINE IMAGES — flow, don't slam */
+  .map-figure {
+    margin: 16px 0;
+    text-align: center;
+  }
+  .map-figure img {
+    max-width: 85%;
+    height: auto;
+    border: 1px solid var(--divider);
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .map-figure.aside {
+    float: right;
+    margin: 4px 0 12px 20px;
+    max-width: 45%;
+  }
+  .map-figure.aside img {
+    max-width: 100%;
+  }
+  .map-figure figcaption {
+    font-size: 8.5pt;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+  }
+  .clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  /* SCREEN — scale everything to ~150% of print sizes */
+  @media screen {
+    body { font-size: 19.5pt; }
+    .page { max-width: 1100px; padding: 40px 32px; }
+    .cover { min-height: 90vh; }
+    .cover::before { inset: 30px; }
+    .cover::after { inset: 34px; }
+    .cover-corner.tl { top: 18px; left: 18px; }
+    .cover-corner.tr { top: 18px; right: 18px; }
+    .cover-corner.bl { bottom: 18px; left: 18px; }
+    .cover-corner.br { bottom: 18px; right: 18px; }
+    table { font-size: 16.5pt; }
+    .callout { font-size: 18pt; }
+    .toc li { font-size: 16pt; }
+    .toc h2 { font-size: 15pt; }
+    /* Scale fixed-size SVGs for ~150% screen zoom */
+    .artwork-full { width: 780px; height: auto; max-width: 100%; }
+    .artwork-emblem { width: 240px; height: 240px; }
+    .artwork-orrery { max-width: 900px; width: 100%; }
+    .artwork-shards { width: 500px; max-width: 100%; }
+    .cover-emblem { width: 260px; height: 260px; }
+    .cover h1 { font-size: 42pt; letter-spacing: 12px; }
+    .cover .subtitle { font-size: 15pt; letter-spacing: 8px; }
+    .cover .tagline { font-size: 16pt; }
+    .cover .toc li { font-size: 14pt; }
+    .cover .toc h2 { font-size: 13pt; }
+    .cover-rule { width: 240px; }
+    .cover-rule.wide { width: 380px; }
+    .cover-corner { width: 44px; height: 44px; }
+    .divider-ornate { margin: 12px 0; }
+    .divider-ornate img { width: 450px; }
+    section { margin-bottom: 16px; }
+    .sharn-float { width: 330px; }
+    .lore-float-r, .lore-float-l { width: 260px; }
+    .sigil-cell { width: 100px; }
+    .sigil-cell img { width: 80px; height: 80px; }
+    a.xref { color: var(--accent); text-decoration: underline dotted; text-underline-offset: 2px; }
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; font-size: 12pt; }
+    .page { padding: 0; max-width: none; }
+    .cover {
+      min-height: 0;
+      height: 100vh;
+      padding: 0;
+      margin-bottom: 0;
+      page-break-inside: avoid;
+      break-after: page;
+    }
+    .cover::before { inset: 18px; border-width: 1.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover::after { inset: 22px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover-corner { width: 26px; height: 26px; }
+    .cover-corner.tl { top: 10px; left: 10px; }
+    .cover-corner.tr { top: 10px; right: 10px; }
+    .cover-corner.bl { bottom: 10px; left: 10px; }
+    .cover-corner.br { bottom: 10px; right: 10px; }
+    .cover h1 { font-size: 28pt; }
+    .cover-emblem { width: 160px; height: 160px; }
+    .callout { background: #edebea !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-left-width: 2px; }
+    .callout.gold { background: #f5f0e4 !important; }
+    .callout.player { background: #eaf1f3 !important; }
+    .callout.summary { background: #edf2ea !important; }
+    .toc { background: #f5f5f5 !important; }
+    .cover .toc { background: transparent !important; }
+    thead th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    tbody tr:nth-child(even) { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { break-after: avoid; }
+    table { break-inside: auto; }
+    .map-figure.aside { float: none; max-width: 65%; margin: 12px auto; }
+    .map-figure img { box-shadow: none; }
+    .lore-float-r, .lore-float-l { float: none; width: auto; max-width: 45%; margin: 10px auto; }
+    .lore-img { box-shadow: none; }
+    a.xref { color: var(--ink); text-decoration: none; }
+    a.xref::after { content: ''; }
+  }
+
+  /* TOC links */
+  .cover .toc a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .cover .toc a:hover {
+    color: var(--accent);
+  }
+
+  /* Back-to-top — screen only */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--parchment);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 100;
+  }
+  .back-to-top:hover { opacity: 1; }
+  @media print { .back-to-top { display: none; } }
+</style>
+</head>
+<body>
+<div id="top"></div>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <!-- Corner ornaments -->
+  <div class="cover-corner tl"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M2,30 L2,6 Q2,2 6,2 L30,2" fill="none" stroke="#b8860b" stroke-width="2.5" stroke-linecap="round"/><circle cx="6" cy="6" r="2" fill="#b8860b" opacity="0.5"/></svg></div>
+  <div class="cover-corner tr"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M2,30 L2,6 Q2,2 6,2 L30,2" fill="none" stroke="#b8860b" stroke-width="2.5" stroke-linecap="round"/><circle cx="6" cy="6" r="2" fill="#b8860b" opacity="0.5"/></svg></div>
+  <div class="cover-corner bl"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M2,30 L2,6 Q2,2 6,2 L30,2" fill="none" stroke="#b8860b" stroke-width="2.5" stroke-linecap="round"/><circle cx="6" cy="6" r="2" fill="#b8860b" opacity="0.5"/></svg></div>
+  <div class="cover-corner br"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M2,30 L2,6 Q2,2 6,2 L30,2" fill="none" stroke="#b8860b" stroke-width="2.5" stroke-linecap="round"/><circle cx="6" cy="6" r="2" fill="#b8860b" opacity="0.5"/></svg></div>
+
+  <div class="cover-inner">
+    <!-- Cover Emblem -->
+    <img class="cover-emblem" src="media/eberron_primer/cover-emblem.svg" alt="Eberron crest"/>
+
+    <div class="cover-rule"></div>
+
+    <h1>Eberron</h1>
+    <div class="subtitle">Campaign Primer</div>
+
+    <div class="cover-rule wide"></div>
+
+    <div class="tagline">"Nothing is as it seems. No one is above suspicion.<br>Every treasure has its price."</div>
+
+    <div class="sources">Setting Overview · DM &amp; Player Reference</div>
+
+    <nav class="toc" style="text-align: left; margin-top: 28px; padding: 14px 22px; display: inline-block;">
+      <h2 style="text-align: center;">Contents</h2>
+      <ol>
+        <li><a href="#what-eberron-is">What Eberron Is (and Isn't)</a></li>
+        <li><a href="#core-setting-philosophy">Core Setting Philosophy</a></li>
+        <li><a href="#three-dragons">The Three Dragons &amp; the Planes</a></li>
+        <li><a href="#history-at-a-glance">History at a Glance</a></li>
+        <li><a href="#the-last-war-chapter">The Last War</a></li>
+        <li><a href="#magic-as-technology">Magic as Technology</a></li>
+        <li><a href="#dragonshards">Dragonshards</a></li>
+        <li><a href="#dragonmarks-houses">Dragonmarks</a></li>
+        <li><a href="#thirteen-houses">The Thirteen Houses</a></li>
+        <li><a href="#nations-of-khorvaire">Nations of Khorvaire</a></li>
+        <li><a href="#factions-power-blocs">Factions &amp; Power Blocs</a></li>
+        <li><a href="#religion-divine">Religion &amp; the Divine</a></li>
+        <li><a href="#group-patrons">Group Patrons</a></li>
+        <li><a href="#money-and-the-street">Money &amp; the Street</a></li>
+        <li><a href="#adventure-themes-tone">Adventure Themes &amp; Tone</a></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+
+
+<!-- PREAMBLE — How to Read This Document -->
+<section>
+  <h2 id="how-to-read">How to Read This Document</h2>
+  <p>This primer covers the Eberron setting from the ground up — history, geography, factions, and the stuff that makes sessions run. Built by Dungeon Mistress CyberGwen with tremendous help from LLMs (Claude Cowork, ChatGPT Agent Mode), so if you hate AI out of principle then probably stay away. It's written for both DMs and players, so we've colour-coded the sidebar notes:</p>
+  <div class="callout summary" style="margin-bottom: 8px;">
+    <span class="label">Chapter Summary</span>
+    Green boxes at the top of longer chapters. Read these if you want the gist before diving into detail.
+  </div>
+  <div class="callout" style="margin-bottom: 8px;">
+    <span class="label">DM Note</span>
+    Red-bordered boxes are for the DM's eyes — plot hooks, running advice, things to prep. Players can read them, but they'll enjoy the game more if they don't.
+  </div>
+  <div class="callout player" style="margin-bottom: 8px;">
+    <span class="label">Player Note</span>
+    Teal boxes are aimed at players — character-building context, things your character would know, questions to answer before session one.
+  </div>
+  <div class="callout gold" style="margin-bottom: 8px;">
+    <span class="label">Designer's Intent / Lore</span>
+    Gold boxes cover setting design rationale, deeper lore, and callouts that matter for both sides of the screen.
+  </div>
+  <p>Chapters are numbered but not strictly sequential — skip to whatever you need. If you want this printed: It is very print-friendly, just Ctrl-P. If you read on a screen: The table of contents on the cover page links to each chapter, and cross-references like <a class="xref" href="#sharn-city-of-towers">Sharn, City of Towers</a> link to the relevant section.</p>
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 01 -->
+<section>
+  <h2 id="what-eberron-is">01 — What Eberron Is (and Isn't)</h2>
+  <p>Eberron is <strong>pulp noir meets wide magic</strong>. Think Indiana Jones with wands, Casablanca in a city lit by bound elementals, hardboiled detectives chasing shapeshifters through a train powered by lightning. It is emphatically <em>not</em> Tolkien pastoral fantasy.</p>
+  <p>Magic is <strong>common but mastery is rare</strong>. A farmer might own a <em>continual flame</em> lantern; that doesn't mean they can cast a single spell. Airships cross the sky. Newspapers run off printing presses enchanted with <em>prestidigitation</em>. Healing potions are sold in corner shops. But an archmage is still extraordinary.</p>
+  <p>Morality is <strong>grey by design</strong>. The paladin's church might be corrupt. The necromancer might run an orphanage. Alignment exists mechanically but the setting actively undermines "detect evil and smite" gameplay.</p>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Build a character with debts, secrets, and opinions — not just a class and a backstory paragraph. Eberron's noir tone rewards characters who are entangled with the world, not passing through it.
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 02 -->
+<section>
+  <h2 id="core-setting-philosophy">02 — Core Setting Philosophy</h2>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Your character lives in a world that feels like the 1920s—but with magic instead of technology. Intrigue, moral grey areas, and consequences matter more than dungeon crawling.
+  </div>
+  <div class="callout gold">
+    <span class="label">Designer's Intent</span>
+    Keith Baker built Eberron around four maxims: <strong>(1)</strong> If it exists in D&amp;D, it has a place in Eberron. <strong>(2)</strong> Tone is grey, never black &amp; white. <strong>(3)</strong> The Last War shaped everything. <strong>(4)</strong> Dragonmark dynasties are the real power.
+  </div>
+  <p>Eberron rewards <strong>investigation, intrigue, and moral ambiguity</strong> over dungeon-clearing. NPCs have competing agendas. Nations are in cold war. Players should regularly face situations where the "right" answer isn't obvious—and might not exist at all.</p>
+  <p>This doesn't mean you can't run a dungeon crawl. Xen'drik is right there, full of ancient giant ruins. But even a dungeon should echo the wider tensions: who hired you, and what do they <em>really</em> want with that artifact?</p>
+</section>
+
+<!-- 03 — The Three Dragons & the Planes -->
+<section>
+  <h2 id="three-dragons">03 — The Three Dragons &amp; the Planes</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Three Progenitor Dragons created the world and became it: Siberys (the sky), Eberron (the land), Khyber (the underworld). Their conflict explains dragonshards, the Draconic Prophecy, and why fiends are imprisoned below. Thirteen planes orbit the material world, bleeding through in manifest zones that shape geography and adventure sites.
+  </div>
+  <p>Eberron has an origin myth older than the Age of Monsters, and it shapes <em>everything</em>. Three Progenitor Dragons created reality, and their bodies <strong>became</strong> reality.</p>
+
+  <div class="artwork" style="margin: 16px 0;">
+    <img class="artwork-emblem" src="media/eberron_primer/progenitors.svg" alt="The Three Progenitor Dragons — Siberys above, Eberron around, Khyber within" style="filter: drop-shadow(0 2px 4px rgba(139,37,0,0.15));"/>
+  </div>
+
+  <h3 id="progenitor-dragons">The Progenitor Dragons</h3>
+  <p>Three dragons shaped the world together. Then <strong>Khyber</strong> betrayed and murdered <strong>Siberys</strong>. <strong>Eberron</strong> wrapped her own body around Khyber to imprison her forever. Their bodies became the cosmos:</p>
+  <table>
+    <thead><tr><th>Dragon</th><th>Became</th><th>Associated With</th></tr></thead>
+    <tbody>
+      <tr><td>Siberys</td><td>The Dragon Above — the ring of golden dragonshards orbiting the planet</td><td>Dragonmarks, celestial power, the heavens</td></tr>
+      <tr><td>Eberron</td><td>The Dragon Between — the living world itself</td><td>Nature, the material plane, primal magic</td></tr>
+      <tr><td>Khyber</td><td>The Dragon Below — the underworld, imprisoned within Eberron</td><td>Fiends, aberrations, the Overlords, darkness</td></tr>
+    </tbody>
+  </table>
+  <p>The myth has teeth. The Progenitors explain why <a class="xref" href="#dragonshards">dragonshards</a> exist (crystallised blood of each dragon), why the <a class="xref" href="#draconic-prophecy">Draconic Prophecy</a> is written into the world's geology, and why fiends are <em>trapped beneath your feet</em>. Every sealed Overlord, every manifest zone, every aberration crawling up from the depths ties back to these three.</p>
+
+  <div class="callout gold">
+    <span class="label">DM Advice</span>
+    You don't need to lecture players on the creation myth. Let it surface naturally: a scholar mentions Siberys shards, a cultist invokes Khyber's name, an ancient mural depicts three intertwined serpents. The myth works best when it's ambient worldbuilding, not an opening crawl.
+  </div>
+
+  <h3 id="thirteen-planes">The Thirteen Planes</h3>
+  <p>The Progenitors created thirteen planes—each an idealised expression of a single concept. These planes orbit the material world, waxing and waning in influence. Where they press close, <strong>manifest zones</strong> form: permanent patches of planar bleed-through that define Eberron's geography. Sharn's impossible towers exist because a Syrania zone makes things lighter there. A village near a Mabar zone has undead crawling from the soil every new moon.</p>
+
+  <div class="artwork" style="margin: 20px 0;">
+    <img class="artwork-orrery" src="media/eberron_primer/cosmology.svg" alt="Eberron's Orrery — thirteen planes orbiting the material world"/>
+  </div>
+
+  <table>
+    <thead><tr><th>Plane</th><th>Domain</th><th>Manifest Zone Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Daanvi</td><td>Perfect Order</td><td>Structures never decay; creatures feel compelled to follow rules</td></tr>
+      <tr><td>Dal Quor</td><td>Dreams</td><td>Vivid shared dreams; quori can reach sleepers more easily</td></tr>
+      <tr><td>Dolurrh</td><td>The Dead</td><td>Ghosts linger; resurrection magic falters; emotional numbness</td></tr>
+      <tr><td>Fernia</td><td>Fire</td><td>Flames burn hotter; forges produce superior metalwork; heat never fades</td></tr>
+      <tr><td>Irian</td><td>Light &amp; Life</td><td>Healing amplified; plants grow explosively; golden glow at all hours</td></tr>
+      <tr><td>Kythri</td><td>Chaos</td><td>Terrain shifts unpredictably; wild magic surges; nothing stays stable</td></tr>
+      <tr><td>Lamannia</td><td>Primal Wilderness</td><td>Animals grow enormous; forests become impenetrable; nature reclaims</td></tr>
+      <tr><td>Mabar</td><td>Endless Night</td><td>Light dims; healing falters; undead spontaneously rise</td></tr>
+      <tr><td>Risia</td><td>Eternal Ice</td><td>Bitter cold; water freezes instantly; time feels sluggish</td></tr>
+      <tr><td>Shavarath</td><td>Eternal War</td><td>Aggression spikes; weapons feel lighter; conflicts escalate fast</td></tr>
+      <tr><td>Syrania</td><td>Azure Sky</td><td>Gravity weakened; flight easier; peace and clarity — <em>this is why Sharn works</em></td></tr>
+      <tr><td>Thelanis</td><td>The Faerie Court</td><td>Stories become literal; promises bind; time flows strangely</td></tr>
+      <tr><td>Xoriat</td><td>Madness</td><td>Reality bends; aberrations seep through; sanity frays at the edges</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">DM Note</span>
+    Manifest zones are your best tool for making <em>places</em> feel distinctive without inventing new mechanics. A tavern in a Thelanis zone where every lie turns your drink sour. A battlefield on a Shavarath zone where initiative bonuses spike and nobody can back down. Pick a zone, pick a quirk, and suddenly a random location has personality.
+  </div>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    If your character is from a region with a strong manifest zone, it probably shaped who they are. Growing up near a Mabar zone means you've seen ghosts since childhood. A Fernia zone village means you understand fire the way coastal people understand tides. Use it.
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Languages — Quick Reference</span>
+    Common is the trade tongue. Other languages worth knowing: <strong>Goblin</strong> (the oldest written language on Khorvaire — predates human literacy by millennia), <strong>Draconic</strong> (the language of prophecy and magic), <strong>Quori</strong> (spoken by kalashtar and the Inspired), <strong>Riedran</strong> (Sarlona's common tongue), and <strong>Giant</strong> (essential for Xen'drik ruins). Elven, Dwarven, Gnomish, and Orc round out the major living languages.
+  </div>
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 04 -->
+<section>
+  <h2 id="history-at-a-glance">04 — History at a Glance</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Goblinoids ruled Khorvaire for millennia before humans arrived. Galifar I united the Five Nations ~1,000 years ago. That kingdom shattered into a century-long civil war (894–996 YK). The war ended when an unknown catastrophe annihilated Cyre in a single day. The peace is two years old and nobody trusts it.
+  </div>
+  <p>You don't need to memorise ten thousand years. You need <strong>four beats</strong>—then some colour.</p>
+  <div class="timeline">
+    <div class="event">
+      <span class="date">Distant Past</span><br>
+      The world was ruled by <strong>dragons</strong>, then by <strong>giants</strong> on the continent of Xen'drik, then by <strong>goblinoids</strong> (the Dhakaani Empire) on Khorvaire. Humans arrived relatively late. All previous empires fell—violently.
+    </div>
+    <div class="event">
+      <span class="date">c. 1 YK (~1,000 years ago)</span><br>
+      <strong>Galifar I</strong> united the Five Nations of Khorvaire into a single kingdom. The YK calendar counts from this event. Centuries of relative peace, prosperity, and dragonmark houses rising as economic superpowers.
+    </div>
+    <div class="event">
+      <span class="date">894–996 YK</span><br>
+      <strong>The Last War.</strong> A century of continental war after the king died and succession was disputed. Every nation fought everyone. Warforged were mass-produced as soldiers. Magic was weaponised at industrial scale.
+    </div>
+    <div class="event">
+      <span class="date">994 YK — The Mourning</span><br>
+      <strong>Cyre was annihilated</strong> in a single day by an unknown magical catastrophe. No one knows the cause. The nation is now the <strong>Mournland</strong>—a warped wasteland where magic behaves unpredictably, healing fails, and living spells roam free. This trauma forced the Treaty of Thronehold (996 YK) and an uneasy peace.
+    </div>
+  </div>
+
+  <figure class="map-figure aside">
+    <img src="media/eberron_primer/eberron.webp" alt="World map of Eberron showing all continents"/>
+    <figcaption>Eberron's world — the history below spans all of these continents</figcaption>
+  </figure>
+
+  <h3 id="age-of-monsters">The Age of Monsters</h3>
+  <p>Before humans set foot on Khorvaire, the continent belonged to the <strong>Dhakaan</strong>. The goblinoid empire—hobgoblins as its generals, bugbears as its shock troops, goblins as its labour—spanned the entire landmass for thousands of years. They had architecture, magic, bardic traditions, standing armies. They were not savages. They were the civilisation.</p>
+  <p>Before them: the <strong>giants of Xen'drik</strong>, who enslaved elves and built wonders that make anything on Khorvaire look like a shed. Before even them: the <strong>dragons of Argonnessen</strong>, still alive, still watching, still older than memory. Each age ended in catastrophe—the giants were shattered by the dragons for misusing planar magic, the Dhakaani were broken by an invasion from <strong>Xoriat, the Realm of Madness</strong>, whose daelkyr drove the empire into civil war and ruin.</p>
+  <div class="callout gold">
+    <span class="label">DM Hook — Dhakaani Ruins</span>
+    Dhakaani ruins are <em>everywhere</em> beneath Khorvaire's cities. Sharn is literally built on top of one. Here's what makes them great dungeon material: Dhakaani architecture is <strong>brutalist and geometric</strong>—massive hexagonal corridors, vaulted chambers with acoustic properties designed for their bardic magic, walls carved with Goblin script that still radiates faint abjuration. They built for <em>scale</em>: wide enough for bugbear formations, deep enough to shelter from the daelkyr invasion. The oldest levels are warped by the lingering taint of Xoriat—corridors that loop back on themselves, rooms where gravity shifts, symbiont creatures fused to the walls. Loot isn't gold; it's <strong>Dhakaani artefacts</strong>: singing blades that hum in Goblin, war-masks that grant tactical telepathy, seal-stones that were placed to keep something <em>below</em> from getting out. And the <strong>Heirs of Dhakaan</strong>—a goblinoid faction trying to rebuild the old empire—want those artefacts back. They have legitimate grievances and impressive discipline. Use them as rivals, employers, or both.
+  </div>
+
+  <h3 id="kingdom-of-galifar">The Kingdom of Galifar</h3>
+  <p>When humans arrived on Khorvaire, they spent centuries squabbling in small kingdoms until <strong>Galifar ir'Wynarn</strong> did what nobody thought possible: he united the Five Nations—Aundair, Breland, Cyre, Karrnath, and Thrane—under a single crown. The deal was elegant: each of his five children would govern one nation, and the eldest would inherit the throne. For nearly a thousand years, this worked.</p>
+  <p>During the Galifar era, the <strong><a class="xref" href="#dragonmarks-the-houses">dragonmark houses</a></strong> transformed from powerful families into continent-spanning monopolies. House Cannith industrialised magical manufacturing. House Orien built the Lightning Rail. House Sivis created a communication network. The houses were officially barred from holding political office or land (the <strong>Korth Edicts</strong>), but everyone understood that economic power was the real power. The kingdom prospered, and the houses grew fat.</p>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Your grandparents remember the golden age. Your parents remember the war. If you're under twenty, you remember nothing but aftermath. That generational divide shapes every family and every tavern conversation.
+  </div>
+
+  <h3 id="the-last-war">The Last War</h3>
+  <p>King Jarot died in 894 YK. His children could not agree on succession. What started as a political dispute escalated into the worst conflict in Khorvaire's history—<strong>a hundred years of total war</strong>.</p>
+  <p>Every nation fought every other nation at some point. Alliances shifted constantly. The <a class="xref" href="#dragonmarks-the-houses">dragonmark houses</a> officially remained neutral, selling weapons and services to all sides, and grew richer than ever. House Cannith created the <strong>warforged</strong> in 965 YK—living constructs built to fight and die so fewer humans had to. Six-foot frames of wood, stone, metal, and darkwood; hinged jawplates, crystal eyes, each stamped with a unique <em>ghulra</em> rune on the forehead. They don't eat, drink, breathe, or sleep. They were tools. The Treaty of Thronehold granted them legal personhood and banned creation of new warforged—but two years of freedom doesn't erase thirty years of being owned. Karrnath raised <strong>undead legions</strong>. Aundair deployed <strong>arcane superweapons</strong>. Breland invested in espionage. Thrane consolidated under the Church of the Silver Flame. Cyre, once the cultural heart of Galifar, was squeezed from all sides.</p>
+  <p>An entire generation was born, lived, and died knowing nothing but war. Every NPC over the age of twenty has war stories. Every nation has grudges. Every veteran carries scars—physical or otherwise. <em>This is the emotional bedrock of every Eberron campaign.</em></p>
+  <div class="callout player">
+    <span class="label">Player Note — Read This First</span>
+    The Last War is not backstory. It's the <strong>defining fact</strong> of your character's life. You fought in it, fled from it, profited from it, or grew up in its shadow. Before you pick a class or a subclass, answer this: <em>what did the war do to you?</em> That answer will drive more roleplay than anything on your character sheet.
+  </div>
+  <div class="callout">
+    <span class="label">DM Note</span>
+    The Last War is your best tool for instant characterisation. Ask every player: <em>what did your character do during the war?</em> A warforged was built for it. A Cyran refugee lost everything. A Karrnathi soldier served alongside skeletons. These are live wires.
+  </div>
+
+  <h3 id="the-day-of-mourning">The Day of Mourning</h3>
+  <div class="callout summary">
+    <span class="label">Section Summary</span>
+    In 994 YK, an unknown catastrophe annihilated the entire nation of Cyre in a single day. The cause is deliberately left open — eight popular theories are listed below, all equally valid. The resulting Mournland is a dead-magic wasteland where healing fails and living spells roam free. The fear of a second Mourning is the only thing keeping the peace.
+  </div>
+  <p>On 20 Olarune, 994 YK, Cyre simply <em>died</em>. A wall of dead-grey mist rolled across the nation in hours. Everything inside was annihilated, warped, or made wrong. Armies from four nations were fighting on Cyran soil that day. None of them came back. When the mist settled, it didn't dissipate—it became the permanent border of the <strong>Mournland</strong>, a zone where the rules of magic and nature no longer apply.</p>
+  <p>No one knows the cause. Was it a Cyran superweapon that backfired? A dragonmark house experiment gone wrong? A planar breach? An act of the Draconic Prophecy? The setting deliberately refuses to answer. What matters is the <em>fear</em>: every nation looked at the Mournland and thought, <em>that could have been us</em>. Two years later, the Treaty of Thronehold was signed. Not because anyone wanted peace—but because everyone was terrified.</p>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Nobody knows what caused the Mourning. Your character has a theory — everyone does. It's probably wrong, but it shapes how you see the world.
+  </div>
+  <div class="callout">
+    <span class="label">DM Note — The Mourning</span>
+    The Mourning is Eberron's greatest mystery <em>by design</em>. Canon deliberately provides no answer. You get to decide — or never reveal it. It functions as the setting's nuclear deterrent: no nation dares reignite total war because it might happen again. Some DMs pick one theory below. Some never decide. Both work. The fear is the point, not the answer.
+  </div>
+
+  <table>
+    <thead><tr><th>Theory</th><th>What Happened</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td>Creation Forge Overload</td><td>House Cannith's largest forge was in Cyre. Warforged production pushed it past capacity, tearing a hole in reality.</td><td>Campaigns about Cannith's guilt and the warforged question</td></tr>
+      <tr><td>Cyran Superweapon</td><td>Cyre was desperate and losing. They built something terrible, aimed it outward, and it detonated inward.</td><td>Tragic irony — the victim was its own weapon's architect</td></tr>
+      <tr><td>Manifest Zone Collapse</td><td>Cyre sat atop a tangle of planar connections. A century of war magic destabilised them until they tore open simultaneously.</td><td>Campaigns that explore the planes</td></tr>
+      <tr><td>Prophecy Fulfilment</td><td>The Lords of Dust engineered the destruction to fulfil a line of the Draconic Prophecy, bringing an Overlord one step closer to freedom.</td><td>Cosmic chess — the players are the counter-move</td></tr>
+      <tr><td>Overlord Stirring</td><td>Something ancient imprisoned beneath Cyre moved. The Mourning is the scar. The Mournland isn't dead — it's an Overlord's <em>dream</em>.</td><td>Slow-burn horror; the threat is still active</td></tr>
+      <tr><td>Mark of Death</td><td>Vol's endgame: the lost thirteenth dragonmark, manifested in a Cyran heir. The mark consumed its bearer and the nation with it.</td><td>Blood of Vol plotlines</td></tr>
+      <tr><td>Cumulative War Magic</td><td>No single villain. A hundred years of arcane bombardment simply exceeded what the world could absorb.</td><td>The most resonant option — everyone is responsible, nobody is to blame, and it could happen again</td></tr>
+      <tr><td>The Traveler Did It</td><td>The trickster god, acting for reasons no mortal can fathom. Maybe a mercy. Maybe a joke. Maybe a test.</td><td>Use this if you never want to answer the question</td></tr>
+    </tbody>
+  </table>
+  <p><em>Adventuring into the Mournland is like stepping into a grave of time.</em> The dead-grey mist clings to your lungs and muffles sound. Spells misfire. Wounds refuse to heal. War machines rust in place while living spells wander the blasted landscape. The only things that move with ease are constructs and the undead: warforged and necromancers can cross the border unscathed. Explorers tell stories of glass forests, melted cities, and trains frozen mid-derailment. Encourage players to bring spare spellbooks and backup plans.</p>
+
+  <!-- The Mournland -->
+  <div class="artwork">
+    <img class="artwork-full" src="media/eberron_primer/mournland.svg" alt="The Mournland — desolate landscape"/>
+  </div>
+  <div style="clear: both;"></div>
+</section>
+
+<!-- Divider -->
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 05 — THE LAST WAR (deep chapter) -->
+<section>
+  <h2 id="the-last-war-chapter">05 — The Last War</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    A succession dispute in 894 YK spiralled into a hundred years of total war. Five nations, shifting alliances, warforged soldiers, undead legions, arcane superweapons. Cyre was destroyed by the Mourning in 994 YK. The Treaty of Thronehold (996 YK) ended the fighting but not the grudges. This chapter covers the full timeline, each nation's war role, character hooks, and the post-war tensions that drive every campaign.
+  </div>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    This is the chapter that matters most for character backstories. The Last War shaped every living person on Khorvaire. Your character was born into it, fought in it, profited from it, or fled from it. Most humans know nothing else. Long-lived races have it worse — an elf who remembers centuries of peace watched it all burn.
+  </div>
+
+  <h3 id="why-it-started">Why It Started</h3>
+  <p>King Jarot ir'Wynarn died in <strong>894 YK</strong>. By tradition, his eldest daughter <strong>Mishann of Cyre</strong> should have inherited the throne. Her siblings disagreed. <strong>Thalin</strong> (Thrane), <strong>Kaius I</strong> (Karrnath), and <strong>Wroann</strong> (Breland) each claimed legitimacy. <strong>Wrogar</strong> (Aundair) backed Mishann—at first. What began as a succession crisis became open warfare within a year. By 896 YK, every nation was fighting at least two others.</p>
+  <p>The war was never a clean two-sided affair. Alliances formed, broke, and reformed constantly. Nations that were allies one decade invaded each other the next. This is important: <em>every nation wronged every other nation at some point</em>. There are no clean hands.</p>
+
+  <h3 id="timeline-of-key-events">Timeline of Key Events</h3>
+  <div class="timeline">
+    <div class="event">
+      <span class="date">894 YK</span><br>
+      King Jarot dies. Succession disputed. War begins between the Five Nations.
+    </div>
+    <div class="event">
+      <span class="date">895–903 YK — Early Sieges</span><br>
+      Breland, Thrane, and Karrnath besiege the Cyran port of <strong>Eston</strong>—twice. Both sieges fail, partly thanks to House Cannith's fortifications, partly because the attackers can't stop fighting each other.
+    </div>
+    <div class="event">
+      <span class="date">897 YK — Karrnath's Bargain</span><br>
+      <figure class="lore-float-l">
+        <img class="lore-img" src="media/eberron_primer/karrnathi_skeleton.webp" alt="Karrnathi undead soldier in dark armour"/>
+        <figcaption>Karrnathi undead soldier</figcaption>
+      </figure>
+      Famine and plague ravage Karrnath. King Kaius I turns to the <strong>Blood of Vol</strong> for aid. The price: he is turned into a vampire. Karrnath begins raising <strong>undead soldiers</strong>—skeletons and zombies bolstered by necromantic magic. Effective, but it horrifies the other nations and ruins diplomacy for decades.
+    </div>
+    <div class="event">
+      <span class="date">914 YK — Thrane's Theocracy</span><br>
+      King Thalin of Thrane dies. The <strong>Church of the Silver Flame</strong> assumes control. Thrane becomes a theocracy under the Keeper of the Flame. The monarchy is sidelined. This changes Thrane's war aims from dynastic to ideological.
+    </div>
+    <div class="event">
+      <span class="date">~920s–950s YK — Thrane vs. Karrnath</span><br>
+      The theocratic Thrane targets Karrnath's undead legions specifically, framing the war as a holy struggle. Silver Flame paladins consider the undead an abomination. The conflict becomes ideological as well as territorial, and the grudge between these two nations runs deepest.
+    </div>
+    <div class="event">
+      <span class="date">956 YK — Valenar Secession</span><br>
+      Elf mercenaries from Aerenal, hired by Cyre to fight, decide they'd rather <strong>keep the land</strong>. They carve out <strong>Valenar</strong> from southeastern Cyre. Cyre, already losing on every front, can't stop them.
+    </div>
+    <div class="event">
+      <span class="date">958 YK — Eldeen Reaches</span><br>
+      Western Aundair, neglected while its armies fight elsewhere, declares independence as the <strong>Eldeen Reaches</strong> under the Great Druid Oalian and the Wardens of the Wood. Aundair loses a third of its territory overnight.
+    </div>
+    <div class="event">
+      <span class="date">965 YK — Warforged</span><br>
+      <figure class="lore-float-r">
+        <img class="lore-img" src="media/eberron_primer/warforged_druid.jpg" alt="A warforged — living construct built for war"/>
+        <figcaption>A warforged, post-war</figcaption>
+      </figure>
+      House Cannith perfects the <strong>modern warforged</strong>—living constructs purpose-built for combat. Mass production begins in the creation forges of Cyre. Within a decade, warforged are fighting on every front for every nation that can afford them.
+    </div>
+    <div class="event">
+      <span class="date">969 YK — Darguun</span><br>
+      Hobgoblin mercenary leader <strong>Lhesh Haruuc</strong> unites the goblinoid forces fighting for Cyre and Breland, turns on both, and claims a swathe of southern Cyre as the new nation of <strong>Darguun</strong>. Cyre is now being dismembered by its own hired soldiers.
+    </div>
+    <div class="event">
+      <span class="date">976 YK — Order of the Emerald Claw</span><br>
+      Regent Moranna of Karrnath outlaws the <strong>Order of the Emerald Claw</strong>, a fanatical military order tied to the Blood of Vol. They go underground and become one of Eberron's most persistent villain factions.
+    </div>
+    <div class="event">
+      <span class="date">994 YK — The Day of Mourning</span><br>
+      On 20 Olarune, <strong>Cyre is annihilated</strong>. Armies from four nations are fighting on Cyran soil that day. None survive. The dead-grey mist settles into the permanent border of the <strong>Mournland</strong>.
+    </div>
+    <div class="event">
+      <span class="date">996 YK — Treaty of Thronehold</span><br>
+      Two years of terror-fuelled negotiation. The treaty recognises the independence of all current nations (including Darguun, Valenar, the Eldeen Reaches, and the Mournland as unclaimed territory). Warforged are granted legal personhood. Creation of new warforged is banned. Nobody is happy. The war is over. <em>The campaign starts here.</em>
+    </div>
+  </div>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    If you're playing a warforged, pick a creation date from this timeline. You have no childhood — just a first activation and a war you were built to fight. Two years of legal personhood doesn't erase thirty years of being property.
+  </div>
+
+  <h3 id="what-each-nation-did">What Each Nation Did</h3>
+  <table>
+    <thead><tr><th>Nation</th><th>War Role</th><th>What They Lost</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cyre</strong></td><td>Had the strongest claim to the throne and the richest culture. Fought defensively on all fronts. Hired mercenaries (elves, goblinoids) who turned on them.</td><td>Everything. The nation itself. Survivors are refugees.</td></tr>
+      <tr><td><strong>Breland</strong></td><td>Invested in espionage and intelligence networks. King Boranel was a pragmatist—fought smart, not hard.</td><td>Territory to Darguun. Political stability—Boranel is aging and succession is unclear.</td></tr>
+      <tr><td><strong>Aundair</strong></td><td>Deployed arcane superweapons and war wizards. Relied on magical superiority rather than numbers.</td><td>The Eldeen Reaches—a third of its land. Aundair <em>wants it back</em>.</td></tr>
+      <tr><td><strong>Karrnath</strong></td><td>Raised undead legions. The most militaristic nation—martial discipline is a cultural identity, not just a wartime measure.</td><td>International trust. The undead gambit worked but left Karrnath diplomatically isolated and internally divided on the Blood of Vol.</td></tr>
+      <tr><td><strong>Thrane</strong></td><td>Became a theocracy mid-war. Framed its campaigns as holy crusades. The Silver Flame's paladins are legendary but their zealotry is polarising.</td><td>The secular monarchy and relationships with every non-Flame-worshipping nation.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Your nation shaped your character more than your class did. Check the table above — you carry that war role and those losses whether you like it or not. An Aundairian and a Karrnathi at the same table have a century of baggage between them.
+  </div>
+
+  <h3 id="dragonmarks-the-houses">The Dragonmarked Houses</h3>
+  <p>Officially neutral. <em>Obscenely profitable.</em> The houses sold weapons, healing, transport, and communication to <strong>all sides simultaneously</strong>. House Cannith armed everyone. House Jorasco healed everyone. House Orien moved troops for whoever paid. The Korth Edicts barred them from taking political sides, but the <a class="xref" href="#the-last-war-chapter">war</a> made them richer and more powerful than any nation. Post-war, the houses are the real power on Khorvaire, and everyone knows it.</p>
+  <div class="callout">
+    <span class="label">DM Hint</span>
+    The houses' war profiteering is a live nerve. NPCs from every nation resent them for it. A player whose family was killed by Cannith-made weapons has a legitimate grievance—but Cannith also built the warforged who might be sitting at the same table. The moral complexity writes itself; you don't have to lecture.
+  </div>
+
+  <h3 id="character-hooks-where-were-you">Character Hooks — Where Were You?</h3>
+  <p>Every player character over the age of four has a relationship with the Last War. Use this table as a starting point—pick one, or combine two.</p>
+  <table>
+    <thead><tr><th>Hook</th><th>What It Means</th><th>Questions to Answer</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Veteran</strong></td><td>You fought. You survived. Most of the people next to you didn't.</td><td>Which nation? Which front? What did you do that still keeps you up at night? Why did you stop fighting—the treaty, or something else?</td></tr>
+      <tr><td><strong>Cyran Refugee</strong></td><td>Your homeland doesn't exist anymore. You watched the mist roll in, or you heard about it from a hundred miles away. Either way, you have nothing.</td><td>Where were you on the Day of Mourning? Who did you lose? Do you want revenge, answers, or a new home? Do you still consider yourself Cyran?</td></tr>
+      <tr><td><strong>Warforged</strong></td><td>You were built to fight. The war ended. You have two years of freedom and a lifetime of war. You are legally a person now—but not everyone agrees.</td><td>What was your designation? Do you use it or have you chosen a name? What's the first thing you did when the treaty freed you? Do you miss having a purpose?</td></tr>
+      <tr><td><strong>War Profiteer</strong></td><td>You made money off the war—through a dragonmark house, as a smuggler, as a mercenary, as a supplier. Now peace threatens your income.</td><td>Who did you sell to? Do you feel guilty? What happens if the war restarts—are you relieved or terrified?</td></tr>
+      <tr><td><strong>Spy / Intelligence</strong></td><td>You worked for one of the national intelligence agencies—Breland's Citadel, Aundair's Royal Eyes, Karrnath's Bone Knights, Thrane's Silver Flame Inquisition.</td><td>Are you still active? Does your handler still contact you? Do you trust the peace? What secrets do you carry that could restart the war?</td></tr>
+      <tr><td><strong>Deserter</strong></td><td>You were supposed to fight. You ran. The war is over now, but desertion is still a crime in most nations.</td><td>Why did you run? Do you use a false name? What happens if someone from your old unit recognises you?</td></tr>
+      <tr><td><strong>Orphan / War Child</strong></td><td>You grew up in the war. Your parents died, disappeared, or gave you to someone else to keep you safe. You know nothing but conflict.</td><td>Who raised you? A temple? An orphanage? The streets? A military unit? Do you know who your parents were? Does it matter?</td></tr>
+      <tr><td><strong>Mourning Survivor</strong></td><td>You were in Cyre on the Day of Mourning. You shouldn't be alive. You got out, somehow—through the mist, across a border, by sheer luck.</td><td>How did you escape? Were you changed by the mist? Do you have survivor's guilt? What did you see inside?</td></tr>
+      <tr><td><strong>Pacifist / Objector</strong></td><td>You opposed the war—as a healer, a diplomat, a member of the Church of the Silver Flame's compassionate wing, a druid who saw the land being destroyed.</td><td>How did people treat you for refusing to fight? Has peace validated your stance or does everyone still resent you? What would you do if the war restarted?</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">DM Hint — Session Zero</span>
+    Ask every player: <em>"What did your character do during the Last War?"</em> Not as flavour—as the foundation of their character. Then ask: <em>"Who did you lose?"</em> and <em>"What do you want now that the war is over?"</em> These three questions generate more usable plot hooks than any backstory essay. Write the answers down. You <em>will</em> use them.
+  </div>
+
+  <h3 id="post-war-tensions">Post-War Tensions — What's Still Burning</h3>
+  <div class="callout summary">
+    <span class="label">Section Summary</span>
+    Seven active fault lines: Aundair wants its territory back, Karrnath hides undead in the basement, Thrane's zealots push for another crusade, Droaam demands recognition, warforged fight for basic rights, the Mourning could happen again, and Cyran refugees have nowhere to go. The treaty is two years old. The grudges are a hundred years deep.
+  </div>
+  <p>The Treaty of Thronehold ended the fighting. It did not end the conflict. Every session you run sits on top of these pressure points.</p>
+  <table>
+    <thead><tr><th>Tension</th><th>What's Happening</th><th>Why It Matters at the Table</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Aundair wants the Reaches back</strong></td><td>Queen Aurala has never accepted the loss of the Eldeen Reaches. Aundairian agents operate along the border. The druids know.</td><td>Any adventure in western Khorvaire sits on this fault line. Border incidents, false flag operations, druid reprisals.</td></tr>
+      <tr><td><strong>Karrnath's undead question</strong></td><td>King Kaius III officially mothballed the undead legions. Unofficially, the <a class="xref" href="#timeline-of-key-events">Order of the Emerald Claw</a> and Blood of Vol loyalists still maintain them in hidden vaults.</td><td>Discovering a hidden undead armoury is a whole adventure. Karrnathi NPCs are split: some are proud of the legions, others are ashamed.</td></tr>
+      <tr><td><strong>Thrane's zealots</strong></td><td>The Church of the Silver Flame runs the nation. The legitimate queen is sidelined. Extremist factions push for another "crusade" to purge evil from Khorvaire—starting with Karrnath.</td><td>Thrane is not evil—the Silver Flame is genuinely good. But institutions can be corrupted by power. Moral complexity, not cartoon villainy.</td></tr>
+      <tr><td><strong>Droaam wants recognition</strong></td><td>The Daughters of Sora Kell (three hags) rule a nation of monsters. The Treaty doesn't recognise Droaam. They're building legitimacy through trade—and through force.</td><td>Droaam NPCs are monsters by species but citizens by choice. Great for challenging assumptions. Medusa diplomats, ogre merchants, harpy couriers.</td></tr>
+      <tr><td><strong>Warforged rights</strong></td><td>Legal personhood is two years old. Prejudice is everywhere. Some warforged join the Lord of Blades in the <a class="xref" href="#the-day-of-mourning">Mournland</a>—a warforged supremacist who wants to build a machine nation.</td><td>Warforged PCs face casual discrimination. The Lord of Blades is a potential patron, antagonist, or dark mirror.</td></tr>
+      <tr><td><strong>The Mourning could happen again</strong></td><td>Nobody knows what caused it. Nobody can guarantee it won't happen to another nation. This fear is the only thing keeping the peace.</td><td>The Mourning is your nuclear deterrent. The moment someone claims to know the cause—or to have weaponised it—every nation panics. That's an arc.</td></tr>
+      <tr><td><strong><a class="xref" href="#the-last-war-chapter">Cyran refugees</a></strong></td><td>Hundreds of thousands of people with no nation. New Cyre in Breland is a refugee camp, not a city. Cyrans are resented everywhere—they're a reminder of what the <a class="xref" href="#the-last-war-chapter">war</a> cost.</td><td>Cyran NPCs carry grief and fury. Some want a new homeland. Some want answers. Some want revenge on whoever caused the <a class="xref" href="#the-day-of-mourning">Mourning</a>. All of them want to be treated as people, not charity cases.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="label">DM Hint — The War Is Not Over</span>
+    The treaty is two years old. Two years. That's nothing. The grudges are a hundred years deep. Every NPC over twenty remembers the war. Every tavern argument can turn into a national incident. Every border crossing is tense. Play this. The "cold war" atmosphere is what makes Eberron's politics feel alive. The Last War didn't end—it just went underground.
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 06 -->
+<section>
+  <h2 id="magic-as-technology">06 — Magic as Technology</h2>
+  <p>Eberron runs on <strong>magewrights</strong>—people who know one or two cantrips/low-level spells and use them professionally. Think electricians, but for bound elementals. The result is a society at roughly a <strong>1920s tech level</strong>, achieved through magic instead of science.</p>
+  <table>
+    <thead><tr><th>Real-World Analogue</th><th>Eberron Equivalent</th></tr></thead>
+    <tbody>
+      <tr><td>Trains</td><td>Lightning Rail (elemental-powered, runs on conductor stones)</td></tr>
+      <tr><td>Airplanes</td><td>Airships (bound air elementals in Lyrandar ring)</td></tr>
+      <tr><td>Telegram / phone</td><td>Sending stones, House Sivis message stations</td></tr>
+      <tr><td>Newspapers</td><td>The Korranberg Chronicle (mass-printed, widely read)</td></tr>
+      <tr><td>Street lights</td><td>Everbright lanterns (continual flame)</td></tr>
+      <tr><td>Banks</td><td>House Kundarak (dwarves, Mark of Warding)</td></tr>
+      <tr><td>Hospitals</td><td>House Jorasco healing houses (Mark of Healing)</td></tr>
+    </tbody>
+  </table>
+  <figure class="lore-float-l">
+    <img class="lore-img" src="media/eberron_primer/lightning_rail.webp" alt="Lightning Rail at a station — elemental-powered train"/>
+    <figcaption>The Lightning Rail</figcaption>
+  </figure>
+  <div class="callout">
+    <span class="label">The Lightning Rail</span>
+    Imagine a train gliding on arcs of elemental energy across the countryside. The Lightning Rail combines conductor stones embedded along the path with bound elementals harnessed by House Lyrandar to propel the cars. Houses Cannith and Orien built it during Galifar's golden age; its routes once stitched the Five Nations together. Inside, carriages range from plush skycoaches for nobles to cramped freight cars for commoners. For adventurers, the Rail is both transport and adventure: heists on the rails, espionage across national borders, sabotage missions in the Mournland. Its network was shattered by the Day of Mourning—broken lines still spark with residual energy, leaving ghost trains stranded mid-journey.
+  </div>
+  <div class="callout">
+    <span class="label">Why This Matters at the Table</span>
+    In most D&amp;D settings, a wizard who casts <em>create food and water</em> would be revolutionary. In Eberron, there's already a magewright down the street doing it for a living. The infrastructure has already absorbed low-level magic. So when your players try to "break the economy" with cantrips and first-level spells, the answer is: someone already thought of that, and there's a guild for it. What adventurers bring isn't basic magic—it's the rare, dangerous, high-level stuff that the infrastructure <em>can't</em> provide. That's their niche.
+  </div>
+  <div class="callout player">
+    <span class="label">What It Feels Like</span>
+    Picture morning in Sharn's middle wards: everbright lanterns dim as dawn breaks over the towers. A skycoach hums past your window. Downstairs, a sending stone chimes in someone's pocket—news from Wroat. A warforged labourer carries crates without complaint; a halfling hawker shouts <em>Korranberg Chronicle</em> headlines about border tensions in the Reaches. The coffee shop is run by a magewright whose <em>prestidigitation</em> keeps every cup at perfect temperature. This isn't a medieval world with fireballs—it's a modern world that runs on magic instead of electricity.
+  </div>
+</section>
+
+<!-- 07 — Dragonshards -->
+<section>
+  <h2 id="dragonshards">07 — Dragonshards</h2>
+  <p>The Progenitor Dragons left behind a resource. <strong>Dragonshards</strong> are crystallised fragments of the three dragons' essence, and they fuel Eberron's magical civilisation. Without dragonshards, no bound elementals, no creation forges, no dragonmarks at full strength. They are Eberron's oil.</p>
+
+  <div class="artwork" style="margin: 16px 0;">
+    <img class="artwork-shards" src="media/eberron_primer/dragonshards.svg" alt="Three types of dragonshards — Siberys (golden), Eberron (rose), Khyber (dark)"/>
+  </div>
+
+  <table>
+    <thead><tr><th>Type</th><th>Appearance</th><th>Found</th><th>Powers</th></tr></thead>
+    <tbody>
+      <tr><td>Siberys</td><td>Golden, luminous</td><td>Fall from the Ring of Siberys — rare, found in Xen'drik and remote regions</td><td>Amplify <a class="xref" href="#dragonmarks-houses">dragonmarks</a>; focus items for the most powerful mark abilities</td></tr>
+      <tr><td>Eberron</td><td>Rose to blood-red</td><td>Mined from the earth across Khorvaire — most common type</td><td>General-purpose magic: power eldritch machines, fuel creation forges, craft magic items</td></tr>
+      <tr><td>Khyber</td><td>Deep blue-black, pulsing</td><td>Deep underground, near the prisons of Overlords and daelkyr</td><td>Bind elementals and fiends; essential for airships, the Lightning Rail, and elemental weapons</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">DM Note</span>
+    Dragonshards are quest fuel. A Siberys shard falling in the wrong place triggers a land rush. An Eberron shard vein discovered under a village makes it a target for House Tharashk and whoever they're competing with. A Khyber shard cache means something was imprisoned nearby—and mining might weaken the seal. Every type of dragonshard is a plot hook.
+  </div>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    If your character uses a dragonmark focus, a bound-elemental weapon, or any serious magical equipment, it almost certainly contains dragonshards. Knowing where they come from and who controls the supply (House Tharashk prospects; House Cannith consumes) tells you something about the economy your character lives in.
+  </div>
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 08 -->
+<section>
+  <h2 id="dragonmarks-houses">08 — Dragonmarks</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Dragonmarks are hereditary magical sigils tied to specific bloodlines and races. Each mark grants innate abilities — Making, Healing, Storm, Warding, and more. The marks come in three tiers (Least, Greater, Siberys) and can't be learned or stolen. Aberrant marks are the wild, dangerous exception: unpredictable powers that the houses have historically tried to exterminate.
+  </div>
+  <p>Dragonmarks are hereditary magical sigils that grant specific powers. Each is tied to a <strong>bloodline family</strong> that has built a mercantile empire around that mark. They are Eberron's megacorps—more powerful than most nations, technically "neutral" per the Treaty, practically anything but.</p>
+
+  <h3 id="what-they-are">What They Are</h3>
+  <figure class="lore-float-r">
+    <img class="lore-img" src="media/eberron_primer/cannith_mark.png" alt="Greater Mark of Making — House Cannith dragonmark"/>
+    <figcaption>Greater Mark of Making</figcaption>
+  </figure>
+  <p>A dragonmark is a pattern of blue-black lines that appears on the skin, somewhere between a tattoo and a birthmark. They first manifest during adolescence or times of stress—often dramatically. The mark is alive: it shifts subtly, and it grows. A <strong>Least mark</strong> might cover part of a forearm. A <strong>Greater mark</strong> can span a shoulder or chest. A <strong>Siberys mark</strong>—exceedingly rare—covers the entire body like a living map.</p>
+  <p>Each mark grants innate magical abilities tied to its domain. The Mark of Making lets you mend and fabricate. The Mark of Storm lets you influence wind and weather. The Mark of Healing lets you cure wounds with a touch. These aren't spells you learn—they're abilities that emerge from the mark itself, and they grow more powerful as the mark develops.</p>
+  <p>Dragonmarks only appear in specific bloodlines tied to specific races. You can't learn one. You can't steal one. You're born with the potential, or you're not. This is what gives the houses their monopoly: nobody else <em>can</em> do what their marked heirs do, at least not as efficiently.</p>
+
+  <h3 id="aberrant-marks">Aberrant Marks</h3>
+  <p>Then there are the <strong>aberrant dragonmarks</strong>—wild, painful marks that appear in people with no house bloodline, or from cross-house pairings. Aberrant marks grant unpredictable, often destructive powers: fire that burns the bearer, touch that kills, uncontrolled psychic blasts. The houses <em>fear</em> aberrant marks and historically exterminated bearers in the <strong>War of the Mark</strong>. In the present day, aberrant-marked people are outcasts, and the houses would prefer they didn't exist. Excellent PC material.</p>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    If you take an aberrant dragonmark, expect social consequences. The houses exterminated bearers in the War of the Mark, and that fear hasn't faded. House Tarkanan might be your only allies — and they're criminals.
+  </div>
+
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 09 — The Thirteen Houses (split from Dragonmarks) -->
+<section>
+  <h2 id="thirteen-houses">09 — The Thirteen Houses</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Thirteen dragonmark families, thirteen monopolies. Each house controls a slice of Eberron's economy — manufacturing, transport, healing, banking, espionage, assassination. They sold services to all sides during the Last War and came out richer than any nation. The table below is your quick reference: house, race, mark, and what they control.
+  </div>
+  <p>Each dragonmark family has incorporated into a mercantile <strong>house</strong> with a continent-spanning monopoly. They held to a fragile neutrality during the Last War — selling services to every side — and emerged wealthier and more powerful than any single nation. Part megacorp, part old-money dynasty, part trade guild with a private army. The houses don't rule openly, but try doing anything in Khorvaire without paying one of them.</p>
+
+  <!-- Dragonmark Houses -->
+  <table>
+    <thead><tr><th>House</th><th>Race</th><th style="text-align: center;">Mark</th><th>Monopoly &amp; Role</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Cannith</td>
+        <td>Human</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-cannith.svg" alt="Mark of Cannith"/>
+        </td>
+        <td>Manufacturing, artifice, warforged creation. Built the warforged and most of Khorvaire's infrastructure. Now split into three rival factions after the Mourning killed their leadership.</td>
+      </tr>
+      <tr>
+        <td>Lyrandar</td>
+        <td>Half-elf</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-lyrandar.svg" alt="Mark of Lyrandar"/>
+        </td>
+        <td>Shipping, airships, weather control. If it flies or sails, they own it. Their windwrights and raincallers are the only reason half of Khorvaire's trade routes function at all.</td>
+      </tr>
+      <tr>
+        <td>Orien</td>
+        <td>Human</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-orien.svg" alt="Mark of Orien"/>
+        </td>
+        <td>Overland transport, Lightning Rail, couriers. They run the continental railroad and the fastest messenger service. If you need to be somewhere yesterday, you pay Orien.</td>
+      </tr>
+      <tr>
+        <td>Sivis</td>
+        <td>Gnome</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-sivis.svg" alt="Mark of Sivis"/>
+        </td>
+        <td>Communication, translation, notaries. They run the Speaking Stones network (Eberron's telegraph), certify legal documents, and their notaries make contracts magically binding.</td>
+      </tr>
+      <tr>
+        <td>Jorasco</td>
+        <td>Halfling</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-jorasco.svg" alt="Mark of Jorasco"/>
+        </td>
+        <td>Medical services — and yes, they charge. Halfling healers who cornered the healthcare market. Their Healers Guildhall is in every major city. If you can't pay, you don't get healed.</td>
+      </tr>
+      <tr>
+        <td>Ghallanda</td>
+        <td>Halfling</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-ghallanda.svg" alt="Mark of Ghallanda"/>
+        </td>
+        <td>Hospitality, inns, taverns, food. The halfling house that makes every inn feel welcoming. Their Hostelers Guild sets the standard for rest stops across the continent.</td>
+      </tr>
+      <tr>
+        <td>Kundarak</td>
+        <td>Dwarf</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-kundarak.svg" alt="Mark of Kundarak"/>
+        </td>
+        <td>Banking, vaults, security. Dwarven bankers who guard the world's wealth behind arcane locks. A Kundarak vault has never been breached. Officially.</td>
+      </tr>
+      <tr>
+        <td>Medani</td>
+        <td>Half-elf</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-medani.svg" alt="Mark of Medani"/>
+        </td>
+        <td>Detection, bodyguards, counter-intelligence. Half-elf investigators and warders. Their Warning Guild provides security; their inquisitives solve crimes the city watch can't.</td>
+      </tr>
+      <tr>
+        <td>Deneith</td>
+        <td>Human</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-deneith.svg" alt="Mark of Deneith"/>
+        </td>
+        <td>Mercenaries, bodyguards, private military. They run the Blademarks Guild and the Defenders Guild. Most nations' armies hired Deneith soldiers during the Last War.</td>
+      </tr>
+      <tr>
+        <td>Phiarlan</td>
+        <td>Elf</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-phiarlan.svg" alt="Mark of Phiarlan"/>
+        </td>
+        <td>Entertainment — and espionage. Elven performers whose travelling shows double as intelligence networks. The finest bards, actors, and spies on the continent.</td>
+      </tr>
+      <tr>
+        <td>Thuranni</td>
+        <td>Elf</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-thuranni.svg" alt="Mark of Thuranni"/>
+        </td>
+        <td>Split from Phiarlan during the Last War. Assassination, shadow operations, espionage. Younger, hungrier, and less restrained than their parent house.</td>
+      </tr>
+      <tr>
+        <td>Tharashk</td>
+        <td>Human / Half-orc</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-tharashk.svg" alt="Mark of Tharashk"/>
+        </td>
+        <td>Prospecting, bounty hunting, inquisitives. Part mining company, part bounty-hunter network. They find things — dragonshard deposits, lost ruins, fugitives.</td>
+      </tr>
+      <tr>
+        <td>Vadalis</td>
+        <td>Human</td>
+        <td class="sigil-cell">
+          <img src="media/eberron_primer/mark-vadalis.svg" alt="Mark of Vadalis"/>
+        </td>
+        <td>Animal breeding, magebred creatures. They breed magically enhanced animals — faster horses, smarter guard dogs, sturdier livestock. If it has four legs, Vadalis probably improved it.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="label">DM Advice</span>
+    Use houses the way a modern thriller uses corporations. They're not evil by default—but they are <em>self-interested</em>. A quest from House Cannith is never just about the artifact; it's about market share. House Jorasco will heal you—for gold. Let players feel the tension between convenience and complicity.
+  </div>
+
+  <div class="callout">
+    <span class="label">Plot Hook — The Cannith Schism</span>
+    The Mourning didn't just destroy Cyre—it killed House Cannith's leadership. The house split into three rival factions: <strong>Cannith South</strong> (based in Breland, led by Merrix d'Cannith, secretly still building warforged), <strong>Cannith West</strong> (based in Aundair, focused on arcane R&amp;D), and <strong>Cannith East</strong> (scattered Cyran survivors, desperate and dangerous). Any quest involving Cannith becomes a three-way power struggle. Which faction hired you? Which one wants you dead for it?
+  </div>
+</section>
+
+<!-- 09 -->
+<section>
+  <h2 id="nations-of-khorvaire">10 — Nations of Khorvaire</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Twelve nations on one continent, none of them happy. Breland is the progressive democracy, Aundair wants its territory back, Thrane is a theocracy, Karrnath has undead in the basement, and Cyre is a dead wasteland full of refugees. Also covers Sharn (the vertical noir city where most campaigns start), the Cyran diaspora, the Mror Holds, and the wider world beyond Khorvaire.
+  </div>
+  <p>The Treaty of Thronehold carved the continent into a patchwork of nations that mostly tolerate each other. "Mostly" is doing heavy lifting. Borders are fresh, grudges are ancient, and every capital has a different theory about who really won the Last War. (Nobody did.) What follows is your field guide to the political geography—who runs what, and why they're angry about it.</p>
+
+  <figure class="map-figure">
+    <img src="media/eberron_primer/khorvaire.jpg" alt="The continent of Khorvaire — detailed DM reference map"/>
+    <figcaption>The continent of Khorvaire — nations, cities, and Lightning Rail routes</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Nation</th><th>Vibe</th><th>Key Tension</th></tr></thead>
+    <tbody>
+      <tr><td>Breland</td><td>Progressive democracy, largest city (<a class="xref" href="#sharn-city-of-towers">Sharn</a>)</td><td>King Boranel is aging; succession is unclear</td></tr>
+      <tr><td>Aundair</td><td>Arcane academia, wine country</td><td>Lost territory, wants it back; espionage-heavy</td></tr>
+      <tr><td>Thrane</td><td>Theocracy (Silver Flame)</td><td>Church vs. crown friction; zealotry vs. faith</td></tr>
+      <tr><td>Karrnath</td><td>Militaristic, gothic, undead legions</td><td>Used undead soldiers in the war; split on that legacy</td></tr>
+      <tr><td><a class="xref" href="#the-day-of-mourning">The Mournland</a></td><td>Dead wasteland (formerly <a class="xref" href="#the-last-war">Cyre</a>)</td><td>Refugees everywhere; mystery of the <a class="xref" href="#the-day-of-mourning">Mourning</a></td></tr>
+      <tr><td>Droaam</td><td>Monster nation (medusas, hags, ogres)</td><td>Not recognized by the Treaty; run by the Daughters of Sora Kell</td></tr>
+      <tr><td>Darguun</td><td>Goblinoid homeland, reclaimed in the war</td><td>Internal tribal conflict; Dhakaani revivalists</td></tr>
+      <tr><td>Valenar</td><td>Militant elves, horse warriors</td><td>Elf war-culture channeling ancestral spirits</td></tr>
+      <tr><td>Q'barra</td><td>Frontier colony, jungle, dragonborn</td><td>Colonial conflict with indigenous Lizardfolk/dragonborn</td></tr>
+      <tr><td>The Eldeen Reaches</td><td>Druidic wilds, seceded from Aundair</td><td>Nature vs. civilisation; Ashbound extremists</td></tr>
+      <tr><td>Zilargo</td><td>Gnome nation; polite, terrifying</td><td>The Trust (secret police) knows <em>everything</em></td></tr>
+      <tr><td>The Lhazaar Principalities</td><td>Pirate princes, island chains</td><td>Loose confederation; every captain for themselves</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="label">The Cyran Diaspora</span>
+    There is no Cyre anymore, but there are <strong>Cyrans everywhere</strong>. Refugees from the Mourning are scattered across every nation—unwelcome, resented, and angry. Many live in <strong>New Cyre</strong>, a refugee camp in Breland that Boranel tolerates but doesn't fund. Cyrans are Eberron's displaced people: they had the richest culture, the finest art, the strongest claim to Galifar's legacy—and now they have nothing. A Cyran PC carries grief, righteous fury, and a burning question: <em>who destroyed my home, and can I make them pay?</em>
+  </div>
+
+  <div class="callout">
+    <span class="label">The Mror Holds — What the Dwarves Dug Up</span>
+    The dwarven clans of the Mror Holds sit on the richest <a class="xref" href="#dragonshards">Khyber dragonshard</a> deposits on Khorvaire. During the Last War, desperate clans dug deeper than ever—and found <strong>Realm Below</strong> tunnels warped by daelkyr corruption. Some holds now use <strong>symbionts</strong>: living tools and weapons fused to the bearer's body. Other clans consider this abomination. The tension between clans embracing the deep holds and those rejecting corruption is a civil war waiting to happen—and a great adventure hook about the price of power.
+  </div>
+
+  <h3 id="beyond-khorvaire">Beyond Khorvaire</h3>
+  <p>Khorvaire is where most campaigns live, but the world is bigger.</p>
+  <figure class="map-figure">
+    <img src="media/eberron_primer/continents.webp" alt="The world of Eberron — all continents"/>
+    <figcaption>The world of Eberron — Khorvaire, Sarlona, Xen'drik, Aerenal, Argonnessen, and the polar reaches</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Continent</th><th>What's There</th><th>Why It Matters</th></tr></thead>
+    <tbody>
+      <tr><td>Aerenal</td><td>Elven island continent. Ruled by the <strong>Undying Court</strong>—ancient elf ancestors preserved through positive-energy necromancy (not undead in the evil sense).</td><td>Elven PCs often hail from here. The Aereni view death completely differently from Khorvaire. Good source of ancient elven artefacts and cultural conflict with Valenar elves, who reject the Undying Court's pacifism.</td></tr>
+      <tr><td>Argonnessen</td><td>Dragon continent. <strong>No humanoid nation has ever explored it and returned intact.</strong> The dragons live here, study the Draconic Prophecy, and do not welcome visitors.</td><td>Mostly used as a looming mystery. The Chamber operates from here. If your campaign ever goes to Argonnessen, things have escalated dramatically.</td></tr>
+      <tr><td>Sarlona</td><td>Human ancestral homeland, now almost entirely controlled by the <strong>Inspired</strong>—human vessels possessed by Quori from the Dreaming Dark. The empire of <strong>Riedra</strong> is a totalitarian psyocracy disguised as utopia.</td><td>The Dreaming Dark's home base. Kalashtar fled from here. If you want psychic horror and 1984-meets-fantasy, Sarlona is your setting. Also the origin of humanity in Eberron—most humans don't know this.</td></tr>
+      <tr><td>Xen'drik</td><td>Shattered continent of the fallen giant civilisation. <strong>Geography literally doesn't work properly</strong>—the Traveler's Curse warps distance and direction. Full of giant ruins, drow (who are very different from Forgotten Realms drow), and dangerous relics.</td><td>Eberron's Indiana Jones continent. Send your party here when you want exploration, ancient traps, lost magic, and the unsettling feeling that the ruins are watching. Stormreach is the only humanoid foothold.</td></tr>
+      <tr><td>Frostfell</td><td>Arctic continent. Barely explored. Something is up there, but published material is thin.</td><td>Blank canvas for DMs who want to go off the map entirely.</td></tr>
+      <tr><td>Everice</td><td>South polar region. Even less explored than Frostfell.</td><td>See above. Sometimes dragons go there. Nobody knows why.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="label">DM Note</span>
+    Most Eberron campaigns stay on Khorvaire—and that's fine, there's a continent's worth of material. But the other continents exist as <em>escalation</em>. When Khorvaire's problems trace back to their source, you end up in Sarlona (Dreaming Dark), Argonnessen (dragons), or Xen'drik (ancient relics). Knowing they're there gives your campaign room to breathe.
+  </div>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Not every character has to be from Khorvaire. An Aereni elf raised by the Undying Court, a kalashtar refugee from Riedra, or a Xen'drik explorer bring outsider perspectives that make the Five Nations' politics feel fresh — you're seeing it all for the first time.
+  </div>
+
+  <!-- Sharn -->
+  <h3 id="sharn-city-of-towers">Sharn, City of Towers</h3>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Sharn is the most likely starting city. It's a vertical metropolis — the higher you go, the richer it gets. The lower you go, the more dangerous.
+  </div>
+
+  <figure class="lore-float-l">
+    <img class="lore-img" src="media/eberron_primer/sharn_street_view.webp" alt="Street view of Sharn — narrow bridges between towers"/>
+    <figcaption>Street level in Sharn</figcaption>
+  </figure>
+  <div class="sharn-float" style="float: right; margin: 4px 0 12px 20px; width: 220px;">
+    <img src="media/eberron_primer/sharn.svg" width="100%" alt="Sharn — City of Towers cross-section" style="margin: 16px 0;"/>
+    <p style="text-align: center; font-size: 8pt; color: var(--muted); font-style: italic; margin-top: 4px;">Sharn in cross-section</p>
+  </div>
+
+  <p><strong>Sharn is the default campaign hub.</strong> Built in a manifest zone linked to Syrania (the plane of azure sky), the city's towers stretch <em>miles</em> into the air. It's vertically stratified: the higher you climb, the richer it gets. The Cogs at the bottom are industrial hells. The upper plateaus drip with gold and politics. A chase scene can go from a penthouse restaurant in Upper Menthis to the goblin-run markets of Lower Dura in minutes—straight down. Think noir Coruscant.</p>
+  <p>Skycoaches—small flying gondolas—are the city's taxis. Bridges connect towers hundreds of feet above street level. The city watch barely patrols below the middle wards, and in the Cogs, law enforcement is a punchline. Every district has a flavour: Morgrave University sits in Upper Menthis, the Bazaar of Dura never sleeps, Tavick's Landing is where refugees queue, and the Depths are where people disappear. If your campaign needs a home base with built-in intrigue, vertical chase scenes, and a noir skyline, Sharn is it.</p>
+  <div style="clear: both;"></div>
+</section>
+
+<!-- Divider -->
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 10 -->
+<section>
+  <h2 id="factions-power-blocs">11 — Factions &amp; Power Blocs</h2>
+  <div class="callout summary">
+    <span class="label">Chapter Summary</span>
+    Factions from street-level gangs to cosmic forces, all stacked on top of each other. The Draconic Prophecy is the big picture: dragons (the Chamber) and fiends (the Lords of Dust) have been playing chess with mortal civilisation for millennia. Below that: the Aurum, the Dreaming Dark, the Emerald Claw, the Dark Lanterns, and more. Eight major factions detailed here, each a campaign engine.
+  </div>
+  <p>Eberron's factions operate on different scales. Some are mortal organisations jockeying for political advantage. Others are cosmic forces playing games that span millennia. Two of the biggest—the Chamber and the Lords of Dust—are locked in a cold war over the <strong>Draconic Prophecy</strong>.</p>
+
+  <h3 id="draconic-prophecy">The Draconic Prophecy</h3>
+  <p>The Prophecy isn't a book or a prediction. It's a <strong>pattern written into reality itself</strong>—encoded in the movement of moons, the lines of dragonmarks, the geology of mountains, the timing of births and deaths. Dragons have spent hundreds of thousands of years studying it. They don't fully understand it. Nobody does.</p>
+  <p>What they do know: the Prophecy describes <em>possible</em> futures, not fixed ones. Certain events—a specific person being in a specific place at a specific time—can tip the Prophecy in one direction or another. The Prophecy doesn't <em>command</em>—it <em>describes conditions</em>. A mark might read: "When the bearer of the Storm mark stands where the bridge of fire fell, the imprisoned voice speaks again." Neither the mark nor the voice have opinions about whether this is good. The players who unwittingly fulfil the condition might never know what they set in motion.</p>
+
+  <figure class="lore-float-r">
+    <img class="lore-img" src="media/eberron_primer/dragons.webp" alt="Ancient dragons studying the Draconic Prophecy"/>
+    <figcaption>Dragons of Argonnessen</figcaption>
+  </figure>
+
+  <h3 id="the-great-game">The Great Game — Dragons vs. Fiends</h3>
+  <div class="callout summary">
+    <span class="label">Section Summary</span>
+    Ancient dragons (the Chamber) and ancient fiends (the Lords of Dust) are locked in a cold war over the Draconic Prophecy. Both sides use mortal civilisation as a game board, manipulating events across centuries. Roughly thirty godlike Overlords are imprisoned beneath Eberron — the Lords of Dust want them free, the Chamber wants them sealed. Your party might be a piece in this game and never know it.
+  </div>
+  <p>The <a class="xref" href="#three-dragons">Progenitor myth</a> didn't end when Eberron imprisoned Khyber. The children of those dragons—the true dragons of <strong>Argonnessen</strong> and the fiends born from Khyber's darkness—have been fighting a cold war over the Prophecy ever since. This is the deepest layer of Eberron's conspiracy stack, and it makes everything else look like local politics.</p>
+
+  <p><strong>The Chamber</strong> is the dragon faction that actively meddles in mortal affairs. They send agents—often polymorphed into humanoid form—to steer events toward prophetic outcomes they consider "safe." A Chamber dragon might spend decades posing as a university professor, a merchant, or a minor noble, positioning mortal pawns for a single moment fifty years in the future. They are patient, brilliant, and utterly indifferent to the collateral damage their plans cause. If a city has to burn to prevent an Overlord from waking, the Chamber will light the match.</p>
+
+  <p><strong>The Lords of Dust</strong> are the fiendish counterpart. Rakshasa—ancient, cunning, practically immortal—who survived the Age of Demons and now work to free the <strong>Overlords</strong>: godlike fiends imprisoned in Khyber at the dawn of the world. Each Overlord embodies a concept—the Rage of War, the Voice in the Darkness, the Keeper of Secrets. They aren't locked in dungeons; they're sealed by the Prophecy itself, bound by specific conditions that the Lords of Dust spend millennia trying to unravel. A rakshasa infiltrator might hold a position of power for centuries, nudging events one careful step at a time toward the moment a seal weakens.</p>
+
+  <p>Between these two forces, mortal civilisation is a game board. The Chamber and the Lords of Dust don't fight each other directly—they fight through <em>events</em>, through the mortals who unknowingly fulfil or prevent prophetic conditions. Your party could be the key piece in a gambit that started before humans existed on Khorvaire.</p>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    If a dragon or ancient fiend takes a personal interest in you, the stakes just escalated past politics. You might be a piece in a game that predates civilisation — and neither side will explain the rules. That NPC who's been unusually helpful? Maybe they're a Chamber agent who needs you alive for a prophecy mark. The one who keeps getting in your way? Maybe a rakshasa who needs you to fail.
+  </div>
+
+  <div class="callout">
+    <span class="label">DM Note — The Overlords</span>
+    There are roughly thirty Overlords imprisoned beneath Eberron—each one a campaign-ending threat if freed. <strong>Rak Tulkhesh</strong> (the Rage of War) stokes conflict across Khorvaire; every border skirmish feeds him. <strong>Sul Khatesh</strong> (the Keeper of Secrets) hoards forbidden knowledge; every dark pact strengthens her bonds. <strong>Bel Shalor</strong> (the Shadow in the Flame) is imprisoned beneath <em>Flamekeep itself</em>—the Silver Flame literally exists to keep him contained. You don't need all thirty. Pick one whose theme matches your campaign, and let its influence seep upward through cultists, manifest zones, and increasingly alarming coincidences. The players should feel the Overlord long before they learn its name.
+  </div>
+
+  <div class="callout gold">
+    <span class="label">The Conspiracy Stack</span>
+    Eberron's genius is that its conspiracies nest. At the street level, factions jockey for power: the Boromar Clan vs. Daask in Sharn's underworld. Above that, nations spy on each other: Dark Lanterns vs. the Royal Eyes. Above <em>that</em>, the dragonmark houses play economic chess. And above everything, the Chamber and the Lords of Dust manipulate all of it for prophetic ends. Your campaign can operate at any layer—or let the players slowly discover that each layer has a layer above it. The goblin gang war was funded by a house agent, who was manipulated by a rakshasa, who was countered by a polymorphed dragon. The moment players realise they're inside a nesting doll of conspiracies is the moment your campaign becomes unforgettable.
+  </div>
+  <div style="clear: both;"></div>
+
+  <!-- Faction relationship diagram — SVG with card nodes -->
+  <img src="media/eberron_primer/factions.svg" width="100%" alt="Faction relationships diagram" style="margin: 16px 0;"/>
+
+  <table>
+    <thead><tr><th>Faction</th><th>Who They Are</th><th>What They Want</th><th>Useful As</th></tr></thead>
+    <tbody>
+      <tr><td>The Aurum</td><td>Secret society of the ultra-wealthy across all nations</td><td>Control through gold; reshape post-war order to serve plutocrats</td><td>Shadowy patrons, puppet-masters</td></tr>
+      <tr><td>The Chamber</td><td>Ancient dragons (in disguise) who study the Draconic Prophecy</td><td>Steer mortal events to fulfil or prevent prophetic outcomes</td><td>Cosmic-scale manipulation; the longest game</td></tr>
+      <tr><td>The Lords of Dust</td><td>Rakshasa and fiends, survivors of the Age of Demons</td><td>Free the imprisoned Overlords and return the world to fiendish rule</td><td>BBEG material; hidden infiltrators in positions of power</td></tr>
+      <tr><td>The Dreaming Dark</td><td>Quori—psychic entities from Dal Quor, the plane of dreams</td><td>Maintain control of Dal Quor by keeping mortals docile and fearful</td><td>Psychic horror; the Inspired of Riedra; Kalashtar hooks</td></tr>
+      <tr><td>The Emerald Claw</td><td>Militant cult loyal to the lich-queen Vol, <a class="xref" href="#timeline-of-key-events">banned from Karrnath</a></td><td>Karrnathi supremacy, mass undeath, Vol's personal apotheosis</td><td>Undead-themed antagonists with political connections</td></tr>
+      <tr><td>The Dark Lanterns</td><td>Breland's intelligence service, answering to King Boranel</td><td>Protect Breland's interests; pre-empt threats; spy on everyone</td><td>Spy missions; morally grey employers who pay well</td></tr>
+      <tr><td>Morgrave University</td><td><a class="xref" href="#sharn-city-of-towers">Sharn</a>'s university—academically disreputable, adventurously prolific</td><td>Acquire relics first, publish papers later, ethics optional</td><td>Quest-givers; "we need this relic and won't ask how you got it"</td></tr>
+      <tr><td>The Lord of Blades</td><td>A warforged supremacist leader hiding in the Mournland</td><td>Build a warforged nation; destroy or subjugate the "fleshborn"</td><td>Warforged villain or anti-hero; Mournland expedition hook</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="label">Using Factions</span>
+    Every organisation in this table is a story engine. The Aurum funds black-market expeditions; the Chamber sends you on prophetic errands without explaining why; the Emerald Claw ambushes you because you angered Vol last week. Tie player characters to one of these groups and watch your campaign run itself as their agendas collide.
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Why the Dreaming Dark Suppresses Hope</span>
+    Here's why the quori do what they do. The current age of dreams—<strong>il-Lashtavar</strong>, the Darkness That Dreams—sustains the quori's existence. If mortals shift to a new age through hope, progress, and positive change, the current quori <em>die</em> and are replaced by entirely new entities. So the Dreaming Dark doesn't suppress hope out of malice—it's existential self-preservation. They crush revolutions, dampen innovation, and promote stagnation across Sarlona because <em>optimism literally kills them</em>. That makes them far more interesting than "evil psychic aliens."
+  </div>
+
+  <div class="callout player">
+    <span class="label">Changelings — It's Not Deception, It's Identity</span>
+    Changelings don't just shapeshift—many maintain multiple stable identities called <strong>personas</strong> as a cultural practice. A changeling might be "Kel" the dock worker in the morning and "Lady Alais" the socialite in the evening, and both are <em>real</em>. This isn't deception; it's how changelings experience selfhood. If you play one, think about how many faces you wear and whether any of them is the "real" you—or whether that question even makes sense.
+  </div>
+</section>
+
+<!-- 11 -->
+<section>
+  <h2 id="religion-divine">12 — Religion &amp; the Divine</h2>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Gods in Eberron don't prove they exist. Faith is faith — no divine voice confirms you're right. Clerics get power, but that doesn't mean their theology is correct.
+  </div>
+  <figure class="lore-float-r">
+    <img class="lore-img" src="media/eberron_primer/cathedral_of_the_silver_flame.webp" alt="The Chamber of the Flame within the Grand Cathedral"/>
+    <figcaption>The Grand Cathedral, Flamekeep</figcaption>
+  </figure>
+  <p>Eberron's gods <strong>do not demonstrably intervene</strong>. Clerics get power, but nobody has met the Sovereign Host at dinner. This means faith is genuine belief, not confirmed fact—and the setting is better for it.</p>
+  <table>
+    <thead><tr><th>Faith</th><th>Nature</th><th>Tension</th></tr></thead>
+    <tbody>
+      <tr><td>The Sovereign Host</td><td>Pantheon of nine gods covering every domain — war, crafts, nature, trade, the lot. Most common faith in Khorvaire, woven into daily life the way casual religion is in the real world.</td><td>Nobody has ever <em>met</em> a Sovereign. Faith is genuine belief, not verified fact. Some priests wonder if they're praying to anything at all.</td></tr>
+      <tr><td>The Dark Six</td><td>Six gods rejected from the Sovereign Host — the Mockery, the Fury, the Keeper, and more. Worshipped openly in some cultures, furtively in others. Their followers aren't necessarily evil.</td><td>Where do you draw the line between honouring the Traveller's chaos and being a dangerous cultist? The Dark Six test moral assumptions.</td></tr>
+      <tr><td>The Silver Flame</td><td>Not a god but a force — a literal pillar of silver fire in Flamekeep that imprisoned ancient fiends. The Church of the Silver Flame is Eberron's most organised religion, with templars, inquisitors, and political power.</td><td>The institution is corrupt and fallible, but the Flame itself is real. Zealots burned lycanthropes in purges. Good people serve a flawed church — classic Eberron grey.</td></tr>
+      <tr><td>The Blood of Vol</td><td>Believes divinity lies within mortal blood, not in distant gods. Seeks to conquer death through understanding it. Practices blood rituals and reveres the undead as those who have "moved beyond."</td><td>Outlawed in most nations and associated with Vol the lich-queen, but rank-and-file followers are ordinary people looking for meaning. The faith itself isn't evil — its figurehead might be.</td></tr>
+      <tr><td>The Path of Light</td><td>Kalashtar philosophy. Teaches that a golden age will come through meditation, compassion, and resisting the Dreaming Dark's psychic corruption. Patient, gentle, and deeply alien to most Khorvairians.</td><td>It's a real struggle against a real enemy — the quori — but most people just see it as weird monks doing weird things. The kalashtar carry this burden mostly alone.</td></tr>
+      <tr><td>The Cults of the Dragon Below</td><td>Loose, chaotic cults worshipping daelkyr (alien lords imprisoned in Khyber), aberrant powers, or eldritch things that whisper from below. No central organisation; each cult is different and usually dangerous.</td><td>Excellent villain material, but some cults are more pathetic than threatening — desperate people reaching for any power that will listen. Not all of them know what they're actually serving.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="label">Two Faces of Undeath</span>
+    Eberron has two completely opposite takes on undeath. The <strong>Undying Court</strong> of Aerenal uses positive-energy necromancy to preserve revered elven ancestors as luminous, benevolent <em>deathless</em>—the highest honour in Aereni culture. Meanwhile, the <strong>Blood of Vol</strong> sees undeath as the mortal conquest of death itself, using negative energy and blood magic. Same concept, diametrically opposed philosophies, both internally consistent. A Silver Flame paladin hates both equally. An Aereni elf and a Blood of Vol priest would have the most fascinating argument in any tavern.
+  </div>
+
+  <div class="artwork">
+    <img class="artwork-full" src="media/eberron_primer/silver-flame.svg" width="520" height="520" alt="The Silver Flame"/>
+  </div>
+</section>
+
+<!-- 13 — Group Patrons -->
+<section>
+  <h2 id="group-patrons">13 — Group Patrons</h2>
+  <p>Eberron was designed around the idea that the party shares a <strong>patron</strong>—an organisation, individual, or institution that gives them work, a reason to be together, and a built-in story engine. This is the session zero question that replaces "so how do your characters meet in a tavern?"</p>
+
+  <table>
+    <thead><tr><th>Patron</th><th>Vibe</th><th>What You Do</th></tr></thead>
+    <tbody>
+      <tr><td>King's Citadel</td><td>Spy thriller</td><td>Espionage, counter-intelligence, and dirty work for Breland's crown</td></tr>
+      <tr><td>Morgrave University</td><td>Pulp adventure</td><td>Relic-hunting expeditions to Xen'drik and ancient ruins, ethics optional</td></tr>
+      <tr><td>The Sharn Inquisitive</td><td>Noir journalism</td><td>Investigate stories, chase leads, expose corruption—and survive it</td></tr>
+      <tr><td>Dragonmarked House</td><td>Corporate thriller</td><td>Fix problems for the house, quietly—deals, acquisitions, rival sabotage</td></tr>
+      <tr><td>Clifftop Adventurers Guild</td><td>Classic adventuring</td><td>Take jobs off the board, build reputation, earn guild rank in Sharn</td></tr>
+      <tr><td>Church of the Silver Flame</td><td>Holy crusade / moral grey</td><td>Hunt fiends, protect the innocent—but the church's agenda isn't always pure</td></tr>
+      <tr><td>Criminal Syndicate</td><td>Heist / underworld</td><td>Boromar Clan, Daask, or House Tarkanan—everyone needs professionals</td></tr>
+      <tr><td>Cyran Survivor Network</td><td>Refugee resistance</td><td>Recover Cyran relics from the Mournland, protect refugees, find answers</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="label">Session Zero Essentials</span>
+    Pick a patron <strong>before</strong> character creation. It answers "why is this group together?" instantly, gives you a quest-giving NPC, and tells you the campaign's genre. A Citadel game plays completely differently from a Morgrave game. Let the patron shape the characters, not the other way around.
+  </div>
+
+  <div class="callout">
+    <span class="label">DM Note — NPCs Are Never Just NPCs</span>
+    The single biggest mindset shift for running Eberron: nobody is generic. The goblin is Daask muscle or a Darguun patriot. The rich patron is Aurum. The beggar on the bridge has a war story and an opinion about warforged personhood. Every NPC is embedded in the setting's web of factions, nations, and grudges. Once you internalise this, your world runs itself.
+  </div>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Your patron is a relationship, not a quest dispenser. You can push back, renegotiate, get suspicious about their motives, or eventually betray them. The patron's goals and yours will diverge. That's where it gets good.
+  </div>
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 14 — Money & the Street -->
+<section>
+  <h2 id="money-and-the-street">14 — Money &amp; the Street</h2>
+  <p>Eberron uses standard D&amp;D currency (cp, sp, gp, pp), but the economic context matters. Khorvaire is a post-industrial magical society—people have <em>jobs</em>. Prices reflect that.</p>
+
+  <table>
+    <thead><tr><th>Thing</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Magewright's daily wage</td><td>2 gp</td></tr>
+      <tr><td>Common labourer's daily wage</td><td>1 sp</td></tr>
+      <tr><td>Skycoach ride across Sharn</td><td>1 sp</td></tr>
+      <tr><td>Lightning Rail ticket (Sharn→Wroat)</td><td>~5 gp (standard), ~15 gp (first class)</td></tr>
+      <tr><td>Night at a Ghallanda inn (decent)</td><td>5 sp</td></tr>
+      <tr><td>Korranberg Chronicle (daily paper)</td><td>1 cp</td></tr>
+      <tr><td>Healing at House Jorasco (basic)</td><td>25–50 gp</td></tr>
+      <tr><td>Sending message via House Sivis</td><td>~2 gp per message</td></tr>
+      <tr><td>Identification papers (legal)</td><td>2 gp</td></tr>
+      <tr><td>Identification papers (forged)</td><td>50+ gp</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">DM Note</span>
+    Identification papers matter in post-war Khorvaire. Border crossings, city gates, and House services all require them. A character without papers is either a refugee, a criminal, or a warforged who hasn't bothered—and each of those is a story. Forged papers are a constant demand in Sharn's underworld.
+  </div>
+
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    Healing costs money. House Jorasco doesn't heal for free—they're a business. This means injured players without gold face real choices: go to the shady back-alley healer, owe a favour to someone with a mark, or push on wounded. The economy creates pressure.
+  </div>
+</section>
+
+<div class="divider-ornate">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+
+<!-- 14 -->
+<section>
+  <h2 id="adventure-themes-tone">15 — Adventure Themes &amp; Tone</h2>
+  <div class="callout player">
+    <span class="label">Player Note</span>
+    This chapter is mostly DM-facing — genre framing, tone guidance, session zero prep. You're welcome to read it, but it won't spoil anything if you skip to the flavour table below for character inspiration instead.
+  </div>
+  <p>Eberron campaigns hit different when you lean into the setting's strengths. The best sessions feel like a mashup of genres:</p>
+  <table>
+    <thead><tr><th>Genre</th><th>Eberron Expression</th></tr></thead>
+    <tbody>
+      <tr><td>Noir detective</td><td>Inquisitives in <a class="xref" href="#sharn-city-of-towers">Sharn</a>; who killed the House heir?</td></tr>
+      <tr><td>Espionage thriller</td><td>Dark Lanterns, Trust, inter-nation spy games</td></tr>
+      <tr><td>War story</td><td>Flashbacks to the Last War; trauma, PTSD, unresolved guilt</td></tr>
+      <tr><td>Heist</td><td>Steal from a Kundarak vault; rob the Lightning Rail</td></tr>
+      <tr><td>Political intrigue</td><td>Succession crises, House maneuvering, Treaty violations</td></tr>
+      <tr><td>Pulp adventure</td><td>Xen'drik expeditions; ancient giant ruins; cursed relics</td></tr>
+      <tr><td>Horror</td><td>The Mournland; daelkyr corruption; Dreaming Dark; aberrant marks gone wrong</td></tr>
+      <tr><td>Conspiracy thriller</td><td>The Chamber, Lords of Dust, and Dreaming Dark all run long games. Who's pulling your patron's strings?</td></tr>
+      <tr><td>Social drama</td><td>Warforged personhood, Cyran refugees, dragonmark prejudice — Eberron does marginalisation as worldbuilding</td></tr>
+      <tr><td>Disaster movie</td><td>Manifest zones destabilising, bound elementals breaking loose, a second Mourning?</td></tr>
+      <tr><td>Journalism &amp; media</td><td>The Korranberg Chronicle, propaganda, public opinion — the party's reputation is a resource</td></tr>
+      <tr><td>Frontier survival</td><td>Q'barra jungle, Demon Wastes, Mournland expeditions — civilisation is far away</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="label">Tone Guide</span>
+    Keep it <strong>grey, cinematic, and consequential</strong>. NPCs remember what the party did. The newspaper might report on it. Actions ripple.
+  </div>
+
+  <h3 id="eberron-flavour">Eberron Flavour — Quick Reference</h3>
+  <p>What makes a scene feel like <em>Eberron</em> instead of generic fantasy? Roll a d12, or pick whichever fits the moment.</p>
+
+  <table>
+    <thead><tr><th style="width: 22%;">Element</th><th>What It Means at the Table</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Manifest Zone</strong></td><td>A place where Eberron physically overlaps with another plane. In a Shavarath zone weapons feel lighter and aggression spikes; in a Mabar zone light dims and healing falters; in an Irian zone everything glows faintly golden. You don't travel to the plane — the plane leaks into you. Great for making a mundane location suddenly feel alien without leaving the map.</td></tr>
+      <tr><td><strong>House Agent</strong></td><td>An employee of a <a class="xref" href="#dragonmarks-houses">dragonmarked house</a> — Eberron's corporate dynasties, each with a monopoly tied to their mark. Cannith makes things, Jorasco heals, Orien moves people, Thuranni kills people quietly. An agent showing up means their house wants something in this area, and they'll be polite about it right up until you're in the way.</td></tr>
+      <tr><td><strong>Magitech Breaks</strong></td><td>What happens when your fantasy industrial revolution has a bad day. The lightning rail is a magically powered continental train. Sending stones are basically phones. Everbright lanterns are streetlights. Bound elementals power airships and forges. When any of it malfunctions, the consequences are wonderfully chaotic — a loose fire elemental is not a tech support ticket.</td></tr>
+      <tr><td><strong>Last War Scar</strong></td><td>The <a class="xref" href="#the-last-war-chapter">war</a> only ended twelve years ago and nobody actually won — it stopped because the <a class="xref" href="#the-day-of-mourning">Mourning</a> annihilated an entire nation overnight and everyone got scared enough to sign a treaty. Veterans are bitter, borders are contested, old weapons sit in fields waiting to activate, and Cyre is now the <a class="xref" href="#the-day-of-mourning">Mournland</a> — a dead-magic wasteland full of mutated horrors.</td></tr>
+      <tr><td><strong>Aberrant Mark</strong></td><td>The wrong kind of dragonmark. Normal marks come through bloodlines and do predictable things. Aberrant marks appear randomly, hurt their bearer, and do unpredictable, often destructive things. House Tarkanan collects people with aberrant marks. Society fears them. An NPC whose mark is "doing too much" is a ticking bomb that also has feelings about it.</td></tr>
+      <tr><td><strong>Warforged Identity</strong></td><td>Sentient constructs built as disposable soldiers for the <a class="xref" href="#the-last-war-chapter">Last War</a>. The Treaty of Thronehold gave them legal personhood, but that doesn't mean anyone treats them like people. They don't sleep, don't eat, and many don't have names — just designations. A warforged NPC asking "what am I for now?" is an instant story hook.</td></tr>
+      <tr><td><strong>Morgrave Find</strong></td><td>Morgrave University in <a class="xref" href="#sharn-city-of-towers">Sharn</a> funds treasure-hunting expeditions to Xen'drik, the shattered continent where giants once enslaved the elves. Expeditions go in, sometimes come back, often come back changed. "A Morgrave find" means someone dug up something they shouldn't have, and now it's loose in civilisation.</td></tr>
+      <tr><td><strong>Dreaming Dark</strong></td><td>The quori — psychic entities from Dal Quor, the plane of dreams — can't physically enter Eberron, so they possess willing hosts called the Inspired, who rule Sarlona. On Khorvaire they operate through sleeper agents and manipulated dreams. The scary part is subtlety: the NPC acting slightly off might not know they're compromised.</td></tr>
+      <tr><td><strong>Prophecy Fragment</strong></td><td>The Draconic Prophecy isn't a prediction, it's a pattern — written in the land itself, in the movement of moons, in dragonmarks, in events. Dragons spend millennia interpreting it. The Chamber and the Lords of Dust both try to steer it. A prophecy fragment showing up means something cosmically significant is happening here, even if nobody at the table understands it yet.</td></tr>
+      <tr><td><strong>Trust No One</strong></td><td>Eberron's two great shapeshifter threats. Changelings are a player race — most just want to live their lives, but some exploit their gift. Rakshasas are ancient fiends who occasionally slip free, take a pleasing form, and play very long games. The person you're talking to might not be the person you think — and in Eberron, that paranoia is the point.</td></tr>
+      <tr><td><strong>Dragonmark Rivalry</strong></td><td>The houses maintain a polite fiction of cooperation, but beneath the surface they compete ferociously. Cannith's three factions fight over the house's future. Phiarlan and Thuranni are in a cold war of espionage and assassination. Orien resents Lyrandar for stealing the airship market. Every inter-house tension is a quest hook waiting to happen.</td></tr>
+      <tr><td><strong>The Newspaper</strong></td><td>The <em>Korranberg Chronicle</em> is a real, mass-produced newspaper. Actions have public consequences. If the party causes a scene, someone writes about it. If a noble dies, the headline changes the political landscape. Information travels fast in Eberron, and reputation matters. Let the players see their deeds in print — flattering or otherwise.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">DM Note — Play It Cinematic</span>
+    Eberron was designed for action-movie energy. Encourage players to swing from airship rigging, surf a collapsing tower, leap between Lightning Rail cars, and tackle a changeling off a sky-bridge. The setting <em>wants</em> dramatic, over-the-top action sequences. When a player describes something cool, say yes and figure out the DC after. Eberron's tone is pulp—reward audacity.
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Session Zero Essentials</span>
+    Nail down: dragonmark availability, warforged social status in your campaign, whether the Mourning has a cause (even if players don't know it yet), which nations the PCs call home, and who your <a class="xref" href="#group-patrons">group patron</a> is. These choices shape <em>everything</em>.
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="divider-ornate" style="margin-top: 40px;">
+  <img src="media/eberron_primer/divider.svg" width="300" height="30" alt=""/>
+</div>
+<div style="text-align: center; padding: 20px 0 40px; color: var(--muted); font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 3px; text-transform: uppercase;">
+  Eberron Campaign Primer — 998 YK<br>
+  <span style="font-family: 'Crimson Pro', serif; font-size: 8pt; letter-spacing: 0; text-transform: none; font-style: italic;">Setting Overview · DM &amp; Player Reference</span>
+</div>
+
+</div>
+
+<a href="#top" class="back-to-top" aria-label="Back to top">&#x25B2;</a>
+
+</body>
+</html>

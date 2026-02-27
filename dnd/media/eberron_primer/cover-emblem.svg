@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="coverGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#d4a843;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8860b;stop-opacity:0.8" />
+    </radialGradient>
+    <filter id="coverShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#b8860b" stroke-width="2" opacity="0.6"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#8b2500" stroke-width="1" opacity="0.4" stroke-dasharray="3,2"/>
+
+  <!-- Large central gear -->
+  <g filter="url(#coverShadow)">
+    <!-- Gear body -->
+    <circle cx="100" cy="100" r="50" fill="url(#coverGlow)" stroke="#8b2500" stroke-width="1.5"/>
+
+    <!-- Gear teeth (12 teeth) -->
+    <g stroke="#8b2500" stroke-width="1.5" fill="#d4a843" opacity="0.9">
+      <polygon points="100,30 108,38 100,50 92,38"/>
+      <polygon points="150,70 142,68 140,56 152,58"/>
+      <polygon points="170,100 162,92 170,80 178,88"/>
+      <polygon points="150,130 152,142 140,144 142,132"/>
+      <polygon points="100,170 92,162 100,150 108,162"/>
+      <polygon points="50,130 58,132 60,144 48,142"/>
+      <polygon points="30,100 38,108 30,120 22,112"/>
+      <polygon points="50,70 48,58 60,56 62,68"/>
+      <polygon points="115,42 120,35 132,45 127,52"/>
+      <polygon points="158,85 163,78 175,92 170,99"/>
+      <polygon points="165,125 170,132 158,148 153,141"/>
+      <polygon points="105,158 100,165 88,155 93,148"/>
+    </g>
+
+    <!-- Inner gear circle -->
+    <circle cx="100" cy="100" r="32" fill="none" stroke="#8b2500" stroke-width="2"/>
+    <circle cx="100" cy="100" r="28" fill="none" stroke="#b8860b" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Central dragonmark-like sigil -->
+    <g stroke="#8b2500" stroke-width="1.5" fill="none" opacity="0.9">
+      <!-- Interlocking circles -->
+      <circle cx="85" cy="100" r="8" fill="none"/>
+      <circle cx="115" cy="100" r="8" fill="none"/>
+      <circle cx="100" cy="85" r="8" fill="none"/>
+      <circle cx="100" cy="115" r="8" fill="none"/>
+
+      <!-- Central dot -->
+      <circle cx="100" cy="100" r="3" fill="#8b2500"/>
+
+      <!-- Arcane lines -->
+      <path d="M 100 72 Q 88 85 80 100 Q 88 115 100 128" fill="none" opacity="0.6"/>
+      <path d="M 100 72 Q 112 85 120 100 Q 112 115 100 128" fill="none" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- Runes around perimeter (simplified arcane symbols) -->
+  <g font-family="'Cinzel', serif" font-size="12" fill="#8b2500" opacity="0.7">
+    <text x="100" y="25" text-anchor="middle">✦</text>
+    <text x="167" y="107" text-anchor="middle">✧</text>
+    <text x="100" y="185" text-anchor="middle">✦</text>
+    <text x="33" y="107" text-anchor="middle">✧</text>
+    <text x="145" y="55" text-anchor="middle">◆</text>
+    <text x="145" y="155" text-anchor="middle">◆</text>
+    <text x="55" y="155" text-anchor="middle">◆</text>
+    <text x="55" y="55" text-anchor="middle">◆</text>
+  </g>
+</svg>

@@ -1,0 +1,617 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: my_books.html
+  PURPOSE: Personal D&D 5e book collection reference. Single table listing all owned sourcebooks,
+           adventures, and rules supplements with quick overview, content pills, and status notes.
+  OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct.
+
+  STRUCTURE:
+    - Title + subtitle
+    - Single table: Book (title + year) | Overview (pill tags + content summary) | Status (what to use/skip)
+    - Books listed in rough chronological/category order
+    - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System, Player Pages
+    - Tag badges for edition (2014/2024), type (Rules/Source/Adventure)
+    - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
+
+  CSS CONVENTIONS:
+    Fonts: system-ui (Segoe UI)
+    Colors: --accent (#8b1a1a), --accent2 (#6b4226), --accent3 (#2d5a3d), --accent4 (#3b3678)
+    Row alternation: nth-child(even) auto-shading
+    Pill classes: .pill-sub, .pill-spe, .pill-mon, .pill-adv, .pill-sys, .pill-pp
+    Tag classes: .tag-2014, .tag-2024, .tag-rules, .tag-source, .tag-adventure
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My D&D 5e Book Collection</title>
+<style>
+  :root {
+    --bg: #f4ede4;
+    --panel-bg: #fffdf8;
+    --accent: #8b1a1a;
+    --accent2: #6b4226;
+    --accent3: #2d5a3d;
+    --accent4: #3b3678;
+    --text: #2c2416;
+    --text-dim: #6b5d4f;
+    --border: #c9b99a;
+    --row-alt: #f7f1e8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 10pt;
+    line-height: 1.4;
+    color: var(--text);
+    background: var(--bg);
+    padding: 20px;
+  }
+  h1 { font-size: 18pt; color: var(--accent); margin-bottom: 4px; }
+  .subtitle { color: var(--text-dim); margin-bottom: 16px; font-size: 10pt; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  thead th {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  tbody td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-right: 2px;
+  }
+  .tag-2014 { background: rgba(107,66,38,0.15); color: var(--accent2); }
+  .tag-2024 { background: rgba(139,26,26,0.12); color: var(--accent); }
+  .tag-rules { background: rgba(107,66,38,0.1); color: var(--accent2); }
+  .tag-source { background: rgba(45,90,61,0.1); color: var(--accent3); }
+  .tag-adventure { background: rgba(139,26,26,0.08); color: var(--accent); }
+
+  .book-title { font-weight: 700; font-size: 10.5pt; }
+  .book-year { color: var(--text-dim); }
+
+  .skip { color: var(--accent); }
+  .ok { color: var(--accent3); font-weight: 600; }
+  .dim { color: var(--text-dim); }
+  b { font-weight: 600; }
+
+  /* Stat pills — first line in overview */
+  .pills { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+  .pill {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .pill-sub { background: #e8c4c4; color: #6b1515; }
+  .pill-spe { background: #b8dbc5; color: #1a4a2a; }
+  .pill-mon { background: #c5c2e0; color: #2d2960; }
+  .pill-adv { background: #dfc9a8; color: #5a3a14; }
+  .pill-sys { background: #c9dce8; color: #2a4d63; }
+  .pill-pp  { background: #ddd6cc; color: #5a4e3e; font-weight: 400; }
+
+  /* Overview structure */
+  .ov { font-size: 9pt; line-height: 1.35; }
+  .ov-head { font-weight: 700; color: var(--text-dim); font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; margin-bottom: 1px; }
+  .ov-head:first-child { margin-top: 0; }
+  .ov-line { margin: 1px 0; }
+
+  .reach { margin-top: 6px; padding: 4px 8px; background: rgba(107,66,38,0.08); border-left: 3px solid var(--accent2); border-radius: 2px; font-size: 9pt; }
+  .reach b { color: var(--accent2); }
+
+  /* Merged status column */
+  .skipped { padding: 5px 8px; background: rgba(139,26,26,0.04); border-left: 3px solid var(--accent); border-radius: 2px; font-size: 9pt; margin-bottom: 6px; }
+  .skipped-label { font-weight: 700; color: var(--accent); font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+
+  .still { padding: 5px 8px; background: rgba(45,90,61,0.06); border-left: 3px solid var(--accent3); border-radius: 2px; font-size: 9pt; margin-top: 6px; }
+  .still:first-child { margin-top: 0; }
+  .still-label { font-weight: 700; color: var(--accent3); font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+
+  .note { font-size: 8.5pt; color: var(--text-dim); margin-top: 4px; }
+
+  .legend {
+    margin-top: 12px;
+    font-size: 9pt;
+    color: var(--text-dim);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media print {
+    body { padding: 8mm; font-size: 8.5pt; }
+    @page { size: landscape; margin: 6mm; }
+  }
+</style>
+</head>
+<body>
+
+<h1>My D&D 5e Book Collection</h1>
+<div class="subtitle">Newest first · what to use, what to skip, what's still unique</div>
+
+<table>
+<thead>
+<tr>
+  <th style="width:13%">Book</th>
+  <th style="width:50%">Overview</th>
+  <th style="width:37%">Status</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- E:FotA -->
+<tr>
+  <td>
+    <div class="book-title">Eberron: Forge of the Artificer</div>
+    <span class="book-year">Dec 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">5 subclasses</span>
+      <span class="pill pill-spe">5 species</span>
+      <span class="pill pill-mon">20+ monsters</span>
+      <span class="pill pill-sys">Artificer class</span>
+      <span class="pill pill-adv">3 campaigns</span>
+      <span class="pill pill-pp">112pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">Artificer class · 5 subclasses (incl. new Cartographer) · 5 species · 18 backgrounds · 28 Dragonmark feats (no longer species-locked)</div>
+      <div class="ov-head">DM content</div>
+      <div class="ov-line">Eberron bastions + mobile bastion rules · 3 campaign frameworks (Sharn noir, Dragonmarked intrigue, Morgrave pulp) · airship rules (3 ships, upgrades, crew stations) · 20+ monsters</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Artificer class, Eberron species, Dragonmarks, airships, Eberron campaigns</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Artificer — 5 subclasses</div>
+      Alchemist · Armorer · Artillerist · Battle Smith · <b>Cartographer</b> (new)
+    </div>
+    <div class="still">
+      <div class="still-label">5 species (2024 versions)</div>
+      Changeling · Kalashtar · Khoravar (new, replaces half-elf) · Shifter · Warforged
+    </div>
+    <div class="note">Nothing superseded — this is the new Eberron baseline.</div>
+  </td>
+</tr>
+
+<!-- FR: Adventures -->
+<tr>
+  <td>
+    <div class="book-title">FR: Adventures in Faerûn</div>
+    <span class="book-year">Nov 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">51+ adventures</span>
+      <span class="pill pill-mon">39 monsters</span>
+      <span class="pill pill-sys">Epic Destinies</span>
+      <span class="pill pill-pp">288pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures</div>
+      <div class="ov-line">51+ adventures (levels 1–13) across 5 gazetteers: Dalelands · Icewind Dale · Calimshan · Moonshae Isles · Baldur's Gate</div>
+      <div class="ov-head">New systems</div>
+      <div class="ov-line">Epic Destinies (post-level-20 progression with supernatural gifts)</div>
+      <div class="ov-head">Also</div>
+      <div class="ov-line">39 monsters · 7 magic items · 52 maps · starter adventure: The Lost Library</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Faerûn one-shots, Epic Destinies, regional gazetteers, 52 maps</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      Cherry-pick adventures by region. Epic Destinies are the new endgame system.
+    </div>
+  </td>
+</tr>
+
+<!-- FR: Heroes -->
+<tr>
+  <td>
+    <div class="book-title">FR: Heroes of Faerûn</div>
+    <span class="book-year">Nov 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">8 subclasses</span>
+      <span class="pill pill-sys">34 feats</span>
+      <span class="pill pill-sys">19 spells</span>
+      <span class="pill pill-sys">Circle Magic</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">8 subclasses (5 new, 3 overhauled) · 17 backgrounds (regional + faction) · 34 feats incl. epic boons for 42 FR gods · 19 spells · Circle Magic (cooperative casting)</div>
+      <div class="ov-head">Setting</div>
+      <div class="ov-line">8 factions · Aurora's Whole Realms Catalog · 10 region primers · full Faerûn map</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Faerûn subclasses, Bladesinger, god-linked epic boons, faction play, circle magic</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">8 subclasses (2024-native)</div>
+      <b>Bard:</b> College of the Moon ·
+      <b>Cleric:</b> Knowledge Domain ·
+      <b>Fighter:</b> Banneret ·
+      <b>Paladin:</b> Oath of Noble Genies ·
+      <b>Ranger:</b> Winter Walker ·
+      <b>Rogue:</b> Scion of the Three ·
+      <b>Sorc:</b> Spellfire Sorcery ·
+      <b>Wizard:</b> Bladesinger
+    </div>
+    <div class="note">Bladesinger supersedes Tasha's version. Knowledge Domain returns.</div>
+  </td>
+</tr>
+
+<!-- Dragon Delves -->
+<tr>
+  <td>
+    <div class="book-title">Dragon Delves</div>
+    <span class="book-year">2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">10 adventures</span>
+      <span class="pill pill-sys">Solo play</span>
+      <span class="pill pill-sys">Low-prep</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures</div>
+      <div class="ov-line">10 dragon-themed adventures (levels 1–12) · each with a different chromatic/metallic dragon + unique lair · 3 campaign frameworks</div>
+      <div class="ov-head">Solo play</div>
+      <div class="ov-line">3 solo-playable adventures with Blessing of the Sole Champion (1 player + DM)</div>
+      <div class="ov-head">Design</div>
+      <div class="ov-line">Low-prep with quick-start guides · unique art style per adventure</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> dragon one-shots, solo play, low-prep sessions</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      One-shots or drop-ins. Low-prep design with quick-start summaries.
+    </div>
+  </td>
+</tr>
+
+<!-- 2025 MM -->
+<tr>
+  <td>
+    <div class="book-title">Monster Manual</div>
+    <span class="book-year">2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-rules">Rules</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-mon">500+ monsters</span>
+      <span class="pill pill-mon">85 brand new</span>
+      <span class="pill pill-sys">Static initiative</span>
+      <span class="pill pill-pp">384pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Monsters</div>
+      <div class="ov-line">500+ stat blocks · all 2014 MM creatures revised + 85 brand new · 14 creature types · high-CR expansion · static initiative option in every stat block</div>
+      <div class="ov-head">Organization</div>
+      <div class="ov-line">Alphabetical A–Z (dragons by color) · App A: animals + dinosaurs · App B: lists by habitat, type, group, CR</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> any creature stat block first — the primary monster reference</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All 500+ creatures are yours</div>
+      Near-zero overlap with MotM — different creature pools by design. MM = 2014 MM lineage (beholders, dragons, liches…), MotM = Volo's/Mordenkainen's lineage (demon lords, archdevils, mind flayer variants…). Combined: ~760 stat blocks.
+    </div>
+  </td>
+</tr>
+
+<!-- 2024 DMG -->
+<tr>
+  <td>
+    <div class="book-title">Dungeon Master's Guide</div>
+    <span class="book-year">2024</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-rules">Rules</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Bastions</span>
+      <span class="pill pill-sys">400+ magic items</span>
+      <span class="pill pill-adv">Greyhawk</span>
+      <span class="pill pill-sys">Maps</span>
+      <span class="pill pill-pp">384pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">New systems</div>
+      <div class="ov-line">Bastions (player-built strongholds with crafting, research, allies)</div>
+      <div class="ov-head">DM tools</div>
+      <div class="ov-line">400+ magic items (18 new) · treasure themes · crafting rules · encounter building · worldbuilding · NPC creation · hazards · tracking sheets</div>
+      <div class="ov-head">Bonus</div>
+      <div class="ov-line">Greyhawk gazetteer (starter setting) · Dyson Logos map appendix (dungeons, lairs, manor, ship, farmstead)</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> bastions, magic items, encounter balance, Greyhawk, maps</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      Bastions are the big new system. Greyhawk is a bonus starter setting.
+    </div>
+  </td>
+</tr>
+
+<!-- 2024 PHB -->
+<tr>
+  <td>
+    <div class="book-title">Player's Handbook</div>
+    <span class="book-year">2024</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-rules">Rules</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">48 subclasses</span>
+      <span class="pill pill-spe">10 species</span>
+      <span class="pill pill-sys">75 feats</span>
+      <span class="pill pill-sys">~400 spells</span>
+      <span class="pill pill-sys">Weapon mastery</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">12 classes (all revised) · 48 subclasses (4/class) · 10 species · 16 backgrounds (grant ability scores + Origin Feat) · 75 feats · ~400 spells</div>
+      <div class="ov-head">New systems</div>
+      <div class="ov-line">Weapon mastery (Cleave, Graze, Nick, Vex, Push, Sap, Slow, Topple) · crafting (mundane + magic + potions + scrolls) · one-spell-slot-per-turn rule</div>
+      <div class="ov-head">Reference</div>
+      <div class="ov-line">Revised action economy · rules glossary (the single source of truth)</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> everything — the baseline. Classes, spells, feats, species, rules glossary</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">10 species</div>
+      Aasimar · Dragonborn · Dwarf · Elf (Drow / High / Wood) · Gnome · Goliath · Halfling · Human · Orc · Tiefling
+    </div>
+    <div class="note">Half-Elf &amp; Half-Orc gone as species — pick one parent's stats, flavor the other narratively. Elf lineages (Drow, High, Wood) retained. Khoravar in E:FotA replaces half-elf for Eberron.</div>
+    <div class="still">
+      <div class="still-label">48 subclasses (4 per class)</div>
+      <b>Barb:</b> Berserker, Wild Heart, World Tree, Zealot ·
+      <b>Bard:</b> Dance, Glamour, Lore, Valor ·
+      <b>Cleric:</b> Life, Light, Trickery, War ·
+      <b>Druid:</b> Land, Moon, Sea, Stars ·
+      <b>Fighter:</b> Battle Master, Champion, Eldritch Knight, Psi Warrior ·
+      <b>Monk:</b> Mercy, Shadow, Elements, Open Hand ·
+      <b>Paladin:</b> Devotion, Glory, Ancients, Vengeance ·
+      <b>Ranger:</b> Beast Master, Fey Wanderer, Gloom Stalker, Hunter ·
+      <b>Rogue:</b> Arcane Trickster, Assassin, Soulknife, Thief ·
+      <b>Sorc:</b> Aberrant, Clockwork, Draconic, Wild Magic ·
+      <b>Warlock:</b> Archfey, Celestial, Fiend, Great Old One ·
+      <b>Wizard:</b> Abjurer, Diviner, Evoker, Illusionist
+    </div>
+    <div class="note">The new baseline — nothing superseded.</div>
+  </td>
+</tr>
+
+<!-- MotM -->
+<tr>
+  <td>
+    <div class="book-title">Monsters of the Multiverse</div>
+    <span class="book-year">2022</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-spe">33 species</span>
+      <span class="pill pill-mon">260 monsters</span>
+      <span class="pill pill-sys">Demon lords</span>
+      <span class="pill pill-sys">Archdevils</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Species</div>
+      <div class="ov-line">33 species (28 still unique)</div>
+      <div class="ov-head">Monsters (260 stat blocks)</div>
+      <div class="ov-line">Consolidated from Volo's + Mordenkainen's Tome of Foes. Demon lords (Demogorgon, Orcus, Baphomet…) · archdevils (Zariel, Geryon, Hutijin…) · mind flayer variants · star spawn · sorrowsworn · and more</div>
+      <div class="ov-head">Near-zero overlap with 2025 MM — different creature pools (~760 combined)</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> 28 exotic species, demon lords, archdevils, any creature not in 2025 MM</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">3 species → 2024 PHB:</span> Aasimar, Goliath, Orc<br>
+      <span class="skip">2 species → E:FotA:</span> Changeling, Shifter
+    </div>
+    <div class="still">
+      <div class="still-label">28 unique species</div>
+      Aarakocra · Bugbear · Centaur · Deep Gnome · Duergar · Eladrin · Fairy · Firbolg · Genasi (Air, Earth, Fire, Water) · Githyanki · Githzerai · Goblin · Harengon · Hobgoblin · Kenku · Kobold · Lizardfolk · Minotaur · Owlin · Satyr · Sea Elf · Shadar-kai · Tabaxi · Tortle · Triton · Yuan-ti
+    </div>
+    <div class="note">No 2024 update for these 28 species yet. All 260 stat blocks remain unique — MM and MotM are complementary by design.</div>
+  </td>
+</tr>
+
+<!-- Tasha's -->
+<tr>
+  <td>
+    <div class="book-title">Tasha's Cauldron of Everything</div>
+    <span class="book-year">2020</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">26 subclasses</span>
+      <span class="pill pill-sys">Sidekicks</span>
+      <span class="pill pill-sys">Puzzles</span>
+      <span class="pill pill-sys">Tattoos</span>
+      <span class="pill pill-sys">Group Patrons</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">26 subclasses (17 still unique) · Artificer reprint (superseded) · spells · feats</div>
+      <div class="ov-head">DM systems (all still unique)</div>
+      <div class="ov-line">Group Patrons (academy, syndicate, guild, military, religious order…) · puzzles with handouts · magic tattoos · sidekick rules · supernatural regions (haunted, infested, mirror worlds…) · common magic items</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> 17 unique subclasses, group patrons, puzzles, magic tattoos, sidekick rules, supernatural regions</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Artificer → E:FotA</span><br>
+      <span class="skip">8 subclasses → 2024 PHB:</span> Stars, Psi Warrior, Mercy, Glory, Fey Wanderer, Soulknife, Aberrant Mind, Clockwork Soul<br>
+      <span class="skip">Bladesinger → Heroes of Faerûn</span><br>
+      <span class="skip">Optional class features</span> — in 2024 base classes<br>
+      <span class="skip">Custom Lineage</span> — 2024 species system
+    </div>
+    <div class="still">
+      <div class="still-label">17 unique subclasses</div>
+      <b>Barb:</b> Beast, Wild Magic ·
+      <b>Bard:</b> Creation, Eloquence ·
+      <b>Cleric:</b> Order, Peace, Twilight ·
+      <b>Druid:</b> Spores, Wildfire ·
+      <b>Fighter:</b> Rune Knight ·
+      <b>Monk:</b> Astral Self ·
+      <b>Paladin:</b> Watchers ·
+      <b>Ranger:</b> Swarmkeeper ·
+      <b>Rogue:</b> Phantom ·
+      <b>Warlock:</b> Fathomless, Genie ·
+      <b>Wizard:</b> Order of Scribes
+    </div>
+    <div class="note">Also unique: puzzles, magic tattoos, sidekick rules, supernatural environments.</div>
+  </td>
+</tr>
+
+<!-- E:RftLW -->
+<tr>
+  <td>
+    <div class="book-title">Eberron: Rising from the Last War</div>
+    <span class="book-year">2019</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Setting lore</span>
+      <span class="pill pill-adv">Sharn</span>
+      <span class="pill pill-adv">Khorvaire</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options (all superseded by E:FotA)</div>
+      <div class="ov-line">2014 Artificer (4 subclasses) · 4 species · Dragonmark subraces</div>
+      <div class="ov-head">Setting lore (still essential)</div>
+      <div class="ov-line">Nations of Khorvaire · Last War history · Dragonmarked Houses · religions · Sharn gazetteer · group patrons (originated here) · adventure: Forgotten Relics</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Eberron world lore, Khorvaire nations, Last War, Sharn, Dragonmarked Houses</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Artificer + all subclasses → E:FotA</span><br>
+      <span class="skip">All 4 species → E:FotA</span><br>
+      <span class="skip">Dragonmark feats → E:FotA</span>
+    </div>
+    <div class="still">
+      <div class="still-label">Setting lore is still essential</div>
+      Nations of Khorvaire, Last War history, Dragonmarked Houses, religions, the map. E:FotA is a companion, not a replacement for world info.
+    </div>
+  </td>
+</tr>
+
+<!-- XGtE -->
+<tr>
+  <td>
+    <div class="book-title">Xanathar's Guide to Everything</div>
+    <span class="book-year">2017</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">31 subclasses</span>
+      <span class="pill pill-sys">Downtime</span>
+      <span class="pill pill-sys">Traps</span>
+      <span class="pill pill-sys">Tool profs</span>
+      <span class="pill pill-sys">Names</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">31 subclasses (27 still unique) · spells · racial feats (superseded)</div>
+      <div class="ov-head">DM tools (all still unique — no 2024 replacement)</div>
+      <div class="ov-line">Downtime activities (buy/sell magic items, carousing, crime, pit fighting, training, research) · trap design (simple + complex) · random encounter tables by environment · tool proficiency rules · common magic items · spell scroll scribing · name tables by ethnicity</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> 27 unique subclasses (Hexblade!), downtime, trap design, tool proficiencies, name tables</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">4 subclasses → 2024 PHB:</span> Zealot, Glamour, Gloom Stalker, Celestial<br>
+      <span class="skip">Racial feats</span> — feat system overhauled<br>
+      <span class="skip">Spells</span> — use PHB version when both exist
+    </div>
+    <div class="still">
+      <div class="still-label">27 unique subclasses</div>
+      <b>Barb:</b> Ancestral Guardian, Storm Herald ·
+      <b>Bard:</b> Swords, Whispers ·
+      <b>Cleric:</b> Forge, Grave ·
+      <b>Druid:</b> Dreams, Shepherd ·
+      <b>Fighter:</b> Arcane Archer, Cavalier, Samurai ·
+      <b>Monk:</b> Drunken Master, Kensei, Sun Soul ·
+      <b>Paladin:</b> Conquest, Redemption ·
+      <b>Ranger:</b> Horizon Walker, Monster Slayer ·
+      <b>Rogue:</b> Inquisitive, Mastermind, Scout, Swashbuckler ·
+      <b>Sorcerer:</b> Divine Soul, Shadow Magic, Storm Sorcery ·
+      <b>Warlock:</b> Hexblade ·
+      <b>Wizard:</b> War Magic
+    </div>
+    <div class="note">DM tools chapter has no 2024 replacement — downtime, random encounters, tool proficiency rules all still unique. 2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
+  </td>
+</tr>
+
+</tbody>
+</table>
+
+<div class="legend">
+  <span><span class="tag tag-rules">Rules</span> core rulebook</span>
+  <span><span class="tag tag-source">Source</span> sourcebook</span>
+  <span><span class="tag tag-adventure">Adventure</span> adventure content</span>
+  <span><span class="tag tag-2014">2014</span> original 5e</span>
+  <span><span class="tag tag-2024">2024</span> revised 5e</span>
+  <span class="skip">Red boxes</span> = superseded, skip
+  <span style="color:var(--accent3)">Green boxes</span> = still unique, use these
+  <span style="color:var(--accent2)">Brown boxes</span> = reach for this when…
+</div>
+
+</body>
+</html>

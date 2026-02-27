@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <style>
+      .siberys { fill: none; stroke: #b8860b; stroke-width: 2; }
+      .eberron { fill: none; stroke: #6b5e50; stroke-width: 2.5; }
+      .khyber { fill: #2a1810; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="transparent"/>
+  
+  <!-- Siberys (The Dragon Above) - Golden arc at top -->
+  <circle cx="100" cy="100" r="75" class="siberys"/>
+  <path d="M 35 100 A 65 65 0 0 1 165 100" class="siberys" stroke="#b8860b" fill="none" stroke-width="3"/>
+  
+  <!-- Radiating lines from Siberys (golden rays) -->
+  <line x1="100" y1="35" x2="100" y2="15" stroke="#b8860b" stroke-width="1.5" opacity="0.6"/>
+  <line x1="146" y1="46" x2="158" y2="34" stroke="#b8860b" stroke-width="1.5" opacity="0.6"/>
+  <line x1="165" y1="100" x2="185" y2="100" stroke="#b8860b" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Eberron (The Dragon Between) - Muted circular form wrapping center -->
+  <circle cx="100" cy="100" r="60" class="eberron"/>
+  <circle cx="100" cy="100" r="55" class="eberron" opacity="0.4"/>
+  
+  <!-- Khyber (The Dragon Below) - Dark form trapped inside -->
+  <circle cx="100" cy="115" r="30" class="khyber"/>
+  <circle cx="100" cy="115" r="28" fill="none" stroke="#8b2500" stroke-width="1" opacity="0.7"/>
+  
+  <!-- Accent details - connecting spiral suggestion -->
+  <path d="M 100 65 Q 85 85 100 100 Q 115 115 100 130" stroke="#c4b8a8" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>

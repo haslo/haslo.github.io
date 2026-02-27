@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="34" viewBox="0 0 28 34" class="flex-shrink-0" style="margin-top:1px;">
+          <defs><linearGradient id="shieldG" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#c9dce8" stop-opacity="0.8"/><stop offset="100%" stop-color="#2a4d63" stop-opacity="0.25"/></linearGradient></defs>
+          <path d="M14,2 L26,7 L26,17 Q26,28 14,32 Q2,28 2,17 L2,7 Z" fill="url(#shieldG)" stroke="#2a4d63" stroke-width="1.5"/>
+          <path d="M14,5 L22,9 L22,17 Q22,25 14,28 Q6,25 6,17 L6,9 Z" fill="none" stroke="#2a4d63" stroke-width="0.5" opacity="0.4"/>
+          <text x="14" y="20" text-anchor="middle" font-size="9" fill="#2a4d63" font-weight="800">AC</text>
+        </svg>

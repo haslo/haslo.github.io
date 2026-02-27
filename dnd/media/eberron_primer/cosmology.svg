@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="500" height="300">
+  <defs>
+    <style>
+      .plane-orbit { fill: none; stroke: #c4b8a8; stroke-width: 1; stroke-dasharray: 2,2; opacity: 0.4; }
+      .plane-circle { fill: none; stroke: #b8860b; stroke-width: 1.5; }
+      .eberron-center { fill: none; stroke: #b8860b; stroke-width: 2; }
+      .siberys-ring { fill: none; stroke: #b8860b; stroke-width: 1; stroke-dasharray: 3,3; opacity: 0.5; }
+      .khyber-region { fill: #1a0f08; opacity: 0.6; }
+      .plane-label { font-size: 8px; font-family: serif; fill: #b8860b; text-anchor: middle; }
+      .plane-label-dark { font-size: 8px; font-family: serif; fill: #c4b8a8; text-anchor: middle; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="300" fill="transparent"/>
+  
+  <!-- Khyber region below (dark) -->
+  <ellipse cx="250" cy="180" rx="140" ry="100" class="khyber-region"/>
+  
+  <!-- Ring of Siberys (outer dotted circle) -->
+  <ellipse cx="250" cy="150" rx="160" ry="110" class="siberys-ring"/>
+  
+  <!-- Orbital paths -->
+  <ellipse cx="250" cy="150" rx="120" ry="85" class="plane-orbit"/>
+  
+  <!-- Central Eberron (Material Plane) -->
+  <circle cx="250" cy="150" r="25" class="eberron-center"/>
+  <text x="250" y="155" class="plane-label">Eberron</text>
+  
+  <!-- Planes orbiting (13 total) -->
+  <!-- Using elliptical positioning around center -->
+  
+  <!-- Daanvi (Order) - top left -->
+  <circle cx="160" cy="95" r="8" class="plane-circle" stroke="#6b5e50"/>
+  <text x="160" y="110" class="plane-label-dark">Daanvi</text>
+  
+  <!-- Dal Quor (Dreams) - top -->
+  <circle cx="250" cy="75" r="8" class="plane-circle" stroke="#8b7355"/>
+  <text x="250" y="60" class="plane-label-dark">Dal Quor</text>
+  
+  <!-- Dolurrh (Dead) - top right -->
+  <circle cx="340" cy="95" r="8" class="plane-circle" stroke="#4a4238"/>
+  <text x="340" y="110" class="plane-label-dark">Dolurrh</text>
+  
+  <!-- Fernia (Fire) - right upper -->
+  <circle cx="385" cy="130" r="8" class="plane-circle" stroke="#8b2500"/>
+  <text x="405" y="135" class="plane-label-dark">Fernia</text>
+  
+  <!-- Irian (Light) - right -->
+  <circle cx="395" cy="165" r="8" class="plane-circle" stroke="#b8860b"/>
+  <text x="420" y="170" class="plane-label-dark">Irian</text>
+  
+  <!-- Kythri (Chaos) - right lower -->
+  <circle cx="370" cy="200" r="8" class="plane-circle" stroke="#8b5a3c"/>
+  <text x="395" y="215" class="plane-label-dark">Kythri</text>
+  
+  <!-- Lamannia (Nature) - bottom right -->
+  <circle cx="310" cy="235" r="8" class="plane-circle" stroke="#6b7d5e"/>
+  <text x="330" y="250" class="plane-label-dark">Lamannia</text>
+  
+  <!-- Mabar (Darkness) - bottom -->
+  <circle cx="250" cy="250" r="8" class="plane-circle" stroke="#2a1f18"/>
+  <text x="250" y="270" class="plane-label-dark">Mabar</text>
+  
+  <!-- Risia (Ice) - bottom left -->
+  <circle cx="190" cy="235" r="8" class="plane-circle" stroke="#4a6b8b"/>
+  <text x="170" y="250" class="plane-label-dark">Risia</text>
+  
+  <!-- Shavarath (War) - left lower -->
+  <circle cx="130" cy="200" r="8" class="plane-circle" stroke="#8b3838"/>
+  <text x="105" y="215" class="plane-label-dark">Shavarath</text>
+  
+  <!-- Syrania (Sky) - left -->
+  <circle cx="105" cy="165" r="8" class="plane-circle" stroke="#6b8ba8"/>
+  <text x="75" y="170" class="plane-label-dark">Syrania</text>
+  
+  <!-- Thelanis (Faerie) - left upper -->
+  <circle cx="115" cy="130" r="8" class="plane-circle" stroke="#8b7a6b"/>
+  <text x="90" y="135" class="plane-label-dark">Thelanis</text>
+  
+  <!-- Xoriat (Madness) - top left (between Daanvi and Dal Quor) -->
+  <circle cx="200" cy="78" r="8" class="plane-circle" stroke="#7a4a6b"/>
+  <text x="200" y="55" class="plane-label-dark">Xoriat</text>
+</svg>

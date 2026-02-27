@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cs" x="-4%" y="-6%" width="108%" height="118%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- CONNECTION LINES (drawn first, behind cards) -->
+  <!-- Chamber ↔ Lords of Dust -->
+  <line x1="278" y1="52" x2="420" y2="52" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- Chamber → Party -->
+  <line x1="170" y1="92" x2="308" y2="218" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <!-- Lords of Dust → Party -->
+  <line x1="530" y1="92" x2="392" y2="218" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <!-- Aurum → Party -->
+  <path d="M 195 218 Q 230 195 268 232" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3" fill="none"/>
+  <!-- Dreaming Dark → Party -->
+  <path d="M 505 218 Q 470 195 432 232" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3" fill="none"/>
+  <!-- Dark Lanterns → Party -->
+  <line x1="110" y1="348" x2="295" y2="260" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <!-- Emerald Claw → Party -->
+  <line x1="260" y1="368" x2="330" y2="260" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <!-- Morgrave → Party -->
+  <line x1="440" y1="368" x2="375" y2="260" stroke="#c4b8a8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <!-- Lord of Blades → Party (thinner, more tenuous) -->
+  <line x1="590" y1="348" x2="405" y2="260" stroke="#c4b8a8" stroke-width="1" stroke-dasharray="3 5"/>
+
+  <!-- RELATIONSHIP LABELS (with parchment background) -->
+  <!-- eternal war -->
+  <rect x="297" y="33" width="106" height="20" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="350" y="49" text-anchor="middle" font-family="'Cinzel', serif" font-size="13" font-weight="600" fill="#b8860b" font-style="italic">eternal war</text>
+  <!-- manipulating (chamber) -->
+  <rect x="192" y="142" width="100" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="242" y="157" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">manipulating</text>
+  <!-- corrupting (LoD) -->
+  <rect x="415" y="142" width="82" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="456" y="157" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">corrupting</text>
+  <!-- funding (Aurum) -->
+  <rect x="210" y="191" width="62" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="241" y="206" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">funding</text>
+  <!-- subverting (DD) -->
+  <rect x="428" y="191" width="78" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="467" y="206" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">subverting</text>
+  <!-- hiring (Lanterns) -->
+  <rect x="168" y="292" width="55" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="195" y="307" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">hiring</text>
+  <!-- hunting (Claw) -->
+  <rect x="262" y="305" width="62" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="293" y="320" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">hunting</text>
+  <!-- quest-givers (Morgrave) -->
+  <rect x="370" y="305" width="90" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="415" y="320" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">quest-givers</text>
+  <!-- wild card (LoB) -->
+  <rect x="468" y="292" width="72" height="19" rx="3" fill="#f5f0e8" opacity="0.92"/>
+  <text x="504" y="307" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" font-weight="600" fill="#8b2500">wild card</text>
+
+  <!-- YOUR PARTY (centre) -->
+  <rect x="272" y="220" width="156" height="40" rx="20" fill="#f5f0e8" stroke="#8b2500" stroke-width="2"/>
+  <text x="350" y="246" text-anchor="middle" font-family="'Cinzel', serif" font-size="14" font-weight="700" fill="#8b2500" letter-spacing="1">YOUR PARTY</text>
+
+  <!-- ROW 1: COSMIC FORCES -->
+  <!-- The Chamber -->
+  <rect x="55" y="8" width="222" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="55" y="8" width="3.5" height="84" rx="1.5" fill="#b8860b"/>
+  <text x="70" y="30" font-family="'Cinzel', serif" font-size="11" font-weight="600" fill="#b8860b" letter-spacing="0.5">The Chamber</text>
+  <text x="70" y="46" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Ancient dragons in mortal disguise</text>
+  <text x="70" y="64" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Studying the Draconic Prophecy for</text>
+  <text x="70" y="78" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">millennia. You might be a variable.</text>
+
+  <!-- Lords of Dust -->
+  <rect x="423" y="8" width="222" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="423" y="8" width="3.5" height="84" rx="1.5" fill="#b8860b"/>
+  <text x="438" y="30" font-family="'Cinzel', serif" font-size="11" font-weight="600" fill="#b8860b" letter-spacing="0.5">The Lords of Dust</text>
+  <text x="438" y="46" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Rakshasa from the Age of Demons</text>
+  <text x="438" y="64" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Wearing mortal faces and pulling</text>
+  <text x="438" y="78" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">strings nobody suspects.</text>
+
+  <!-- ROW 2: POWER BROKERS -->
+  <!-- The Aurum -->
+  <rect x="0" y="180" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="0" y="180" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="14" y="202" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">The Aurum</text>
+  <text x="14" y="216" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Secret plutocrat cabal</text>
+  <text x="14" y="234" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">More gold than most treasuries.</text>
+  <text x="14" y="248" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Your employer answers to them.</text>
+
+  <!-- The Dreaming Dark -->
+  <rect x="505" y="180" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="505" y="180" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="519" y="202" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">The Dreaming Dark</text>
+  <text x="519" y="216" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Quori agents from Dal Quor</text>
+  <text x="519" y="234" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Subtly manipulating dreams and</text>
+  <text x="519" y="248" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">political crises across Khorvaire.</text>
+
+  <!-- ROW 3: ACTIVE FACTIONS -->
+  <!-- Dark Lanterns -->
+  <rect x="0" y="320" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="0" y="320" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="14" y="342" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">Dark Lanterns</text>
+  <text x="14" y="356" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Breland's intelligence agency</text>
+  <text x="14" y="374" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Spies, secrets, and plausible</text>
+  <text x="14" y="388" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">deniability. Common employers.</text>
+
+  <!-- Emerald Claw -->
+  <rect x="160" y="340" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="160" y="340" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="174" y="362" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">Emerald Claw</text>
+  <text x="174" y="376" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Cyran death cult</text>
+  <text x="174" y="394" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Seeking vengeance for the Mourning.</text>
+  <text x="174" y="408" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Unhinged and dangerous.</text>
+
+  <!-- Morgrave University -->
+  <rect x="320" y="340" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="320" y="340" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="334" y="362" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">Morgrave U.</text>
+  <text x="334" y="376" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Sharn's major university</text>
+  <text x="334" y="394" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Always seeking adventurers to loot</text>
+  <text x="334" y="408" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">ancient ruins. Good pay, questions later.</text>
+
+  <!-- Lord of Blades -->
+  <rect x="480" y="320" width="195" height="84" rx="4" fill="#e8e0d2" filter="url(#cs)"/>
+  <rect x="480" y="320" width="3.5" height="84" rx="1.5" fill="#8b2500"/>
+  <text x="494" y="342" font-family="'Cinzel', serif" font-size="10.5" font-weight="600" fill="#8b2500" letter-spacing="0.5">Lord of Blades</text>
+  <text x="494" y="356" font-family="'Crimson Pro', serif" font-size="8.5" font-style="italic" fill="#6b5e50">Warforged revolutionary</text>
+  <text x="494" y="374" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">Seeks warforged independence. Violent,</text>
+  <text x="494" y="388" font-family="'Crimson Pro', serif" font-size="9.5" fill="#1a1a1a">unpredictable, and gathering power.</text>
+</svg>
