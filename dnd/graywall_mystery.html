@@ -658,14 +658,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     max-height: 0 !important;
   }
 
+  /* Tablet */
+  @media (max-width: 900px) {
+    .page { padding: 30px 20px 50px; }
+    .accordion-preview { max-height: 140px; }
+    .accordion-preview.dm-preview { max-height: 70px; }
+  }
+
+  /* Phone */
   @media (max-width: 600px) {
     .page { padding: 20px 14px 36px; }
-    .header h1 { font-size: 21pt; }
+    .header h1 { font-size: 18pt; padding-right: 50px; }
     h2 { font-size: 15pt; }
     .class-grid { grid-template-columns: 1fr; }
-    .slideshow .slide-text { font-size: 13pt; }
-    .graywall-table { font-size: 11pt; }
-    .graywall-table th { font-size: 8pt; }
+    .slideshow .slide-text { font-size: 12pt; max-width: 90vw; padding: 16px 12px 0; }
+    .slideshow .slide-img { max-height: 55vh; }
+    .accordion-preview { max-height: 100px; }
+    .accordion-preview.dm-preview { max-height: 50px; }
+
+    /* Tables: horizontal scroll wrapper */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px -14px; padding: 0 14px; }
+    .graywall-table { font-size: 11pt; min-width: 600px; }
+    .graywall-table th { font-size: 8pt; padding: 6px 8px; }
+    .graywall-table td { padding: 6px 8px; }
+
+    /* Callouts */
+    .callout { padding: 10px 12px; }
+    .dm-warning { font-size: 10pt; }
+
+    /* Agenda */
+    .agenda li { padding-left: 28px; }
   }
 
   /* Back-to-top — screen only */
@@ -908,6 +930,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p>Detailed breakdown of the four quarters and local knowledge. Use this at the table to drop details as the kids explore.</p>
 
+  <div class="table-scroll">
   <table class="graywall-table">
     <thead>
       <tr>
@@ -950,12 +973,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </tr>
     </tbody>
   </table>
+  </div>
 
   <!-- REFERENCES TABLE -->
   <h2>References <span class="dm-prelim">DM Only</span></h2>
 
   <p>Sources for Graywall, Droaam lore, and Eberron rules.</p>
 
+  <div class="table-scroll">
   <table class="graywall-table ref-table">
     <thead>
       <tr>
@@ -1010,6 +1035,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </tr>
     </tbody>
   </table>
+  </div>
 
   </div><!-- end acc-dm-graywall -->
 
