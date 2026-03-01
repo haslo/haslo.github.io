@@ -12,7 +12,7 @@
       1. Species (Generic): PHB 2024, MotM 2022, Fizban's 2021
       2. Eberron Species: E:FotA 2025, FoE:Quickstone 2024, Chronicles 2022, ExE 2020
       3. Classes & Subclasses (Generic): PHB 2024, FR:Heroes 2025, Fizban's 2021, TCoE 2020, XGtE 2017
-      4. Eberron Classes & Subclasses: E:FotA 2025, FoE:Quickstone 2024, Chronicles 2022, ExE 2020
+      4. Eberron Classes & Subclasses: E:FotA 2025, FoE:Quickstone 2024, Chronicles 2022, ExE 2020, E:RftLW 2019
     - All tables ordered: PHB/newest first, then by book release date descending
     - Purchase links: .book-links / .bk a for DMs Guild / D&D Beyond (hidden in print)
     - Notes box: "Using Legacy Content with 2024 Rules" + Eberron compatibility
@@ -22,11 +22,12 @@
     Colors: parchment palette — --accent (#8b2500), --gold, --muted, --parchment
     Row alternation: .ga and .gb classes on <tr>, NOT nth-child (rowspan breaks nth-child)
     Book names: .bk cell + data-book attribute on <tr> + .book-start on first <tr> per book group
-    Tags: .n (new)
+    Tags: .vr (variant — used for alternate versions of species already listed under another book)
+    Supersession: .sp (supersedes column), .sb (superseded-by column) — both muted italic
     Links: .bk a (book name links), .book-links (secondary purchase links)
-    Tables: .species-table and .classes-table classes for targeted mobile styling
+    Tables: .species-table and .classes-table — 4 content columns + Supersedes + Superseded by
     Eberron sections: .eb-head on h2, .eb-table on table, .eb-mobile on mobile div
-    Mobile (≤768px): species tables → cards. Classes use SEPARATE MARKUP (.mobile-classes div).
+    Mobile (≤768px): species tables → cards. Classes use SEPARATE MARKUP (.mobile-classes div, .sp-section, .sb-section).
     Print: A4 landscape, .book-links hidden, notes visible
 -->
 <!DOCTYPE html>
@@ -90,8 +91,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .book-links a + a::before { content: ' · '; }
   .yr { font-weight: 400; font-size: 10.5px; color: var(--muted); }
   .cl { font-weight: 600; white-space: nowrap; min-width: 62px; }
-  .sp { color: var(--muted); font-size: 12px; font-style: italic; }
-  .n { display: inline-block; font: 700 8px/1.4 'Cinzel', serif; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 3px; margin-left: 2px; vertical-align: middle; text-transform: uppercase; letter-spacing: .3px; }
+  .sp, .sb { color: var(--muted); font-size: 12px; font-style: italic; }
+  .vr { display: inline-block; font: 700 8px/1.4 'Cinzel', serif; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 3px; margin-left: 2px; vertical-align: middle; text-transform: uppercase; letter-spacing: .3px; }
   .ga td { background: var(--bg-a); }
   .gb td { background: var(--bg-b); }
   .notes { background: var(--bg-b); border: 1px solid var(--divider); border-radius: 4px; padding: 12px 16px; margin-top: 12px; font-size: 12.5px; line-height: 1.45; }
@@ -122,6 +123,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .mobile-classes .book-card .class-row .subs { display: inline; }
   .mobile-classes .book-card .sp-section { color: var(--muted); font-size: 11px; font-style: italic; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
   .mobile-classes .book-card .sp-section::before { content: 'Supersedes: '; font-style: normal; font-weight: 600; }
+  .mobile-classes .book-card .sb-section { color: var(--muted); font-size: 11px; font-style: italic; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
+  .mobile-classes .book-card .sb-section::before { content: 'Superseded by: '; font-style: normal; font-weight: 600; }
 
   /* ── Mobile: cards ── */
   @media screen and (max-width: 768px) {
@@ -152,10 +155,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .species-table .bk br { display: none; }
     .species-table .yr { margin-left: 4px; }
     .species-table td:nth-child(2) { padding: 4px 0; }
-    .species-table td:last-child { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
+    .species-table td.sp, .species-table td.sb { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--divider); }
     .species-table td.sp::before { content: 'Supersedes: '; font-style: normal; font-weight: 600; color: var(--muted); }
-    .species-table .sp:empty { display: none; }
-    .species-table td:last-child:has(.sp:empty) { display: none; }
+    .species-table td.sb::before { content: 'Superseded by: '; font-style: normal; font-weight: 600; color: var(--muted); }
+    .species-table .sp:empty, .species-table .sb:empty { display: none; }
 
     .classes-table { display: none; }
     .mobile-classes { display: block; }
@@ -179,8 +182,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     td { padding: 2px 5px; }
     .bk { font-size: 9.5px; }
     .yr { font-size: 7.5px; }
-    .n { font-size: 6.5px; padding: 0 2px; }
-    .sp { font-size: 8px; }
+    .vr { font-size: 6.5px; padding: 0 2px; }
+    .sp, .sb { font-size: 8px; }
     .ga td { background: #f2f2f2 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     .notes { font-size: 8px; padding: 6px 10px; page-break-inside: avoid; }
     .notes h3 { font-size: 9px; }
@@ -197,7 +200,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <h1>Allowed Races &amp; Classes with Dungeon Mistress CyberGwen</h1>
-<p class="sub">PHB 2024 · TCoE · XGtE · Fizban's · MotM · FR: Heroes of Faerûn · Eberron: Forge of the Artificer · Exploring Eberron · Chronicles of Eberron · FoE: Quickstone — duplicates &amp; superseded entries removed</p>
+<p class="sub">PHB 2024 · TCoE · XGtE · Fizban's · MotM · FR: Heroes of Faerûn · Eberron: Forge of the Artificer · E: Rising from the Last War · Exploring Eberron · Chronicles of Eberron · FoE: Quickstone — duplicates &amp; superseded entries removed</p>
 <div class="mc-note">
   <b>This list isn't strict</b> — if you have a character idea that needs something not listed here, bring it up and we'll talk. These are the pre-approved options; everything else is open for discussion.
 </div>
@@ -210,11 +213,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ════════════════════════════════════════════════════ -->
 <h2>Species</h2>
 <table class="species-table">
-  <thead><tr><th style="width:18%">Book</th><th>Species</th><th style="width:22%">Supersedes</th></tr></thead>
+  <thead><tr><th style="width:16%">Book</th><th>Species</th><th style="width:18%">Supersedes</th><th style="width:18%">Superseded by</th></tr></thead>
   <tbody>
-    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/phb-2024" target="_blank">Player's Handbook</a><br><span class="yr">Sep 2024</span></td><td>Aasimar, Dragonborn, Dwarf, Elf (Drow/High/Wood), Gnome (Forest/Rock), Goliath, Halfling (Lightfoot/Stout), Human, Orc, Tiefling (Abyssal/Chthonic/Infernal)</td><td class="sp">Aasimar, Goliath, Orc from MotM · Chromatic &amp; Metallic Dragonborn from Fizban's</td></tr>
-    <tr class="gb"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/mpmm" target="_blank">Monsters of the Multiverse</a><br><span class="yr">May 2022</span></td><td>Aarakocra, Bugbear, Centaur, Deep Gnome, Duergar, Eladrin, Fairy, Firbolg, Genasi (Air/Earth/Fire/Water), Githyanki, Githzerai, Goblin, Harengon, Hobgoblin, Kenku, Kobold, Lizardfolk, Minotaur, Owlin, Satyr, Sea Elf, Shadar-kai, Tabaxi, Tortle, Triton, Yuan-ti</td><td class="sp">25 listed (excl. Aasimar, Changeling, Goliath, Orc, Shifter — superseded by PHB 2024 / Forge)</td></tr>
-    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/ftod" target="_blank">Fizban's Treasury of Dragons</a><br><span class="yr">Oct 2021</span></td><td>Gem Dragonborn (Amethyst/Crystal/Emerald/Sapphire/Topaz)</td><td class="sp"></td></tr>
+    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/phb-2024" target="_blank">Player's Handbook</a><br><span class="yr">Sep 2024</span></td><td>Aasimar, Dragonborn, Dwarf, Elf (Drow/High/Wood), Gnome (Forest/Rock), Goliath, Halfling (Lightfoot/Stout), Human, Orc, Tiefling (Abyssal/Chthonic/Infernal)</td><td class="sp">Aasimar from MotM + ExE · Goliath, Orc from MotM · Chromatic &amp; Metallic Dragonborn from Fizban's</td><td class="sb"></td></tr>
+    <tr class="gb"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/mpmm" target="_blank">Monsters of the Multiverse</a><br><span class="yr">May 2022</span></td><td>Aarakocra, Bugbear, Centaur, Deep Gnome, Duergar, Eladrin, Fairy, Firbolg, Genasi (Air/Earth/Fire/Water), Githyanki, Githzerai, Goblin, Harengon, Hobgoblin, Kenku, Kobold, Lizardfolk, Minotaur, Owlin, Satyr, Sea Elf, Shadar-kai, Tabaxi, Tortle, Triton, Yuan-ti</td><td class="sp"></td><td class="sb">Aasimar, Goliath, Orc → PHB 2024 · Changeling, Shifter → E:FotA</td></tr>
+    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/ftod" target="_blank">Fizban's Treasury of Dragons</a><br><span class="yr">Oct 2021</span></td><td>Gem Dragonborn (Amethyst/Crystal/Emerald/Sapphire/Topaz)</td><td class="sp"></td><td class="sb">Chromatic &amp; Metallic Dragonborn → PHB 2024</td></tr>
   </tbody>
 </table>
 
@@ -223,12 +226,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ════════════════════════════════════════════════════ -->
 <h2 class="eb-head">Eberron Species</h2>
 <table class="species-table eb-table">
-  <thead><tr><th style="width:18%">Book</th><th>Species</th><th style="width:22%">Supersedes</th></tr></thead>
+  <thead><tr><th style="width:16%">Book</th><th>Species</th><th style="width:18%">Supersedes</th><th style="width:18%">Superseded by</th></tr></thead>
   <tbody>
-    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">Eberron: Forge of the Artificer</a><br><span class="yr">Dec 2025</span></td><td>Changeling, Kalashtar, Khoravar, Shifter, Warforged</td><td class="sp">Changeling, Shifter from MotM</td></tr>
-    <tr class="gb"><td class="bk"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">Frontiers of Eberron: Quickstone</a><br><span class="yr">Sep 2024</span></td><td>Gargoyle, Gnoll, Harpy, Medusa, Worg</td><td class="sp">Gnoll from ExE (2024 update)</td></tr>
-    <tr class="ga"><td class="bk"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">Chronicles of Eberron</a><br><span class="yr">Nov 2022</span></td><td>Gnome: Lorghalan, Goliath: Desert Born, Warforged: Living Construct <span class="n">variant</span></td><td class="sp"></td></tr>
-    <tr class="gb"><td class="bk"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">Exploring Eberron</a><br><span class="yr">Jul 2020</span><div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/exeb" target="_blank">D&amp;D Beyond</a></div></td><td>Aereni Elf, Ruinbound Dwarf, Dhakaani Ghaal'dar (Hobgoblin), Dhakaani Golin'dar (Goblin), Dhakaani Guul'dar (Bugbear)</td><td class="sp">Aasimar → 2024 PHB · Gnoll → FoE: Quickstone (2024)</td></tr>
+    <tr class="ga"><td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">Eberron: Forge of the Artificer</a><br><span class="yr">Dec 2025</span></td><td>Changeling, Kalashtar, Khoravar, Shifter, Warforged</td><td class="sp">Changeling, Shifter from MotM</td><td class="sb"></td></tr>
+    <tr class="gb"><td class="bk"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">Frontiers of Eberron: Quickstone</a><br><span class="yr">Sep 2024</span></td><td>Gargoyle, Gnoll, Harpy, Medusa, Worg</td><td class="sp">Gnoll from ExE</td><td class="sb"></td></tr>
+    <tr class="ga"><td class="bk"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">Chronicles of Eberron</a><br><span class="yr">Nov 2022</span></td><td>Gnome: Lorghalan, Goliath: Desert Born, Warforged: Living Construct <span class="vr">variant</span></td><td class="sp"></td><td class="sb"></td></tr>
+    <tr class="gb"><td class="bk"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">Exploring Eberron</a><br><span class="yr">Jul 2020</span><div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/exeb" target="_blank">D&amp;D Beyond</a></div></td><td>Aereni Elf, Ruinbound Dwarf, Dhakaani Ghaal'dar (Hobgoblin), Dhakaani Golin'dar (Goblin), Dhakaani Guul'dar (Bugbear)</td><td class="sp"></td><td class="sb">Aasimar → PHB 2024 · Gnoll → FoE:Q</td></tr>
   </tbody>
 </table>
 
@@ -238,10 +241,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2>Classes &amp; Subclasses</h2>
 <table class="classes-table">
   <thead><tr>
-    <th style="width:14%">Book</th>
-    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
-    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
-    <th style="width:24%">Supersedes (from XGtE / older)</th>
+    <th style="width:13%">Book</th>
+    <th style="width:6%">Class</th><th style="width:19%">Subclasses</th>
+    <th style="width:6%">Class</th><th style="width:19%">Subclasses</th>
+    <th style="width:17%">Supersedes</th>
+    <th style="width:20%">Superseded by</th>
   </tr></thead>
   <tbody>
     <!-- PHB 2024: 12 classes = 6 rows -->
@@ -250,6 +254,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Barbarian</td><td>Berserker, Wild Heart, World Tree, Zealot</td>
       <td class="cl">Bard</td><td>Dance, Glamour, Lore, Valor</td>
       <td class="sp">Zealot (XGtE), Glamour (XGtE)</td>
+      <td class="sb" rowspan="6"></td>
     </tr>
     <tr class="ga" data-book="Player's Handbook · Sep 2024">
       <td class="cl">Cleric</td><td>Life, Light, Trickery, War</td>
@@ -282,12 +287,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="bk" rowspan="4"><a href="https://www.dndbeyond.com/sources/dnd/frhof" target="_blank">FR: Heroes of Faerûn</a><br><span class="yr">Nov 2025</span></td>
       <td class="cl">Bard</td><td>College of the Moon</td>
       <td class="cl">Cleric</td><td>Knowledge Domain</td>
-      <td class="sp">Knowledge Domain (2014 PHB)</td>
+      <td class="sp"></td>
+      <td class="sb" rowspan="4"></td>
     </tr>
     <tr class="gb" data-book="FR: Heroes of Faerûn · Nov 2025">
       <td class="cl">Fighter</td><td>Banneret</td>
       <td class="cl">Paladin</td><td>Oath of the Noble Genies</td>
-      <td class="sp">Banneret / Purple Dragon Knight (SCAG)</td>
+      <td class="sp"></td>
     </tr>
     <tr class="gb" data-book="FR: Heroes of Faerûn · Nov 2025">
       <td class="cl">Ranger</td><td>Winter Walker</td>
@@ -297,7 +303,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <tr class="gb" data-book="FR: Heroes of Faerûn · Nov 2025">
       <td class="cl">Sorcerer</td><td>Spellfire Sorcery</td>
       <td class="cl">Wizard</td><td>Bladesinger</td>
-      <td class="sp">Bladesinger (TCoE / SCAG)</td>
+      <td class="sp">Bladesinger (TCoE)</td>
     </tr>
 
     <!-- Fizban's (Oct 2021): 2 subclasses = 1 row -->
@@ -306,6 +312,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Monk</td><td>Way of the Ascendant Dragon</td>
       <td class="cl">Ranger</td><td>Drakewarden</td>
       <td class="sp"></td>
+      <td class="sb"></td>
     </tr>
 
     <!-- TCoE (Nov 2020): 11 classes = 6 rows -->
@@ -314,6 +321,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Barbarian</td><td>Beast, Wild Magic</td>
       <td class="cl">Bard</td><td>Creation, Eloquence</td>
       <td class="sp"></td>
+      <td class="sb" rowspan="6">Stars, Psi Warrior, Mercy, Glory, Fey Wanderer, Soulknife, Aberrant, Clockwork → PHB 2024 · Bladesinger → FR:Heroes · Artificer → E:FotA</td>
     </tr>
     <tr class="gb" data-book="Tasha's Cauldron of Everything · Nov 2020">
       <td class="cl">Cleric</td><td>Order, Peace, Twilight</td>
@@ -347,6 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Barbarian</td><td>Ancestral Guardian, Storm Herald</td>
       <td class="cl">Bard</td><td>Swords, Whispers</td>
       <td class="sp"></td>
+      <td class="sb" rowspan="6">Zealot, Glamour, Gloom Stalker, Celestial → PHB 2024</td>
     </tr>
     <tr class="ga" data-book="Xanathar's Guide to Everything · Nov 2017">
       <td class="cl">Cleric</td><td>Forge Domain, Grave Domain</td>
@@ -382,10 +391,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 class="eb-head">Eberron Classes &amp; Subclasses</h2>
 <table class="classes-table eb-table">
   <thead><tr>
-    <th style="width:14%">Book</th>
-    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
-    <th style="width:7%">Class</th><th style="width:24%">Subclasses</th>
-    <th style="width:24%">Supersedes</th>
+    <th style="width:13%">Book</th>
+    <th style="width:6%">Class</th><th style="width:19%">Subclasses</th>
+    <th style="width:6%">Class</th><th style="width:19%">Subclasses</th>
+    <th style="width:17%">Supersedes</th>
+    <th style="width:20%">Superseded by</th>
   </tr></thead>
   <tbody>
     <!-- Forge of the Artificer (Dec 2025): 1 class = 1 row -->
@@ -393,7 +403,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">Eberron: Forge of the Artificer</a><br><span class="yr">Dec 2025</span></td>
       <td class="cl">Artificer</td><td>Alchemist, Armorer, Artillerist, Battle Smith, Cartographer</td>
       <td></td><td></td>
-      <td class="sp">Artificer + 4 subclasses (E:RftLW / TCoE)</td>
+      <td class="sp">Artificer + 4 subclasses (TCoE / E:RftLW)</td>
+      <td class="sb"></td>
     </tr>
 
     <!-- Frontiers of Eberron: Quickstone (Sep 2024): 6 subclasses = 3 rows -->
@@ -402,6 +413,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Barbarian</td><td>Path of the Demonshard</td>
       <td class="cl">Bard</td><td>College of Wands</td>
       <td class="sp"></td>
+      <td class="sb" rowspan="3"></td>
     </tr>
     <tr class="gb" data-book="Frontiers of Eberron: Quickstone · Sep 2024">
       <td class="cl">Cleric</td><td>Commerce Domain</td>
@@ -420,6 +432,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Bard</td><td>College of the Fury</td>
       <td class="cl">Cleric</td><td>Aspiration Domain</td>
       <td class="sp"></td>
+      <td class="sb" rowspan="3"></td>
     </tr>
     <tr class="ga" data-book="Chronicles of Eberron · Nov 2022">
       <td class="cl">Druid</td><td>Stonesinger (variant)</td>
@@ -438,6 +451,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Artificer</td><td>Forge Adept, Maverick</td>
       <td class="cl">Bard</td><td>College of the Dirge Singer</td>
       <td class="sp"></td>
+      <td class="sb" rowspan="3"></td>
     </tr>
     <tr class="gb" data-book="Exploring Eberron · Jul 2020">
       <td class="cl">Cleric</td><td>Mind Domain</td>
@@ -448,6 +462,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td class="cl">Monk</td><td>Way of the Living Weapon</td>
       <td></td><td></td>
       <td class="sp"></td>
+    </tr>
+
+    <!-- Eberron: Rising from the Last War (Nov 2019): all superseded -->
+    <tr class="ga book-start" data-book="Eberron: Rising from the Last War · Nov 2019">
+      <td class="bk"><a href="https://www.dndbeyond.com/sources/dnd/erlw" target="_blank">Eberron: Rising from the Last War</a><br><span class="yr">Nov 2019</span></td>
+      <td class="sp" colspan="4" style="text-align:center;">All player options superseded — setting lore still essential</td>
+      <td class="sp"></td>
+      <td class="sb">Artificer + 3 subclasses → E:FotA</td>
     </tr>
   </tbody>
 </table>
@@ -470,6 +492,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Abjurer, Diviner, Evoker, Illusionist</span></div>
     <div class="sp-section">Zealot, Glamour (XGtE) · Stars (TCoE) · Psi Warrior, Mercy (TCoE) · Glory, Fey Wanderer (TCoE), Gloom Stalker (XGtE) · Soulknife, Aberrant, Clockwork (TCoE) · Celestial (XGtE)</div>
   </div>
+  <!-- FR:Heroes: no superseded-by -->
   <div class="book-card">
     <div class="book-name"><a href="https://www.dndbeyond.com/sources/dnd/frhof" target="_blank">FR: Heroes of Faerûn</a> <span class="yr">Nov 2025</span></div>
     <div class="class-row"><span class="cl">Bard:</span> <span class="subs">College of the Moon</span></div>
@@ -480,7 +503,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Scion of the Three</span></div>
     <div class="class-row"><span class="cl">Sorcerer:</span> <span class="subs">Spellfire Sorcery</span></div>
     <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Bladesinger</span></div>
-    <div class="sp-section">Knowledge Domain (2014 PHB) · Banneret / Purple Dragon Knight (SCAG) · Bladesinger (TCoE / SCAG)</div>
+    <div class="sp-section">Bladesinger (TCoE)</div>
   </div>
   <div class="book-card">
     <div class="book-name"><a href="https://www.dndbeyond.com/sources/dnd/ftod" target="_blank">Fizban's Treasury of Dragons</a> <span class="yr">Oct 2021</span></div>
@@ -500,6 +523,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="class-row"><span class="cl">Rogue:</span> <span class="subs">Phantom</span></div>
     <div class="class-row"><span class="cl">Warlock:</span> <span class="subs">Fathomless, Genie</span></div>
     <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">Order of Scribes</span></div>
+    <div class="sb-section">Stars, Psi Warrior, Mercy, Glory, Fey Wanderer, Soulknife, Aberrant, Clockwork → PHB 2024 · Bladesinger → FR:Heroes · Artificer → E:FotA</div>
   </div>
   <div class="book-card">
     <div class="book-name"><a href="https://www.dndbeyond.com/sources/dnd/xgte" target="_blank">Xanathar's Guide to Everything</a> <span class="yr">Nov 2017</span></div>
@@ -515,6 +539,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="class-row"><span class="cl">Sorcerer:</span> <span class="subs">Divine Soul, Shadow Magic, Storm Sorcery</span></div>
     <div class="class-row"><span class="cl">Warlock:</span> <span class="subs">Hexblade</span></div>
     <div class="class-row"><span class="cl">Wizard:</span> <span class="subs">War Magic</span></div>
+    <div class="sb-section">Zealot, Glamour, Gloom Stalker, Celestial → PHB 2024</div>
   </div>
 </div>
 
@@ -523,7 +548,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="book-card">
     <div class="book-name"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">Eberron: Forge of the Artificer</a> <span class="yr">Dec 2025</span></div>
     <div class="class-row"><span class="cl">Artificer:</span> <span class="subs">Alchemist, Armorer, Artillerist, Battle Smith, Cartographer</span></div>
-    <div class="sp-section">Artificer + 4 subclasses (E:RftLW / TCoE)</div>
+    <div class="sp-section">Artificer + 4 subclasses (TCoE / E:RftLW)</div>
   </div>
   <div class="book-card">
     <div class="book-name"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">Frontiers of Eberron: Quickstone</a> <span class="yr">Sep 2024</span></div>
@@ -549,6 +574,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="class-row"><span class="cl">Cleric:</span> <span class="subs">Mind Domain</span></div>
     <div class="class-row"><span class="cl">Druid:</span> <span class="subs">Circle of the Forged</span></div>
     <div class="class-row"><span class="cl">Monk:</span> <span class="subs">Way of the Living Weapon</span></div>
+  </div>
+  <div class="book-card">
+    <div class="book-name"><a href="https://www.dndbeyond.com/sources/dnd/erlw" target="_blank">Eberron: Rising from the Last War</a> <span class="yr">Nov 2019</span></div>
+    <div class="sb-section">Artificer + 3 subclasses → E:FotA</div>
   </div>
 </div>
 
