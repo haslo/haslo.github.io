@@ -1,0 +1,1450 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: graywall_mystery.html
+  PURPOSE: "The Graywall Mystery" campaign booklet for Amir (11) and Kais (15).
+           Session zero cheat sheet + slideshow mode for atmosphere images.
+  OWNER PREF: No MS Office. Self-contained HTML. Parchment theme.
+
+  TONE: Player-facing sections speak DIRECTLY to Amir & Kais (2nd person).
+        DM section speaks to DM (Gwen), uses "the kids" / "they" — no names.
+        DM-inline callouts remain DM-voice even in player sections.
+
+  STRUCTURE:
+    01  The Story So Far (the pitch, 2nd person)
+    02  Which Class? (Amir guidance + Kais picks freely)
+    03  Your Characters (backstory questions, direct to kids)
+    04  What You Need to Know (neighbours, food, boss, country)
+    05  Your Town (kid-friendly table of Graywall places)
+    06  What They Don't Need Yet (sisters, politics, wider world) [DM]
+    07  The Hook (creepy plants, missing people) [DM]
+    08  The Secret (vampire gardener — DM eyes only) [DM]
+    09  Session Zero Agenda (incl. map-drawing pointers) [DM]
+    10  Sessions (campaign log and session notes) [Outside DM section]
+
+  SLIDESHOW: JS overlay triggered by button. Cycles through 8 images with
+    intro text. Arrow keys / click to advance. Esc to close. Good for
+    showing the kid at session zero to set the mood.
+
+  IMAGES (media/kids_primer/):
+    night_domain.png, graywall_1.webp, graywall_2.webp, witches.png,
+    stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png
+
+  CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
+       Includes DM Graywall reference table and sources table (DM section).
+
+  DM SECTION ADDITIONS:
+    - Graywall quarters condensed into wide reference table
+    - References table with DMs Guild PDFs and official WotC books
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Graywall Mystery — Campaign Booklet</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
+<!-- End Google Tag Manager -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --teal: #2a6e7a;
+    --vampire: #4a1a3a;
+    --secret-bg: #f8f0f4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 15pt;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+
+  .page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 40px 60px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .header .tagline {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 12pt;
+  }
+
+  .rule {
+    width: 200px;
+    height: 1px;
+    margin: 24px auto;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 17pt;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin: 30px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 12pt;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin: 14px 0 4px;
+  }
+
+  p { margin-bottom: 10px; }
+
+  /* IMAGES */
+  .atmo {
+    width: 100%;
+    margin: 18px 0;
+    display: block;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    padding: 4px 0;
+  }
+
+  .atmo img {
+    width: 100%;
+    max-height: 550px;
+    object-fit: contain;
+    display: block;
+    opacity: 0.88;
+  }
+
+  .atmo figcaption {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-align: center;
+    color: var(--muted);
+    font-style: italic;
+    padding: 6px 0 0;
+    opacity: 0.75;
+  }
+
+  /* INLINE DM IMAGES — small floated images to break up text */
+  .dm-img {
+    width: 160px;
+    max-height: 140px;
+    object-fit: cover;
+    opacity: 0.7;
+    border: 1px solid var(--divider);
+    margin-bottom: 8px;
+  }
+
+  .dm-img.left {
+    float: left;
+    margin-right: 16px;
+    margin-top: 4px;
+  }
+
+  .dm-img.right {
+    float: right;
+    margin-left: 16px;
+    margin-top: 4px;
+  }
+
+  .dm-clear { clear: both; }
+
+  /* CALLOUTS — default is DM (red), like eberron-primer */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: #eaddd8;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 14pt;
+  }
+
+  .callout.player {
+    border-left-color: var(--teal);
+    background: #e8eff2;
+  }
+
+  .callout.secret {
+    border-left-color: var(--vampire);
+    background: var(--secret-bg);
+  }
+
+  .callout.gold {
+    border-left-color: var(--gold);
+    background: #eee8dc;
+  }
+
+  .callout .label {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .callout.player .label {
+    color: var(--teal);
+  }
+
+  .callout.secret .label {
+    color: var(--vampire);
+  }
+
+  .callout.gold .label {
+    color: var(--gold);
+  }
+
+  /* CLASS TABLE */
+  .class-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+
+  .class-card {
+    background: #eee8dc;
+    padding: 12px 14px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .class-card.pick { border-left-color: var(--teal); background: #e8eff2; }
+
+  .class-card .class-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .class-card .class-why {
+    font-size: 12pt;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .class-card .class-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    background: var(--teal);
+    padding: 1px 6px;
+    margin-top: 4px;
+  }
+
+  /* TABLES */
+  .graywall-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 12pt;
+  }
+
+  .graywall-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--gold);
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  .graywall-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .graywall-table tr:nth-child(even) td {
+    background: #eee8dc;
+  }
+
+  .graywall-table td:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .ref-table th {
+    background: var(--accent);
+  }
+
+  /* AGENDA LIST */
+  .agenda {
+    counter-reset: agenda;
+    margin: 14px 0;
+  }
+
+  .agenda-item {
+    counter-increment: agenda;
+    padding: 8px 0 8px 36px;
+    position: relative;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .agenda-item:last-child { border-bottom: none; }
+
+  .agenda-item::before {
+    content: counter(agenda);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--gold);
+    width: 26px;
+    text-align: center;
+  }
+
+  .agenda-item strong { color: var(--accent); }
+
+  blockquote {
+    border-left: 3px solid var(--muted);
+    padding: 6px 14px;
+    margin: 12px 0;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 13pt;
+  }
+
+  /* SLIDESHOW BUTTON */
+  .slideshow-btn {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--accent);
+    border: none;
+    padding: 10px 24px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .slideshow-btn:hover { background: var(--gold); }
+
+  /* SLIDESHOW OVERLAY */
+  .slideshow {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0a0a0a;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .slideshow.active { display: flex; }
+
+  .slideshow .slide-img {
+    max-width: 90vw;
+    max-height: 65vh;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .slideshow .slide-img.visible { opacity: 1; }
+
+  .slideshow .slide-text {
+    font-family: 'Cinzel', serif;
+    color: #c4b8a8;
+    font-size: 16pt;
+    letter-spacing: 2px;
+    text-align: center;
+    max-width: 700px;
+    padding: 24px 20px 0;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.2s;
+  }
+
+  .slideshow .slide-text.visible { opacity: 1; }
+
+  .slideshow .slide-counter {
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 2px;
+    color: #555;
+  }
+
+  .slideshow .slide-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 28px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 10pt;
+    font-style: italic;
+    color: #444;
+  }
+
+  /* DM SPOILER SECTION */
+  .dm-only {
+    display: none;
+  }
+
+  .dm-only.revealed {
+    display: block;
+  }
+
+  /* DM accordions — hidden by default, shown when DM mode active */
+  button.accordion-toggle.dm-only {
+    display: none;
+  }
+
+  button.accordion-toggle.dm-only.revealed {
+    display: block;
+  }
+
+  div.accordion-body.dm-only {
+    display: none;
+  }
+
+  div.accordion-body.dm-only.revealed {
+    display: block;
+  }
+
+  img.accordion-preview.dm-only {
+    display: none;
+  }
+
+  img.accordion-preview.dm-only.revealed {
+    display: block;
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .dm-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--accent);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    opacity: 0.7;
+  }
+
+  .dm-toggle:hover { background: var(--vampire); opacity: 1; }
+
+  .dm-warning {
+    background: var(--vampire);
+    color: var(--parchment);
+    padding: 18px 22px;
+    margin: 0 0 24px;
+    font-size: 13pt;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .dm-warning strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 14pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .dm-prelim {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--vampire);
+    opacity: 0.6;
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .footer {
+    margin-top: 36px;
+    text-align: center;
+    font-size: 9pt;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .back-link:hover { color: var(--accent); text-decoration: underline; }
+
+  /* TOC */
+  .toc {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+  .toc li {
+    display: inline;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    letter-spacing: 1px;
+  }
+
+  .toc li + li::before {
+    content: ' · ';
+    color: var(--divider);
+    margin: 0 6px;
+  }
+
+  .toc a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* ACCORDIONS */
+  .accordion-toggle {
+    display: block;
+    width: 100%;
+    font-family: 'Cinzel', serif;
+    font-size: 14pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--gold);
+    padding: 14px 0 8px;
+    margin: 28px 0 0;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.15s;
+    position: relative;
+  }
+
+  .accordion-toggle:first-of-type {
+    margin-top: 0;
+  }
+
+  .accordion-toggle::after {
+    content: '▾';
+    position: absolute;
+    right: 0;
+    font-size: 12pt;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+
+  .accordion-toggle.collapsed::after {
+    transform: rotate(-90deg);
+  }
+
+  .accordion-toggle:hover {
+    color: var(--gold);
+  }
+
+  .accordion-toggle.no-toggle {
+    cursor: default;
+  }
+
+  .accordion-toggle.no-toggle::after {
+    display: none;
+  }
+
+  .accordion-preview {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    opacity: 0.7;
+    border-bottom: 1px solid var(--divider);
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+    display: block;
+  }
+
+  .accordion-preview.dm-preview {
+    max-height: 90px;
+    opacity: 0.5;
+  }
+
+  .accordion-preview.faded {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .accordion-body {
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .accordion-body.collapsed {
+    max-height: 0 !important;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 20px 14px 36px; }
+    .header h1 { font-size: 21pt; }
+    h2 { font-size: 15pt; }
+    .class-grid { grid-template-columns: 1fr; }
+    .slideshow .slide-text { font-size: 13pt; }
+    .graywall-table { font-size: 11pt; }
+    .graywall-table th { font-size: 8pt; }
+  }
+
+  /* Back-to-top — screen only */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--parchment);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 100;
+  }
+  .back-to-top:hover { opacity: 1; }
+
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .page { max-width: none; padding: 20px; }
+    .header h1 { font-size: 20pt; }
+    h2 { font-size: 13pt; margin-top: 18px; }
+    .callout, .class-card { break-inside: avoid; }
+    .graywall-table { break-inside: avoid; }
+    .atmo img { opacity: 1; }
+    .back-link, .slideshow-btn, .dm-toggle, .toc, .accordion-toggle, .accordion-preview, .back-to-top { display: none; }
+    .accordion-body { max-height: none !important; overflow: visible !important; }
+    .slideshow { display: none !important; }
+    .dm-only, .dm-inline { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5SNKTZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager -->
+
+<!-- SLIDESHOW OVERLAY -->
+<div class="slideshow" id="slideshow">
+  <img class="slide-img" id="slide-img" src="" alt="">
+  <div class="slide-text" id="slide-text"></div>
+  <div class="slide-counter" id="slide-counter"></div>
+  <div class="slide-hint" id="slide-hint">click or &rarr; to continue &middot; esc to close</div>
+</div>
+
+<div class="page" id="top">
+  <div class="header">
+    <h1>The Graywall Mystery</h1>
+    <div class="tagline">An Eberron campaign for Amir &amp; Kais</div>
+    <button class="dm-toggle" id="dm-toggle" onclick="toggleDM()">DM</button>
+  </div>
+
+  <ul class="toc">
+    <li><a href="#" onclick="startSlideshow(); return false;">Intro Slideshow</a></li>
+    <li><a href="#" onclick="openAccordion('session-zero'); return false;">Session Zero</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-graywall'); return false;">Graywall Detail</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-world'); return false;">The World</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Villain</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero (DM)</a></li>
+    <li><a href="#" onclick="openAccordion('campaign-log'); return false;">Campaign Log</a></li>
+  </ul>
+
+  <!-- INTRO SLIDESHOW — styled like accordion header but not collapsible -->
+  <div class="accordion-toggle no-toggle" id="slideshow-section">Intro Slideshow</div>
+  <div style="text-align:center; padding: 16px 0;">
+    <button class="slideshow-btn" onclick="startSlideshow()">See Your World</button>
+  </div>
+
+  <!-- ACCORDION 2: SESSION ZERO -->
+  <button class="accordion-toggle collapsed" id="session-zero" onclick="toggleAccordion(this)">Session Zero</button>
+  <img class="accordion-preview" id="preview-session-zero" src="media/kids_primer/graywall_2.webp" alt="Graywall streets">
+  <div class="accordion-body collapsed" id="acc-session-zero">
+
+  <!-- 1. THE PITCH -->
+  <h2>The Story So Far</h2>
+
+  <div class="callout player">
+    <span class="label">Your World</span>
+    You live in a town called Graywall. It's a frontier town in a country of monsters — but the monsters aren't all bad. Your neighbours are goblins, orcs, ogres, and weirder things. Three powerful sisters rule the country from far away. Lately, strange things are happening near town — dark plants growing where they shouldn't, people going missing. There might be a vampire involved. You're going to find out what's going on.
+  </div>
+
+  <p>You don't have to know everything about the world, Eberron, or the big war that happened before you were born. If you have questions, just ask — but honestly, your characters wouldn't know most of that stuff either. The world gets bigger as your story goes on.</p>
+
+  <div class="atmo"><img src="media/kids_primer/castle.webp" alt="A dark castle in the hills"><figcaption>Something old waits in the hills south of town.</figcaption></div>
+
+  <div class="callout dm-inline" style="display:none">
+    <span class="label">DM Note</span>
+    The younger one picks first. Once his character exists, send the older one the pitch plus whatever his brother picked — he'll build something complementary on instinct. He already plays D&D and is thinking about DMing, so he'll get it fast. Don't over-brief him — let the brothers figure out their dynamic at the table. The older one can handle a more complex class if he wants one.
+  </div>
+
+  <!-- 2. CLASS PICKS -->
+  <h2>Which Class?</h2>
+
+  <p>Amir, you have the Player's Handbook — pick whatever you want from it. Race, class, all your choice. But some classes are easier to start with than others. Here's a quick guide:</p>
+
+  <div class="class-grid">
+    <div class="class-card pick">
+      <span class="class-name">Fighter</span>
+      <span class="class-why">The simplest class in the game. "I hit things." Your turn is always clear, and it's hard to mess up. At level 3 you crit on a 19. Solid first character.</span>
+      <span class="class-tag">Easiest to learn</span>
+    </div>
+    <div class="class-card pick">
+      <span class="class-name">Barbarian</span>
+      <span class="class-why">Even simpler than fighter. "I get angry and hit harder." Rage is one button — press it and go. Zero spells. Great if you don't want to think about rules.</span>
+      <span class="class-tag">Simplest in the game</span>
+    </div>
+    <div class="class-card">
+      <span class="class-name">Ranger</span>
+      <span class="class-why">The tracker with an animal companion. Beast Master at level 3 — if you want a pet fighting alongside you, this is the one. You get a few spells too, but nothing overwhelming.</span>
+      <span class="class-tag">"I want a pet"</span>
+    </div>
+    <div class="class-card">
+      <span class="class-name">Rogue</span>
+      <span class="class-why">The sneaky one. Sneak Attack hits <em>hard</em> when you set it up right. Great in Graywall's alleys and ruins. A bit more tactical — you'll need to think about positioning.</span>
+      <span class="class-tag">"I want to sneak"</span>
+    </div>
+    <div class="class-card">
+      <span class="class-name">Cleric</span>
+      <span class="class-why">The healer. Heavy armour + mace means you can take a hit. Your turn is simple: "Hit with mace, Sacred Flame, or heal someone?" Three options, that's it. And in Graywall, a healer is a <em>big deal</em>.</span>
+      <span class="class-tag">"I want to heal"</span>
+    </div>
+    <div class="class-card">
+      <span class="class-name">Paladin</span>
+      <span class="class-why">Fighter + heals + a cool oath. More moving parts, but if you like the idea of a holy warrior who smites evil, this is incredibly satisfying. Divine Smite is a dopamine hit.</span>
+      <span class="class-tag">"I want to be a knight"</span>
+    </div>
+  </div>
+
+  <div class="callout dm-inline" style="display:none">
+    <span class="label">DM Note — Steer Away From (for now)</span>
+    For the younger one: full casters (wizard, sorcerer, warlock, druid, bard) are harder to run as a first character. Too many spell choices per turn, slot management, concentration tracking. If he insists on magic, cleric or paladin give him spells without the complexity. The older one can play whatever he wants — he'll be fine.
+  </div>
+
+  <div class="callout player">
+    <span class="label">Pick Any Race</span>
+    Any race from the Player's Handbook works in Graywall — this town has everything. A dwarf could be a trader from the Mror Holds. A tiefling fits right in with the monster-nation vibe. An elf might live in the Calabas. A halfling could be Bahiri's kitchen apprentice. A dragonborn is just another tough face in Bloodstone. Pick what looks cool — we'll figure out the backstory together.
+  </div>
+
+  <div class="callout dm-inline" style="display:none">
+    <span class="label">DM Note — If He Picks Cleric</span>
+    Life Domain is the easiest subclass. Heavy armour + mace means he's not squishy. Pre-pick his prepared spells: <strong>Healing Word</strong> (bonus action heal — the important one), <strong>Bless</strong>, <strong>Shield of Faith</strong>. Life Domain adds bonus spells automatically. Cantrips: <em>Sacred Flame</em> (attack) and <em>Guidance</em> (help friends). His turn becomes: "Hit with mace, Sacred Flame, or heal someone?" — three options, that's it. A healer in Graywall is also a <em>big deal</em> — the town's medical options are a medusa who turns you to stone until help arrives, or grist and hope. A kid who can close wounds with a prayer? The goblin quarter would love him.
+  </div>
+
+  <div class="atmo"><img src="media/kids_primer/graywall_1.webp" alt="Graywall — the frontier city"><figcaption>Graywall. A city built where no city should be.</figcaption></div>
+
+  <h3>Hey, Kais!</h3>
+
+  <p>You already play D&D — you know how classes work. Borrow the Player's Handbook from Amir and pick anything, including full casters. No restrictions. Once Amir has his character, you'll get the pitch and his pick. Build something that works with his.</p>
+
+  <!-- 3. YOUR CHARACTERS -->
+  <h2>Your Characters</h2>
+
+  <p>Once you've picked race and class, answer these about your character. Both of you.</p>
+
+  <div class="callout player">
+    <span class="label">Tell Your DM</span>
+    <strong>Where in town did you grow up?</strong><br>
+    Bloodstone is the busy market district. The Calabas is the quieter human quarter. Sar Kuraath is the goblin neighbourhood — everything there is tiny.<br><br>
+    <strong>Who's your best friend?</strong><br>
+    Could be a goblin, a young gnoll, an orc kid, a halfling cook — you pick.<br><br>
+    <strong>What's your favourite spot in town?</strong><br>
+    The arena? The market? A rooftop? The ruins under the city?<br><br>
+    <strong>What's something you're good at that isn't fighting?</strong><br>
+    Cooking? Running? Climbing? Fixing things? Talking your way out of trouble?
+  </div>
+
+  <p class="dm-inline" style="display:none"><em>DM note:</em> Write down their answers. These become plot hooks later. A best friend can be an NPC. A favourite spot can be where they find the first clue. A non-combat skill can save the day when swords won't.</p>
+
+  <!-- 4. WHAT YOU NEED TO KNOW -->
+  <h2>What You Need to Know</h2>
+
+  <p>This is what you'd know if you grew up in Graywall:</p>
+
+  <p><strong>Your neighbours:</strong> Goblins, orcs, ogres, gnolls, harpies (they sing the news), gargoyles (they deliver mail), a medusa or two (don't stare). Everyone gets along, mostly. Bigger creatures have the right of way.</p>
+
+  <p><strong>Food:</strong> There's free stew called <em>grist</em>. It's made from troll meat — the trolls grow it back, so don't feel bad. The best restaurant in town is run by a goblin chef called Bahiri, in the small-people quarter.</p>
+
+  <p><strong>The boss:</strong> A mind flayer named Xor'chylic runs the town from a tower. Tentacle face, reads minds. He's fair, but you really don't want to annoy him.</p>
+
+  <div class="atmo"><img src="media/kids_primer/xorchylic.png" alt="Xor'chylic, the mind flayer governor of Graywall"><figcaption>He knows what you're thinking. Literally.</figcaption></div>
+
+  <p><strong>The country:</strong> Droaam is run by three powerful sisters far away in the capital. They're ancient, they're powerful, and everyone respects them. That's all you need to know about them for now.</p>
+
+  <div class="atmo"><img src="media/kids_primer/witches.png" alt="The Daughters of Sora Kell"><figcaption>The Daughters of Sora Kell. They see everything. Even this.</figcaption></div>
+
+  <!-- 5. ON GRAYWALL — player-friendly short table -->
+  <h2>Your Town</h2>
+
+  <p>You grew up here. These are the places you know.</p>
+
+  <table class="graywall-table">
+    <thead>
+      <tr>
+        <th>Place</th>
+        <th>What's Cool About It</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Bloodstone</strong></td>
+        <td>The arena where people fight monsters! Challenge rings in the street where anyone can dare anyone. The Bloody Market sells weird stuff from old ruins.</td>
+      </tr>
+      <tr>
+        <td><strong>Sar Kuraath</strong></td>
+        <td>The goblin quarter — everything is tiny! Best food in town at Bahiri's. Free troll-meat stew (don't worry, the trolls grow it back).</td>
+      </tr>
+      <tr>
+        <td><strong>The Calabas</strong></td>
+        <td>The "normal" quarter with a theatre that only shows plays that are BANNED everywhere else.</td>
+      </tr>
+      <tr>
+        <td><strong>The Karda</strong></td>
+        <td>The fortress. The mind flayer lives here. Don't go unless invited.</td>
+      </tr>
+      <tr>
+        <td><strong>Around Town</strong></td>
+        <td>Harpies sing the news from rooftops. Gargoyles deliver mail (tip: give them riddles). Bigger creatures always have right of way. There's a night hag who sells bottled dreams from a tent that appears and vanishes.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div><!-- end acc-session-zero -->
+
+  <!-- DM ACCORDION 1: GRAYWALL IN MORE DETAIL -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-graywall" onclick="toggleAccordion(this)">Graywall in More Detail <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/graywall_1.webp" alt="">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-graywall">
+
+  <!-- DM GRAYWALL REFERENCE TABLE -->
+  <h2>Graywall Quarters — Reference <span class="dm-prelim">DM Only</span></h2>
+
+  <p>Detailed breakdown of the four quarters and local knowledge. Use this at the table to drop details as the kids explore.</p>
+
+  <table class="graywall-table">
+    <thead>
+      <tr>
+        <th>Quarter / Topic</th>
+        <th>Key Locations</th>
+        <th>Who's There</th>
+        <th>What to Know</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Bloodstone</strong></td>
+        <td>Arena, Challenge Rings, Bloody Market, The Labyrinth</td>
+        <td>Minotaurs, ogres, gnoll hunters, tiefling merchants</td>
+        <td>Largest quarter, red stone, everything happens here. Condemned fight for freedom in arena. Challenge rings at intersections for dares. Labyrinth inn in old mine tunnels.</td>
+      </tr>
+      <tr>
+        <td><strong>Sar Kuraath</strong></td>
+        <td>Bahiri's, grist mill, clan halls</td>
+        <td>Goblin clans (Bone Crows, Hammer-Knockers, Hidden Hands, Stonebreakers), kobolds</td>
+        <td>Everything goblin-sized. Best food in town. Grist = renewable troll meat (stew, pie, sausage). Harpy sings workers to sleep at end of each shift.</td>
+      </tr>
+      <tr>
+        <td><strong>The Calabas</strong></td>
+        <td>The Roar (plaza), Silenced Stage, Twilight Palace, Merry Marcher</td>
+        <td>House Tharashk guards, human traders, exiled artists</td>
+        <td>Foreign quarter, signs in Common, "normal" buildings. Banned plays at Silenced Stage. Jorasco healing house. Dragonne statue at center.</td>
+      </tr>
+      <tr>
+        <td><strong>The Karda</strong></td>
+        <td>Last Tower (court+prison), Xor'chylic's tower</td>
+        <td>Flayer Guard, Znir gnolls</td>
+        <td>Walled fortress. Don't go unless invited. Public executions. Architecture feeds on fear. Mind flayer reads intentions.</td>
+      </tr>
+      <tr>
+        <td><strong>Local Knowledge</strong></td>
+        <td>(everywhere)</td>
+        <td>Harpies, gargoyles, Jabra, medusas</td>
+        <td>News sung by harpies. Mail by garcoyles (love riddles). Bigger = right of way. Jabra (night hag) sells potions &amp; dreams from tent. Dhakaani ruins underneath.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- REFERENCES TABLE -->
+  <h2>References <span class="dm-prelim">DM Only</span></h2>
+
+  <p>Sources for Graywall, Droaam lore, and Eberron rules.</p>
+
+  <table class="graywall-table ref-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Type</th>
+        <th>Pages</th>
+        <th>What's There</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Exploring Eberron</strong> (Keith Baker)</td>
+        <td>DMs Guild PDF</td>
+        <td>pp.81–95</td>
+        <td>Droaam chapter: Graywall overview, grist economy, denizens, Daughters of Sora Kell, patrons</td>
+      </tr>
+      <tr>
+        <td><strong>Frontiers of Eberron: Quickstone</strong> (Keith Baker)</td>
+        <td>DMs Guild PDF</td>
+        <td>pp.60–68</td>
+        <td>Graywall city detail: four quarters, businesses, NPCs, Xor'chylic, Znir gnolls</td>
+      </tr>
+      <tr>
+        <td><strong>Chronicles of Eberron</strong> (Keith Baker)</td>
+        <td>DMs Guild PDF</td>
+        <td>pp.149–160</td>
+        <td>Vampires of Eberron, Lord Varonaen (p.156), weakness table (p.151), Grim Lords</td>
+      </tr>
+      <tr>
+        <td><strong>Eberron: Rising from the Last War</strong> (WotC)</td>
+        <td>Official</td>
+        <td>Ch.4</td>
+        <td>Khorvaire nations, Droaam overview, Graywall mention</td>
+      </tr>
+      <tr>
+        <td><strong>Player's Handbook 2024</strong> (WotC)</td>
+        <td>Official</td>
+        <td>—</td>
+        <td>Races, classes, spells — character creation</td>
+      </tr>
+      <tr>
+        <td><strong>Dungeon Master's Guide 2024</strong> (WotC)</td>
+        <td>Official</td>
+        <td>—</td>
+        <td>Rules, encounters, magic items</td>
+      </tr>
+      <tr>
+        <td><strong>Monster Manual 2025</strong> (WotC)</td>
+        <td>Official</td>
+        <td>—</td>
+        <td>Stat blocks for creatures in Droaam</td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div><!-- end acc-dm-graywall -->
+
+  <!-- DM ACCORDION 2: THE WORLD -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-world" onclick="toggleAccordion(this)">The World <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/ghost.png" alt="">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-world">
+
+  <h2>What They Don't Need Yet <span class="dm-prelim">DM Only</span></h2>
+
+  <img class="dm-img right" src="media/kids_primer/graywall_1.webp" alt="">
+
+  <p>Don't explain any of this unless they ask. Even then, give the short version first. If they dig deeper, you can expand — but let them set the pace.</p>
+
+  <p><strong>The Last War (894–996 YK)</strong> — a century-long war between the Five Nations of Khorvaire over the shattered Galifar kingdom. Ended two years ago with the Treaty of Thronehold. Millions dead. The current year is 998 YK.</p>
+
+  <div class="callout">
+    <span class="label">DM Note — The War and Droaam</span>
+    Droaam is deeply connected to the war — just not as a battlefield. The Daughters of Sora Kell united the monster races of western Breland around 986 YK and declared Droaam a sovereign nation. Nobody recognised them. But House Tharashk brokered Droaam's monsters as mercenaries to the warring nations — ogre shock troops, troll berserkers, harpy scouts, gargoyle couriers. Droaam profited enormously. Graywall itself was founded by the Daughters as the border gateway, the controlled point of contact between monster nation and human civilisation. The town is only about 12 years old. It's not ancient — it's a startup. If the kids ask about the war, the short version is: "There was a big war between the human countries. It ended a couple of years ago. Droaam sold soldiers to all sides and got rich. Your town was built to make that trade happen."
+  </div>
+
+  <p><strong>The Treaty of Thronehold</strong> — the peace treaty that ended the Last War. Crucially, it did <em>not</em> recognise Droaam as a legitimate nation. Breland still officially claims the territory. This is a simmering political tension that could matter later in the campaign, but for now it's background noise — nobody in Graywall cares what Breland thinks.</p>
+
+  <p><strong>The Mourning (994 YK)</strong> — the event that scared everyone into peace. An entire nation (Cyre) was destroyed overnight by an unknown magical catastrophe. Nobody knows what caused it. The former territory is now the Mournland — a dead, warped wasteland. This is the single most important event in recent Eberron history, and it's useful to have in your back pocket because it comes up in every Eberron source. But for the kids, it's a distant horror story — "a whole country just... died one day, and nobody knows why." Don't bring it up unless the campaign moves in that direction.</p>
+
+  <p><strong>Dragonmarks / Houses</strong> — hereditary magical marks that grant specific powers. Twelve dragonmarked Houses control most commerce and services across Khorvaire (healing, transportation, banking, communication). The relevant one is <strong>House Tharashk</strong> (Mark of Finding) — they run the Calabas, they broker the monster mercenaries, and they're the closest thing Graywall has to legitimate foreign authority. When the kids encounter Tharashk, the simple version is "they're like a powerful guild that controls trade." The deeper version — that the Houses are essentially supranational corporations with more power than most governments — can wait.</p>
+
+  <div class="callout">
+    <span class="label">DM Note — Tharashk in Graywall</span>
+    House Tharashk is the intermediary between Droaam and the Five Nations. They have an exclusive contract to broker Droaam's mercenaries and resources. Their compound in the Calabas is a little embassy of civilisation, but they're not naive — Tharashk members working in Droaam tend to be tough, pragmatic, and morally flexible. A Tharashk half-orc who's spent years in Graywall is a very different person from a Tharashk heir in Sharn. Could be a useful NPC — someone who knows both worlds and has complicated loyalties.
+  </div>
+
+  <p><strong>The wider world</strong> — a kid who grew up in Graywall would have heard of Breland (the big nation next door), Sharn (the enormous city of towers, traders sometimes come from there), and maybe Karrnath or Thrane if they paid attention to travellers' stories. But they wouldn't know or care about the details. Keep it vague: "there are big human cities far to the east, and a dead country nobody goes to." The world becomes real when the story takes them there.</p>
+
+  <p><strong>The Daughters of Sora Kell</strong> — Sora Katra (the schemer, wears faces), Sora Maenya (the brute, unstoppable), Sora Teraza (the seer, blind and ancient). They rule Droaam from the Great Crag. Every creature in Droaam fears and respects them. The kids know the Daughters exist and that they're in charge — that's the player-facing version. What the kids don't need: the Daughters' long-term political agenda (Droaam recognition, economic independence, military strength), the internal power dynamics between the three sisters, or the fact that Sora Teraza may be playing a much longer game than her sisters realise.</p>
+
+  <p><strong>Blood of Vol, the Draconic Prophecy, Overlords</strong> — deep Eberron lore. The Blood of Vol is a religion focused on divinity within the self (and sometimes undead immortality). The Draconic Prophecy is a cosmic pattern that dragons and demons have been interpreting for millennia. The Overlords are imprisoned fiendish entities of world-ending power. None of this is relevant until it is. File it under "maybe in six months, maybe never."</p>
+
+  <div class="dm-clear"></div>
+
+  <div class="callout">
+    <span class="label">DM Note — The Golden Rule</span>
+    If it's not in Graywall and it's not happening to the kids right now, it doesn't exist yet. The world gets bigger as they explore it. Resist the urge to world-build at them — 11-year-olds don't want a lecture, they want to open the next door. Feed the lore through encounters, not exposition.
+  </div>
+
+  </div><!-- end acc-dm-world -->
+
+  <!-- DM ACCORDION 3: HOOK & VILLAIN -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-hook" onclick="toggleAccordion(this)">Hook &amp; Villain <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/vampires.png" alt="">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-hook">
+
+  <h2>The Hook <span class="dm-prelim">Preliminary</span></h2>
+
+  <img class="dm-img left" src="media/kids_primer/night_domain.png" alt="">
+
+  <div class="callout player">
+    <span class="label">Player — Tell Them at Session 1</span>
+    Dark vines have been growing on the south wall of town. They appeared overnight. The city watch pulled them down, but they grew back by morning. A goblin kid touched one and couldn't feel his fingers for a day. Strange flowers are blooming in the gutters — blood-red, beautiful, and wrong. And a few people who went into the southern hills haven't come back.
+  </div>
+
+  <p>Let them investigate. The kids talk to people, follow the vines, find tracks. The trail leads south to an old ruin half-swallowed by dark vegetation. Inside: traps (plants, not mechanical), undead servants, and a garden that shouldn't exist underground — darkwood trees, luminescent flowers, and soil that smells sweet and wrong.</p>
+
+  <p>The vampire isn't there yet. First session is the garden, the clues, and the <em>feeling</em> that something intelligent is behind this. They find a journal, or a note, or a beautifully tended greenhouse in the middle of a ruin. Someone is cultivating this. Someone patient.</p>
+
+  <div class="dm-clear"></div>
+
+  <!-- 7. THE SECRET -->
+  <h2>The Villain <span class="dm-prelim">Preliminary — Subject to Change</span></h2>
+
+  <div class="callout secret">
+    <span class="label">Seriously, Players — Stop Reading</span>
+    This will ruin the story. Your DM has something cool planned and you'll enjoy it more if you don't know what's coming. Go do something else.
+  </div>
+
+  <img class="dm-img right" src="media/kids_primer/castle.webp" alt="">
+
+  <div class="callout secret">
+    <span class="label">DM Eyes Only</span>
+    Inspired by Lord Varonaen (Chronicles of Eberron p.156) — an ancient elven vampire obsessed with plants. He creates hybrid flora using darkwood, blood, and necromantic energy. His "gardens" are alive in the worst way: vines that drain life, roses that charm, trees grown from corpses.<br><br>
+    Your version: an old vampire who arrived in the Droaam borderlands decades ago. Presents himself as a travelling scholar — soft-spoken, courteous, endlessly curious about botany. He buys rare seeds from merchants in disguise. He asks about your favourite flowers. He remembers your name. He seems <em>kind</em>.<br><br>
+    He is not kind. He is a monster wearing patience like a coat. The garden is fed with blood. The beautiful darkwood trees? Grown from the bodies of the missing travellers — he plants them like bulbs. The luminescent flowers? They thrive on life force drained from living creatures through root systems that spread underground. The vines creeping up Graywall's south wall aren't an accident — they're infrastructure. He's extending his garden <em>into</em> the town, slowly, root by root. The missing people aren't collateral damage. They're compost.<br><br>
+    He knows exactly what he's doing and he enjoys it. But his mask is perfect — gentle, scholarly, a little eccentric. The kind of person you'd invite to dinner. He'd accept. He'd bring flowers. He'd compliment the cooking. And weeks later, something dark and beautiful would bloom in your garden where nothing was planted, and you'd never connect the two.<br><br>
+    <div class="dm-clear"></div><img class="dm-img left" src="media/kids_primer/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise his voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
+    <strong>The Truth:</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries across different regions — arrives, gardens, leaves when the locals catch on. Droaam is perfect for him because nobody's organised enough to notice a few missing travellers. He considers his work <em>art</em> and the deaths a necessary part of the creative process. Not apologetic. Not conflicted. Just patient.<br><br>
+    <strong>Weakness hook:</strong> Use the Eberron variant weakness table (Chronicles p.151). Pick something fun — maybe he <em>must accept any gift offered to him</em> (Keeper's Greed), or he <em>can't re-enter a building he's left for 13 days</em> (Never Look Back). Give the kids a way to be clever, not just strong.<br><br>
+    <div class="dm-clear"></div><img class="dm-img right" src="media/kids_primer/stairs.png" alt=""><strong>Escalation:</strong> To be planned once we know how much table time we have. The broad arc: strange plants → investigation → the vampire appears → someone goes missing → confrontation.
+  </div>
+
+  <blockquote>"Some gardeners plant in the dark."</blockquote>
+
+  </div><!-- end acc-dm-hook -->
+
+  <!-- DM ACCORDION 4: SESSION ZERO -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-zero" onclick="toggleAccordion(this)">Session Zero <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/stairs.png" alt="">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-zero">
+
+  <h2>Session Zero <span class="dm-prelim">DM Only</span></h2>
+
+  <img class="dm-img left" src="media/kids_primer/ghost.png" alt="">
+
+  <div class="agenda">
+    <div class="agenda-item"><strong>The Pitch</strong> — the 30-second version above, just with the younger one first. See if he's excited.</div>
+    <div class="agenda-item"><strong>Pick Race & Class</strong> — let him browse the PHB. Steer towards fighter/barbarian/ranger if he's unsure. If he picks a caster, pre-pick spells for the first sessions.</div>
+    <div class="agenda-item"><strong>Build the Character</strong> — name, where he grew up, best friend, favourite spot. Use standard array or point buy — don't roll stats, it's simpler and avoids bad luck.</div>
+    <div class="agenda-item"><strong>Draw the Map</strong> — sketch Graywall together on a piece of paper. Draw the outer wall (rough rectangle), then divide it into four quarters. Top-left: <strong>Bloodstone</strong> (the big, busy, dangerous one — arena, market, tanneries). Top-right: <strong>Sar Kuraath</strong> (goblin quarter — everything is small-sized, best food in town). Bottom-right: <strong>the Calabas</strong> (the "normal" quarter — signs in Common, human-ish buildings, theater). Bottom-centre: <strong>the Karda</strong> (the fortress — Xor'chylic's tower, jail, soldiers, don't go here). Draw the south wall at the bottom with squiggly vines climbing up it. Let him pick where he lives and add a detail ("there's a fountain" / "there's a stray worg cub"). Now it's <em>his</em> town.</div>
+    <div class="agenda-item"><strong>Brief the Older One</strong> — send him the pitch + his brother's character. Let him pick from the full PHB — he can handle any class. Tell him the brothers should know each other in-world. Don't spoil the vampire.</div>
+    <div class="agenda-item"><strong>Set Expectations</strong> — "We play for about an hour. You tell me what you want to do, I tell you what happens. If it's dangerous, you roll dice. If you die, you make a new character — but I'll try to be fair."</div>
+    <div class="agenda-item"><strong>End with the Hook</strong> — describe the vines on the south wall. Ask: "What do you do?" If they're hooked, session 1 is sorted.</div>
+  </div>
+
+  <div class="dm-clear"></div>
+
+  </div><!-- end acc-dm-session-zero -->
+
+  <!-- ACCORDION 3: CAMPAIGN LOG -->
+  <button class="accordion-toggle collapsed" id="campaign-log" onclick="toggleAccordion(this)">Campaign Log</button>
+  <img class="accordion-preview" id="preview-campaign-log" src="media/kids_primer/night_domain.png" alt="The lands of Droaam">
+  <div class="accordion-body collapsed" id="acc-campaign-log">
+
+  <div class="callout gold">
+    <span class="label">Session Zero — Amir</span>
+    About to begin. Character creation, map drawing, setting the scene.
+  </div>
+
+  <p><em>This section will be updated as the campaign progresses with notable events, player characters, and session notes.</em></p>
+
+  </div><!-- end acc-campaign-log -->
+
+  <div class="rule"></div>
+
+  <div class="footer">
+    D&D 5e (2024) · Eberron · Droaam<br>
+    <a class="back-link" href="index.html">&larr; Back to CyberGwen's D&D Table</a>
+  </div>
+</div>
+
+<a href="#top" class="back-to-top" aria-label="Back to top">&#x25B2;</a>
+
+<script>
+function openAccordion(id) {
+  var btn = document.getElementById(id);
+  if (!btn) return;
+  // Close all other accordions
+  document.querySelectorAll('.accordion-toggle:not(.no-toggle)').forEach(function(other) {
+    if (other.id === id) return;
+    var preview = other.nextElementSibling;
+    var body;
+    if (preview && preview.classList.contains('accordion-preview')) {
+      body = preview.nextElementSibling;
+    } else {
+      body = preview; preview = null;
+    }
+    if (body && !body.classList.contains('collapsed')) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.maxHeight = '0';
+      body.classList.add('collapsed');
+      other.classList.add('collapsed');
+      if (preview) preview.classList.remove('faded');
+    }
+  });
+  // Open target if collapsed
+  var preview = btn.nextElementSibling;
+  var body;
+  if (preview && preview.classList.contains('accordion-preview')) {
+    body = preview.nextElementSibling;
+  } else {
+    body = preview; preview = null;
+  }
+  if (body && body.classList.contains('collapsed')) {
+    // Force layout calc (element may have just become visible via DM toggle)
+    body.offsetHeight;
+    var h = body.scrollHeight;
+    if (h === 0) {
+      // scrollHeight is 0 if element was just revealed — open without animation
+      body.classList.remove('collapsed');
+      btn.classList.remove('collapsed');
+      if (preview) preview.classList.add('faded');
+      body.style.maxHeight = 'none';
+    } else {
+      body.style.maxHeight = h + 'px';
+      body.classList.remove('collapsed');
+      btn.classList.remove('collapsed');
+      if (preview) preview.classList.add('faded');
+      setTimeout(function() { body.style.maxHeight = 'none'; }, 400);
+    }
+  }
+  // Scroll to it
+  btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeAccordion(otherBtn) {
+  var p = otherBtn.nextElementSibling;
+  var b;
+  if (p && p.classList.contains('accordion-preview')) { b = p.nextElementSibling; } else { b = p; p = null; }
+  if (b && !b.classList.contains('collapsed')) {
+    b.style.maxHeight = b.scrollHeight + 'px';
+    b.offsetHeight;
+    b.style.maxHeight = '0';
+    b.classList.add('collapsed');
+    otherBtn.classList.add('collapsed');
+    if (p) p.classList.remove('faded');
+  }
+}
+
+function toggleAccordion(btn) {
+  var preview = btn.nextElementSibling;
+  var body;
+  if (preview && preview.classList.contains('accordion-preview')) {
+    body = preview.nextElementSibling;
+  } else {
+    body = preview;
+    preview = null;
+  }
+  if (!body) return;
+
+  var isCollapsed = body.classList.contains('collapsed');
+  if (isCollapsed) {
+    // Close all other open accordions
+    document.querySelectorAll('.accordion-toggle:not(.no-toggle)').forEach(function(other) {
+      if (other !== btn) closeAccordion(other);
+    });
+    // Open this one
+    body.offsetHeight;
+    var h = body.scrollHeight;
+    if (h === 0) {
+      body.classList.remove('collapsed');
+      btn.classList.remove('collapsed');
+      if (preview) preview.classList.add('faded');
+      body.style.maxHeight = 'none';
+    } else {
+      body.style.maxHeight = h + 'px';
+      body.classList.remove('collapsed');
+      btn.classList.remove('collapsed');
+      if (preview) preview.classList.add('faded');
+      setTimeout(function() { body.style.maxHeight = 'none'; }, 400);
+    }
+  } else {
+    // Close this one
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.offsetHeight;
+    body.style.maxHeight = '0';
+    body.classList.add('collapsed');
+    btn.classList.add('collapsed');
+    if (preview) preview.classList.remove('faded');
+  }
+}
+
+// Initialize open accordions on load
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.accordion-body:not(.collapsed)').forEach(function(body) {
+    body.style.maxHeight = 'none';
+    var preview = body.previousElementSibling;
+    if (preview && preview.classList.contains('accordion-preview')) {
+      preview.classList.add('faded');
+    }
+  });
+});
+
+function activateDM() {
+  var btn = document.getElementById('dm-toggle');
+  var dmEls = document.querySelectorAll('.dm-only');
+  var inlines = document.querySelectorAll('.dm-inline');
+  var tocDm = document.querySelectorAll('.toc-dm');
+  dmEls.forEach(function(el) { el.classList.add('revealed'); });
+  btn.textContent = 'DM ✓';
+  btn.style.background = 'var(--vampire)';
+  btn.style.opacity = '1';
+  inlines.forEach(function(n) { n.style.display = ''; });
+  tocDm.forEach(function(n) { n.style.display = ''; });
+}
+
+function deactivateDM() {
+  var btn = document.getElementById('dm-toggle');
+  var dmEls = document.querySelectorAll('.dm-only');
+  var inlines = document.querySelectorAll('.dm-inline');
+  var tocDm = document.querySelectorAll('.toc-dm');
+  dmEls.forEach(function(el) { el.classList.remove('revealed'); });
+  btn.textContent = 'DM';
+  btn.style.background = '';
+  btn.style.opacity = '';
+  inlines.forEach(function(n) { n.style.display = 'none'; });
+  tocDm.forEach(function(n) { n.style.display = 'none'; });
+}
+
+function isDMActive() {
+  return document.getElementById('dm-toggle').textContent.indexOf('✓') !== -1;
+}
+
+function updateURLParam(dmOn) {
+  var url = new URL(window.location);
+  if (dmOn) {
+    url.searchParams.set('dm_mode', 'true');
+  } else {
+    url.searchParams.delete('dm_mode');
+  }
+  history.replaceState(null, '', url);
+}
+
+function toggleDM() {
+  if (isDMActive()) {
+    deactivateDM();
+    updateURLParam(false);
+  } else {
+    var pw = prompt('Password:');
+    if (pw !== 'dm_only') return;
+    activateDM();
+    updateURLParam(true);
+  }
+}
+
+// Auto-activate DM mode from ?dm_mode=true
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('dm_mode') === 'true') {
+    // Wait for DOM to be ready (this script runs at end of body, so it already is)
+    activateDM();
+  }
+})();
+
+(function () {
+  var slides = [
+    {
+      img: 'media/kids_primer/night_domain.png',
+      text: 'Amir. Kais. This is the land around your town.\nWild, old, and full of things that don\'t sleep at night.'
+    },
+    {
+      img: 'media/kids_primer/graywall_1.webp',
+      text: 'Welcome to Graywall.\nA frontier city on the edge of the monster nation.'
+    },
+    {
+      img: 'media/kids_primer/graywall_2.webp',
+      text: 'Your neighbours are goblins, orcs, ogres, and stranger things.\nThey\'re loud. They\'re proud. And they look out for each other.'
+    },
+    {
+      img: 'media/kids_primer/xorchylic.png',
+      text: 'The town is run by a mind flayer named Xor\'chylic.\nTentacle face. Reads minds. Fair ruler.\nDon\'t annoy him.'
+    },
+    {
+      img: 'media/kids_primer/witches.png',
+      text: 'Three ancient sisters rule Droaam from the capital, far away.\nEveryone respects them. Nobody questions them.'
+    },
+    {
+      img: 'media/kids_primer/stairs.png',
+      text: 'Beneath the city lie the ruins of an empire that fell\nthousands of years ago. Some passages have never been opened.'
+    },
+    {
+      img: 'media/kids_primer/vampires.png',
+      text: 'Lately, something is wrong.\nPeople are going missing. Strange plants are growing where they shouldn\'t.'
+    },
+    {
+      img: 'media/kids_primer/castle.webp',
+      text: 'In the hills south of town, there\'s an old ruin.\nDark vines have swallowed it whole. Something lives inside.'
+    },
+    {
+      img: 'media/kids_primer/ghost.png',
+      text: 'You grew up here. This is your home.\nAnd you\'re both brave enough to find out what\'s going on.'
+    }
+  ];
+
+  var current = -1;
+  var overlay = document.getElementById('slideshow');
+  var imgEl = document.getElementById('slide-img');
+  var textEl = document.getElementById('slide-text');
+  var counterEl = document.getElementById('slide-counter');
+  var hintEl = document.getElementById('slide-hint');
+
+  // Preload all images
+  slides.forEach(function (s) {
+    var i = new Image();
+    i.src = s.img;
+  });
+
+  function show(index) {
+    current = index;
+    if (current >= slides.length) {
+      close();
+      return;
+    }
+
+    imgEl.classList.remove('visible');
+    textEl.classList.remove('visible');
+
+    setTimeout(function () {
+      imgEl.src = slides[current].img;
+      imgEl.alt = slides[current].text;
+      textEl.textContent = slides[current].text;
+      counterEl.textContent = (current + 1) + ' / ' + slides.length;
+      hintEl.style.display = current === 0 ? '' : 'none';
+
+      // Wait for image load then fade in
+      imgEl.onload = function () {
+        imgEl.classList.add('visible');
+        textEl.classList.add('visible');
+      };
+      // If cached, onload may already have fired
+      if (imgEl.complete) {
+        imgEl.classList.add('visible');
+        textEl.classList.add('visible');
+      }
+    }, current === 0 ? 10 : 300);
+  }
+
+  function next() { show(current + 1); }
+  function prev() { if (current > 0) show(current - 1); }
+  function close() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    current = -1;
+  }
+
+  window.startSlideshow = function () {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    show(0);
+  };
+
+  overlay.addEventListener('click', function (e) {
+    if (e.clientX < window.innerWidth * 0.3) {
+      prev();
+    } else {
+      next();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (current < 0) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+})();
+</script>
+
+</body>
+</html>
