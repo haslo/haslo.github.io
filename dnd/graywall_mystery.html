@@ -388,16 +388,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     justify-content: center;
     cursor: pointer;
     user-select: none;
+    overflow: hidden;
   }
 
   .slideshow.active { display: flex; }
 
-  .slideshow .slide-img {
+  /* Image container — grid stacks two imgs for crossfade */
+  .slideshow .slide-frame {
+    display: grid;
+    place-items: center;
     max-width: 90vw;
-    max-height: 65vh;
+    max-height: 58vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .slideshow .slide-img {
+    grid-area: 1 / 1;
+    display: block;
+    max-width: 90vw;
+    max-height: 58vh;
     object-fit: contain;
     opacity: 0;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.5s ease;
   }
 
   .slideshow .slide-img.visible { opacity: 1; }
@@ -409,10 +422,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     letter-spacing: 2px;
     text-align: center;
     max-width: 700px;
-    padding: 24px 20px 0;
-    line-height: 1.6;
+    padding: 14px 20px 0;
+    line-height: 1.5;
     opacity: 0;
-    transition: opacity 0.6s ease 0.2s;
+    transition: opacity 0.5s ease 0.15s;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.7);
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .slideshow .slide-text.visible { opacity: 1; }
@@ -671,8 +687,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .header h1 { font-size: 18pt; padding-right: 50px; }
     h2 { font-size: 15pt; }
     .class-grid { grid-template-columns: 1fr; }
-    .slideshow .slide-text { font-size: 12pt; max-width: 90vw; padding: 16px 12px 0; }
-    .slideshow .slide-img { max-height: 55vh; }
+    .slideshow .slide-text { font-size: 11pt; max-width: 90vw; padding: 8px 12px 0; line-height: 1.4; }
+    .slideshow .slide-frame { max-height: 50vh; }
+    .slideshow .slide-img { max-height: 50vh; }
+    /* Portrait images: pan top-to-bottom on phone */
+    .slideshow .slide-frame.portrait { max-width: 70vw; overflow: hidden; }
+    .slideshow .slide-frame.portrait .slide-img {
+      max-height: none; max-width: 70vw; width: 70vw; object-fit: cover;
+    }
+    .slideshow .slide-frame.portrait .slide-img.visible {
+      animation: panPortrait 12s ease-in-out infinite alternate;
+    }
+    @keyframes panPortrait {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(calc(-100% + 50vh)); }
+    }
     .accordion-preview { max-height: 100px; }
     .accordion-preview.dm-preview { max-height: 50px; }
 
@@ -688,6 +717,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     /* Agenda */
     .agenda li { padding-left: 28px; }
+  }
+
+  /* Phone landscape — very short viewport */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .slideshow .slide-frame { max-height: 65vh; }
+    .slideshow .slide-img { max-height: 65vh; }
+    .slideshow .slide-text { padding: 0 12px; margin-top: -2em; position: relative; z-index: 1; text-shadow: 0 2px 8px #000, 0 0 20px #000, 0 0 40px #000; }
+    .slideshow .slide-counter { bottom: 6px; right: 12px; font-size: 8pt; }
+    .slideshow .slide-hint { bottom: 6px; left: 12px; font-size: 8pt; }
+    .slideshow .slide-frame.portrait { max-width: 50vw; max-height: 70vh; overflow: hidden; }
+    .slideshow .slide-frame.portrait .slide-img {
+      max-height: none; max-width: 50vw; width: 50vw; object-fit: cover;
+    }
+    .slideshow .slide-frame.portrait .slide-img.visible {
+      animation: panPortraitLandscape 12s ease-in-out infinite alternate;
+    }
+    @keyframes panPortraitLandscape {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(calc(-100% + 70vh)); }
+    }
   }
 
   /* Back-to-top — screen only */
@@ -736,7 +785,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- SLIDESHOW OVERLAY -->
 <div class="slideshow" id="slideshow">
-  <img class="slide-img" id="slide-img" src="" alt="">
+  <div class="slide-frame" id="slide-frame">
+    <img class="slide-img" id="slide-img-a" src="" alt="">
+    <img class="slide-img" id="slide-img-b" src="" alt="">
+  </div>
   <div class="slide-text" id="slide-text"></div>
   <div class="slide-counter" id="slide-counter"></div>
   <div class="slide-hint" id="slide-hint">click or &rarr; to continue &middot; esc to close</div>
@@ -1399,46 +1451,81 @@ function toggleDM() {
   ];
 
   var current = -1;
+  var showId = 0; // increments per show() call to invalidate stale callbacks
   var overlay = document.getElementById('slideshow');
-  var imgEl = document.getElementById('slide-img');
+  var frameEl = document.getElementById('slide-frame');
+  var imgA = document.getElementById('slide-img-a');
+  var imgB = document.getElementById('slide-img-b');
   var textEl = document.getElementById('slide-text');
   var counterEl = document.getElementById('slide-counter');
   var hintEl = document.getElementById('slide-hint');
+  var front = imgA; // which img is currently visible
 
-  // Preload all images
+  // Preload all images and record aspect ratios
+  var imgMeta = {};
   slides.forEach(function (s) {
     var i = new Image();
+    i.onload = function () { imgMeta[s.img] = { w: i.naturalWidth, h: i.naturalHeight }; };
     i.src = s.img;
   });
 
+  function isPortrait(src) {
+    var meta = imgMeta[src];
+    return meta && meta.h > meta.w;
+  }
+
   function show(index) {
     current = index;
+    showId++;
+    var myId = showId; // capture for closure
+
     if (current >= slides.length) {
       close();
       return;
     }
 
-    imgEl.classList.remove('visible');
-    textEl.classList.remove('visible');
+    var slide = slides[current];
+    var incoming = (front === imgA) ? imgB : imgA;
+    var outgoing = front;
 
-    setTimeout(function () {
-      imgEl.src = slides[current].img;
-      imgEl.alt = slides[current].text;
-      textEl.textContent = slides[current].text;
+    // Clear any stale onload handler
+    incoming.onload = null;
+
+    // Portrait vs landscape
+    if (isPortrait(slide.img)) {
+      frameEl.classList.add('portrait');
+    } else {
+      frameEl.classList.remove('portrait');
+    }
+
+    // Load new image into the incoming element
+    incoming.src = slide.img;
+    incoming.alt = slide.text;
+
+    function reveal() {
+      // Guard: only run once, and only for the current show() call
+      if (myId !== showId) return;
+      incoming.onload = null; // prevent double-fire
+
+      // Crossfade: incoming fades in, outgoing fades out
+      incoming.classList.add('visible');
+      outgoing.classList.remove('visible');
+
+      // Text
+      textEl.textContent = slide.text;
+      textEl.classList.add('visible');
+
       counterEl.textContent = (current + 1) + ' / ' + slides.length;
       hintEl.style.display = current === 0 ? '' : 'none';
 
-      // Wait for image load then fade in
-      imgEl.onload = function () {
-        imgEl.classList.add('visible');
-        textEl.classList.add('visible');
-      };
-      // If cached, onload may already have fired
-      if (imgEl.complete) {
-        imgEl.classList.add('visible');
-        textEl.classList.add('visible');
-      }
-    }, current === 0 ? 10 : 300);
+      // Swap roles
+      front = incoming;
+    }
+
+    incoming.onload = reveal;
+    if (incoming.complete && incoming.naturalWidth > 0) {
+      reveal();
+    }
   }
 
   function next() { show(current + 1); }
@@ -1447,6 +1534,16 @@ function toggleDM() {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
     current = -1;
+    showId++;
+    imgA.classList.remove('visible');
+    imgB.classList.remove('visible');
+    imgA.onload = null;
+    imgB.onload = null;
+    imgA.removeAttribute('src');
+    imgB.removeAttribute('src');
+    textEl.classList.remove('visible');
+    frameEl.classList.remove('portrait');
+    front = imgA;
   }
 
   window.startSlideshow = function () {
