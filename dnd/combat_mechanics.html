@@ -9,7 +9,7 @@
   STRUCTURE:
     1. Weapon Attack section:
        - Attack roll SVG formula diagram + ability key (Melee/Ranged/Thrown → STR/DEX)
-       - "Who Rolls the d20?" table (weapon atk, spell atk, save spell, ability check)
+       - "Who Rolls?" table (weapon atk, spell atk, save spell, damage, ability check — die type annotated)
        - Damage roll SVG formula diagram
        - AC table (physical armor + Mage Armor, Shield spell, Barb/Monk Unarmored Defense)
     2. Central cheat table (Prof / Ability Mod / Magic × 7 roll contexts)
@@ -524,13 +524,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <dt>Thrown</dt><dd>STR modifier (or DEX if Finesse, e.g. dagger)</dd>
       </dl>
 
-      <div class="sub-head" style="margin-top:4px;">Who Rolls the d20?</div>
+      <div class="sub-head" style="margin-top:4px;">Who Rolls?</div>
       <table>
         <tr><th>Situation</th><th>Who Rolls</th><th>Against</th></tr>
-        <tr><td>Weapon attack</td><td><span class="who attacker" style="margin:0;">Attacker</span></td><td>Target's AC</td></tr>
-        <tr><td>Spell attack</td><td><span class="who attacker" style="margin:0;">Caster</span></td><td>Target's AC</td></tr>
-        <tr><td>Save spell</td><td><span class="who defender" style="margin:0;">Target(s)</span></td><td>Caster's DC</td></tr>
-        <tr><td>Ability check</td><td><span class="who attacker" style="margin:0;">Actor</span></td><td>DC set by DM</td></tr>
+        <tr><td>Weapon attack <span class="note-text">(d20)</span></td><td><span class="who attacker" style="margin:0;">Attacker</span></td><td>Target's AC</td></tr>
+        <tr><td>Damage <span class="note-text">(weapon die)</span></td><td><span class="who attacker" style="margin:0;">Attacker</span></td><td>— <span class="note-text">subtracted from HP</span></td></tr>
+        <tr><td>Spell attack <span class="note-text">(d20)</span></td><td><span class="who attacker" style="margin:0;">Caster</span></td><td>Target's AC</td></tr>
+        <tr><td>Save spell <span class="note-text">(d20)</span></td><td><span class="who defender" style="margin:0;">Target(s)</span></td><td>Caster's DC</td></tr>
+        <tr><td>Ability check <span class="note-text">(d20)</span></td><td><span class="who attacker" style="margin:0;">Actor</span></td><td>DC set by DM</td></tr>
       </table>
     </div>
 

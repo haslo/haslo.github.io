@@ -8,11 +8,13 @@
 
   STRUCTURE:
     - Title + subtitle
-    - Single table: Book (title + year) | Overview (pill tags + content summary) | Status (what to use/skip)
+    - Single table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status (what to use/skip)
     - Books listed in rough chronological/category order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System, Player Pages
     - Tag badges for edition (2014/2024), type (Rules/Source/Adventure)
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
+    - Purchase links: .book-links with DMs Guild / D&D Beyond links per book (hidden in print)
+    - DMs Guild books: FoE:Quickstone (2024 rules), Chronicles of Eberron (2014), Exploring Eberron (2014, also on DDB)
 
   CSS CONVENTIONS:
     Fonts: system-ui (Segoe UI)
@@ -20,6 +22,7 @@
     Row alternation: nth-child(even) auto-shading
     Pill classes: .pill-sub, .pill-spe, .pill-mon, .pill-adv, .pill-sys, .pill-pp
     Tag classes: .tag-2014, .tag-2024, .tag-rules, .tag-source, .tag-adventure
+    Link classes: .book-links (purchase links below book title)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -144,6 +147,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .note { font-size: 8.5pt; color: var(--text-dim); margin-top: 4px; }
   .ordered { display: inline-block; font-size: 7.5pt; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: rgba(59,54,120,0.12); color: var(--accent4); margin-top: 4px; }
 
+  .book-links { margin-top: 3px; }
+  .book-links a { font-size: 8pt; color: var(--accent4); text-decoration: none; font-weight: 600; }
+  .book-links a:hover { text-decoration: underline; }
+  .book-links a + a::before { content: ' · '; color: var(--text-dim); font-weight: 400; }
+
   .legend {
     margin-top: 12px;
     font-size: 9pt;
@@ -205,6 +213,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .tag, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 6.5pt; }
     .skipped, .still, .reach { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .ov { font-size: 8pt; }
+    .book-links { display: none; }
     .legend { font-size: 8pt; }
   }
 </style>
@@ -235,6 +244,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Dec 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -273,6 +283,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-adventure">Adventure</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/fraif" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -306,6 +317,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/frhof" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -342,9 +354,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Dragon Delves</div>
-    <span class="book-year">2025</span>
+    <span class="book-year">Jul 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-adventure">Adventure</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/dd" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -374,9 +387,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Monster Manual</div>
-    <span class="book-year">2025</span>
+    <span class="book-year">Feb 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-rules">Rules</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/mm-2025" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -405,9 +419,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Dungeon Master's Guide</div>
-    <span class="book-year">2024</span>
+    <span class="book-year">Nov 2024</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-rules">Rules</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/dmg-2024" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -439,9 +454,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Player's Handbook</div>
-    <span class="book-year">2024</span>
+    <span class="book-year">Sep 2024</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-rules">Rules</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/phb-2024" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -486,13 +502,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
+<!-- FoE: Quickstone -->
+<tr>
+  <td>
+    <div class="book-title">Frontiers of Eberron: Quickstone</div>
+    <span class="book-year">Sep 2024</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></div>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">6 subclasses</span>
+      <span class="pill pill-spe">5 species</span>
+      <span class="pill pill-adv">1 adventure</span>
+      <span class="pill pill-sys">Droaam frontier</span>
+      <span class="pill pill-pp">~255pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">6 subclasses · 5 new species (Gargoyle, Gnoll, Harpy, Medusa, Worg) · 5 backgrounds (Dragonmarked Bravo/Foundling/Scion, Magewright, Wandslinger) · origin + general + fighting style feats</div>
+      <div class="ov-head">Setting</div>
+      <div class="ov-line">Western Frontier (Droaam border) gazetteer · Quickstone town guide · frontier cultures, faiths, NPCs · symbionts · Droaam treasures</div>
+      <div class="ov-head">Adventure</div>
+      <div class="ov-line">Heart of Stone — full campaign adventure in Quickstone</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Droaam frontier play, monster-species PCs, western/frontier tone, Quickstone adventure</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Gnoll species → FoE:Q 2024 version</span> (from ExE 2020)
+    </div>
+    <div class="still">
+      <div class="still-label">6 subclasses</div>
+      <b>Barb:</b> Path of the Demonshard ·
+      <b>Bard:</b> College of Wands ·
+      <b>Cleric:</b> Commerce Domain ·
+      <b>Ranger:</b> Bloodhound ·
+      <b>Sorc:</b> Nemesis Sorcery ·
+      <b>Warlock:</b> Stone Sovereign Patron
+    </div>
+    <div class="still">
+      <div class="still-label">5 species (2024 native)</div>
+      Gargoyle · Gnoll · Harpy · Medusa · Worg
+    </div>
+    <div class="note">DMs Guild (Keith Baker &amp; Imogen Gingell). Released Sep 2024 with PHB 2024 — uses 2024 rules natively, no legacy conversion needed.</div>
+  </td>
+</tr>
+
+<!-- Chronicles of Eberron -->
+<tr>
+  <td>
+    <div class="book-title">Chronicles of Eberron</div>
+    <span class="book-year">Nov 2022</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></div>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">5 subclasses</span>
+      <span class="pill pill-spe">3 racial variants</span>
+      <span class="pill pill-mon">15+ creatures</span>
+      <span class="pill pill-sys">Overlords revealed</span>
+      <span class="pill pill-pp">~208pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">5 subclasses · 3 racial variants (Lorghalan Gnome, Desert Born Goliath, Living Construct Warforged) · 3 noble backgrounds · psionic feats · forbidden metamagic · Spells of the Six</div>
+      <div class="ov-head">Setting lore</div>
+      <div class="ov-line">Nobility of Galifar · Tairnadal Elves deep dive · Gnomes of Lorghalan &amp; Pylas Pyrial · The Dark Six · all Overlords named &amp; detailed · First War · Karrnathi undead types · Grim Lords · Mordain the Fleshweaver · Riedra &amp; psionics · Aerenal &amp; Bloodsails</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Overlord lore, Tairnadal elves, Karrnathi undead, Riedra/psionics, Dark Six, noble backgrounds</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">5 subclasses</div>
+      <b>Bard:</b> College of the Fury ·
+      <b>Cleric:</b> Aspiration Domain ·
+      <b>Druid:</b> Stonesinger (variant) ·
+      <b>Paladin:</b> Oath of Veneration ·
+      <b>Rogue:</b> Dark Petitioner
+    </div>
+    <div class="still">
+      <div class="still-label">Deepest Overlord lore anywhere</div>
+      All Overlords named (Ashtakala, Rak Tulkhesh, Sul Khatesh, Bel Shalor…). Boons of the Overlords system. The definitive reference.
+    </div>
+    <div class="note">DMs Guild (Keith Baker &amp; Imogen Gingell). 2014-era rules — use legacy compatibility notes.</div>
+  </td>
+</tr>
+
 <!-- MotM -->
 <tr>
   <td>
     <div class="book-title">Monsters of the Multiverse</div>
-    <span class="book-year">2022</span>
+    <span class="book-year">May 2022</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/mpmm" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -531,7 +641,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Oct 2021</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <br><span class="ordered">Ordered — not yet arrived</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/ftod" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -573,9 +683,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Tasha's Cauldron of Everything</div>
-    <span class="book-year">2020</span>
+    <span class="book-year">Nov 2020</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/tcoe" target="_blank">D&amp;D Beyond</a></div>
     <br><span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
@@ -622,13 +733,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
+<!-- Exploring Eberron -->
+<tr>
+  <td>
+    <div class="book-title">Exploring Eberron</div>
+    <span class="book-year">Jul 2020</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a><a href="https://www.dndbeyond.com/sources/dnd/exeb" target="_blank">D&amp;D Beyond</a></div>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">6 subclasses</span>
+      <span class="pill pill-spe">7 species</span>
+      <span class="pill pill-sys">13 planes</span>
+      <span class="pill pill-sys">Symbionts</span>
+      <span class="pill pill-pp">~247pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">6 subclasses · 7 species/subraces (Aereni Elves, Ruinbound Dwarves, Dhakaani Ghaal'dar/Golin'dar/Guul'dar, Gnolls, Aasimar variant) · 3 backgrounds · racial feats</div>
+      <div class="ov-head">Setting lore (the big draw)</div>
+      <div class="ov-line">All 13 planes of Eberron detailed · Droaam deep dive (Daughters of Sora Kell) · Heirs of Dhakaan (goblinoid empire) · Mror Holds &amp; Realm Below · Thunder Sea (merfolk, sahuagin, sea elves) · faiths expanded · dragonmark items · symbionts</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> planes of Eberron, Droaam, Dhakaani, Mror Holds, sea civilisations, Eberron artificer subclasses</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Aasimar → 2024 PHB</span><br>
+      <span class="skip">Gnoll species → FoE: Quickstone (2024 version)</span>
+    </div>
+    <div class="still">
+      <div class="still-label">6 subclasses</div>
+      <b>Artificer:</b> Forge Adept, Maverick ·
+      <b>Bard:</b> College of the Dirge Singer ·
+      <b>Cleric:</b> Mind Domain ·
+      <b>Druid:</b> Circle of the Forged ·
+      <b>Monk:</b> Way of the Living Weapon
+    </div>
+    <div class="still">
+      <div class="still-label">Definitive planes reference + Droaam/Dhakaani/Mror lore</div>
+      No other book covers Eberron's planes in this detail. Symbionts, dragonmark focus items all unique.
+    </div>
+    <div class="note">DMs Guild (Keith Baker). 2014-era rules — use legacy compatibility notes.</div>
+  </td>
+</tr>
+
 <!-- E:RftLW -->
 <tr>
   <td>
     <div class="book-title">Eberron: Rising from the Last War</div>
-    <span class="book-year">2019</span>
+    <span class="book-year">Nov 2019</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/erlw" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -662,9 +822,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
   <td>
     <div class="book-title">Xanathar's Guide to Everything</div>
-    <span class="book-year">2017</span>
+    <span class="book-year">Nov 2017</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
+    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/xgte" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
