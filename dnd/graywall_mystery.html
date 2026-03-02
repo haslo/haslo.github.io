@@ -6,6 +6,18 @@
            Session zero cheat sheet + slideshow mode for atmosphere images.
   OWNER PREF: No MS Office. Self-contained HTML. Parchment theme.
               Kids are 11 and 16 — no alcohol/drinking references in NPC profiles or scenes.
+              PHB-ONLY campaign. The kids only have the 2024 PHB. Do not reference
+              content from other sourcebooks (Fizban's, VRGtR, etc.) in player-facing sections.
+              DM notes may reference other books for DM reading — but rules at the table = PHB only.
+              RULES: This is 2024 D&D (5.5e), NOT 2014 5e. LLM training data mixes both editions.
+              ALWAYS verify rules against the 2024 PHB before writing mechanics. Key 2024 changes
+              that LLMs commonly get wrong: Lay on Hands = bonus action (not action), Divine Smite
+              is a spell (not a class feature), Divine Sense = bonus action + 10 min duration,
+              prepared spells = fixed from Paladin table (not level + CHA), Weapon Mastery exists
+              at level 1, Dragonborn breath = Prof Bonus uses/long rest (not 1/short rest),
+              breath save = always DEX (not DEX or CON), choose cone or line each time (not fixed
+              per ancestry), Draconic Flight at level 5 (not metallic second breath). When in doubt,
+              do not guess — ask or look it up.
 
   TONE: Player-facing sections speak DIRECTLY to Amir & Kais (2nd person).
         DM section speaks to DM (Gwen), uses "the kids" / "they" — no names.
@@ -29,6 +41,10 @@
     .npc-header (accent bg, flex row: name left + subtitle right, wraps on mobile), .npc-body (content area),
     .npc-stats (6-col grid, 3-col on mobile), .npc-stat (individual stat box),
     .npc-line (labeled trait line), .npc-aside (gold-border lore callout for DM context)
+    .pill (muted bg inline tag) — use for compact metadata: damage types, dragon names,
+    shape tags (cone/line), or any small categorical label. Keeps lists scannable.
+    .pill-ref (divider bg, italic) — use for book+page references: "PHB p. 108", "FToD p. 180".
+    Always use pill-ref for page citations. Keeps them visually distinct from prose.
 
   SLIDESHOW: JS overlay triggered by button. Cycles through 8 images with
     intro text. Arrow keys / click to advance. Esc to close. Good for
@@ -662,6 +678,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     padding: 2px 8px;
     border-radius: 3px;
   }
+  .pill {
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin: 0 1px;
+    background: var(--muted);
+    color: var(--parchment);
+  }
+  .pill-ref {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9pt;
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 3px;
+    vertical-align: baseline;
+    margin: 0 1px;
+    background: transparent;
+    border: 1px solid var(--divider);
+    color: var(--muted);
+  }
 
   .footer {
     margin-top: 36px;
@@ -1191,7 +1232,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <td><strong>Chronicles of Eberron</strong> (Keith Baker)</td>
         <td>DMs Guild PDF</td>
         <td>pp.149–160</td>
-        <td>Vampires of Eberron, Lord Varonaen (p.156), weakness table (p.151), Grim Lords</td>
+        <td>Vampires of Eberron, Lord Varonaen <span class="pill-ref">Chronicles p. 156</span>, weakness table <span class="pill-ref">Chronicles p. 151</span>, Grim Lords</td>
       </tr>
       <tr>
         <td><strong>Eberron: Rising from the Last War</strong> (WotC)</td>
@@ -1299,13 +1340,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="callout secret">
     <span class="label">DM Eyes Only</span>
-    Inspired by Lord Varonaen (Chronicles of Eberron p.156) — an ancient elven vampire obsessed with plants. He creates hybrid flora using darkwood, blood, and necromantic energy. His "gardens" are alive in the worst way: vines that drain life, roses that charm, trees grown from corpses.<br><br>
+    Inspired by Lord Varonaen <span class="pill-ref">Chronicles of Eberron p. 156</span> — an ancient elven vampire obsessed with plants. He creates hybrid flora using darkwood, blood, and necromantic energy. His "gardens" are alive in the worst way: vines that drain life, roses that charm, trees grown from corpses.<br><br>
     Your version: an old vampire who arrived in the Droaam borderlands decades ago. Presents himself as a travelling scholar — soft-spoken, courteous, endlessly curious about botany. He buys rare seeds from merchants in disguise. He asks about your favourite flowers. He remembers your name. He seems <em>kind</em>.<br><br>
     He is not kind. He is a monster wearing patience like a coat. The garden is fed with blood. The beautiful darkwood trees? Grown from the bodies of the missing travellers — he plants them like bulbs. The luminescent flowers? They thrive on life force drained from living creatures through root systems that spread underground. The vines creeping up Graywall's south wall aren't an accident — they're infrastructure. He's extending his garden <em>into</em> the town, slowly, root by root. The missing people aren't collateral damage. They're compost.<br><br>
     He knows exactly what he's doing and he enjoys it. But his mask is perfect — gentle, scholarly, a little eccentric. The kind of person you'd invite to dinner. He'd accept. He'd bring flowers. He'd compliment the cooking. And weeks later, something dark and beautiful would bloom in your garden where nothing was planted, and you'd never connect the two.<br><br>
     <div class="dm-clear"></div><img class="dm-img left" src="media/graywall_mystery/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise his voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
     <strong>The Truth:</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries across different regions — arrives, gardens, leaves when the locals catch on. Droaam is perfect for him because nobody's organised enough to notice a few missing travellers. He considers his work <em>art</em> and the deaths a necessary part of the creative process. Not apologetic. Not conflicted. Just patient.<br><br>
-    <strong>Weakness hook:</strong> Use the Eberron variant weakness table (Chronicles p.151). Pick something fun — maybe he <em>must accept any gift offered to him</em> (Keeper's Greed), or he <em>can't re-enter a building he's left for 13 days</em> (Never Look Back). Give the kids a way to be clever, not just strong.<br><br>
+    <strong>Weakness hook:</strong> Use the Eberron variant weakness table <span class="pill-ref">Chronicles p. 151</span>. Pick something fun — maybe he <em>must accept any gift offered to him</em> (Keeper's Greed), or he <em>can't re-enter a building he's left for 13 days</em> (Never Look Back). Give the kids a way to be clever, not just strong.<br><br>
     <div class="dm-clear"></div><img class="dm-img right" src="media/graywall_mystery/stairs.png" alt=""><strong>Escalation:</strong> To be planned once we know how much table time we have. The broad arc: strange plants → investigation → the vampire appears → someone goes missing → confrontation.
   </div>
 
@@ -1325,22 +1366,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="npc-subtitle">Human (Brelish), late 40s · Former Paladin (Oath of Devotion, broken) · "Nothing — officially"</span>
     </div>
     <div class="npc-body">
-      <p>The Charmer. Arrived in Graywall with nothing, acts like she owns the place. Former holy warrior of Thrane who lost her faith when she saw the Silver Flame's crusades up close. Now a grifter in the Calabas — sells "blessed" trinkets, tells fortunes with a straight face. Charisma for days.</p>
+      <p>The Charmer. Arrived in Graywall with nothing, acts like she owns the place. Former holy warrior of Thrane who lost her faith when she saw the Silver Flame's crusades up close. Now a grifter in the Calabas — sells "blessed" trinkets, tells fortunes with a straight face.</p>
 
       <div class="npc-aside">
-        <strong>Calabas:</strong> Graywall's "civilised" quarter — signs in Common, human-scale buildings, a theatre. Where outsiders, merchants, and people who don't want to get eaten settle. Sera fits right in. <em>(ExE p. 84, E:RftLW p. 198)</em>
+        <strong>Calabas:</strong> Graywall's "civilised" quarter — signs in Common, human-scale buildings, a theatre. Where outsiders, merchants, and people who don't want to get eaten settle. Sera fits right in. <span class="pill-ref">ExE p. 84</span> <span class="pill-ref">E:RftLW p. 198</span>
       </div>
 
       <div class="npc-aside">
-        <strong>Thrane:</strong> One of the Five Nations, ruled by the Church of the Silver Flame. Think theocracy with good PR. Sera grew up there, trained there, left there. <em>(E:RftLW p. 126)</em>
+        <strong>Thrane:</strong> One of the Five Nations, ruled by the Church of the Silver Flame. Think theocracy with good PR. Sera grew up there, trained there, left there. <span class="pill-ref">E:RftLW p. 126</span>
       </div>
 
       <div class="npc-aside">
-        <strong>Silver Flame:</strong> Thrane's state religion — a force of genuine good that also ran crusades against lycanthropes and "monsters." The crusades got ugly. That's what broke Sera. <em>(E:RftLW p. 144, ExE p. 52)</em>
+        <strong>Silver Flame:</strong> Thrane's state religion — a force of genuine good that also ran crusades against lycanthropes and "monsters." The crusades got ugly. That's what broke Sera. <span class="pill-ref">E:RftLW p. 144</span> <span class="pill-ref">ExE p. 52</span>
       </div>
 
       <div class="npc-aside">
-        <strong>Breland:</strong> One of the Five Nations — the big, pragmatic, slightly cynical neighbour to the east. Most humans in Graywall are Brelish. They value independence and common sense over tradition. <em>(E:RftLW p. 107)</em>
+        <strong>Breland:</strong> One of the Five Nations — the big, pragmatic, slightly cynical neighbour to the east. Most humans in Graywall are Brelish. They value independence and common sense over tradition. <span class="pill-ref">E:RftLW p. 107</span>
       </div>
 
       <div class="npc-stats">
@@ -1363,7 +1404,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="npc-line"><strong>What she lost</strong> Spell slots. Divine sense. Her oath. Whether the magic actually left or she just stopped reaching for it — she won't answer that.</div>
 
       <div class="npc-aside">
-        <strong>Oath of Devotion:</strong> The "classic" paladin oath — honesty, courage, compassion, duty. Paladins who break their oath lose their powers (or do they?). In 2024 rules: PHB p. 116. The interesting bit for Sera is that a broken oath doesn't necessarily mean the oath is gone — it means <em>she</em> walked away from it.
+        <strong>Oath of Devotion:</strong> The "classic" paladin oath — honesty, courage, compassion, duty. Paladins who break their oath lose their powers (or do they?) <span class="pill-ref">PHB p. 116</span>. The interesting bit for Sera is that a broken oath doesn't necessarily mean the oath is gone — it means <em>she</em> walked away from it.
       </div>
 
       <div class="npc-line"><strong>Personality</strong> Warm, fast-talking, always shares her food. Never talks about Thrane unless someone catches her humming a hymn. Flinches at Silver Flame iconography.</div>
@@ -1428,7 +1469,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <tr><td><strong>Name</strong></td><td><em>???</em></td><td><strong>Background</strong></td><td>Charlatan</td></tr>
       <tr><td><strong>STR</strong></td><td>14 (+2)</td><td><strong>INT</strong></td><td>8 (−1)</td></tr>
       <tr><td><strong>DEX</strong></td><td>10 (+0)</td><td><strong>WIS</strong></td><td>12 (+1)</td></tr>
-      <tr><td><strong>CON</strong></td><td>13 (+1)</td><td><strong>CHA</strong></td><td>14 (+2)</td></tr>
+      <tr><td><strong>CON</strong></td><td>13 (+1)</td><td><strong>CHA</strong></td><td>15 (+2)</td></tr>
       <tr><td><strong>Speed</strong></td><td>30 ft</td><td><strong>Proficiency</strong></td><td>+2</td></tr>
       <tr><td><strong>Armor</strong></td><td>Light, Medium, Heavy, Shields</td><td><strong>Skills</strong></td><td>Sleight of Hand, Deception, Intimidation</td></tr>
       <tr><td><strong>Feat</strong></td><td colspan="3">
@@ -1482,30 +1523,104 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-log-session-zero-amir -->
 
-  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-next-session-zero" onclick="toggleAccordion(this)">Next Session Zero Prep <span class="dm-prelim">DM</span></button>
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-next-session-zero" onclick="toggleAccordion(this)">2nd Session Zero Prep <span class="dm-prelim">DM</span></button>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-next-session-zero">
+
+  <!-- Priority reading -->
+  <div class="callout gold">
+    <span class="label">Read This First</span>
+    <p>If you only read one thing before the next session: <strong>Chronicles of Eberron — Vampires</strong> <span class="pill-ref">Chronicles p. 149</span>. That's your villain's engine. Everything else can wait until the kids drag you there organically.</p>
+    <p>Pre-picking Amir's spells is the right call. "Sera teaches him between sessions" is an elegant handwave — eleven-year-olds don't want to study a spell list, they want to hold their hand out and mean it.</p>
+  </div>
 
   <!-- Oath idea -->
   <div class="callout gold">
     <span class="label">Oath of Self-Made Greatness</span>
     <p>Amir's paladin isn't religious or noble. He's ambitious. His oath is personal: <em>I will rise. I will not be ordinary. I will not let others define my worth.</em></p>
-    <p><strong>The Traveller:</strong> A retired, washed-up adventurer-knight — himself a paladin once, now a con artist drifting through Droaam. Crosses paths with Amir. Teaches him a few things (fighting, attitude, how to read people). Then challenges him: <em>"If you're going to be great, swear it."</em> Amir swears. The old man laughs and walks away. That's the oath origin.</p>
+    <p><strong>Sera Tain</strong> is the catalyst. A broken paladin turned Calabas grifter who still steps forward when it counts. She teaches him a few things — fighting, attitude, how to read people. Then dares him: <em>"If you're going to be great, swear it."</em> He swears. She laughs and walks away. That's the oath origin.</p>
+    <p>She also teaches him how the oath <em>works</em> — Lay on Hands, the smite, the feeling when the power answers. She knows because she had it and lost it. She can show him the shape of it without being able to do it herself. That's what makes her the right teacher.</p>
     <p>This is a story about ambition turning into heroism. Later, challenge Amir: <em>Does greatness mean being feared, or being admired?</em> That's growth fuel.</p>
+  </div>
+
+  <!-- Paladin & Dragonborn cheat sheet -->
+  <div class="callout gold">
+    <span class="label">Paladin & Dragonborn — What Matters</span>
+    <p><strong>Paladin level 1</strong> <span class="pill-ref">PHB p. 108</span>: <strong>Lay on Hands</strong> — 5 × level HP pool, touch, <em>bonus action</em>, no slot, long rest recharge. Also cures Poisoned (costs 5 HP from pool). <strong>Divine Sense</strong> — <em>bonus action</em>, detects undead/fiends/celestials within 60 ft for 10 min, Prof Bonus uses/long rest. <strong>Weapon Mastery</strong> — mastery properties on weapons you're proficient with. <strong>Spellcasting</strong> — 2 prepared spells + 2 slots at level 1.</p>
+    <p><strong>Paladin level 2</strong> <span class="pill-ref">PHB p. 109</span>: <strong>Fighting Style</strong> (Defence +1 AC is the safe pick). <strong>Paladin's Smite</strong> — Divine Smite is a <em>spell</em>, always prepared, doesn't count against your limit. Bonus action after you hit, 2d8 radiant (+1d8 vs undead). Once per turn. One free cast per long rest, then costs a slot. Can't smite on opportunity attacks.</p>
+    <p><strong>Dragonborn</strong> <span class="pill-ref">PHB p. 187</span>: <strong>Breath Weapon</strong> — replaces one Attack action attack, choose cone or line each time, DEX save (DC 8 + CON mod + Prof), 1d10 damage (scales 2d10/3d10/4d10 at 5/11/17). Prof Bonus uses per long rest. <strong>Damage Resistance</strong> — half damage from breath type, always on. <strong>Darkvision</strong> 60 ft. <strong>Draconic Flight</strong> (level 5) — bonus action, sprout spectral wings, fly speed = walking speed, 10 min, 1/long rest.</p>
+    <p><strong>His turn:</strong> Action + Bonus Action + Move. "Hit, then bonus action smite, done" is a perfectly good turn.</p>
+  </div>
+
+  <!-- Spells for Amir -->
+  <div class="callout gold">
+    <span class="label">Amir's Prepared Spells</span>
+    <p>At level 1 he picks 2 prepared spells <span class="pill-ref">PHB p. 110</span>. Divine Smite doesn't count — always prepared via Paladin's Smite at level 2. Pick:</p>
+    <ul>
+      <li><strong>1. Cure Wounds</strong> <span class="pill-ref">PHB p. 264</span> — Action, touch. Heal 2d8 + CHA mod HP. Uses a spell slot. Non-negotiable — he needs to be able to help Kais.</li>
+      <li><strong>2. Command</strong> <span class="pill-ref">PHB p. 255</span> — Action, 60 ft, one word. Target must follow the word for one turn (WIS save). "Flee!" / "Grovel!" / "Drop!" — fails on undead. The fun one.</li>
+    </ul>
+    <p><strong>Swap-ins</strong> (after a long rest, trade one out):<br>
+    <strong>Shield of Faith</strong> <span class="pill-ref">PHB p. 310</span> — Bonus action, 10 min, concentration. +2 AC on one creature within 60 ft. Good before a fight you see coming.<br>
+    <strong>Divine Favor</strong> <span class="pill-ref">PHB p. 270</span> — Bonus action, self, concentration, 1 min. Extra 1d4 radiant on every hit. But note: competes with Divine Smite for his bonus action on smite turns.</p>
+    <p>Sera teaches him these between sessions: <em>"Hold your hand out. Mean it."</em></p>
+  </div>
+
+  <!-- Subclass choice -->
+  <div class="callout gold">
+    <span class="label">Paladin Subclass at Level 3</span>
+    <p>He picks an oath at level 3 <span class="pill-ref">PHB p. 113</span>. Four options in the PHB. For a CHA-focused Charlatan dragonborn played by an 11-year-old:</p>
+    <ul>
+      <li><strong>Oath of Glory</strong> <span class="pill-ref">PHB p. 113</span> — <em>the pick.</em> Channel Divinity: Peerless Athlete (bonus action, 1 hour, advantage on Athletics + Acrobatics, carry/push/lift doubles). Inspiring Smite shares temp HP with allies after a Divine Smite. Oath spells include Heroism and Guiding Bolt. Fits a kid who wants to be the coolest person in the room — which is exactly what a Charlatan dragonborn is about</li>
+      <li><strong>Oath of Vengeance</strong> <span class="pill-ref">PHB p. 118</span> — simple and aggressive. Vow of Enmity (advantage on attacks vs one target, part of Attack action, transfers on kill). Great damage focus. But the oath tenets are dark — relentless pursuit, no mercy. Maybe too edgy for 11</li>
+      <li><strong>Oath of Devotion</strong> <span class="pill-ref">PHB p. 116</span> — the classic. Sacred Weapon (10 min, add CHA to attack rolls) is strong with CHA 15. But the tenets are very "be honest, be compassionate" which clashes with Charlatan. Interesting tension if he leans into it, boring if he doesn't</li>
+      <li><strong>Oath of the Ancients</strong> <span class="pill-ref">PHB p. 115</span> — nature-themed, resistance to spell damage at level 7. Nature's Wrath (restrain a creature) is fun. But flavour is druidy/fey, doesn't match a street-smart city kid in Graywall</li>
+    </ul>
+    <p>Don't pre-pick. Let him read the oath tenets and choose. But if he asks: Glory.</p>
   </div>
 
   <!-- Breath type -->
   <div class="callout gold">
     <span class="label">Breath Type Choice</span>
-    <p>Next session, when Amir chooses breath type (PHB p. 187), tie it to a story moment in Graywall. Examples:</p>
+    <p>Dragonborn breath weapon <span class="pill-ref">PHB p. 187</span>. Choose <span class="pill">15 ft cone</span> or <span class="pill">30 ft line</span> each time you use it. Always DEX save. Scales: 1d10 → 2d10 (5) → 3d10 (11) → 4d10 (17). Pick a damage type:</p>
     <ul>
-      <li><strong>Fire</strong> — he burned a bridge on a deal gone wrong</li>
-      <li><strong>Lightning</strong> — he shocked someone with unexpected boldness</li>
-      <li><strong>Cold</strong> — he froze when someone betrayed him</li>
-      <li><strong>Poison</strong> — he said something that cut deeper than he meant</li>
-      <li><strong>Acid</strong> — he watched something precious dissolve and couldn't stop it</li>
+      <li><strong>Fire</strong> <span class="pill">Gold</span> <span class="pill">Brass</span> <span class="pill">Red</span> — resistance to fire is the most useful in the game</li>
+      <li><strong>Lightning</strong> <span class="pill">Bronze</span> <span class="pill">Blue</span> — rarely resisted</li>
+      <li><strong>Cold</strong> <span class="pill">Silver</span> <span class="pill">White</span> — solid damage type, good resistance</li>
+      <li><strong>Poison</strong> <span class="pill">Green</span> — cool flavour but most monsters resist it — worst pick mechanically</li>
+      <li><strong>Acid</strong> <span class="pill">Copper</span> <span class="pill">Black</span> — rarely resisted</li>
     </ul>
-    <p>Let Amir pick the type, then ask him: <em>"When was the first time you felt that?"</em></p>
+    <p>Let him pick what sounds cool. Fire or lightning if he wants advice. At level 5 all dragonborn get <strong>Draconic Flight</strong> — spectral wings, fly speed, bonus action, 1/long rest.</p>
+  </div>
+
+  <!-- Dragon ancestry -->
+  <div class="callout gold">
+    <span class="label">Dragon Ancestry Reference</span>
+    <p>Three dragon families: <strong>Chromatic</strong>, <strong>Metallic</strong> (both in PHB), and <strong>Gem</strong> (Fizban's only). Creation myth: Bahamut (metallic god) and Tiamat (chromatic god) shattered the original world, dragonborn are echoes of that <span class="pill-ref">FToD p. 6</span>.</p>
+    <p><strong>Chromatic</strong> — evil-aligned, raw elemental power:</p>
+    <ul>
+      <li><strong>Red</strong> <span class="pill">fire</span> — greedy, prideful, most iconic <span class="pill-ref">FToD p. 180</span></li>
+      <li><strong>Blue</strong> <span class="pill">lightning</span> — cunning, territorial, desert schemers <span class="pill-ref">FToD p. 104</span></li>
+      <li><strong>White</strong> <span class="pill">cold</span> — feral, bestial, least intelligent <span class="pill-ref">FToD p. 192</span></li>
+      <li><strong>Green</strong> <span class="pill">poison</span> — manipulative, forest-dwelling, love secrets <span class="pill-ref">FToD p. 140</span></li>
+      <li><strong>Black</strong> <span class="pill">acid</span> — cruel, swamp ambushers <span class="pill-ref">FToD p. 98</span></li>
+    </ul>
+    <p><strong>Metallic</strong> — good-aligned, wise and noble:</p>
+    <ul>
+      <li><strong>Gold</strong> <span class="pill">fire</span> — wisest, strongest, noble <span class="pill-ref">FToD p. 152</span></li>
+      <li><strong>Bronze</strong> <span class="pill">lightning</span> — coastal, martial, love honour <span class="pill-ref">FToD p. 112</span></li>
+      <li><strong>Silver</strong> <span class="pill">cold</span> — friendly, love humans, shapeshift to live among them <span class="pill-ref">FToD p. 162</span></li>
+      <li><strong>Brass</strong> <span class="pill">fire</span> — chatty, social, desert-dwellers <span class="pill-ref">FToD p. 110</span></li>
+      <li><strong>Copper</strong> <span class="pill">acid</span> — pranksters, jokers, love riddles <span class="pill-ref">FToD p. 118</span></li>
+    </ul>
+    <p><strong>Gem</strong> — neutral, psionic. <em>Fizban's only, not in PHB — DM reading only.</em></p>
+    <ul>
+      <li><strong>Amethyst</strong> <span class="pill">force</span> — scholarly, gravity magic <span class="pill-ref">FToD p. 96</span></li>
+      <li><strong>Crystal</strong> <span class="pill">radiant</span> — friendly, live on mountain peaks <span class="pill-ref">FToD p. 120</span></li>
+      <li><strong>Emerald</strong> <span class="pill">psychic</span> — paranoid, hoarders of knowledge <span class="pill-ref">FToD p. 126</span></li>
+      <li><strong>Sapphire</strong> <span class="pill">thunder</span> — militaristic, guard the Underdark <span class="pill-ref">FToD p. 158</span></li>
+      <li><strong>Topaz</strong> <span class="pill">necrotic</span> — misanthropic, coastal loners <span class="pill-ref">FToD p. 168</span></li>
+    </ul>
   </div>
 
   <!-- VRGtR reading list -->
@@ -1523,13 +1638,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="callout gold">
     <span class="label">Eberron Reading List — Undead &amp; the Blood of Vol</span>
     <p>Amir is fascinated by the undead in Graywall. Here's what to read so you can answer his questions and seed future plot hooks.</p>
-    <p><strong>Exploring Eberron, Ch. 3 — "The Blood of Vol" (p. 57–59).</strong> This is the core. Explains why Seekers donate their corpses, why mindless undead do community labour, and the key misconception: Seekers don't <em>want</em> to become undead — undeath is a sacrifice, not a reward. The "Divinity Within" is lost when you die. Read at least through "Necromancy and the Undead" (p. 58). Also covers undead champions (vampires, mummies, liches) who protect Seeker communities — your vampire villain could twist this concept.</p>
-    <p><strong>Exploring Eberron, Ch. 4 — "Droaam" (p. 81–92).</strong> You've read most of this, but revisit "Religion" (p. 85–86) for the Cazhaak Creed and the Keeper's role in Droaamish funerary rites. Droaam is religiously tolerant — a Seeker community fits. Also "The Denizens of Droaam" (p. 87–90) for the full species list so you know who else lives next door.</p>
-    <p><strong>Exploring Eberron, Ch. 5 — "Dolurrh: The Realm of the Dead" (p. 156–160).</strong> Where souls go in Eberron. Important for understanding <em>why</em> Seekers fear death — souls fade in Dolurrh, there's no happy afterlife. This is what drives the whole Blood of Vol philosophy. Skim "Concerning Resurrection" (p. 159) too. Then <strong>"Mabar: The Endless Night" (p. 177–181)</strong> — the plane of negative energy, where necromantic power comes from. Mabaran manifest zones are where Seeker communities tend to settle.</p>
+    <p><strong>Exploring Eberron, Ch. 3 — "The Blood of Vol"</strong> <span class="pill-ref">ExE p. 57–59</span> This is the core. Explains why Seekers donate their corpses, why mindless undead do community labour, and the key misconception: Seekers don't <em>want</em> to become undead — undeath is a sacrifice, not a reward. The "Divinity Within" is lost when you die. Read at least through "Necromancy and the Undead" <span class="pill-ref">ExE p. 58</span>. Also covers undead champions (vampires, mummies, liches) who protect Seeker communities — your vampire villain could twist this concept.</p>
+    <p><strong>Exploring Eberron, Ch. 4 — "Droaam"</strong> <span class="pill-ref">ExE p. 81–92</span> You've read most of this, but revisit "Religion" <span class="pill-ref">ExE p. 85–86</span> for the Cazhaak Creed and the Keeper's role in Droaamish funerary rites. Droaam is religiously tolerant — a Seeker community fits. Also "The Denizens of Droaam" <span class="pill-ref">ExE p. 87–90</span> for the full species list so you know who else lives next door.</p>
+    <p><strong>Exploring Eberron, Ch. 5 — "Dolurrh: The Realm of the Dead"</strong> <span class="pill-ref">ExE p. 156–160</span> Where souls go in Eberron. Important for understanding <em>why</em> Seekers fear death — souls fade in Dolurrh, there's no happy afterlife. This is what drives the whole Blood of Vol philosophy. Skim "Concerning Resurrection" <span class="pill-ref">ExE p. 159</span> too. Then <strong>"Mabar: The Endless Night"</strong> <span class="pill-ref">ExE p. 177–181</span> — the plane of negative energy, where necromantic power comes from. Mabaran manifest zones are where Seeker communities tend to settle.</p>
     <p><strong>Eberron: Rising from the Last War — Karrnath section.</strong> Short but covers undead soldiers in the Last War, Fort Bones, Fort Zombie. Good for context if Amir asks "are there undead armies?" — yes, Karrnath had them, they're sealed in vaults now. Also the Blood of Vol entry in the religions section.</p>
-    <p><strong>Chronicles of Eberron — "Ghost Stories of Eberron" (p. 143–154).</strong> The motherlode. Starts with "The Reality of Undead" — how Eberron's undead actually work, why they exist, what drives them. Then every type individually: Skeletons &amp; Zombies (p. 145) for your Seeker street-sweepers, Ghouls (145), Wights (146), Wraiths &amp; Specters (147), and crucially <strong>Vampires (p. 149)</strong> — read this before you finalise your villain. Mummies (150) and Liches (152) for later escalation.</p>
-    <p><strong>Chronicles of Eberron — "The Keeper" (p. 74–80).</strong> The Dark Six deity of death, worshipped in Droaam via the Cazhaak Creed. "Many Faces of the Keeper" (p. 78) and "Using the Keeper" (p. 80) — Keeper priests handle funerary rites in Graywall, so this is who the kids would encounter around death and burial.</p>
-    <p><strong>Chronicles of Eberron — "Karrnathi Undead" (p. 161–164).</strong> If Amir asks "are there undead armies?" — yes. Two variants: Canon (Unchanging, p. 161) and Kanon (Uncanny, p. 163) plus FAQ. Also <strong>"The Grim Lords" (p. 155–160)</strong> — powerful undead NPCs, good villain templates for later.</p>
+    <p><strong>Chronicles of Eberron — "Ghost Stories of Eberron"</strong> <span class="pill-ref">Chronicles p. 143–154</span> The motherlode. Starts with "The Reality of Undead" — how Eberron's undead actually work, why they exist, what drives them. Then every type individually: Skeletons &amp; Zombies <span class="pill-ref">Chronicles p. 145</span> for your Seeker street-sweepers, Ghouls <span class="pill-ref">Chronicles p. 145</span>, Wights <span class="pill-ref">Chronicles p. 146</span>, Wraiths &amp; Specters <span class="pill-ref">Chronicles p. 147</span>, and crucially <strong>Vampires</strong> <span class="pill-ref">Chronicles p. 149</span> — read this before you finalise your villain. Mummies <span class="pill-ref">Chronicles p. 150</span> and Liches <span class="pill-ref">Chronicles p. 152</span> for later escalation.</p>
+    <p><strong>Chronicles of Eberron — "The Keeper"</strong> <span class="pill-ref">Chronicles p. 74–80</span> The Dark Six deity of death, worshipped in Droaam via the Cazhaak Creed. "Many Faces of the Keeper" <span class="pill-ref">Chronicles p. 78</span> and "Using the Keeper" <span class="pill-ref">Chronicles p. 80</span> — Keeper priests handle funerary rites in Graywall, so this is who the kids would encounter around death and burial.</p>
+    <p><strong>Chronicles of Eberron — "Karrnathi Undead"</strong> <span class="pill-ref">Chronicles p. 161–164</span> If Amir asks "are there undead armies?" — yes. Two variants: Canon (Unchanging, <span class="pill-ref">Chronicles p. 161</span>) and Kanon (Uncanny, <span class="pill-ref">Chronicles p. 163</span>) plus FAQ. Also <strong>"The Grim Lords"</strong> <span class="pill-ref">Chronicles p. 155–160</span> — powerful undead NPCs, good villain templates for later.</p>
   </div>
 
   </div><!-- end acc-dm-next-session-zero -->
