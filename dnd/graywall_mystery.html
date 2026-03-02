@@ -12,8 +12,7 @@
 
   STRUCTURE:
     01  The Story So Far (the pitch, 2nd person)
-    02  Which Class? (Amir guidance + Kais picks freely)
-    03  Your Characters (backstory questions, direct to kids)
+    02  Your Characters (backstory questions, direct to kids)
     04  What You Need to Know (neighbours, food, boss, country)
     05  Your Town (kid-friendly table of Graywall places)
     06  What They Don't Need Yet (sisters, politics, wider world) [DM]
@@ -21,14 +20,20 @@
     08  The Secret (vampire gardener — DM eyes only) [DM]
     09  Session Zero Agenda (incl. map-drawing pointers) [DM]
     10  Sessions (campaign log and session notes) [Outside DM section]
+    11  Next Session Zero Prep (Oath, breath type, VRGtR reading list) [DM]
 
   SLIDESHOW: JS overlay triggered by button. Cycles through 8 images with
     intro text. Arrow keys / click to advance. Esc to close. Good for
     showing the kid at session zero to set the mood.
 
-  IMAGES (media/kids_primer/):
+  IMAGES (media/graywall_mystery/):
     night_domain.png, graywall_1.webp, graywall_2.webp, witches.png,
-    stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png
+    stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png,
+    vines.png, dm_prep.jpg, khorvaire-graywall_map.jpg, droaam_graywall_map.png
+    Session zero report uses vines.png as accordion-preview + inline atmo with figcaption.
+    Both session zero prep accordions (DM + Next) use dm_prep.jpg as dm-preview header.
+    .map-container: flex row (2:1 ratio) with khorvaire + droaam maps, .map-caption captions.
+    All .atmo images and .map-caption use figcaption/caption style (Cinzel italic, muted).
 
   CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
        Includes DM Graywall reference table and sources table (DM section).
@@ -36,6 +41,7 @@
   DM SECTION ADDITIONS:
     - Graywall quarters condensed into wide reference table
     - References table with DMs Guild PDFs and official WotC books
+    - "Next Session Zero Prep" accordion (DM): Oath, breath type, VRGtR reading list
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -231,6 +237,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     color: var(--gold);
   }
 
+  .callout ul {
+    margin: 4px 0 10px 20px;
+    font-size: 14pt;
+    line-height: 1.6;
+  }
+
+  .callout li { margin-bottom: 2px; }
+
   /* CLASS TABLE */
   .class-grid {
     display: grid;
@@ -317,6 +331,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .ref-table th {
     background: var(--accent);
   }
+
+  .char-sheet td:nth-child(1),
+  .char-sheet td:nth-child(3) {
+    width: 10%;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .char-sheet td:nth-child(2),
+  .char-sheet td:nth-child(4) { width: 40%; }
 
   /* AGENDA LIST */
   .agenda {
@@ -652,6 +678,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     border-bottom: 1px solid var(--divider);
     transition: opacity 0.4s ease, max-height 0.4s ease;
     display: block;
+    cursor: pointer;
   }
 
   .accordion-preview.dm-preview {
@@ -704,6 +731,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     .accordion-preview { max-height: 100px; }
     .accordion-preview.dm-preview { max-height: 50px; }
+
+    /* Char sheet: stack to label/value pairs on mobile */
+    .char-sheet { min-width: 0 !important; width: 100%; }
+    .char-sheet thead th { text-align: center; }
+    .char-sheet,
+    .char-sheet tbody,
+    .char-sheet tr,
+    .char-sheet td { display: block; width: 100%; }
+    .char-sheet tr { display: grid; grid-template-columns: auto 1fr; gap: 0; }
+    .char-sheet td:nth-child(1),
+    .char-sheet td:nth-child(3) { width: auto; white-space: nowrap; padding-right: 10px; }
+    .char-sheet td:nth-child(2),
+    .char-sheet td:nth-child(4) { width: auto; word-wrap: break-word; overflow-wrap: break-word; }
+    .char-sheet td[colspan] { grid-column: 1 / -1; }
 
     /* Tables: horizontal scroll wrapper */
     .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px -14px; padding: 0 14px; }
@@ -775,6 +816,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .slideshow { display: none !important; }
     .dm-only, .dm-inline { display: none !important; }
   }
+
+  /* Maps */
+  .map-container {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    width: 100%;
+  }
+  .map-link {
+    display: block;
+    border: 1px solid var(--divider);
+    transition: opacity 0.2s;
+  }
+  .map-link:hover { opacity: 0.9; }
+  .map-link img {
+    width: 100%;
+    height: 400px; /* Fixed height for desktop alignment */
+    object-fit: cover;
+    display: block;
+  }
+  .map-khorvaire { flex: 2; }
+  .map-droaam { flex: 1; }
+  .map-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-align: center;
+    color: var(--muted);
+    font-style: italic;
+    padding: 6px 0 0;
+    opacity: 0.75;
+    text-decoration: none;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .map-container { flex-direction: column; }
+    .map-link img { height: auto; max-height: 450px; }
+  }
 </style>
 </head>
 <body>
@@ -803,12 +884,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <ul class="toc">
     <li><a href="#" onclick="startSlideshow(); return false;">Intro Slideshow</a></li>
-    <li><a href="#" onclick="openAccordion('session-zero'); return false;">Session Zero</a></li>
+    <li><a href="#" onclick="openAccordion('session-zero'); return false;">The Story So Far</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-graywall'); return false;">Graywall Detail</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-world'); return false;">The World</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Villain</a></li>
-    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero (DM)</a></li>
-    <li><a href="#" onclick="openAccordion('campaign-log'); return false;">Campaign Log</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero Prep (DM)</a></li>
+    <li><a href="#" onclick="openAccordion('log-session-zero-amir'); return false;">March 1st — Session Zero</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-next-session-zero'); return false;">Next Session Zero Prep</a></li>
   </ul>
 
   <!-- INTRO SLIDESHOW — styled like accordion header but not collapsible -->
@@ -818,85 +900,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- ACCORDION 2: SESSION ZERO -->
-  <button class="accordion-toggle collapsed" id="session-zero" onclick="toggleAccordion(this)">Session Zero</button>
-  <img class="accordion-preview" id="preview-session-zero" src="media/kids_primer/graywall_2.webp" alt="Graywall streets">
+  <button class="accordion-toggle collapsed" id="session-zero" onclick="toggleAccordion(this)">The Story So Far</button>
+  <img class="accordion-preview" id="preview-session-zero" src="media/graywall_mystery/graywall_2.webp" alt="Graywall streets" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed" id="acc-session-zero">
 
   <!-- 1. THE PITCH -->
-  <h2>The Story So Far</h2>
 
   <div class="callout player">
     <span class="label">Your World</span>
     You live in a town called Graywall. It's a frontier town in a country of monsters — but the monsters aren't all bad. Your neighbours are goblins, orcs, ogres, and weirder things. Three powerful sisters rule the country from far away. Lately, strange things are happening near town — dark plants growing where they shouldn't, people going missing. There might be a vampire involved. You're going to find out what's going on.
   </div>
 
+  <div class="map-container">
+    <a href="media/graywall_mystery/khorvaire-graywall_map.jpg" target="_blank" class="map-link map-khorvaire">
+      <img src="media/graywall_mystery/khorvaire-graywall_map.jpg" alt="Map of Khorvaire">
+      <span class="map-caption">Khorvaire. Your continent. Graywall is on the far western edge.</span>
+    </a>
+    <a href="media/graywall_mystery/droaam_graywall_map.png" target="_blank" class="map-link map-droaam">
+      <img src="media/graywall_mystery/droaam_graywall_map.png" alt="Map of Droaam and Graywall">
+      <span class="map-caption">Droaam. The monster nation you call home.</span>
+    </a>
+  </div>
+
   <p>You don't have to know everything about the world, Eberron, or the big war that happened before you were born. If you have questions, just ask — but honestly, your characters wouldn't know most of that stuff either. The world gets bigger as your story goes on.</p>
 
-  <div class="atmo"><img src="media/kids_primer/castle.webp" alt="A dark castle in the hills"><figcaption>Something old waits in the hills south of town.</figcaption></div>
+  <div class="atmo"><img src="media/graywall_mystery/castle.webp" alt="A dark castle in the hills"><figcaption>Something old waits in the hills south of town.</figcaption></div>
 
   <div class="callout dm-inline" style="display:none">
     <span class="label">DM Note</span>
     The younger one picks first. Once his character exists, send the older one the pitch plus whatever his brother picked — he'll build something complementary on instinct. He already plays D&D and is thinking about DMing, so he'll get it fast. Don't over-brief him — let the brothers figure out their dynamic at the table. The older one can handle a more complex class if he wants one.
   </div>
 
-  <!-- 2. CLASS PICKS -->
-  <h2>Which Class?</h2>
-
-  <p>Amir, you have the Player's Handbook — pick whatever you want from it. Race, class, all your choice. But some classes are easier to start with than others. Here's a quick guide:</p>
-
-  <div class="class-grid">
-    <div class="class-card pick">
-      <span class="class-name">Fighter</span>
-      <span class="class-why">The simplest class in the game. "I hit things." Your turn is always clear, and it's hard to mess up. At level 3 you crit on a 19. Solid first character.</span>
-      <span class="class-tag">Easiest to learn</span>
-    </div>
-    <div class="class-card pick">
-      <span class="class-name">Barbarian</span>
-      <span class="class-why">Even simpler than fighter. "I get angry and hit harder." Rage is one button — press it and go. Zero spells. Great if you don't want to think about rules.</span>
-      <span class="class-tag">Simplest in the game</span>
-    </div>
-    <div class="class-card">
-      <span class="class-name">Ranger</span>
-      <span class="class-why">The tracker with an animal companion. Beast Master at level 3 — if you want a pet fighting alongside you, this is the one. You get a few spells too, but nothing overwhelming.</span>
-      <span class="class-tag">"I want a pet"</span>
-    </div>
-    <div class="class-card">
-      <span class="class-name">Rogue</span>
-      <span class="class-why">The sneaky one. Sneak Attack hits <em>hard</em> when you set it up right. Great in Graywall's alleys and ruins. A bit more tactical — you'll need to think about positioning.</span>
-      <span class="class-tag">"I want to sneak"</span>
-    </div>
-    <div class="class-card">
-      <span class="class-name">Cleric</span>
-      <span class="class-why">The healer. Heavy armour + mace means you can take a hit. Your turn is simple: "Hit with mace, Sacred Flame, or heal someone?" Three options, that's it. And in Graywall, a healer is a <em>big deal</em>.</span>
-      <span class="class-tag">"I want to heal"</span>
-    </div>
-    <div class="class-card">
-      <span class="class-name">Paladin</span>
-      <span class="class-why">Fighter + heals + a cool oath. More moving parts, but if you like the idea of a holy warrior who smites evil, this is incredibly satisfying. Divine Smite is a dopamine hit.</span>
-      <span class="class-tag">"I want to be a knight"</span>
-    </div>
-  </div>
-
-  <div class="callout dm-inline" style="display:none">
-    <span class="label">DM Note — Steer Away From (for now)</span>
-    For the younger one: full casters (wizard, sorcerer, warlock, druid, bard) are harder to run as a first character. Too many spell choices per turn, slot management, concentration tracking. If he insists on magic, cleric or paladin give him spells without the complexity. The older one can play whatever he wants — he'll be fine.
-  </div>
-
-  <div class="callout player">
-    <span class="label">Pick Any Race</span>
-    Any race from the Player's Handbook works in Graywall — this town has everything. A dwarf could be a trader from the Mror Holds. A tiefling fits right in with the monster-nation vibe. An elf might live in the Calabas. A halfling could be Bahiri's kitchen apprentice. A dragonborn is just another tough face in Bloodstone. Pick what looks cool — we'll figure out the backstory together.
-  </div>
-
-  <div class="callout dm-inline" style="display:none">
-    <span class="label">DM Note — If He Picks Cleric</span>
-    Life Domain is the easiest subclass. Heavy armour + mace means he's not squishy. Pre-pick his prepared spells: <strong>Healing Word</strong> (bonus action heal — the important one), <strong>Bless</strong>, <strong>Shield of Faith</strong>. Life Domain adds bonus spells automatically. Cantrips: <em>Sacred Flame</em> (attack) and <em>Guidance</em> (help friends). His turn becomes: "Hit with mace, Sacred Flame, or heal someone?" — three options, that's it. A healer in Graywall is also a <em>big deal</em> — the town's medical options are a medusa who turns you to stone until help arrives, or grist and hope. A kid who can close wounds with a prayer? The goblin quarter would love him.
-  </div>
-
-  <div class="atmo"><img src="media/kids_primer/graywall_1.webp" alt="Graywall — the frontier city"><figcaption>Graywall. A city built where no city should be.</figcaption></div>
-
-  <h3>Hey, Kais!</h3>
-
-  <p>You already play D&D — you know how classes work. Borrow the Player's Handbook from Amir and pick anything, including full casters. No restrictions. Once Amir has his character, you'll get the pitch and his pick. Build something that works with his.</p>
+  <div class="atmo"><img src="media/graywall_mystery/graywall_1.webp" alt="Graywall — the frontier city"><figcaption>Graywall. A city built where no city should be.</figcaption></div>
 
   <!-- 3. YOUR CHARACTERS -->
   <h2>Your Characters</h2>
@@ -924,15 +959,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p><strong>Your neighbours:</strong> Goblins, orcs, ogres, gnolls, harpies (they sing the news), gargoyles (they deliver mail), a medusa or two (don't stare). Everyone gets along, mostly. Bigger creatures have the right of way.</p>
 
+  <p><strong>The dead:</strong> Some of your neighbours are undead. That's normal here. Skeletons work the heavy lifts at the quarry — they don't get tired and they don't complain. A zombie runs a night stall in the Bloody Market selling candles; he's been there longer than anyone remembers. There's a ghost in the Calabas who gives directions to lost travellers. Nobody's scared of them. They're just people who didn't stop.</p>
+
   <p><strong>Food:</strong> There's free stew called <em>grist</em>. It's made from troll meat — the trolls grow it back, so don't feel bad. The best restaurant in town is run by a goblin chef called Bahiri, in the small-people quarter.</p>
 
   <p><strong>The boss:</strong> A mind flayer named Xor'chylic runs the town from a tower. Tentacle face, reads minds. He's fair, but you really don't want to annoy him.</p>
 
-  <div class="atmo"><img src="media/kids_primer/xorchylic.png" alt="Xor'chylic, the mind flayer governor of Graywall"><figcaption>He knows what you're thinking. Literally.</figcaption></div>
+  <div class="atmo"><img src="media/graywall_mystery/xorchylic.png" alt="Xor'chylic, the mind flayer governor of Graywall"><figcaption>He knows what you're thinking. Literally.</figcaption></div>
 
   <p><strong>The country:</strong> Droaam is run by three powerful sisters far away in the capital. They're ancient, they're powerful, and everyone respects them. That's all you need to know about them for now.</p>
 
-  <div class="atmo"><img src="media/kids_primer/witches.png" alt="The Daughters of Sora Kell"><figcaption>The Daughters of Sora Kell. They see everything. Even this.</figcaption></div>
+  <div class="atmo"><img src="media/graywall_mystery/witches.png" alt="The Daughters of Sora Kell"><figcaption>The Daughters of Sora Kell. They see everything. Even this.</figcaption></div>
 
   <!-- 5. ON GRAYWALL — player-friendly short table -->
   <h2>Your Town</h2>
@@ -974,7 +1011,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- DM ACCORDION 1: GRAYWALL IN MORE DETAIL -->
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-graywall" onclick="toggleAccordion(this)">Graywall in More Detail <span class="dm-prelim">DM</span></button>
-  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/graywall_1.webp" alt="">
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/graywall_1.webp" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-graywall">
 
   <!-- DM GRAYWALL REFERENCE TABLE -->
@@ -1093,12 +1130,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- DM ACCORDION 2: THE WORLD -->
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-world" onclick="toggleAccordion(this)">The World <span class="dm-prelim">DM</span></button>
-  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/ghost.png" alt="">
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/ghost.png" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-world">
 
   <h2>What They Don't Need Yet <span class="dm-prelim">DM Only</span></h2>
 
-  <img class="dm-img right" src="media/kids_primer/graywall_1.webp" alt="">
+  <img class="dm-img right" src="media/graywall_mystery/graywall_1.webp" alt="">
 
   <p>Don't explain any of this unless they ask. Even then, give the short version first. If they dig deeper, you can expand — but let them set the pace.</p>
 
@@ -1137,12 +1174,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- DM ACCORDION 3: HOOK & VILLAIN -->
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-hook" onclick="toggleAccordion(this)">Hook &amp; Villain <span class="dm-prelim">DM</span></button>
-  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/vampires.png" alt="">
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/vampires.png" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-hook">
 
   <h2>The Hook <span class="dm-prelim">Preliminary</span></h2>
 
-  <img class="dm-img left" src="media/kids_primer/night_domain.png" alt="">
+  <img class="dm-img left" src="media/graywall_mystery/night_domain.png" alt="">
 
   <div class="callout player">
     <span class="label">Player — Tell Them at Session 1</span>
@@ -1163,7 +1200,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     This will ruin the story. Your DM has something cool planned and you'll enjoy it more if you don't know what's coming. Go do something else.
   </div>
 
-  <img class="dm-img right" src="media/kids_primer/castle.webp" alt="">
+  <img class="dm-img right" src="media/graywall_mystery/castle.webp" alt="">
 
   <div class="callout secret">
     <span class="label">DM Eyes Only</span>
@@ -1171,10 +1208,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     Your version: an old vampire who arrived in the Droaam borderlands decades ago. Presents himself as a travelling scholar — soft-spoken, courteous, endlessly curious about botany. He buys rare seeds from merchants in disguise. He asks about your favourite flowers. He remembers your name. He seems <em>kind</em>.<br><br>
     He is not kind. He is a monster wearing patience like a coat. The garden is fed with blood. The beautiful darkwood trees? Grown from the bodies of the missing travellers — he plants them like bulbs. The luminescent flowers? They thrive on life force drained from living creatures through root systems that spread underground. The vines creeping up Graywall's south wall aren't an accident — they're infrastructure. He's extending his garden <em>into</em> the town, slowly, root by root. The missing people aren't collateral damage. They're compost.<br><br>
     He knows exactly what he's doing and he enjoys it. But his mask is perfect — gentle, scholarly, a little eccentric. The kind of person you'd invite to dinner. He'd accept. He'd bring flowers. He'd compliment the cooking. And weeks later, something dark and beautiful would bloom in your garden where nothing was planted, and you'd never connect the two.<br><br>
-    <div class="dm-clear"></div><img class="dm-img left" src="media/kids_primer/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise his voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
+    <div class="dm-clear"></div><img class="dm-img left" src="media/graywall_mystery/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise his voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
     <strong>The Truth:</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries across different regions — arrives, gardens, leaves when the locals catch on. Droaam is perfect for him because nobody's organised enough to notice a few missing travellers. He considers his work <em>art</em> and the deaths a necessary part of the creative process. Not apologetic. Not conflicted. Just patient.<br><br>
     <strong>Weakness hook:</strong> Use the Eberron variant weakness table (Chronicles p.151). Pick something fun — maybe he <em>must accept any gift offered to him</em> (Keeper's Greed), or he <em>can't re-enter a building he's left for 13 days</em> (Never Look Back). Give the kids a way to be clever, not just strong.<br><br>
-    <div class="dm-clear"></div><img class="dm-img right" src="media/kids_primer/stairs.png" alt=""><strong>Escalation:</strong> To be planned once we know how much table time we have. The broad arc: strange plants → investigation → the vampire appears → someone goes missing → confrontation.
+    <div class="dm-clear"></div><img class="dm-img right" src="media/graywall_mystery/stairs.png" alt=""><strong>Escalation:</strong> To be planned once we know how much table time we have. The broad arc: strange plants → investigation → the vampire appears → someone goes missing → confrontation.
   </div>
 
   <blockquote>"Some gardeners plant in the dark."</blockquote>
@@ -1182,13 +1219,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div><!-- end acc-dm-hook -->
 
   <!-- DM ACCORDION 4: SESSION ZERO -->
-  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-zero" onclick="toggleAccordion(this)">Session Zero <span class="dm-prelim">DM</span></button>
-  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/kids_primer/stairs.png" alt="">
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-zero" onclick="toggleAccordion(this)">Session Zero Prep <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-zero">
 
-  <h2>Session Zero <span class="dm-prelim">DM Only</span></h2>
-
-  <img class="dm-img left" src="media/kids_primer/ghost.png" alt="">
+  <img class="dm-img left" src="media/graywall_mystery/ghost.png" alt="">
 
   <div class="agenda">
     <div class="agenda-item"><strong>The Pitch</strong> — the 30-second version above, just with the younger one first. See if he's excited.</div>
@@ -1204,19 +1239,130 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-dm-session-zero -->
 
-  <!-- ACCORDION 3: CAMPAIGN LOG -->
-  <button class="accordion-toggle collapsed" id="campaign-log" onclick="toggleAccordion(this)">Campaign Log</button>
-  <img class="accordion-preview" id="preview-campaign-log" src="media/kids_primer/night_domain.png" alt="The lands of Droaam">
-  <div class="accordion-body collapsed" id="acc-campaign-log">
+  <!-- CAMPAIGN LOG -->
+  <div class="rule"></div>
+  <h2 id="campaign-log-title" style="font-size: 22pt; text-align: center; margin: 24px 0 8px;">Campaign Log</h2>
+
+  <button class="accordion-toggle collapsed" id="log-session-zero-amir" onclick="toggleAccordion(this)">1. März — Session Zero mit Amir</button>
+  <img class="accordion-preview" id="preview-log-session-zero-amir" src="media/graywall_mystery/vines.png" alt="Dark vines" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed" id="acc-log-session-zero-amir">
+
+  <!-- SESSION REPORT — edit these paragraphs -->
+  <h2>Session Report</h2>
+
+  <p>Amir hat sich in die Welt eingelebt und etwas über Greywall und das Land Droaam und den Kontinent Khorvaire erfahren. Wir haben über die Hexen gesprochen und über den Mind Flayer, über das seltsame Wachstum von schrägen Pflanzen wie schwarzen Rosen oder verknorksten dunklen Lianen und Schlingenranken. Und dass Leute verschwinden, plötzlich.</p>
+
+  <div class="atmo"><img src="media/graywall_mystery/vines.png" alt="Dark vines creeping through Graywall"><figcaption>Dark vines. Growing where they shouldn't. Growing back when you cut them.</figcaption></div>
+
+  <p>Dann haben wir den Charakter zu bauen begonnen. Schön dem Player's Handbook nach. Klasse zuerst, dann Stats, dann Hintergründe. Wir haben die Standard-Stats für Paladine genommen, ich habe die Stats (Abilities) auch etwas erklärt, aber wir haben jetzt auf mehr CHA statt STR gewechselt weil das zum Charakter einfach besser passt.</p>
+
+  <p>Amir weiss jetzt, wie er in der Stadt Greywall gelebt hat: Er hat sich mit Deals durchgeschlagen, kennt die ganze Stadt in- und auswändig, kann Leute einfach so mit viel Blabla überzeugen. Er ist deutlich mehr Scharlatan als Paladin, ganz sicher kein nobler Ritter oder religiös.</p>
+
+  <p>Wir wurden mit dem Charakter nicht fertig, aber das macht nichts. Wir haben ein Bild davon. Dragonborn, mächtig, wird fliegen und etwas speien können. Ich wusste gerade nicht was; auf Seite 187 unten links ist eine Tabelle. Kann Feuer oder Gift oder Blitze oder Kälte sein, Amir kann das noch aussuchen. Wir machen nächdstes Mal einfach da weiter wo wir waren.</p>
+
+  <!-- AMIR'S CHARACTER SHEET -->
+  <h2>Amirs Character</h2>
+
+  <table class="graywall-table char-sheet">
+    <thead>
+      <tr><th colspan="4">Dragonborn Paladin · Level 1</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Name</strong></td><td><em>???</em></td><td><strong>Background</strong></td><td>Charlatan</td></tr>
+      <tr><td><strong>STR</strong></td><td>14 (+2)</td><td><strong>INT</strong></td><td>8 (−1)</td></tr>
+      <tr><td><strong>DEX</strong></td><td>10 (+0)</td><td><strong>WIS</strong></td><td>12 (+1)</td></tr>
+      <tr><td><strong>CON</strong></td><td>13 (+1)</td><td><strong>CHA</strong></td><td>14 (+2)</td></tr>
+      <tr><td><strong>Speed</strong></td><td>30 ft</td><td><strong>Proficiency</strong></td><td>+2</td></tr>
+      <tr><td><strong>Armor</strong></td><td>Light, Medium, Heavy, Shields</td><td><strong>Skills</strong></td><td>Sleight of Hand, Deception, Intimidation</td></tr>
+      <tr><td><strong>Feat</strong></td><td colspan="3">
+        Skilled (3 proficiencies — noch nicht verteilt)<br>
+      </td></tr>
+      <tr><td><strong>Equipment</strong></td><td colspan="3">Chainmail, shield, longsword, 6 javelins, holy symbol, priest's pack, forgery kit, costume, fine clothes, 24 gp</td></tr>
+    </tbody>
+  </table>
+
+  <!-- NEXT -->
+  <h2>Nächste Schritte</h2>
 
   <div class="callout gold">
-    <span class="label">Session Zero — Amir</span>
-    About to begin. Character creation, map drawing, setting the scene.
+    <span class="label">Wichtig</span>
+    <p>Alles kann nichts muss. Wir können das alles zusammen, würd mir Spass machen.</p>
+
+    <span class="label">Amir</span>
+    <ul>
+      <li>Skilled verteilen
+        <ul>
+          <li>Persuasion (Überzeugungskraft, Selbstvertrauen)</li>
+          <li>Insight (Leute lesen, sehen wer wie drauf ist)</li>
+          <li>Perception (schnell erkennen wo wertvolle Sachen oder Wachen sind)</li>
+        </ul>
+      </li>
+      <li>Charakternamen suchen</li>
+      <li>Überlegen welche coolen Orte es in der Stadt gibt, die in die Karte müssen</li>
+      <li>Wir spielen das mit dem Paladin-Klasse finden noch fertig 🤭</li>
+    </ul>
+
+    <span class="label">Kais</span>
+    <ul>
+      <li>Vorbereiten welchen Charakter (Klasse, evtl. schon Rasse oder Hintergrund) Du spielen möchtest</li>
+    </ul>
+    <p style="margin-bottom: 4px;"><strong>Ideen:</strong></p>
+    <ul>
+      <li><strong>Rogue</strong> (Halfling, Elf (Drow)) — Während Amir trickbetrügt schleichst Du hinten rein und stiehlst, und kannst hauen — als Arcane Trickster kann er INT</li>
+      <li><strong>Wizard</strong> (Gnome, Elf, Tiefling) — Ergänzt sich sehr gut mit INT und Casting von weitem, Artillerie für den Tank</li>
+      <li><strong>Ranger</strong> (Wood Elf, Orc, Goliath) — Physischer Kampf von Ferne in Ergänzung zu dem in der Nähe, Wildnis als Ergänzung (aber DEX-basiert)</li>
+      <li><strong>Warlock</strong> (Tiefling, Aasimar, Elf (Drow)) — Gute Spell-Economy für häufige Casts, mysteriöser Edge Lord (aber CHA-basiert, das könnte sich beissen)</li>
+    </ul>
+    <p>…musst aber nicht alles ausfüllen, das wär ja wie Hausaufgaben 🤭</p>
+
+    <span class="label">Nächste Session (immer noch Zero)</span>
+    <ul>
+      <li>Charakterblätter weiter ausfüllen (bei Amir weitermachen mit Species, bei Kais starten)</li>
+      <li>Karte von Greywall zeichnen</li>
+      <li>Vorbereiten wie wir ins Abenteuer starten werden (wer will was planen?)</li>
+    </ul>
   </div>
 
-  <p><em>This section will be updated as the campaign progresses with notable events, player characters, and session notes.</em></p>
+  </div><!-- end acc-log-session-zero-amir -->
 
-  </div><!-- end acc-campaign-log -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-next-session-zero" onclick="toggleAccordion(this)">Next Session Zero Prep <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-next-session-zero">
+
+  <!-- Oath idea -->
+  <div class="callout gold">
+    <span class="label">Oath of Self-Made Greatness</span>
+    <p>Amir's paladin isn't religious or noble. He's ambitious. His oath is personal: <em>I will rise. I will not be ordinary. I will not let others define my worth.</em></p>
+    <p><strong>The Traveller:</strong> A retired, washed-up adventurer-knight — himself a paladin once, now a con artist drifting through Droaam. Crosses paths with Amir. Teaches him a few things (fighting, attitude, how to read people). Then challenges him: <em>"If you're going to be great, swear it."</em> Amir swears. The old man laughs and walks away. That's the oath origin.</p>
+    <p>This is a story about ambition turning into heroism. Later, challenge Amir: <em>Does greatness mean being feared, or being admired?</em> That's growth fuel.</p>
+  </div>
+
+  <!-- Breath type -->
+  <div class="callout gold">
+    <span class="label">Breath Type Choice</span>
+    <p>Next session, when Amir chooses breath type (PHB p. 187), tie it to a story moment in Graywall. Examples:</p>
+    <ul>
+      <li><strong>Fire</strong> — he burned a bridge on a deal gone wrong</li>
+      <li><strong>Lightning</strong> — he shocked someone with unexpected boldness</li>
+      <li><strong>Cold</strong> — he froze when someone betrayed him</li>
+      <li><strong>Poison</strong> — he said something that cut deeper than he meant</li>
+      <li><strong>Acid</strong> — he watched something precious dissolve and couldn't stop it</li>
+    </ul>
+    <p>Let Amir pick the type, then ask him: <em>"When was the first time you felt that?"</em></p>
+  </div>
+
+  <!-- VRGtR reading list -->
+  <div class="callout gold">
+    <span class="label">VRGtR Reading List for This Adventure</span>
+    <p>Your vampire gardener + creepy plants + kid-appropriate dark mystery maps perfectly onto several VRGtR chapters. Prioritised reading order:</p>
+    <p><strong>Chapter 4 — Horror Adventures</strong> (essential). Seeds of Fear mechanics let kids calibrate their own horror tolerance. Fear and Stress rules replace flat saves with mounting tension — much better for a mystery where dread builds. Safety tools section explicitly covers running horror for younger players. Curse mechanics for the garden's supernatural taint.</p>
+    <p><strong>Chapter 2 — Creating Domains of Dread.</strong> The "Creating a Darklord" framework is perfect for fleshing out your vampire gardener's backstory, fatal flaw, and obsessive motivation. The "Genres of Horror" tables (focus on Folk Horror and Dark Fantasy) give you environmental details and mood hooks for Graywall's corrupted vegetation.</p>
+    <p><strong>Chapter 5 — Monsters.</strong> The <strong>Bodytaker Plant</strong> (CR 7) is a Huge plant colony with pod-creatures that melt when the parent dies — perfect as the vampire's "crop" and explains where the missing people went. Shambling Mound variants work as garden sentries.</p>
+    <p><strong>Chapter 1 — Lineages &amp; Dark Gifts.</strong> Dhampir lore helps you design thralls or half-turned NPCs in the underground. Dark Gifts offer temptation mechanics — the mystery touches back when the kids investigate too deep. Could be interesting for Amir's con-artist paladin: shortcuts to truth, false promises of power.</p>
+    <p><strong>Chapter 3 — Domains of Ravenloft.</strong> Skim for domains with underground geography, corrupted nature, or patient intellectual villains. Use as atmosphere templates, not plot — Graywall isn't Ravenloft, but the mood translates.</p>
+  </div>
+
+  </div><!-- end acc-dm-next-session-zero -->
 
   <div class="rule"></div>
 
@@ -1277,8 +1423,9 @@ function openAccordion(id) {
       setTimeout(function() { body.style.maxHeight = 'none'; }, 400);
     }
   }
-  // Scroll to it
-  btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Save hash and scroll after closing animations settle
+  if (btn.id) history.replaceState(null, '', window.location.pathname + (window.location.search || '') + '#' + btn.id);
+  setTimeout(function() { btn.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 420);
 }
 
 function closeAccordion(otherBtn) {
@@ -1327,6 +1474,8 @@ function toggleAccordion(btn) {
       if (preview) preview.classList.add('faded');
       setTimeout(function() { body.style.maxHeight = 'none'; }, 400);
     }
+    // Save open state to hash
+    if (btn.id) history.replaceState(null, '', window.location.pathname + (window.location.search || '') + '#' + btn.id);
   } else {
     // Close this one
     body.style.maxHeight = body.scrollHeight + 'px';
@@ -1335,6 +1484,8 @@ function toggleAccordion(btn) {
     body.classList.add('collapsed');
     btn.classList.add('collapsed');
     if (preview) preview.classList.remove('faded');
+    // Clear hash
+    history.replaceState(null, '', window.location.pathname + (window.location.search || ''));
   }
 }
 
@@ -1405,47 +1556,67 @@ function toggleDM() {
 (function() {
   var params = new URLSearchParams(window.location.search);
   if (params.get('dm_mode') === 'true') {
-    // Wait for DOM to be ready (this script runs at end of body, so it already is)
     activateDM();
+  }
+})();
+
+// Restore open accordion from hash
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash) {
+    var btn = document.getElementById(hash);
+    if (btn && btn.classList.contains('accordion-toggle')) {
+      // If it's a DM accordion, DM mode must be active
+      if (btn.classList.contains('dm-only') && !isDMActive()) return;
+      openAccordion(hash);
+    }
   }
 })();
 
 (function () {
   var slides = [
     {
-      img: 'media/kids_primer/night_domain.png',
+      img: 'media/graywall_mystery/night_domain.png',
       text: 'Amir. Kais. This is the land around your town.\nWild, old, and full of things that don\'t sleep at night.'
     },
     {
-      img: 'media/kids_primer/graywall_1.webp',
+      img: 'media/graywall_mystery/khorvaire-graywall_map.jpg',
+      text: 'This is Khorvaire — the continent.\nYour town is on the far western edge, in a country of monsters.'
+    },
+    {
+      img: 'media/graywall_mystery/droaam_graywall_map.png',
+      text: 'Droaam. Your country.\nGraywall is the gateway between the monster nation and the human world.'
+    },
+    {
+      img: 'media/graywall_mystery/graywall_1.webp',
       text: 'Welcome to Graywall.\nA frontier city on the edge of the monster nation.'
     },
     {
-      img: 'media/kids_primer/graywall_2.webp',
+      img: 'media/graywall_mystery/graywall_2.webp',
       text: 'Your neighbours are goblins, orcs, ogres, and stranger things.\nThey\'re loud. They\'re proud. And they look out for each other.'
     },
     {
-      img: 'media/kids_primer/xorchylic.png',
+      img: 'media/graywall_mystery/xorchylic.png',
       text: 'The town is run by a mind flayer named Xor\'chylic.\nTentacle face. Reads minds. Fair ruler.\nDon\'t annoy him.'
     },
     {
-      img: 'media/kids_primer/witches.png',
+      img: 'media/graywall_mystery/witches.png',
       text: 'Three ancient sisters rule Droaam from the capital, far away.\nEveryone respects them. Nobody questions them.'
     },
     {
-      img: 'media/kids_primer/stairs.png',
+      img: 'media/graywall_mystery/stairs.png',
       text: 'Beneath the city lie the ruins of an empire that fell\nthousands of years ago. Some passages have never been opened.'
     },
     {
-      img: 'media/kids_primer/vampires.png',
+      img: 'media/graywall_mystery/vampires.png',
       text: 'Lately, something is wrong.\nPeople are going missing. Strange plants are growing where they shouldn\'t.'
     },
     {
-      img: 'media/kids_primer/castle.webp',
+      img: 'media/graywall_mystery/castle.webp',
       text: 'In the hills south of town, there\'s an old ruin.\nDark vines have swallowed it whole. Something lives inside.'
     },
     {
-      img: 'media/kids_primer/ghost.png',
+      img: 'media/graywall_mystery/ghost.png',
       text: 'You grew up here. This is your home.\nAnd you\'re both brave enough to find out what\'s going on.'
     }
   ];
