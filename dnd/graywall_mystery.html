@@ -2,9 +2,10 @@
   LLM CONTEXT — keep this comment current when making changes.
 
   FILE: graywall_mystery.html
-  PURPOSE: "The Graywall Mystery" campaign booklet for Amir (11) and Kais (15).
+  PURPOSE: "The Graywall Mystery" campaign booklet for Amir (11) and Kais (16).
            Session zero cheat sheet + slideshow mode for atmosphere images.
   OWNER PREF: No MS Office. Self-contained HTML. Parchment theme.
+              Kids are 11 and 16 — no alcohol/drinking references in NPC profiles or scenes.
 
   TONE: Player-facing sections speak DIRECTLY to Amir & Kais (2nd person).
         DM section speaks to DM (Gwen), uses "the kids" / "they" — no names.
@@ -18,9 +19,16 @@
     06  What They Don't Need Yet (sisters, politics, wider world) [DM]
     07  The Hook (creepy plants, missing people) [DM]
     08  The Secret (vampire gardener — DM eyes only) [DM]
-    09  Session Zero Agenda (incl. map-drawing pointers) [DM]
-    10  Sessions (campaign log and session notes) [Outside DM section]
-    11  Next Session Zero Prep (Oath, breath type, VRGtR reading list) [DM]
+    09  NPCs (DM NPC cards — reusable .npc-card template) [DM]
+    --- Campaign Log heading ---
+    10  Session Zero Agenda (incl. map-drawing pointers) [DM, inside campaign log]
+    11  Sessions (campaign log and session notes) [Outside DM section]
+    12  Next Session Zero Prep (Oath, breath type, VRGtR + Eberron reading lists) [DM]
+
+  NPC TEMPLATE (.npc-card):
+    .npc-header (accent bg, flex row: name left + subtitle right, wraps on mobile), .npc-body (content area),
+    .npc-stats (6-col grid, 3-col on mobile), .npc-stat (individual stat box),
+    .npc-line (labeled trait line), .npc-aside (gold-border lore callout for DM context)
 
   SLIDESHOW: JS overlay triggered by button. Cycles through 8 images with
     intro text. Arrow keys / click to advance. Esc to close. Good for
@@ -29,9 +37,10 @@
   IMAGES (media/graywall_mystery/):
     night_domain.png, graywall_1.webp, graywall_2.webp, witches.png,
     stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png,
-    vines.png, dm_prep.jpg, khorvaire-graywall_map.jpg, droaam_graywall_map.png
+    vines.png, dm_prep.jpg, npcs.png, khorvaire-graywall_map.jpg, droaam_graywall_map.png
     Session zero report uses vines.png as accordion-preview + inline atmo with figcaption.
     Both session zero prep accordions (DM + Next) use dm_prep.jpg as dm-preview header.
+    NPCs accordion uses npcs.png as dm-preview header (half-height).
     .map-container: flex row (2:1 ratio) with khorvaire + droaam maps, .map-caption captions.
     All .atmo images and .map-caption use figcaption/caption style (Cinzel italic, muted).
 
@@ -344,6 +353,89 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .char-sheet td:nth-child(2),
   .char-sheet td:nth-child(4) { width: 40%; }
 
+  /* NPC CARDS — reusable template for DM NPC section */
+  .npc-card {
+    background: #eee8dc;
+    border: 1px solid var(--divider);
+    padding: 0;
+    margin: 14px 0;
+  }
+  .npc-header {
+    background: var(--accent);
+    color: var(--parchment);
+    padding: 10px 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 13pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+  .npc-header .npc-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 10pt;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0;
+    opacity: 0.85;
+  }
+  .npc-body { padding: 12px 16px; font-size: 14pt; }
+  .npc-body p { margin: 6px 0; }
+  .npc-stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin: 10px 0;
+    text-align: center;
+  }
+  .npc-stat {
+    background: var(--parchment);
+    border: 1px solid var(--divider);
+    padding: 6px 4px;
+    font-size: 10pt;
+  }
+  .npc-stat strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .npc-stat em {
+    font-style: normal;
+    font-size: 8pt;
+    color: var(--muted);
+  }
+  .npc-line {
+    margin: 4px 0;
+    font-size: 13pt;
+  }
+  .npc-line strong {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+  .npc-aside {
+    background: var(--parchment);
+    border-left: 2px solid var(--gold);
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 12pt;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .npc-aside strong {
+    font-style: normal;
+    color: var(--ink);
+  }
+  @media (max-width: 600px) {
+    .npc-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+
   /* AGENDA LIST */
   .agenda {
     counter-reset: agenda;
@@ -558,15 +650,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   .dm-prelim {
     font-family: 'Cinzel', serif;
-    font-size: 8pt;
+    font-size: 7pt;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--vampire);
-    opacity: 0.6;
+    color: var(--parchment);
+    background: var(--vampire);
     display: inline-block;
     margin-left: 8px;
     vertical-align: middle;
+    padding: 2px 8px;
+    border-radius: 3px;
   }
 
   .footer {
@@ -888,6 +982,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-graywall'); return false;">Graywall Detail</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-world'); return false;">The World</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Villain</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-npcs'); return false;">NPCs</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero Prep (DM)</a></li>
     <li><a href="#" onclick="openAccordion('log-session-zero-amir'); return false;">March 1st — Session Zero</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-next-session-zero'); return false;">Next Session Zero Prep</a></li>
@@ -1218,7 +1313,73 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-dm-hook -->
 
-  <!-- DM ACCORDION 4: SESSION ZERO -->
+  <!-- DM ACCORDION 5: NPCs -->
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-npcs" onclick="toggleAccordion(this)">NPCs <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/npcs.png" alt="" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-npcs">
+
+  <!-- NPC: Sera Tain -->
+  <div class="npc-card">
+    <div class="npc-header">
+      Sera Tain
+      <span class="npc-subtitle">Human (Brelish), late 40s · Former Paladin (Oath of Devotion, broken) · "Nothing — officially"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Charmer. Arrived in Graywall with nothing, acts like she owns the place. Former holy warrior of Thrane who lost her faith when she saw the Silver Flame's crusades up close. Now a grifter in the Calabas — sells "blessed" trinkets, tells fortunes with a straight face. Charisma for days.</p>
+
+      <div class="npc-aside">
+        <strong>Calabas:</strong> Graywall's "civilised" quarter — signs in Common, human-scale buildings, a theatre. Where outsiders, merchants, and people who don't want to get eaten settle. Sera fits right in. <em>(ExE p. 84, E:RftLW p. 198)</em>
+      </div>
+
+      <div class="npc-aside">
+        <strong>Thrane:</strong> One of the Five Nations, ruled by the Church of the Silver Flame. Think theocracy with good PR. Sera grew up there, trained there, left there. <em>(E:RftLW p. 126)</em>
+      </div>
+
+      <div class="npc-aside">
+        <strong>Silver Flame:</strong> Thrane's state religion — a force of genuine good that also ran crusades against lycanthropes and "monsters." The crusades got ugly. That's what broke Sera. <em>(E:RftLW p. 144, ExE p. 52)</em>
+      </div>
+
+      <div class="npc-aside">
+        <strong>Breland:</strong> One of the Five Nations — the big, pragmatic, slightly cynical neighbour to the east. Most humans in Graywall are Brelish. They value independence and common sense over tradition. <em>(E:RftLW p. 107)</em>
+      </div>
+
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 12 (+1) <em>was higher once</em></div>
+        <div class="npc-stat"><strong>DEX</strong> 10 (+0)</div>
+        <div class="npc-stat"><strong>CON</strong> 13 (+1)</div>
+        <div class="npc-stat"><strong>INT</strong> 11 (+0)</div>
+        <div class="npc-stat"><strong>WIS</strong> 14 (+2) <em>reads people like books</em></div>
+        <div class="npc-stat"><strong>CHA</strong> 17 (+3) <em>still has it</em></div>
+      </div>
+
+      <div class="npc-line"><strong>AC</strong> 12 (leather jacket, no shield, no glory) · <strong>HP</strong> ~45 · <strong>Speed</strong> 30 ft</div>
+
+      <div class="npc-line"><strong>Skills</strong> Persuasion +6, Deception +6, Insight +5, Religion +3 <em>(can't forget it even if she wants to)</em></div>
+
+      <div class="npc-line"><strong>Languages</strong> Common, Goblin (picked up in Graywall), enough Thranish prayer-cant to sound holy when she's selling trinkets</div>
+
+      <div class="npc-line"><strong>What she still has</strong> Lay on Hands (she'll deny it). A longsword wrapped in cloth at the bottom of her pack — hasn't drawn it in years. Proficient in all armour and shields, even if she doesn't wear any.</div>
+
+      <div class="npc-line"><strong>What she lost</strong> Spell slots. Divine sense. Her oath. Whether the magic actually left or she just stopped reaching for it — she won't answer that.</div>
+
+      <div class="npc-aside">
+        <strong>Oath of Devotion:</strong> The "classic" paladin oath — honesty, courage, compassion, duty. Paladins who break their oath lose their powers (or do they?). In 2024 rules: PHB p. 116. The interesting bit for Sera is that a broken oath doesn't necessarily mean the oath is gone — it means <em>she</em> walked away from it.
+      </div>
+
+      <div class="npc-line"><strong>Personality</strong> Warm, fast-talking, always shares her food. Never talks about Thrane unless someone catches her humming a hymn. Flinches at Silver Flame iconography.</div>
+
+      <div class="npc-line"><strong>The tell</strong> When real danger shows up, she steps forward. Every time. She hates that about herself.</div>
+
+      <div class="npc-line"><strong>The oath challenge</strong> A dare wrapped in a smile: <em>"Swear it or don't. But if you swear it, I'll know if you mean it."</em></div>
+    </div>
+  </div>
+
+  </div><!-- end acc-dm-npcs -->
+
+  <!-- CAMPAIGN LOG -->
+  <div class="rule"></div>
+  <h2 id="campaign-log-title" style="font-size: 22pt; text-align: center; margin: 24px 0 8px;">Campaign Log</h2>
+
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-zero" onclick="toggleAccordion(this)">Session Zero Prep <span class="dm-prelim">DM</span></button>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-zero">
@@ -1238,10 +1399,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="dm-clear"></div>
 
   </div><!-- end acc-dm-session-zero -->
-
-  <!-- CAMPAIGN LOG -->
-  <div class="rule"></div>
-  <h2 id="campaign-log-title" style="font-size: 22pt; text-align: center; margin: 24px 0 8px;">Campaign Log</h2>
 
   <button class="accordion-toggle collapsed" id="log-session-zero-amir" onclick="toggleAccordion(this)">1. März — Session Zero mit Amir</button>
   <img class="accordion-preview" id="preview-log-session-zero-amir" src="media/graywall_mystery/vines.png" alt="Dark vines" onclick="toggleAccordion(this.previousElementSibling)">
