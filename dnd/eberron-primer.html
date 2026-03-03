@@ -144,7 +144,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* COVER */
   .cover {
     text-align: center;
-    padding: 0;
+    padding: 40px 0;
     margin-bottom: 40px;
     position: relative;
     /* Fill the full page and center content vertically */
@@ -727,6 +727,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .back-to-top:hover { opacity: 1; }
   @media print { .back-to-top { display: none; } }
+
+  /* Floating nav */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold, #b8860b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -780,6 +812,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li><a href="#adventure-themes-tone">Adventure Themes &amp; Tone</a></li>
       </ol>
     </nav>
+
+    <div style="text-align:center; margin-top:12px;"><img src="media/cybergwen_logo.svg" alt="" style="width:60px; height:auto; opacity:0.85;"></div>
   </div>
 </div>
 
@@ -788,7 +822,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- PREAMBLE — How to Read This Document -->
 <section>
   <h2 id="how-to-read">How to Read This Document</h2>
-  <p>This primer covers the Eberron setting from the ground up — history, geography, factions, and the stuff that makes sessions run. Compiled by Dungeon Mistress CyberGwen with tremendous help from LLMs (Claude Cowork, ChatGPT Agent Mode), so if you hate AI out of principle then probably stay away. It's written for both DMs and players, so we've colour-coded the sidebar notes:</p>
+  <p>This primer covers the Eberron setting from the ground up — history, geography, factions, and the stuff that makes sessions run. Compiled by Dungeon Mistress CyberGwen with tremendous help from LLMs (Claude Cowork, ChatGPT Agent Mode), so if you hate AI out of principle then probably stay away.</p>
+  <p><strong>It's written for mostly myself.</strong> I wanted to have this info and procrastinated reading the books.
+  So it contains the info I thought I wanted to add, compiled and summarized, and in neat little tables.</p>
+  <p>But also, it is also written for others, for both DMs and players, so we've colour-coded the sidebar notes:</p>
   <div class="callout summary" style="margin-bottom: 8px;">
     <span class="label">Chapter Summary</span>
     Green boxes at the top of longer chapters. Read these if you want the gist before diving into detail.
@@ -1950,7 +1987,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </div>
 
-<a href="#top" class="back-to-top" aria-label="Back to top">&#x25B2;</a>
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
 </body>
 </html>

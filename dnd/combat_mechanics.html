@@ -123,7 +123,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background: rgba(139,26,26,0.1);
     color: var(--accent);
     border-left: 4px solid var(--accent);
+    display: flex;
+    align-items: center;
   }
+  .section-head .section-logo { margin-left: auto; width: 22px; height: auto; opacity: 0.6; flex-shrink: 0; }
   .section-head.pur {
     background: rgba(59,54,120,0.08);
     color: var(--accent4);
@@ -462,6 +465,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       order: 1;
     }
   }
+
+  /* Floating nav */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold, #b8860b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -470,13 +505,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="title">Combat Mechanics — Who Rolls What, When?</div>
+<div class="title" id="top">
+  Combat Mechanics — Who Rolls What, When?
+</div>
 
 <!-- ════════════════════════════════════════════════════════ -->
 <!-- SECTION 1: WEAPON ATTACK                               -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section>
-  <div class="section-head">Weapon Attack <span class="who attacker">Attacker Rolls</span></div>
+  <div class="section-head">Weapon Attack <span class="who attacker">Attacker Rolls</span><img src="media/cybergwen_logo.svg" alt="" class="section-logo"></div>
 
   <div class="two-col">
     <div>
@@ -590,7 +627,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- CENTRAL CHEAT TABLE                                     -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section>
-  <div class="section-head gold">Where Does Each Bonus Go? — The Cheat Table</div>
+  <div class="section-head gold">Where Does Each Bonus Go? — The Cheat Table<img src="media/cybergwen_logo.svg" alt="" class="section-logo"></div>
   <table class="desktop-only">
     <tr>
       <th style="width:18%">Bonus</th>
@@ -744,7 +781,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- SECTION 2: SPELLS — TWO PATHS                          -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section>
-  <div class="section-head pur">Spell Attacks &amp; Saves — Two Different Paths</div>
+  <div class="section-head pur">Spell Attacks &amp; Saves — Two Different Paths<img src="media/cybergwen_logo.svg" alt="" class="section-logo"></div>
 
   <div class="two-col">
     <!-- PATH A: Spell Attack Roll -->
@@ -867,6 +904,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </table>
 
 <div style="text-align:right; font-size:7pt; color:var(--text-dim); margin-top:4px; opacity:0.6;">© 2026 by Dungeon Mistress CyberGwen</div>
+
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
 </body>
 </html>

@@ -89,7 +89,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; background: none; }
     .spread { display: block; padding: 0; gap: 0; }
     .panel { page-break-after: always; page-break-inside: avoid; break-inside: avoid; box-shadow: none; border: none; border-radius: 0; padding: 10px 14px; margin: 0; background: none; min-height: 100vh; border-bottom: 3px solid var(--border); }
-    .panel:last-child { page-break-after: auto; }
   }
 
   :root {
@@ -159,6 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .panel-title.green  { background: #b8dbc5; color: #1a4a2a; border-left: 5px solid var(--accent3); }
   .panel-title.purple { background: #c5c2e0; color: #2d2960; border-left: 5px solid var(--accent4); }
   .panel-title.teal   { background: #b8dbd6; color: #0f4f4f; border-left: 5px solid var(--accent5); }
+  .panel-title .panel-logo { margin-left: auto; width: 22px; height: auto; opacity: 0.6; flex-shrink: 0; }
 
   /* ── Section headers ── */
   .section { margin-bottom: 4px; }
@@ -352,6 +352,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Spell cards */
     .spell-card { margin-bottom: 4px; }
   }
+
+  /* Floating nav */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold, #b8860b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -360,11 +392,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="spread">
+<div class="spread" id="top">
 
 <!-- ═══════════════════ PANEL 1: COMBAT ACTIONS ═══════════════════ -->
 <div class="panel">
-  <div class="panel-title red"><span class="icon">⚔</span> Combat — Actions &amp; Economy</div>
+  <div class="panel-title red" style="display:flex; align-items:center;">
+    <span class="icon">⚔</span> Combat — Actions &amp; Economy
+    <img src="media/cybergwen_logo.svg" alt="" class="panel-logo">
+  </div>
 
   <!-- TOP GRID: ACTIONS + TURN FLOW -->
   <div class="grid-actions-flow">
@@ -449,7 +484,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══════════════════ PANEL 2: MOVEMENT ═══════════════════ -->
 <div class="panel">
-  <div class="panel-title gold"><span class="icon">🏃</span> Movement &amp; Terrain</div>
+  <div class="panel-title gold"><span class="icon">🏃</span> Movement &amp; Terrain<img src="media/cybergwen_logo.svg" alt="" class="panel-logo"></div>
 
   <div class="grid2">
     <!-- LEFT COLUMN -->
@@ -577,7 +612,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══════════════════ PANEL 3: CONDITIONS ═══════════════════ -->
 <div class="panel">
-  <div class="panel-title green"><span class="icon">🎭</span> Conditions</div>
+  <div class="panel-title green"><span class="icon">🎭</span> Conditions<img src="media/cybergwen_logo.svg" alt="" class="panel-logo"></div>
 
   <div class="cond-grid">
     <div class="cond-item"><span class="cond-name cond-blue">Blinded</span> — Can't see. Auto-fail sight checks. Atks Disadv. Atks against Adv.</div>
@@ -686,7 +721,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══════════════════ PANEL 4: REFERENCE ═══════════════════ -->
 <div class="panel">
-  <div class="panel-title purple"><span class="icon">📋</span> Saves, Spells &amp; Damage</div>
+  <div class="panel-title purple"><span class="icon">📋</span> Saves, Spells &amp; Damage<img src="media/cybergwen_logo.svg" alt="" class="panel-logo"></div>
 
   <div class="grid2 section">
     <div class="section">
@@ -868,7 +903,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══════════════════ PANEL 5: IMPROVISATION ENGINE ═══════════════════ -->
 <div class="panel">
-  <div class="panel-title teal"><span class="icon">🎲</span> Scene Texture — Improvisation Engine</div>
+  <div class="panel-title teal"><span class="icon">🎲</span> Scene Texture — Improvisation Engine<img src="media/cybergwen_logo.svg" alt="" class="panel-logo"></div>
 
   <!-- ROW 1: three columns -->
   <div class="grid3 section gap-md">
@@ -993,6 +1028,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 </div><!-- /spread -->
+
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
 </body>
 </html>

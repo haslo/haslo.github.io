@@ -190,7 +190,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .mobile-classes { display: none; }
     .book-links { display: none; }
     @page { margin: 0.7cm; size: A4 landscape; }
+    .float-nav { display: none !important; }
   }
+
+  /* Floating nav */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold, #b8860b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -199,7 +232,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<h1>Allowed Races &amp; Classes with Dungeon Mistress CyberGwen</h1>
+<h1 id="top" style="display:flex; align-items:center; gap:10px;">
+  <img src="media/cybergwen_logo.svg" alt="" style="width:32px; height:auto; opacity:0.8; flex-shrink:0;">
+  Allowed Races &amp; Classes with Dungeon Mistress CyberGwen
+</h1>
 <p class="sub">PHB 2024 · FR: Heroes of Faerûn · Keys from the Golden Vault · Fizban's · TCoE · XGtE · MotM · Eberron: Forge of the Artificer · FoE: Quickstone · Chronicles of Eberron · Exploring Eberron · Van Richten's Guide to Ravenloft · E: Rising from the Last War — duplicates &amp; superseded entries removed</p>
 <div class="mc-note">
   <b>This list isn't strict</b> — if you have a character idea that needs something not listed here, bring it up and we'll talk. These are the pre-approved options; everything else is open for discussion.
@@ -626,6 +662,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p><strong>Order</strong> (TCoE Cleric): No heavy armor at levels 1–2 due to the level shift. Plan early AC accordingly.</p>
   <p><strong>Storm Sorcery</strong> (XGtE Sorcerer): On the weaker side — pick it for flavour, not optimisation.</p>
 </div>
+
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
 </body>
 </html>

@@ -31,11 +31,12 @@
     06  What They Don't Need Yet (sisters, politics, wider world) [DM]
     07  The Hook (creepy plants, missing people) [DM]
     08  The Secret (vampire gardener — DM eyes only) [DM]
-    09  NPCs (DM NPC cards — reusable .npc-card template) [DM]
+    09  NPCs (DM NPC cards — Sera Tain + Vampire BBEG + 3 decoy villains: Korrath, Thesska Mirren, Rixit) [DM]
     --- Campaign Log heading ---
     10  Session Zero Agenda (incl. map-drawing pointers) [DM, inside campaign log]
     11  Sessions (campaign log and session notes) [Outside DM section]
     12  Next Session Zero Prep (Oath, breath type, VRGtR + Eberron reading lists) [DM]
+    13  Phase 1 Prep (Decoys, investigation flowchart, "I want to go to the castle" advice) [DM]
 
   NPC TEMPLATE (.npc-card):
     .npc-header (accent bg, flex row: name left + subtitle right, wraps on mobile), .npc-body (content area),
@@ -380,15 +381,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background: var(--accent);
     color: var(--parchment);
     padding: 10px 16px;
+    padding-right: 36px; /* room for chevron */
     font-family: 'Cinzel', serif;
     font-size: 13pt;
     font-weight: 600;
     letter-spacing: 1px;
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 4px 16px;
+    gap: 4px 8px;
   }
   .npc-header .npc-subtitle {
     font-family: 'Crimson Pro', serif;
@@ -397,6 +398,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     font-style: italic;
     letter-spacing: 0;
     opacity: 0.85;
+    margin-left: auto;
   }
   .npc-body { padding: 12px 16px; font-size: 14pt; }
   .npc-body p { margin: 6px 0; }
@@ -448,8 +450,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     font-style: normal;
     color: var(--ink);
   }
+  .npc-statblock {
+    columns: 2;
+    column-gap: 24px;
+    column-rule: 1px solid var(--divider);
+  }
+  .npc-statblock > * {
+    break-inside: avoid;
+  }
+  /* Collapsible NPC detail */
+  .npc-header { cursor: pointer; user-select: none; position: relative; }
+  .npc-header::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14pt; opacity: 0.5; transition: transform 0.2s; }
+  .npc-header.npc-collapsed::after { transform: translateY(-50%) rotate(-90deg); }
+  .npc-detail { overflow: hidden; transition: max-height 0.3s ease; }
+  .npc-detail.npc-hidden { max-height: 0 !important; }
+  .npc-statblock h4 {
+    break-after: avoid;
+  }
   @media (max-width: 600px) {
     .npc-stats { grid-template-columns: repeat(3, 1fr); }
+    .npc-statblock { columns: 1; }
+    .npc-body { padding: 10px 12px; font-size: 12pt; }
+    .npc-line { font-size: 11pt; }
+    .npc-aside { font-size: 10pt; }
+    .npc-header { flex-direction: column; gap: 2px; }
   }
 
   /* AGENDA LIST */
@@ -946,7 +970,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .callout, .class-card { break-inside: avoid; }
     .graywall-table { break-inside: avoid; }
     .atmo img { opacity: 1; }
-    .back-link, .slideshow-btn, .dm-toggle, .toc, .accordion-toggle, .accordion-preview, .back-to-top { display: none; }
+    .back-link, .slideshow-btn, .dm-toggle, .toc, .accordion-toggle, .accordion-preview, .back-to-top, .float-nav { display: none; }
     .accordion-body { max-height: none !important; overflow: visible !important; }
     .slideshow { display: none !important; }
     .dm-only, .dm-inline { display: none !important; }
@@ -991,6 +1015,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .map-container { flex-direction: column; }
     .map-link img { height: auto; max-height: 450px; }
   }
+
+  /* Floating nav */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold, #b8860b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -1017,16 +1073,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="dm-toggle" id="dm-toggle" onclick="toggleDM()">DM</button>
   </div>
 
+  <img src="media/cybergwen_logo.svg" alt="" class="title-logo" style="display:block; margin:8px auto 12px; width:60px; height:auto; opacity:0.85;">
+
   <ul class="toc">
     <li><a href="#" onclick="startSlideshow(); return false;">Intro Slideshow</a></li>
     <li><a href="#" onclick="openAccordion('session-zero'); return false;">The Story So Far</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-graywall'); return false;">Graywall Detail</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-world'); return false;">The World</a></li>
-    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Villain</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Story</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-npcs'); return false;">NPCs</a></li>
-    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero Prep (DM)</a></li>
+  </ul>
+  <div class="toc-label toc-dm" style="display:none; text-align:center; font-family:'Cinzel',serif; font-size:9pt; letter-spacing:1px; color:var(--gold); opacity:0.6; margin:4px 0 2px;">Campaign Log</div>
+  <ul class="toc">
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-zero'); return false;">Session Zero Prep</a></li>
     <li><a href="#" onclick="openAccordion('log-session-zero-amir'); return false;">March 1st — Session Zero</a></li>
-    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-next-session-zero'); return false;">Next Session Zero Prep</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-next-session-zero'); return false;">2nd Session Zero Prep</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-one-prep'); return false;">Phase 1 Prep</a></li>
   </ul>
 
   <!-- INTRO SLIDESHOW — styled like accordion header but not collapsible -->
@@ -1309,7 +1371,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div><!-- end acc-dm-world -->
 
   <!-- DM ACCORDION 3: HOOK & VILLAIN -->
-  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-hook" onclick="toggleAccordion(this)">Hook &amp; Villain <span class="dm-prelim">DM</span></button>
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-hook" onclick="toggleAccordion(this)">Hook &amp; Story <span class="dm-prelim">DM</span></button>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/vampires.png" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-hook">
 
@@ -1341,12 +1403,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="callout secret">
     <span class="label">DM Eyes Only</span>
     Inspired by Lord Varonaen <span class="pill-ref">Chronicles of Eberron p. 156</span> — an ancient elven vampire obsessed with plants. He creates hybrid flora using darkwood, blood, and necromantic energy. His "gardens" are alive in the worst way: vines that drain life, roses that charm, trees grown from corpses.<br><br>
-    Your version: an old vampire who arrived in the Droaam borderlands decades ago. Presents himself as a travelling scholar — soft-spoken, courteous, endlessly curious about botany. He buys rare seeds from merchants in disguise. He asks about your favourite flowers. He remembers your name. He seems <em>kind</em>.<br><br>
-    He is not kind. He is a monster wearing patience like a coat. The garden is fed with blood. The beautiful darkwood trees? Grown from the bodies of the missing travellers — he plants them like bulbs. The luminescent flowers? They thrive on life force drained from living creatures through root systems that spread underground. The vines creeping up Graywall's south wall aren't an accident — they're infrastructure. He's extending his garden <em>into</em> the town, slowly, root by root. The missing people aren't collateral damage. They're compost.<br><br>
-    He knows exactly what he's doing and he enjoys it. But his mask is perfect — gentle, scholarly, a little eccentric. The kind of person you'd invite to dinner. He'd accept. He'd bring flowers. He'd compliment the cooking. And weeks later, something dark and beautiful would bloom in your garden where nothing was planted, and you'd never connect the two.<br><br>
-    <div class="dm-clear"></div><img class="dm-img left" src="media/graywall_mystery/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise his voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
-    <strong>The Truth:</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries across different regions — arrives, gardens, leaves when the locals catch on. Droaam is perfect for him because nobody's organised enough to notice a few missing travellers. He considers his work <em>art</em> and the deaths a necessary part of the creative process. Not apologetic. Not conflicted. Just patient.<br><br>
-    <strong>Weakness hook:</strong> Use the Eberron variant weakness table <span class="pill-ref">Chronicles p. 151</span>. Pick something fun — maybe he <em>must accept any gift offered to him</em> (Keeper's Greed), or he <em>can't re-enter a building he's left for 13 days</em> (Never Look Back). Give the kids a way to be clever, not just strong.<br><br>
+    Your version — <strong>Lady Verdemis</strong>: an old vampire who arrived in the Droaam borderlands decades ago. Presents herself as a travelling scholar — soft-spoken, courteous, endlessly curious about botany. She buys rare seeds from merchants in disguise. She asks about your favourite flowers. She remembers your name. She seems <em>kind</em>.<br><br>
+    She is not kind. She is a monster wearing patience like a coat. The garden is fed with blood. The beautiful darkwood trees? Grown from the bodies of the missing travellers — she plants them like bulbs. The luminescent flowers? They thrive on life force drained from living creatures through root systems that spread underground. The vines creeping up Graywall's south wall aren't an accident — they're infrastructure. She's extending her garden <em>into</em> the town, slowly, root by root. The missing people aren't collateral damage. They're compost.<br><br>
+    In combat she shifts between two forms: a <strong>wraith</strong> — incorporeal, flying, draining life on touch — and a <strong>darkwood body</strong> she animates from plants and trees, lashing out with vines. The wraith is the real her. The darkwood is the weapon. Full stat block in the NPC section.<br><br>
+    She knows exactly what she's doing and she enjoys it. But her mask is perfect — gentle, scholarly, a little eccentric. The kind of person you'd invite to dinner. She'd accept. She'd bring flowers. She'd compliment the cooking. And weeks later, something dark and beautiful would bloom in your garden where nothing was planted, and you'd never connect the two.<br><br>
+    <div class="dm-clear"></div><img class="dm-img left" src="media/graywall_mystery/vampires.png" alt=""><strong>The Mask:</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise her voice. The kids should <em>like</em> this NPC at first — the betrayal hits harder that way.<br><br>
+    <strong>The Truth:</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries across different regions — arrives, gardens, leaves when the locals catch on. Droaam is perfect for her because nobody's organised enough to notice a few missing travellers. She considers her work <em>art</em> and the deaths a necessary part of the creative process. Not apologetic. Not conflicted. Just patient.<br><br>
+    <strong>Weakness 1 — Keeper's Greed</strong> <span class="pill-ref">Chronicles p. 151</span> — she <em>must accept any gift freely offered to her</em>. Can't refuse, can't drop it, can't destroy it. Her lair is full of small gifts from people she's killed — that's the clue. In the final fight, the kids offer her something and she has to take it. See the NPC stat block for tactical details.<br><br>
+    <strong>Weakness 2 — Perfect Etiquette</strong> <span class="pill-ref">Chronicles p. 151</span> — when asked a question, she <em>must truthfully answer if her name was spoken as part of that same sentence</em>. The answer can be brief or cryptic. The kids figure out the rule through trial and error ("she dodged the question… but wait, last time I said her name and she answered straight"). Once they know, they can interrogate her in social scenes by weaving "Lady Verdemis" into their questions. She hates it but she can't stop herself.<br><br>
     <div class="dm-clear"></div><img class="dm-img right" src="media/graywall_mystery/stairs.png" alt=""><strong>Escalation:</strong> To be planned once we know how much table time we have. The broad arc: strange plants → investigation → the vampire appears → someone goes missing → confrontation.
   </div>
 
@@ -1359,15 +1423,79 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/npcs.png" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-npcs">
 
+  <!-- NPC: Vaelk (Changeling Castle Squatter) -->
+  <div class="npc-card">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+      Vaelk <span class="dm-prelim">DECOY</span>
+      <span class="npc-subtitle">Goblin Changeling · Con Artist · "The Lord of Südburg"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Ghost. A goblin with a Dhakaan name and nothing to show for it — "Vaelk" means something like "unseen hand" in old Goblin, and they've made it a lifestyle. Moved into the abandoned castle south of Graywall six months ago because it was free, creepy, and nobody asks questions about a ruin. The lights in the windows, the moving shadows, the plants swinging at night — half of it is Vaelk in different shapes, half is just wind and a bad reputation doing the work for them. Runs a smuggling waypoint through the castle cellar: Droaam antiquities come in, get crated, go out to a contact in the Calabas. Vaelk is Amir in 20 years if Amir never finds a cause.</p>
+
+      <div class="npc-detail npc-hidden">
+      <div class="npc-aside">
+        <strong>Decoy logic:</strong> The castle is the obvious villain lair — overgrowing, lights at night, creepy as hell. The kids already know about it from session zero. Vaelk is the payoff for going there: not a boss fight, not a vampire, just a panicked changeling in a nightgown who really wishes the kids had knocked. The vines creep Vaelk out too — they burn them off the walls every morning and they grow back by evening. A false lead, but an entertaining one.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The Thesska connection:</strong> Vaelk's smuggling route ends at Thesska Mirren's estate. Vaelk is her supplier — Droaam relics through the castle cellar, picked up by her intermediaries at night. Neither knows the other's real name (Vaelk deals as "Lord Draven," she deals through servants). The kids won't notice this until they see matching crate markings or specific artefacts at both locations. Don't point it out. Let them connect it.
+      </div>
+
+      <div class="npc-aside">
+        <strong>Mirror to Amir:</strong> Vaelk has the same toolkit as Amir — Deception, disguises, reading people, fast talk. But no oath, no friends, no purpose beyond the next score. Brilliant and completely hollow. If Amir spends time with them, there should be a flash of recognition. Vaelk might genuinely admire the oath — not mockingly, but wistfully. <em>"You actually believe in something. That must be nice."</em>
+      </div>
+
+      <div class="npc-aside">
+        <strong>The witness:</strong> Vaelk has been watching the Watching Wood from their tower every night for months. They've seen the vine growth radiate from one point deep in the forest. They know roughly where the epicentre is. They haven't told anyone because attention means losing the castle. They'll trade the information — for protection, a favour, or just someone who doesn't treat them like a freak for being a changeling in Droaam.
+      </div>
+
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 8 (−1) <em>avoids fights</em></div>
+        <div class="npc-stat"><strong>DEX</strong> 14 (+2)</div>
+        <div class="npc-stat"><strong>CON</strong> 11 (+0)</div>
+        <div class="npc-stat"><strong>INT</strong> 13 (+1) <em>street smart</em></div>
+        <div class="npc-stat"><strong>WIS</strong> 12 (+1)</div>
+        <div class="npc-stat"><strong>CHA</strong> 17 (+3) <em>whatever you need</em></div>
+      </div>
+
+      <div class="npc-statblock">
+      <div class="npc-line"><em>Medium Fey (Changeling), Chaotic Neutral</em></div>
+      <div class="npc-line"><strong>AC</strong> 13 (leather, when they bother) · <strong>HP</strong> ~28 · <strong>Speed</strong> 30 ft</div>
+      <div class="npc-line"><strong>Skills</strong> Deception +7, Persuasion +5, Stealth +4, Insight +3, Performance +5</div>
+      <div class="npc-line"><strong>Languages</strong> Common, Goblin, Orc, Halfling — picks up accents like lint</div>
+      <div class="npc-line"><strong>Shapechanger.</strong> Action to polymorph into any Medium or Small humanoid they've seen. Stats don't change. Reverts on death. Clothing and equipment don't transform.</div>
+
+      <h4 style="margin: 12px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">The Four Faces</h4>
+
+      <div class="npc-line"><strong>"Vaelk"</strong> — goblin male, old by goblin standards, wiry, yellow eyes that miss nothing. The name is ancient Dhakaan — means something like "unseen hand" or "the one who slips through." This is the face Amir meets. Sitting cross-legged on a castle windowsill, eating stolen fruit, grinning like he's been expecting company. Vaelk-as-Vaelk is the con artist teacher: fast-talking, streetwise, genuinely impressed by a kid who took an oath and meant it. He's the one who'll teach Amir to read a room, spot a lie, run a grift without getting caught. Male, because Amir needs someone he can see himself in — and Vaelk sees himself in Amir, which is worse. <em>"You're me, twenty years ago. Before I got smart. Or stupid. Depends on the day."</em></div>
+
+      <div class="npc-line"><strong>"Lord Draven"</strong> — tall, gaunt human male, silver temples, deep voice. The castle lord. Cold, imperious, exactly what you'd expect from a reclusive noble in a crumbling estate. This is the face Vaelk uses for smuggling deals and the identity Thesska's intermediaries know. If the kids approach the castle formally, Draven answers the door. Dismissive, vaguely threatening, wants them gone. The kids will <em>hate</em> this guy.</div>
+
+      <div class="npc-line"><strong>"Sister Aldrice"</strong> — human female, Silver Flame vestments, soft-spoken, pious. Visits the sick in the Calabas, blesses doorways, quotes scripture. Trusted. Invisible in the way clergy are — nobody questions a priestess. Vaelk finds the irony hilarious. If Sera Tain ever runs into Sister Aldrice, she'll clock the fake immediately — the prayers are slightly wrong, the accent shifts. That's a scene worth setting up.</div>
+
+      <div class="npc-line"><strong>"Korrga"</strong> — orc female, dockworker build, scarred hands, short sentences, long stares. The muscle. Moves crates through Bloodstone at night, handles physical smuggling runs. Nobody messes with Korrga. She's been "working the docks" for months — regulars nod at her. If the kids are watching crate movements through Bloodstone, they'll see Korrga. They will not connect her to Lord Draven or Sister Aldrice unless they get very, very lucky.</div>
+
+      <div class="npc-aside">
+        <strong>The confusion trick:</strong> Lord Draven walks into the castle's back room. Korrga walks out. Room's empty. The kids will lose their minds. Don't explain it. Don't even acknowledge it happened. Just describe what they see and let them argue about it.
+      </div>
+
+      <div class="npc-line"><strong>Personality</strong> Charming, slippery, never quite honest. Defaults to humour under pressure. There's no "real face" underneath — the goblin, Draven, Aldrice, and Korrga are all equally Vaelk. They rotate between them the way other people change clothes. If the kids ask which one is the real one: <em>"All of them. That's the point."</em></div>
+      <div class="npc-line"><strong>The tell</strong> When Amir talks about his oath, Vaelk goes quiet. First time anyone's seen them not have a comeback.</div>
+      </div>
+      </div><!-- end npc-detail -->
+    </div>
+  </div>
+
   <!-- NPC: Sera Tain -->
   <div class="npc-card">
-    <div class="npc-header">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
       Sera Tain
       <span class="npc-subtitle">Human (Brelish), late 40s · Former Paladin (Oath of Devotion, broken) · "Nothing — officially"</span>
     </div>
     <div class="npc-body">
       <p>The Charmer. Arrived in Graywall with nothing, acts like she owns the place. Former holy warrior of Thrane who lost her faith when she saw the Silver Flame's crusades up close. Now a grifter in the Calabas — sells "blessed" trinkets, tells fortunes with a straight face.</p>
 
+      <div class="npc-detail npc-hidden">
       <div class="npc-aside">
         <strong>Calabas:</strong> Graywall's "civilised" quarter — signs in Common, human-scale buildings, a theatre. Where outsiders, merchants, and people who don't want to get eaten settle. Sera fits right in. <span class="pill-ref">ExE p. 84</span> <span class="pill-ref">E:RftLW p. 198</span>
       </div>
@@ -1393,7 +1521,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="npc-stat"><strong>CHA</strong> 17 (+3) <em>still has it</em></div>
       </div>
 
-      <div class="npc-line"><strong>AC</strong> 12 (leather jacket, no shield, no glory) · <strong>HP</strong> ~45 · <strong>Speed</strong> 30 ft</div>
+      <div class="npc-statblock">
+      <div class="npc-line"><strong>AC</strong> 12 (studded leather, no shield, no glory) · <strong>HP</strong> ~45 · <strong>Speed</strong> 30 ft</div>
 
       <div class="npc-line"><strong>Skills</strong> Persuasion +6, Deception +6, Insight +5, Religion +3 <em>(can't forget it even if she wants to)</em></div>
 
@@ -1412,6 +1541,244 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="npc-line"><strong>The tell</strong> When real danger shows up, she steps forward. Every time. She hates that about herself.</div>
 
       <div class="npc-line"><strong>The oath challenge</strong> A dare wrapped in a smile: <em>"Swear it or don't. But if you swear it, I'll know if you mean it."</em></div>
+      </div><!-- end npc-statblock -->
+      </div><!-- end npc-detail -->
+    </div>
+  </div>
+
+  <!-- NPC: The Vampire (BBEG) -->
+  <div class="npc-card">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+      Lady Verdemis <span class="dm-prelim">BBEG</span>
+      <span class="npc-subtitle">Elf (Aereni), ancient · Vampire · "Travelling botanist"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Gardener. Arrived in the Droaam borderlands decades ago. Soft-spoken, courteous, endlessly curious about plants. Buys rare seeds from merchants in disguise. Asks about your favourite flowers. Remembers your name. Seems <em>kind</em>.</p>
+
+      <div class="npc-detail npc-hidden">
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 8 (−1) <em>no need for muscle</em></div>
+        <div class="npc-stat"><strong>DEX</strong> 16 (+3) <em>uncanny grace</em></div>
+        <div class="npc-stat"><strong>CON</strong> 14 (+2)</div>
+        <div class="npc-stat"><strong>INT</strong> 17 (+3) <em>centuries of study</em></div>
+        <div class="npc-stat"><strong>WIS</strong> 14 (+2)</div>
+        <div class="npc-stat"><strong>CHA</strong> 16 (+3) <em>the perfect mask</em></div>
+      </div>
+
+      <div class="npc-aside">
+        <strong>Design note:</strong> Based on Lord Varonaen <span class="pill-ref">Chronicles p. 156</span>, scaled to CR 4 for 2 PCs at level 4. "We figured her out" beats "we ground her down": radiant shuts Regen (Amir's smite moment), Keeper's Greed disarms her, Perfect Etiquette forces truthful answers when they say her name. Seed clues early. If fight drags, drop Magic Resistance. If too easy, darkwood form.
+      </div>
+
+      <div class="npc-aside">
+        <strong>Preliminary.</strong> This entire stat block assumes Amir (paladin) + one unknown PC. Once Kais has his character, revisit: CR may need adjusting, resistances/immunities depend on what damage types the party can deal, and legendary actions should counter their specific tactics. Don't finalise until both characters exist.
+      </div>
+
+      <div class="npc-statblock">
+
+      <div class="npc-line"><em>Medium Undead (Vampire), Neutral Evil</em></div>
+
+      <div class="npc-line"><strong>HP</strong> 82 (11d8 + 33) · <strong>Challenge</strong> 4 (1,100 XP) · <strong>Prof</strong> +2</div>
+
+      <div class="npc-line"><strong>Saving Throws</strong> DEX +5, INT +5, WIS +4 · <strong>Skills</strong> Deception +5, Nature +5, Arcana +5, Persuasion +5, Stealth +5</div>
+
+      <div class="npc-line"><strong>Resistances</strong> necrotic; bludgeoning/piercing/slashing from nonmagical attacks · <strong>Immunities</strong> poison (dmg), charmed, exhaustion, poisoned (cond)</div>
+
+      <div class="npc-line"><strong>Senses</strong> darkvision 120 ft, passive Perception 14 · <strong>Languages</strong> Common, Elvish, Goblin, Sylvan</div>
+
+      <h4 style="margin: 16px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">Shared Traits (both forms)</h4>
+
+      <div class="npc-line"><strong>Undead Nature.</strong> Doesn't need air, food, drink, or sleep.</div>
+
+      <div class="npc-line"><strong>Magic Resistance.</strong> Advantage on saving throws against spells and magical effects.</div>
+
+      <div class="npc-line"><strong>Regeneration.</strong> Regains 5 HP at the start of her turn if she has at least 1 HP and isn't in sunlight or running water. Doesn't function if she took radiant damage since her last turn.</div>
+
+      <div class="npc-line"><strong>Garden Stride.</strong> Once per turn, use 10 ft of movement to step into a Medium+ plant within reach and emerge from another within 30 ft.</div>
+
+      <div class="npc-line"><strong>Shapeshift (once on her turn, no action required).</strong> She can switch between wraith form and darkwood form. To enter darkwood form she must touch a Medium+ plant or darkwood object. When she reverts to wraith form she leaves the darkwood behind.</div>
+
+      <div class="npc-line"><strong>Spellcasting (either form).</strong> INT-based, spell save DC 13, +5 to hit. 1/day each: <em>entangle</em>, <em>plant growth</em>, <em>grasping vine</em> (as an action).</div>
+
+      <h4 style="margin: 16px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">Wraith Form (default)</h4>
+
+      <div class="npc-line"><strong>AC</strong> 15 (natural armour) · <strong>Speed</strong> 30 ft, fly 30 ft (hover)</div>
+
+      <div class="npc-line"><strong>Incorporeal Movement.</strong> Can move through creatures and objects as difficult terrain. Takes 5 (1d10) force damage if she ends her turn inside an object.</div>
+
+      <div class="npc-line"><strong>Multiattack.</strong> Withering Touch and Life Drain, <em>or</em> Withering Touch and casts a spell (1/day each: <em>entangle</em>, <em>plant growth</em>, <em>grasping vine</em>).</div>
+
+      <div class="npc-line"><strong>Withering Touch.</strong> <em>Melee Weapon Attack:</em> +5 to hit, reach 5 ft, one target. <em>Hit:</em> 6 (1d6 + 3) necrotic damage.</div>
+
+      <div class="npc-line"><strong>Life Drain.</strong> <em>Melee Weapon Attack:</em> +5 to hit, reach 5 ft, one creature. <em>Hit:</em> 14 (2d10 + 3) necrotic damage. Target must succeed on a DC 13 CON save or its HP maximum is reduced by the damage taken. Reduction lasts until a long rest. If this reduces a creature's HP maximum to 0, the creature is paralysed and will die in 4 hours unless it receives <em>greater restoration</em> or similar magic. <strong>Cost:</strong> She partially materialises — she loses Incorporeal Movement, flying, and can't use Shapeshift until the start of her next turn. Grounded, solid, locked in wraith form for one full round.</div>
+
+      <h4 style="margin: 16px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">Darkwood Form</h4>
+
+      <div class="npc-line"><strong>AC</strong> 17 · <strong>Speed</strong> 30 ft · <strong>STR</strong> 14 (+2) · Advantage on STR/CON saves · No flying, no incorporeal</div>
+
+      <div class="npc-line"><strong>Multiattack.</strong> Two Vine Lash attacks.</div>
+
+      <div class="npc-line"><strong>Vine Lash.</strong> <em>Melee Weapon Attack:</em> +5 to hit, reach 10 ft, one target. <em>Hit:</em> 8 (1d10 + 3) bludgeoning damage, and the target must succeed on a DC 13 STR save or be grappled (escape DC 13).</div>
+
+      <h4 style="margin: 16px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">Legendary Actions (2/round)</h4>
+
+      <div class="npc-line"><strong>Vine Lash (1, darkwood only).</strong> One Vine Lash attack.</div>
+
+      <div class="npc-line"><strong>Garden Stride (1).</strong> Teleport between plants.</div>
+
+      <div class="npc-line"><strong>Shapeshift (2).</strong> Switch between wraith and darkwood form.</div>
+
+      <h4 style="margin: 16px 0 6px; font-family: 'Cinzel', serif; border-bottom: 1px solid var(--divider);">Personality</h4>
+
+      <div class="npc-line"><strong>The Mask</strong> Gentle. Curious. Remembers every name. Always smiling. Hands like ice. Would never raise her voice. The kids should <em>like</em> this NPC at first.</div>
+
+      <div class="npc-line"><strong>The Truth</strong> Utterly evil. Sees living creatures as raw material. Has been doing this for centuries. Considers her work <em>art</em>. Not apologetic. Not conflicted. Just patient.</div>
+
+      <div class="npc-line"><strong>Weakness 1: Keeper's Greed</strong> <span class="pill-ref">Chronicles p. 151</span> She <em>must accept any gift freely offered to her</em>.</div>
+
+      <div class="npc-line"><strong>Weakness 2: Perfect Etiquette</strong> <span class="pill-ref">Chronicles p. 151</span> When asked a question, she <em>must truthfully answer if her name was spoken as part of that same sentence</em>. The answer can be brief or cryptic.</div>
+      </div><!-- end npc-statblock -->
+      </div><!-- end npc-detail -->
+    </div>
+  </div>
+
+  <!-- NPC: Decoy — Korrath (Warforged Druid) -->
+  <div class="npc-card">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+      Korrath <span class="dm-prelim">DECOY</span>
+      <span class="npc-subtitle">Warforged · Circle of the Land Druid · "Warden of the Threshold"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Preacher. A warforged druid living at the edge of the Watching Wood, south of Graywall. Built during the Last War as a siege unit, found purpose tending wild land after the Treaty. Believes civilisation is a wound that festers — talks about it constantly, loudly, in the market square.</p>
+
+      <div class="npc-detail npc-hidden">
+      <div class="npc-aside">
+        <strong>Decoy logic:</strong> Publicly warned Graywall "something would come for the walls." Has a ritual clearing in the woods with stone circles and strange moss arrangements. Knows more about local plants than anyone except Verdemis. The kids should suspect him first.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The truth:</strong> Genuinely cares about the balance between wild and settled land. Militant about it, but not violent — he protests, he doesn't poison. Has noticed the vine growth and is terrified by it because it's <em>wrong</em> — not natural growth, something forced. Could become an unlikely ally if the party listens past his rhetoric.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The Sermon Incident:</strong> Weeks ago, Korrath confronted a lumber merchant cutting trees near the Watching Wood. Shoved him. Town guard intervened. Now everyone remembers his earlier warnings — <em>"something will come for the walls"</em> — and connects dots that don't connect. A shopkeeper near the market can recount the scene in a way that makes Korrath sound unhinged. Great red-herring fuel for an early investigation scene.
+      </div>
+
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 14 (+2)</div>
+        <div class="npc-stat"><strong>DEX</strong> 10 (+0)</div>
+        <div class="npc-stat"><strong>CON</strong> 15 (+2) <em>built to last</em></div>
+        <div class="npc-stat"><strong>INT</strong> 12 (+1)</div>
+        <div class="npc-stat"><strong>WIS</strong> 16 (+3) <em>feels the land</em></div>
+        <div class="npc-stat"><strong>CHA</strong> 8 (−1) <em>zero tact</em></div>
+      </div>
+
+      <div class="npc-statblock">
+      <div class="npc-line"><em>Medium Construct, Neutral</em></div>
+      <div class="npc-line"><strong>AC</strong> 15 (natural plating + wooden shield) · <strong>HP</strong> ~38 · <strong>Speed</strong> 30 ft</div>
+      <div class="npc-line"><strong>Skills</strong> Nature +4, Survival +6, Perception +6, Intimidation +1</div>
+      <div class="npc-line"><strong>Languages</strong> Common, Druidic, Goblin, Sylvan</div>
+      <div class="npc-line"><strong>Spellcasting (Druid, WIS).</strong> Has druid spells prepared. Relevant flavour: <em>speak with plants</em>, <em>detect poison and disease</em>, <em>plant growth</em>. Refuses to cast <em>plant growth</em> near the vines — says it would be "feeding the infection."</div>
+      <div class="npc-line"><strong>Personality</strong> Blunt, preachy, humourless. Stands in the market and lectures passers-by. Genuinely upset when he sees cut flowers. Addresses trees by name.</div>
+      <div class="npc-line"><strong>The tell</strong> If asked directly about the vines: fear in his voice. <em>"That's not growth. That's hunger."</em></div>
+      </div>
+      </div><!-- end npc-detail -->
+    </div>
+  </div>
+
+  <!-- NPC: Decoy — Thesska Mirren (Medusa Noble) -->
+  <div class="npc-card">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+      Thesska Mirren <span class="dm-prelim">DECOY</span>
+      <span class="npc-subtitle">Medusa · Minor Noble (House Mirren) · "Lady of the Locked Estate"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Recluse. A medusa aristocrat whose walled estate sits in the Calabas. Servants come and go but never stay long. The shutters are always drawn. Rumours range from illegal alchemy to worship of a dark woodland entity — the kind of gossip that sticks to someone who never shows their face in public.</p>
+
+      <div class="npc-detail npc-hidden">
+      <div class="npc-aside">
+        <strong>Decoy logic:</strong> Her cellar has live vines growing through the stonework — has had them for years, but the timing looks terrible now. Keeps journals in a language nobody in town reads (Elvish, actually, she's pretentious). Was seen buying unusual seeds from a traveling merchant weeks before the wall infestation started. The servants whisper.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The truth:</strong> Thesska is shady but not the villain. She <em>is</em> smuggling — Droaam antiquities, mostly, items she sells to collectors in Breland through intermediaries. The locked rooms contain crated relics, not ritual sites. The cellar vines are a decorative choice she imported from Cazhaak Draal years ago — totally mundane. She's terrified the investigation will expose her smuggling ring, which makes her act guilty as hell.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The Servant Rotation:</strong> Thesska cycles household staff every few months. Locals assume petrification. Reality: she pays well but demands absolute discretion, and most people can't handle the paranoia of working for a smuggler. One former servant — a half-orc named <strong>Dresh</strong>, now working at a tavern in the Calabas — will happily gossip. He mixes real observations (locked rooms, late-night crate deliveries, visitors who only come after dark) with wild speculation. Good for a tavern scene that sends the party down the wrong path.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The Vaelk Connection:</strong> Thesska's supplier is <strong>Vaelk</strong>, the changeling squatting in the castle south of town. They deal as "Lord Draven," she deals through servants — neither knows the other's real identity. The crates in her locked rooms carry the same markings as those in Vaelk's cellar. If the party visits both locations, they might notice matching stamps, specific artefacts, or a servant description that fits one of Vaelk's shapes. Don't point it out — let them connect it themselves.
+      </div>
+
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 10 (+0)</div>
+        <div class="npc-stat"><strong>DEX</strong> 14 (+2) <em>precise hands</em></div>
+        <div class="npc-stat"><strong>CON</strong> 12 (+1)</div>
+        <div class="npc-stat"><strong>INT</strong> 15 (+2) <em>shrewd dealer</em></div>
+        <div class="npc-stat"><strong>WIS</strong> 13 (+1)</div>
+        <div class="npc-stat"><strong>CHA</strong> 16 (+3) <em>polished menace</em></div>
+      </div>
+
+      <div class="npc-statblock">
+      <div class="npc-line"><em>Medium Monstrosity, Lawful Neutral</em></div>
+      <div class="npc-line"><strong>AC</strong> 14 (natural armour) · <strong>HP</strong> ~40 · <strong>Speed</strong> 30 ft</div>
+      <div class="npc-line"><strong>Skills</strong> Deception +6, Persuasion +6, Insight +4, History +5</div>
+      <div class="npc-line"><strong>Senses</strong> darkvision 60 ft · <strong>Languages</strong> Common, Elvish, Goblin</div>
+      <div class="npc-line"><strong>Petrifying Gaze.</strong> Standard medusa gaze — she wears a veil in public and considers using it <em>gauche</em>. Won't use it unless cornered.</div>
+      <div class="npc-line"><strong>Personality</strong> Cold courtesy. Speaks in complete sentences. Offers tea to uninvited guests — then asks them to leave. Every room in her house has a mirror, which she claims is "an aesthetic choice." Deeply vain.</div>
+      <div class="npc-line"><strong>The tell</strong> If pressed about the vines, she gets <em>angry</em> rather than scared. <em>"Those are my Cazhaak creepers and they have nothing to do with whatever is happening to this town. Now get out of my house."</em></div>
+      </div>
+      </div><!-- end npc-detail -->
+    </div>
+  </div>
+
+  <!-- NPC: Decoy — Rixit (Goblin Herbalist) -->
+  <div class="npc-card">
+    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+      Rixit <span class="dm-prelim">DECOY</span>
+      <span class="npc-subtitle">Goblin · Apothecary · "The Rootweaver"</span>
+    </div>
+    <div class="npc-body">
+      <p>The Widow. A goblin herbalist who runs a tiny apothecary in Sar Kuraath. Known for remedies that actually work — rare in Graywall. Lost her husband Torvik three months ago; he went foraging in the Watching Wood and never came back. Since then she's been different. Quieter. Stays up late. Gathers things in the forest at night.</p>
+
+      <div class="npc-detail npc-hidden">
+      <div class="npc-aside">
+        <strong>Decoy logic:</strong> Knows more about plants than any non-druid in town. Her shop has roots and seeds the players won't recognise. Recently started brewing "revival tonics" — thick green liquids she won't explain. Was spotted at the south wall at midnight, kneeling near the vine growth, whispering. The emotional motive writes itself: grief makes people do desperate things.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The truth:</strong> Rixit is grieving, not scheming. The midnight trips to the wall are because she thinks the vines might have something to do with Torvik's disappearance — she's <em>investigating</em>, not cultivating. The revival tonics are exactly what they sound like: failed attempts to brew something that could bring someone back. They don't work. She knows they don't work. She brews them anyway. If the party earns her trust, she's a valuable source — she's mapped vine growth patterns across town and noticed they radiate from a specific direction.
+      </div>
+
+      <div class="npc-aside">
+        <strong>Torvik's Trail:</strong> Side quest. Torvik went into the Watching Wood to gather ghost orchids and never returned. His trail leads to an area where the vines are thickest — his body (or what remains) is entangled in early vine growth, one of the first victims. Finding him devastates Rixit but confirms the threat timeline and direction. Could also yield a clue on his body: a pressed flower from deeper in the wood, or a sketch of something he saw before the vines took him.
+      </div>
+
+      <div class="npc-aside">
+        <strong>The Map on the Wall:</strong> Rixit's shop back room has a hand-drawn map of Graywall with pins marking vine sightings — dated, colour-coded. She's been tracking the spread for weeks. The pins clearly radiate from the south-southwest, toward the Watching Wood. If the party finds it (or earns enough trust for her to show it), it's a massive investigative shortcut. Whether they treat her as suspect or collaborator when they see it is the key moment.
+      </div>
+
+      <div class="npc-stats">
+        <div class="npc-stat"><strong>STR</strong> 6 (−2) <em>tiny</em></div>
+        <div class="npc-stat"><strong>DEX</strong> 14 (+2)</div>
+        <div class="npc-stat"><strong>CON</strong> 12 (+1)</div>
+        <div class="npc-stat"><strong>INT</strong> 15 (+2) <em>encyclopedic</em></div>
+        <div class="npc-stat"><strong>WIS</strong> 13 (+1)</div>
+        <div class="npc-stat"><strong>CHA</strong> 10 (+0) <em>guarded now</em></div>
+      </div>
+
+      <div class="npc-statblock">
+      <div class="npc-line"><em>Small Humanoid (Goblinoid), Neutral Good</em></div>
+      <div class="npc-line"><strong>AC</strong> 12 · <strong>HP</strong> ~18 · <strong>Speed</strong> 30 ft</div>
+      <div class="npc-line"><strong>Skills</strong> Nature +5, Medicine +4, Stealth +4, Perception +3</div>
+      <div class="npc-line"><strong>Languages</strong> Common, Goblin</div>
+      <div class="npc-line"><strong>Nimble Escape.</strong> Disengage or Hide as a bonus action — she uses this to slip away when conversations get too personal.</div>
+      <div class="npc-line"><strong>Herbalist's Kit.</strong> Proficient. Can identify any plant native to the Graywall region on sight. Has noticed the vine species doesn't match anything in her references.</div>
+      <div class="npc-line"><strong>Personality</strong> Warm but brittle. Smiles easily, cries easily. Will give healing potions to anyone who looks hurt — for free, no questions. Flinches when someone says Torvik's name.</div>
+      <div class="npc-line"><strong>The tell</strong> If the party mentions the vines spread from a specific direction, her eyes go wide. She's mapped the same thing. <em>"South-southwest. Towards the Wood. I know."</em></div>
+      </div>
+      </div><!-- end npc-detail -->
     </div>
   </div>
 
@@ -1453,6 +1820,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="atmo"><img src="media/graywall_mystery/vines.png" alt="Dark vines creeping through Graywall"><figcaption>Dark vines. Growing where they shouldn't. Growing back when you cut them.</figcaption></div>
 
   <p>Dann haben wir den Charakter zu bauen begonnen. Schön dem Player's Handbook nach. Klasse zuerst, dann Stats, dann Hintergründe. Wir haben die Standard-Stats für Paladine genommen, ich habe die Stats (Abilities) auch etwas erklärt, aber wir haben jetzt auf mehr CHA statt STR gewechselt weil das zum Charakter einfach besser passt.</p>
+
+  <p>Im Süden gibt es eine Burg. Die ist auch überwachsen, war lange verlassen, jetzt sieht man aber ab und zu
+  wieder Licht in den Fenstern. Schatten, die sich bewegen. Die Pflanzen auch, schwingen in der Nacht. Creepy.</p>
 
   <p>Amir weiss jetzt, wie er in der Stadt Greywall gelebt hat: Er hat sich mit Deals durchgeschlagen, kennt die ganze Stadt in- und auswändig, kann Leute einfach so mit viel Blabla überzeugen. Er ist deutlich mehr Scharlatan als Paladin, ganz sicher kein nobler Ritter oder religiös.</p>
 
@@ -1649,15 +2019,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-dm-next-session-zero -->
 
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-one-prep" onclick="toggleAccordion(this)">Phase 1 Prep <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-one-prep">
+
+  <div class="callout gold">
+    <span class="label">Session 1 Goal</span>
+    <p>Both kids are at the table. Amir has his character (Dragonborn Paladin/Charlatan) and context from session zero — he knows about the vines and the creepy castle. Kais is new to the world. This session needs to work for both of them: give Amir agency to act on what he already knows, and give Kais a way in that doesn't feel like catching up.</p>
+    <p>They should meet at least one NPC, get suspicious of something, and end the session with a lead — but not the answer. This is a mystery session, not a combat session. Save the vampire for later.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Opening — Getting Both Kids In</span>
+    <p>Start with something both brothers experience together. The vines on the south wall have gotten worse overnight — thicker, darker, a section of wall is cracking. A small crowd gathers. People are nervous. This is the inciting incident: the problem has escalated from "weird" to "urgent."</p>
+    <p><strong>Amir</strong> already knows the setup. He'll want to act. Let him be the one who tells Kais's character what's going on — that's better than you recapping. It makes Amir the expert and gives Kais a reason to follow his lead.</p>
+    <p><strong>Kais</strong> needs a reason to care. Either his character lives here too (establish that quickly), or he's just arrived and walks into the scene. Either way: the crowd, the cracking wall, the whispers about missing people — that's enough hook for a 16-year-old. He'll engage.</p>
+    <p><strong>Then ask:</strong> <em>"What do you do?"</em> — and let them decide the direction. Don't steer. The flowchart below handles wherever they go.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">The Decoys — Running Them</span>
+    <p>All decoys are in the NPC section above. Here's how to use them in play:</p>
+    <p><strong>Korrath</strong> (The Preacher) — easiest to encounter. He's in the market square, lecturing anyone who'll listen. The kids hear him ranting about "the walls will fall" and the Sermon Incident gets mentioned by a shopkeeper. He <em>looks</em> guilty. He isn't. If they confront him, he's hostile but honest — and visibly afraid of the vines. A Nature or Insight check (DC 10) reveals his fear is real.</p>
+    <p><strong>Thesska Mirren</strong> (The Recluse) — harder to reach. Locked estate, servants deflect visitors. The tavern gossip route works: former servant <strong>Dresh</strong> at a Calabas tavern talks about locked rooms and midnight deliveries. Getting inside takes persuasion, deception, or breaking in. Once inside, they find crated antiquities and Cazhaak creepers in the cellar — suspicious but not villainous. She's angry, not scared.</p>
+    <p><strong>Rixit</strong> (The Widow) — the emotional one. Her apothecary in Sar Kuraath is easy to find — anyone in the goblin quarter knows her. She's helpful but evasive. Earning her trust (DC 12 Persuasion, or mention Torvik, or just be kind) unlocks the Map on the Wall — pins radiating south-southwest. That's the real lead.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">"I Want to Go to the Castle"</span>
+    <p>Amir knows about the castle from session zero. It's overgrowing, there are lights at night, shadows moving. He'll want to go there. <strong>Let him.</strong> This is the smart, brave call — reward it.</p>
+    <p><strong>What they find:</strong> If they knock, <strong>Lord Draven</strong> answers — imperious, dismissive, wants them gone. If they sneak in or push past Draven, they find a goblin sitting cross-legged on a windowsill eating stolen fruit: <strong>Vaelk</strong>. Not a vampire, not a boss fight — a panicked con artist in a nightgown who really wishes the kids had knocked. The castle is creepy because Vaelk <em>wants</em> it to be creepy: it keeps people away from their smuggling operation. The vines bother Vaelk too — they burn them off the walls every morning and they grow back by evening.</p>
+    <p><strong>For Amir:</strong> The goblin face is the one that matters. Same skillset — fast talk, disguises, reading people — but no oath, no friends, no purpose beyond the next score. Old Dhakaan blood, ancient name, nothing to show for it but a stolen castle and a good eye for marks. The moment Vaelk goes quiet when Amir mentions his oath is the character beat. <em>"You actually believe in something. That must be nice."</em></p>
+    <p><strong>For Kais:</strong> Vaelk is a puzzle. A changeling who could be anyone, living in a ruin full of crated artefacts. Kais's character gets to be the one who notices things — the crate markings, the smuggling setup, the fact that Vaelk is scared of the vines too. Give Kais's character the Perception or Investigation checks here.</p>
+    <p><strong>Don't give the location yet.</strong> Vaelk has been watching the Watching Wood from their tower — they've seen the vine growth radiate from one point deep in the forest. But they won't share that in session 1. They don't trust the kids yet. They'll trade information for a favour later — protection, keeping their secret, something. For now Vaelk is a fun encounter and a loose thread. The lead to the Wood should come from the town investigation (Rixit's map, Korrath's knowledge, examining the wall).</p>
+    <p><strong>If they skip the castle:</strong> the vines are all over the south wall but there's no obvious single target. Without information, walking into the Watching Wood is walking blind — miles of monster-filled borderland with no direction. A Survival check (DC 14) gives a partial lead (vines denser to the south-southwest). If they're stuck, have a townsfolk nudge them: <em>"Talk to the goblin herbalist in Sar Kuraath. She's been mapping them."</em></p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Introducing Verdemis (mid-phase)</span>
+    <p>Lady Verdemis first appears mid-phase — session 2 or 3, whenever the investigation is rolling. She doesn't tag along. She shows up irregularly and helps. Two options for the first meeting — pick based on how things went:</p>
+    <p><strong>Option A — Castle visitor:</strong> She shows up at Vaelk's castle, tracking the vine growth to the same area. Vaelk knows her as a regular customer — she buys rare botanical specimens from his smuggling haul. The kids trust her because the goblin trusts her. Ironic. Tragic later.</p>
+    <p><strong>Option B — The rescue:</strong> The kids find her near the vine growth, seemingly overwhelmed by aggressive plants. They save her. She's grateful, "wounded," and now has every reason to stay close. They'll feel personally invested in protecting her — which makes the betrayal hit harder.</p>
+    <p>After that: she appears when they're stuck. Identifies a plant, offers a theory, then has somewhere else to be. Always helpful, never intrusive. Remembers their names. Each time she turns up feels like a lucky coincidence. It isn't.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Investigation Flowchart</span>
+    <p>Multiple paths lead to the same place. They don't need to follow all of them — any two should be enough to point toward the Watching Wood.</p>
+    <p><strong>The castle</strong> → find Vaelk → fun encounter, Amir's mirror moment → no location lead yet, but a thread for later<br>
+    <strong>Market square</strong> → hear Korrath ranting → confront him → he says the growth is "forced, not natural" and points south<br>
+    <strong>Tavern in Calabas</strong> → Dresh gossips about Thesska → investigate her estate → dead end (smuggling, not vines) → but her Cazhaak creepers are unaffected, which is a clue: whatever is growing isn't natural plant life<br>
+    <strong>Sar Kuraath</strong> → Rixit's apothecary → earn trust → the Map on the Wall → south-southwest vector confirmed<br>
+    <strong>The south wall</strong> → examine vines directly → Nature DC 12: these aren't local species, they're magically accelerated → Herbalism DC 14: faint necrotic trace in the root system</p>
+    <p>All town roads point to the Watching Wood. Phase 1 ends with them deciding to go there — or already on the path.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Brother Dynamics</span>
+    <p>A few tools:</p>
+    <p><strong>Split the spotlight.</strong> If one of them does all the talking, have an NPC address the other character directly. <em>"And what about you? You've been quiet."</em> If Kais dominates, give Amir a moment where his specific knowledge matters — he's the one who knows the town, after all.</p>
+    <p><strong>Let them disagree.</strong> If Amir wants the castle and Kais wants to investigate in town, don't pick a side. Ask: <em>"You've got an hour of daylight. Castle or town — what do you do?"</em> Make them negotiate. That's the game.</p>
+    <p><strong>Give them different strengths.</strong> Amir is CHA — he talks to people, reads them, persuades them. Kais's character should get the Perception, Investigation, Arcana checks. They need each other.</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Pacing</span>
+    <p>Phase 1 is 3–6 sessions depending on pacing. For a ~1 hour session with two kids: two encounters max. The opening scene (vines on the wall, crowd) + one NPC encounter or one exploration is a full session. If they go to the castle and meet Vaelk, that's the whole hour. If they stay in town and meet Korrath, that's the whole hour. Don't try to run all the decoys in one go. Let it breathe — spread the decoys, the investigation threads, and the Verdemis introduction across the phase.</p>
+  </div>
+
+  </div><!-- end acc-dm-session-one-prep -->
+
   <div class="rule"></div>
 
   <div class="footer">
     D&D 5e (2024) · Eberron · Droaam<br>
-    <a class="back-link" href="index.html">&larr; Back to CyberGwen's D&D Table</a>
   </div>
 </div>
-
-<a href="#top" class="back-to-top" aria-label="Back to top">&#x25B2;</a>
 
 <script>
 function openAccordion(id) {
@@ -1711,6 +2148,23 @@ function openAccordion(id) {
   // Save hash and scroll after closing animations settle
   if (btn.id) history.replaceState(null, '', window.location.pathname + (window.location.search || '') + '#' + btn.id);
   setTimeout(function() { btn.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 420);
+}
+
+function toggleNpc(header) {
+  var detail = header.parentElement.querySelector('.npc-detail');
+  if (!detail) return;
+  if (detail.classList.contains('npc-hidden')) {
+    detail.classList.remove('npc-hidden');
+    detail.style.maxHeight = detail.scrollHeight + 'px';
+    header.classList.remove('npc-collapsed');
+    setTimeout(function() { detail.style.maxHeight = 'none'; }, 350);
+  } else {
+    detail.style.maxHeight = detail.scrollHeight + 'px';
+    detail.offsetHeight; // force reflow
+    detail.style.maxHeight = '0';
+    detail.classList.add('npc-hidden');
+    header.classList.add('npc-collapsed');
+  }
 }
 
 function closeAccordion(otherBtn) {
@@ -2024,6 +2478,9 @@ function toggleDM() {
   });
 })();
 </script>
+
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
 </body>
 </html>
