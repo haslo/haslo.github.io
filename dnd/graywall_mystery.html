@@ -2066,11 +2066,85 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="callout gold">
     <span class="label">Investigation Flowchart</span>
     <p>Multiple paths lead to the same place. They don't need to follow all of them — any two should be enough to point toward the Watching Wood.</p>
-    <p><strong>The castle</strong> → find Vaelk → fun encounter, Amir's mirror moment → no location lead yet, but a thread for later<br>
-    <strong>Market square</strong> → hear Korrath ranting → confront him → he says the growth is "forced, not natural" and points south<br>
-    <strong>Tavern in Calabas</strong> → Dresh gossips about Thesska → investigate her estate → dead end (smuggling, not vines) → but her Cazhaak creepers are unaffected, which is a clue: whatever is growing isn't natural plant life<br>
-    <strong>Sar Kuraath</strong> → Rixit's apothecary → earn trust → the Map on the Wall → south-southwest vector confirmed<br>
-    <strong>The south wall</strong> → examine vines directly → Nature DC 12: these aren't local species, they're magically accelerated → Herbalism DC 14: faint necrotic trace in the root system</p>
+
+    <div class="mermaid" style="background: transparent; margin: 16px 0;">
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f5f0e8', 'primaryTextColor': '#2c1810', 'primaryBorderColor': '#8b6914', 'lineColor': '#8b6914', 'secondaryColor': '#f5f0e8', 'tertiaryColor': '#f5f0e8', 'fontFamily': 'Cinzel, serif', 'fontSize': '12px' }}}%%
+graph LR
+    START["🌿 Vines on the South Wall<br><i>Something is growing</i>"]
+
+    subgraph TOWN["Graywall — Investigation Paths"]
+        CASTLE["🏰 The Castle<br><i>lights, shadows, overgrown</i>"]
+        MARKET["🏪 Market Square<br><i>Korrath is ranting</i>"]
+        TAVERN["🍺 Tavern in Calabas<br><i>Dresh gossips</i>"]
+        SARKUR["🧪 Sar Kuraath<br><i>Rixit's apothecary</i>"]
+        WALL["🧱 South Wall<br><i>examine vines directly</i>"]
+    end
+
+    subgraph NPCS["NPC Encounters"]
+        VAELK["🎭 Vaelk<br><i>goblin changeling con artist</i>"]
+        DRAVEN["👤 'Lord Draven'<br><i>answers the door</i>"]
+        ALDRICE["👤 'Sister Aldrice'<br><i>Calabas clergy</i>"]
+        KORRGA["👤 'Korrga'<br><i>Bloodstone docks</i>"]
+        KORRATH["🌳 Korrath<br><i>warforged druid</i>"]
+        THESSKA["🐍 Thesska Mirren<br><i>medusa noble</i>"]
+        DRESH["💬 Dresh<br><i>ex-servant, gossip</i>"]
+        RIXIT["🍵 Rixit<br><i>goblin herbalist</i>"]
+        SERA["⚔️ Sera Tain<br><i>ex-paladin grifter</i>"]
+        VERDEMIS["🌹 Lady Verdemis<br><i>'travelling botanist'</i>"]
+    end
+
+    subgraph CLUES["Clues & Evidence"]
+        CRATES["📦 Matching crate markings<br><i>castle ↔ Thesska's cellar</i>"]
+        MAP["🗺️ Rixit's Map<br><i>pins radiating SSW</i>"]
+        TORVIK["💀 Torvik's Trail<br><i>missing 3 months</i>"]
+        CREEPERS["🌱 Cazhaak creepers<br><i>unaffected — why?</i>"]
+        NECROTIC["☠️ Necrotic trace<br><i>Herbalism DC 14</i>"]
+        FORCED["⚡ 'Forced, not natural'<br><i>Nature DC 12</i>"]
+    end
+
+    WOOD["🌲 The Watching Wood<br><i>all roads lead here</i>"]
+    GARDEN["🧛 Verdemis's Garden<br><i>the source</i>"]
+
+    START --> CASTLE & MARKET & TAVERN & SARKUR & WALL
+
+    CASTLE --> DRAVEN
+    DRAVEN -->|"sneak past / push"| VAELK
+    VAELK -.->|"same person"| DRAVEN
+    VAELK -.->|"same person"| ALDRICE
+    VAELK -.->|"same person"| KORRGA
+    VAELK -->|"smuggling supplier"| THESSKA
+    VAELK --> CRATES
+    VAELK -->|"watches from tower<br><i>won't share yet</i>"| WOOD
+
+    MARKET --> KORRATH
+    KORRATH --> FORCED
+    KORRATH -->|"points south"| WOOD
+
+    TAVERN --> DRESH
+    DRESH -->|"gossips about"| THESSKA
+    THESSKA --> CRATES
+    THESSKA --> CREEPERS
+    CREEPERS --> NECROTIC
+
+    SARKUR --> RIXIT
+    RIXIT --> MAP
+    RIXIT --> TORVIK
+    MAP -->|"SSW vector"| WOOD
+    TORVIK -->|"body in vines"| WOOD
+
+    WALL --> FORCED
+    WALL --> NECROTIC
+    FORCED --> WOOD
+    NECROTIC --> WOOD
+
+    SERA -.->|"detects fake"| ALDRICE
+    KORRGA -.->|"moves crates"| CRATES
+
+    VERDEMIS -.->|"customer of"| VAELK
+    VERDEMIS -.->|"appears mid-phase<br><i>helpful, recurring</i>"| WOOD
+    WOOD --> GARDEN
+    </div>
+
     <p>All town roads point to the Watching Wood. Phase 1 ends with them deciding to go there — or already on the path.</p>
   </div>
 
@@ -2482,5 +2556,7 @@ function toggleDM() {
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
 <a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>
 </body>
 </html>
