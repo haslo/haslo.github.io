@@ -11,19 +11,17 @@
     - Single table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status (what to use/skip)
     - Books listed in rough chronological/category order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System, Player Pages
-    - Tag badges for edition (2014/2024), type (Rules/Source/Adventure)
+    - Tag badges for edition (2014/2024), type (Core/Source/Adventure/Lore), DMs Guild link
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
-    - Purchase links: .book-links with DMs Guild / D&D Beyond links per book (hidden in print)
-    - DMs Guild books: FoE:Quickstone (2024 rules), Chronicles of Eberron (2014), Exploring Eberron (2014, also on DDB)
-    - Non-DMs Guild books in 2024-2021 range: Van Richten's Guide to Ravenloft (May 2021), Keys from the Golden Vault (Feb 2023)
+    - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
+    - No D&D Beyond links unless asked.
 
   CSS CONVENTIONS:
     Fonts: system-ui (Segoe UI)
     Colors: --accent (#8b1a1a), --accent2 (#6b4226), --accent3 (#2d5a3d), --accent4 (#3b3678)
     Row alternation: nth-child(even) auto-shading
     Pill classes: .pill-sub, .pill-spe, .pill-mon, .pill-adv, .pill-sys, .pill-pp
-    Tag classes: .tag-2014, .tag-2024, .tag-rules, .tag-source, .tag-adventure
-    Link classes: .book-links (purchase links below book title)
+    Tag classes: .tag-2014, .tag-2024, .tag-core, .tag-source, .tag-adventure, .tag-lore (pure lore, no mechanics: PCGtD only), .tag-dmsg (DMs Guild purchase link)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -99,9 +97,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .tag-2014 { background: rgba(107,66,38,0.15); color: var(--accent2); }
   .tag-2024 { background: rgba(139,26,26,0.12); color: var(--accent); }
-  .tag-rules { background: rgba(107,66,38,0.1); color: var(--accent2); }
+  .tag-core { background: rgba(107,66,38,0.1); color: var(--accent2); }
   .tag-source { background: rgba(45,90,61,0.1); color: var(--accent3); }
   .tag-adventure { background: rgba(139,26,26,0.08); color: var(--accent); }
+  .tag-lore { background: rgba(184,134,11,0.15); color: #7a6008; }
+  .tag-dmsg { background: rgba(59,54,120,0.1); color: var(--accent4); }
+  .tag-dmsg a { color: inherit; text-decoration: none; font-weight: 600; }
+  .tag-dmsg a:hover { text-decoration: underline; }
 
   .book-title { font-weight: 700; font-size: 10.5pt; }
   .book-year { color: var(--text-dim); }
@@ -148,10 +150,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .note { font-size: 8.5pt; color: var(--text-dim); margin-top: 4px; }
   .ordered { display: inline-block; font-size: 7.5pt; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: rgba(59,54,120,0.12); color: var(--accent4); margin-top: 4px; }
 
-  .book-links { margin-top: 3px; }
-  .book-links a { font-size: 8pt; color: var(--accent4); text-decoration: none; font-weight: 600; }
-  .book-links a:hover { text-decoration: underline; }
-  .book-links a + a::before { content: ' · '; color: var(--text-dim); font-weight: 400; }
 
   .legend {
     margin-top: 12px;
@@ -214,7 +212,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .tag, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 6.5pt; }
     .skipped, .still, .reach { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .ov { font-size: 8pt; }
-    .book-links { display: none; }
+    .tag-dmsg { display: none; }
     .legend { font-size: 8pt; }
     .float-nav { display: none !important; }
   }
@@ -281,7 +279,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Dec 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/efota" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -320,7 +317,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-adventure">Adventure</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/fraif" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -354,7 +350,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/frhof" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -394,7 +389,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Jul 2025</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-adventure">Adventure</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/dd" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -426,8 +420,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="book-title">Monster Manual</div>
     <span class="book-year">Feb 2025</span>
     <span class="tag tag-2024">2024</span>
-    <span class="tag tag-rules">Rules</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/mm-2025" target="_blank">D&amp;D Beyond</a></div>
+    <span class="tag tag-core">Core</span>
   </td>
   <td>
     <div class="pills">
@@ -458,8 +451,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="book-title">Dungeon Master's Guide</div>
     <span class="book-year">Nov 2024</span>
     <span class="tag tag-2024">2024</span>
-    <span class="tag tag-rules">Rules</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/dmg-2024" target="_blank">D&amp;D Beyond</a></div>
+    <span class="tag tag-core">Core</span>
   </td>
   <td>
     <div class="pills">
@@ -493,8 +485,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="book-title">Player's Handbook</div>
     <span class="book-year">Sep 2024</span>
     <span class="tag tag-2024">2024</span>
-    <span class="tag tag-rules">Rules</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/phb-2024" target="_blank">D&amp;D Beyond</a></div>
+    <span class="tag tag-core">Core</span>
   </td>
   <td>
     <div class="pills">
@@ -546,7 +537,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Sep 2024</span>
     <span class="tag tag-2024">2024</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></div>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></span>
     <br><span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
@@ -589,6 +580,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
+<!-- The Practically Complete Guide to Dragons -->
+<tr>
+  <td>
+    <div class="book-title">The Practically Complete Guide to Dragons</div>
+    <span class="book-year">Aug 2023</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-lore">Lore</span>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">128pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Dragon lore (zero mechanics)</div>
+      <div class="ov-line">Pure lore book — no subclasses, no species, no stat blocks, no game rules whatsoever. Narrated by the kender wizard Sindri Suncatcher (Dragonlance).</div>
+      <div class="ov-head">Contents</div>
+      <div class="ov-line">Dragon anatomy, society, language, hoards, magic, lairs · 10 dragon kinds covered (~6pp each) with appearance, habits, treasures · Combines &amp; updates three older Practical Guide books (2006–2010)</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> dragon lore, lair flavour, hoard descriptions, dragon personalities — the Draconomicon-adjacent reading that Fizban's didn't have room for</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      No mechanics to supersede. Edition-agnostic lore.
+    </div>
+    <div class="note">The dragon lore book Fizban's should have been. Complements FToD's bestiary &amp; player options with actual worldbuilding.</div>
+  </td>
+</tr>
+
 <!-- Keys from the Golden Vault -->
 <tr>
   <td>
@@ -596,7 +617,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Feb 2023</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-adventure">Adventure</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/kftgv" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -628,7 +648,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2022</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></div>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></span>
     <br><span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
@@ -671,7 +691,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">May 2022</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/mpmm" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -710,7 +729,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Oct 2021</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/ftod" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -755,7 +773,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">May 2021</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/vrgtr" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -796,7 +813,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2020</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/tcoe" target="_blank">D&amp;D Beyond</a></div>
     <br><span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
@@ -850,7 +866,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Jul 2020</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a><a href="https://www.dndbeyond.com/sources/dnd/exeb" target="_blank">D&amp;D Beyond</a></div>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a></span>
     <br><span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
@@ -898,7 +914,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2019</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/erlw" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -935,7 +950,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2017</span>
     <span class="tag tag-2014">2014</span>
     <span class="tag tag-source">Source</span>
-    <div class="book-links"><a href="https://www.dndbeyond.com/sources/dnd/xgte" target="_blank">D&amp;D Beyond</a></div>
   </td>
   <td>
     <div class="pills">
@@ -983,9 +997,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </table>
 
 <div class="legend">
-  <span><span class="tag tag-rules">Rules</span> core rulebook</span>
+  <span><span class="tag tag-core">Core</span> core rulebook</span>
   <span><span class="tag tag-source">Source</span> sourcebook</span>
   <span><span class="tag tag-adventure">Adventure</span> adventure content</span>
+  <span><span class="tag tag-lore">Lore</span> pure lore (no mechanics)</span>
+  <span><span class="tag tag-dmsg"><a href="#" onclick="return false">DMs Guild</a></span> DMs Guild purchase link</span>
   <span><span class="tag tag-2014">2014</span> original 5e</span>
   <span><span class="tag tag-2024">2024</span> revised 5e</span>
   <span class="skip">Red boxes</span> = superseded, skip
