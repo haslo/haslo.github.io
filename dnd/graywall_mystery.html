@@ -41,6 +41,10 @@
     08  The Secret (vampire gardener — DM eyes only) [DM]
     08b Lore (DM only — dragon ancestry, breath types, VRGtR + Eberron reading lists, Aereni vampire backstory) [DM]
     09  NPCs (DM NPC cards — Sera Tain + Vampire BBEG + 3 decoy villains: Korrath, Thesska Mirren, Rixit) [DM]
+    09b Enemies (encounter cards — Giant Rat, Giant Centipede, Violet Fungus, Swarm of Rats) [DM]
+        ENEMY CARDS: Only reference books the owner has (see dnd/my_books.html).
+        Prefer 2024/2025 stat blocks (MM 2025). Fall back to older books only if the
+        creature isn't in MM 2025. Always include page refs with pill-ref tags.
     --- Campaign Log heading ---
     10  Session -2 Prep [DM, inside campaign log]
     11  Session Negative 2 (1. März, Amir solo — ability scores, background, backstory)
@@ -493,7 +497,71 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .npc-statblock h4 {
     break-after: avoid;
   }
+  /* Enemy cards */
+  .enemy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .enemy-card {
+    background: #eee8dc;
+    border: 1px solid var(--divider);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .enemy-card-header {
+    background: var(--accent);
+    color: var(--parchment);
+    padding: 8px 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .enemy-card-header .enemy-cr {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9pt;
+    font-weight: 300;
+    opacity: 0.85;
+  }
+  .enemy-level-band {
+    background: #f5e6c8;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+    font-size: 9pt;
+    font-style: italic;
+    padding: 4px 12px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .enemy-card-body {
+    padding: 10px 12px;
+    font-size: 11pt;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .enemy-card-body p { margin: 0; }
+  .enemy-card-body hr {
+    border: none;
+    border-top: 1px solid var(--divider);
+    margin: 8px 0;
+  }
+  .enemy-card-usage {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 10pt;
+  }
+  .enemy-card-refs {
+    margin-top: auto;
+    padding-top: 8px;
+  }
   @media (max-width: 600px) {
+    .enemy-grid { grid-template-columns: repeat(2, 1fr); }
     .npc-stats { grid-template-columns: repeat(3, 1fr); }
     .npc-statblock { columns: 1; }
     .npc-body { padding: 10px 12px; font-size: 12pt; }
@@ -1112,6 +1180,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-hook'); return false;">Hook &amp; Story</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-lore'); return false;">Lore</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-npcs'); return false;">NPCs</a></li>
+    <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-enemies'); return false;">Enemies</a></li>
   </ul>
   <div class="toc-label" style="text-align:center; font-family:'Cinzel',serif; font-size:9pt; letter-spacing:1px; color:var(--gold); opacity:0.6; margin:4px 0 2px;">Campaign Log</div>
   <ul class="toc">
@@ -1972,6 +2041,128 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   </div><!-- end acc-dm-npcs -->
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ENEMIES                                 -->
+  <!-- ═══════════════════════════════════════ -->
+
+  <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-enemies" onclick="toggleAccordion(this)">Enemies <span class="dm-prelim">DM</span></button>
+  <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/beholder.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-enemies">
+
+  <div class="callout gold">
+    <span class="label">Labyrinth &amp; Early Encounters</span>
+    <p>Low-level creatures for the first real combat — could be the Labyrinth, could be a vine-choked alley, could be wherever the kids go first. Good for teaching action economy, saves, and positioning. Run theatre-of-mind with a quick sketch on paper: draw the space, mark enemy positions, let the kids point. Zones not squares — "close enough to hit," "one move away," "too far." Only measure distance for breath weapon targeting.</p>
+
+    <div class="enemy-grid">
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Giant Rat <span class="enemy-cr">CR 1/8</span></div>
+        <div class="enemy-level-band">Fair fight at level 1</div>
+        <div class="enemy-card-body">
+          <p>Pack Tactics — advantage on attacks when an ally is within 5 ft. AC 13, HP 7, bite +4 for 1d4+2.</p>
+          <hr>
+          <p class="enemy-card-usage">4 in a wide tunnel as a warm-up fight. They teach action economy — more enemies = more turns. Spark's breath weapon clears the pack in one shot if he lines them up.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 137</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Giant Centipede <span class="enemy-cr">CR 1/4</span></div>
+        <div class="enemy-level-band">Fair fight at level 1</div>
+        <div class="enemy-card-body">
+          <p>Bite poisons without a save — target has Poisoned condition until centipede's next turn. AC 14, HP 9, bite +4 for 1d4+2.</p>
+          <hr>
+          <p class="enemy-card-usage">2 in a narrow passage. Introduces conditions (Poisoned = disadvantage on attacks and ability checks). Low damage but the debuff stings. Good "this got harder" moment.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 71</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Violet Fungus <span class="enemy-cr">CR 1/4</span></div>
+        <div class="enemy-level-band">Fair fight at level 1</div>
+        <div class="enemy-card-body">
+          <p>Stationary — 0 speed, but 1d8+2 necrotic touch with 10 ft reach. AC 5, HP 18. Looks like scenery until it hits.</p>
+          <hr>
+          <p class="enemy-card-usage">3 in a cluster where Mabaran vines push through the rock. Thematic — corrupted growth that lashes out. Teaches "don't walk into things" and rewards Perception checks. Necrotic damage foreshadows the Mabaran theme.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 317</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Swarm of Rats <span class="enemy-cr">CR 1/4</span></div>
+        <div class="enemy-level-band">Fair fight at level 1</div>
+        <div class="enemy-card-body">
+          <p>Swarm — occupies another creature's space, resistance to most single-target damage. AC 10, HP 24, bite +2 for 2d6 (1d6 below half HP).</p>
+          <hr>
+          <p class="enemy-card-usage">Flavour encounter — a carpet of rats floods out of a crack when they disturb something. Teaches AoE vs single-target: weapons barely scratch it, but breath weapon shreds it. Pairs well with giant rats.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 296</span></div>
+        </div>
+      </div>
+
+    </div><!-- end enemy-grid -->
+
+    <span class="label">Watching Wood — "Not Yet"</span>
+    <p>Stalking encounters for the edges of the Watching Wood. These are <strong>not fights</strong> — they're warnings. The kids spot something at a distance, get just enough detail to be scared, and ideally decide to leave. If they don't, let the creature get closer, growl, posture — then have Sera or Korrath pull them back. Save these for when the party actually levels up.</p>
+
+    <div class="enemy-grid">
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Shambling Mound <span class="enemy-cr">CR 5</span></div>
+        <div class="enemy-level-band">Not yet — level 8+ for two PCs</div>
+        <div class="enemy-card-body">
+          <p>Engulf — grapples and suffocates on a hit. AC 15, HP 136, two slams +7 for 2d8+4. Absorbs lightning damage as healing. Looks like a pile of vines until it moves.</p>
+          <hr>
+          <p class="enemy-card-usage">The big scare. A mound of Mabaran vines shifts and stands up at the treeline. Perception DC 12 to notice it's watching them before it moves. If they approach, it takes one step forward — that's enough. Way too much HP for level 1.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 276</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Displacer Beast <span class="enemy-cr">CR 3</span></div>
+        <div class="enemy-level-band">Hard at level 4, fair at level 5</div>
+        <div class="enemy-card-body">
+          <p>Displacement — attacks against it have disadvantage unless it's incapacitated. AC 13, HP 85, two tentacles +6 for 1d6+4 plus 1d6 piercing each.</p>
+          <hr>
+          <p class="enemy-card-usage">A six-legged panther-shape flickers between the trees — never quite where it looks. Perception DC 14 to track it. Perfect "the forest has eyes" moment. Droaam native, completely at home here.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 98</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Ettercap <span class="enemy-cr">CR 2</span></div>
+        <div class="enemy-level-band">Fair fight at level 3–4</div>
+        <div class="enemy-card-body">
+          <p>Web — 30 ft ranged, restrains on hit (DC 11 STR to escape). AC 13, HP 44, bite +4 for 1d8+2 plus 1d8 poison. Spider Climb, Web Sense.</p>
+          <hr>
+          <p class="enemy-card-usage">Webs strung between dark trees, something skittering above. They find a cocooned animal — Survival DC 12 reveals it was alive an hour ago. The ettercap is watching from directly above. Creepy, not a fight — yet.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 115</span></div>
+        </div>
+      </div>
+
+      <div class="enemy-card">
+        <div class="enemy-card-header">Worg <span class="enemy-cr">CR 1/2</span></div>
+        <div class="enemy-level-band">Fair fight at level 2–3, use a pack</div>
+        <div class="enemy-card-body">
+          <p>Keen Hearing and Smell — advantage on Perception. AC 13, HP 26, bite +5 for 2d6+3, knocks prone on failed DC 13 STR save.</p>
+          <hr>
+          <p class="enemy-card-usage">A pair of yellow eyes in the underbrush, then two more, then four. Worgs are smart — they speak Goblin and Worg, and they hunt in packs for Droaam warlords. They don't attack, they evaluate. Let the kids feel outnumbered.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 335</span></div>
+        </div>
+      </div>
+
+    </div><!-- end enemy-grid watching-wood -->
+  </div>
+
+  </div><!-- end acc-dm-enemies -->
 
   <!-- CAMPAIGN LOG -->
   <div class="rule"></div>
