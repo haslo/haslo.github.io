@@ -843,6 +843,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transform: rotate(-90deg);
   }
 
+  .accordion-toggle:focus { outline: none; }
+  .accordion-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
   .accordion-toggle:hover {
     color: var(--gold);
   }
@@ -1585,7 +1588,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: Vaelk (Changeling Castle Squatter) -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-vaelk" onclick="toggleNpc(this)">
       Vaelk <span class="dm-prelim">DECOY</span>
       <span class="npc-subtitle">Goblin Changeling · Con Artist · "The Lord of Südburg"</span>
     </div>
@@ -1648,7 +1651,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: Sera Tain -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-sera" onclick="toggleNpc(this)">
       Sera Tain
       <span class="npc-subtitle">Human (Brelish), late 40s · Former Paladin (Oath of Devotion, broken) · "Nothing — officially"</span>
     </div>
@@ -1708,7 +1711,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: The Vampire (BBEG) -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-verdemis" onclick="toggleNpc(this)">
       Lady Verdemis <span class="dm-prelim">BBEG</span>
       <span class="npc-subtitle">Elf (Aereni), ancient · Vampire · "Travelling botanist"</span>
     </div>
@@ -1815,7 +1818,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: Decoy — Korrath (Warforged Druid) -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-korrath" onclick="toggleNpc(this)">
       Korrath <span class="dm-prelim">DECOY</span>
       <span class="npc-subtitle">Warforged · Circle of the Land Druid · "Warden of the Threshold"</span>
     </div>
@@ -1863,7 +1866,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: Decoy — Thesska Mirren (Medusa Noble) -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-thesska" onclick="toggleNpc(this)">
       Thesska Mirren <span class="dm-prelim">DECOY</span>
       <span class="npc-subtitle">Medusa · Minor Noble (House Mirren) · "Lady of the Locked Estate"</span>
     </div>
@@ -1915,7 +1918,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- NPC: Decoy — Rixit (Goblin Herbalist) -->
   <div class="npc-card">
-    <div class="npc-header npc-collapsed" onclick="toggleNpc(this)">
+    <div class="npc-header npc-collapsed" id="npc-rixit" onclick="toggleNpc(this)">
       Rixit <span class="dm-prelim">DECOY</span>
       <span class="npc-subtitle">Goblin · Apothecary · "The Rootweaver"</span>
     </div>
@@ -2629,16 +2632,45 @@ function toggleNpc(header) {
   var detail = header.parentElement.querySelector('.npc-detail');
   if (!detail) return;
   if (detail.classList.contains('npc-hidden')) {
+    // Close other open NPCs first
+    document.querySelectorAll('.npc-header:not(.npc-collapsed)').forEach(function(other) {
+      if (other === header) return;
+      var otherDetail = other.parentElement.querySelector('.npc-detail');
+      if (otherDetail) {
+        otherDetail.style.maxHeight = otherDetail.scrollHeight + 'px';
+        otherDetail.offsetHeight;
+        otherDetail.style.maxHeight = '0';
+        otherDetail.classList.add('npc-hidden');
+        other.classList.add('npc-collapsed');
+      }
+    });
     detail.classList.remove('npc-hidden');
     detail.style.maxHeight = detail.scrollHeight + 'px';
     header.classList.remove('npc-collapsed');
     setTimeout(function() { detail.style.maxHeight = 'none'; }, 350);
+    // Save NPC + parent accordion to hash
+    if (header.id) {
+      var accBody = header.closest('.accordion-body');
+      var accBtn = accBody ? accBody.previousElementSibling : null;
+      // skip preview images
+      while (accBtn && accBtn.classList && accBtn.classList.contains('accordion-preview')) accBtn = accBtn.previousElementSibling;
+      var accId = (accBtn && accBtn.id) ? accBtn.id : '';
+      history.replaceState(null, '', window.location.pathname + (window.location.search || '') + '#' + accId + '+' + header.id);
+    }
+    setTimeout(function() { header.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
   } else {
     detail.style.maxHeight = detail.scrollHeight + 'px';
     detail.offsetHeight; // force reflow
     detail.style.maxHeight = '0';
     detail.classList.add('npc-hidden');
     header.classList.add('npc-collapsed');
+    // Revert hash to parent accordion
+    var accBody = header.closest('.accordion-body');
+    var accBtn = accBody ? accBody.previousElementSibling : null;
+    while (accBtn && accBtn.classList && accBtn.classList.contains('accordion-preview')) accBtn = accBtn.previousElementSibling;
+    if (accBtn && accBtn.id) {
+      history.replaceState(null, '', window.location.pathname + (window.location.search || '') + '#' + accBtn.id);
+    }
   }
 }
 
@@ -2774,15 +2806,27 @@ function toggleDM() {
   }
 })();
 
-// Restore open accordion from hash
+// Restore open accordion (and optionally NPC) from hash
+// Hash format: #accordion-id or #accordion-id+npc-id
 (function() {
   var hash = window.location.hash.replace('#', '');
-  if (hash) {
-    var btn = document.getElementById(hash);
-    if (btn && btn.classList.contains('accordion-toggle')) {
-      // If it's a DM accordion, DM mode must be active
-      if (btn.classList.contains('dm-only') && !isDMActive()) return;
-      openAccordion(hash);
+  if (!hash) return;
+  var parts = hash.split('+');
+  var accId = parts[0];
+  var npcId = parts[1] || null;
+  var btn = document.getElementById(accId);
+  if (btn && btn.classList.contains('accordion-toggle')) {
+    if (btn.classList.contains('dm-only') && !isDMActive()) return;
+    openAccordion(accId);
+    if (npcId) {
+      // Wait for accordion animation to finish, then open NPC
+      setTimeout(function() {
+        var npcHeader = document.getElementById(npcId);
+        if (npcHeader && npcHeader.classList.contains('npc-collapsed')) {
+          toggleNpc(npcHeader);
+          setTimeout(function() { npcHeader.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+        }
+      }, 450);
     }
   }
 })();
