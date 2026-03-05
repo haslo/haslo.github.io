@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigation Flowchart — The Graywall Mystery</title>
+<!-- Mermaid source of truth: investigation_flowchart.mermaid — run scripts/export.py from dnd/ -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #eaddd8; }
+  #chart-container {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    position: relative;
+  }
+  #chart-container.grabbing { cursor: grabbing; }
+  #chart {
+    transform-origin: 0 0;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  #chart .mermaid { background: transparent; }
+  #controls {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 100;
+  }
+  #controls button {
+    width: 44px; height: 44px;
+    border: 1px solid #8b6914;
+    border-radius: 8px;
+    background: #f5f0e8;
+    color: #2c1810;
+    font-size: 22px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #controls button:hover { background: #e8dcc8; }
+  #controls button:active { background: #d4c4a8; }
+  #zoom-level {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: #2c1810;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div id="chart-container">
+  <div id="chart">
+    <!-- MERMAID-CONTENT: synced from investigation_flowchart.mermaid -->
+    <div class="mermaid">
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f5f0e8', 'primaryTextColor': '#2c1810', 'primaryBorderColor': '#8b6914', 'lineColor': '#8b6914', 'secondaryColor': '#f5f0e8', 'tertiaryColor': '#f5f0e8', 'fontFamily': 'Cinzel, serif', 'fontSize': '14px' }}}%%
+graph LR
+    START["🌿 Vines on the South Wall<br><i>Something is growing</i>"]
+
+    subgraph TOWN["Graywall — Investigation Paths"]
+        CASTLE["🏰 The Castle<br><i>lights, shadows, overgrown</i>"]
+        MARKET["🏪 Bloody Market<br><i>Korrath is ranting</i>"]
+        TAVERN["🍺 Tavern in Calabas<br><i>Dresh gossips</i>"]
+        SARKUR["🧪 Sar Kuraath<br><i>Rixit's apothecary</i>"]
+        WALL["🧱 South Wall<br><i>examine vines directly</i>"]
+        LABYRINTH["⛏️ The Labyrinth<br><i>old Dhakaani tunnels</i>"]
+    end
+
+    subgraph NPCS["NPC Encounters"]
+        VAELK["🎭 Vaelk<br><i>goblin changeling con artist</i>"]
+        DRAVEN["👤 'Lord Draven'<br><i>answers the door</i>"]
+        ALDRICE["👤 'Sister Aldrice'<br><i>Calabas clergy</i>"]
+        KORRGA["👤 'Korrga'<br><i>Bloodstone docks</i>"]
+        KORRATH["🌳 Korrath<br><i>warforged druid</i>"]
+        THESSKA["🐍 Thesska Mirren<br><i>medusa noble</i>"]
+        DRESH["💬 Dresh<br><i>ex-servant, gossip</i>"]
+        RIXIT["🍵 Rixit<br><i>goblin herbalist</i>"]
+        SERA["⚔️ Sera Tain<br><i>ex-paladin grifter</i>"]
+        VERDEMIS["🌹 Lady Verdemis<br><i>'travelling botanist'</i>"]
+    end
+
+    subgraph CLUES["Clues & Evidence"]
+        CRATES["📦 Matching crate markings<br><i>castle ↔ Thesska's cellar</i>"]
+        MAP["🗺️ Rixit's Map<br><i>pins radiating SSW</i>"]
+        TORVIK["💀 Torvik's Trail<br><i>missing 3 months</i>"]
+        CREEPERS["🌱 Cazhaak creepers<br><i>unaffected — why?</i>"]
+        NECROTIC["☠️ Necrotic trace<br><i>Herbalism DC 14</i>"]
+        FORCED["⚡ 'Forced, not natural'<br><i>Nature DC 12</i>"]
+    end
+
+    WOOD["🌲 The Watching Wood<br><i>all roads lead here</i>"]
+    GARDEN["🧛 Verdemis's Garden<br><i>the source</i>"]
+
+    START --> CASTLE & MARKET & TAVERN & SARKUR & WALL & LABYRINTH
+
+    CASTLE --> DRAVEN
+    DRAVEN -->|"sneak past / push"| VAELK
+    VAELK -.->|"same person"| DRAVEN
+    VAELK -.->|"same person"| ALDRICE
+    VAELK -.->|"same person"| KORRGA
+    VAELK -->|"smuggling supplier"| THESSKA
+    VAELK --> CRATES
+    VAELK -->|"watches from tower<br><i>won't share yet</i>"| WOOD
+
+    MARKET --> KORRATH
+    MARKET -.->|"crowd gossip<br><i>after rose scene</i>"| SARKUR
+    MARKET -.->|"crowd gossip<br><i>'Schwester Aldrice segnet...'</i>"| ALDRICE
+    LABYRINTH -->|"warforged footprints<br><i>druid marks on walls</i>"| KORRATH
+    KORRATH --> FORCED
+    KORRATH -->|"points south"| WOOD
+
+    TAVERN --> DRESH
+    DRESH -->|"gossips about"| THESSKA
+    THESSKA --> CRATES
+    THESSKA --> CREEPERS
+    CREEPERS --> NECROTIC
+
+    SARKUR --> RIXIT
+    RIXIT --> MAP
+    RIXIT --> TORVIK
+    MAP -->|"SSW vector"| WOOD
+    TORVIK -->|"body in vines"| WOOD
+
+    WALL --> FORCED
+    WALL --> NECROTIC
+    FORCED --> WOOD
+    NECROTIC --> WOOD
+
+    KORRATH <-.->|"secret meetings<br><i>she milks his knowledge</i>"| THESSKA
+
+    SERA -.->|"detects fake"| ALDRICE
+    KORRGA -.->|"moves crates"| CRATES
+    KORRGA -.->|"works for<br><i>Vaelk keeps tabs</i>"| THESSKA
+    RIXIT -.->|"thinks he's guilty<br><i>poisoned the well · post-it</i>"| KORRATH
+    RIXIT -.->|"distrusts her<br><i>'something isn't right'</i>"| ALDRICE
+    RIXIT -.->|"post-it"| VAELK
+
+    VERDEMIS -.->|"customer of"| VAELK
+    VERDEMIS -.->|"tracks him<br><i>points kids at him</i>"| KORRATH
+    VERDEMIS -.->|"'helps' with plants<br><i>keeps her away from truth</i>"| THESSKA
+    VERDEMIS -.->|"appears mid-phase<br><i>helpful, recurring</i>"| WOOD
+    WOOD --> GARDEN
+
+    style START fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+    style CASTLE fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+    style MARKET fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+    style KORRATH fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+    style LABYRINTH fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+    style WALL fill:#f2c6c6,stroke:#8b2500,color:#2c1810
+
+    </div>
+    <!-- /MERMAID-CONTENT -->
+  </div>
+</div>
+
+<div id="controls">
+  <button onclick="zoomIn()" title="Zoom in">+</button>
+  <div id="zoom-level">100%</div>
+  <button onclick="zoomOut()" title="Zoom out">−</button>
+  <button onclick="fitToPage()" title="Fit to page">⬜</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+
+const container = document.getElementById('chart-container');
+const chart = document.getElementById('chart');
+const zoomLabel = document.getElementById('zoom-level');
+
+let scale = 1, panX = 0, panY = 0;
+let dragging = false, startX, startY;
+
+function applyTransform() {
+  chart.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  zoomLabel.textContent = Math.round(scale * 100) + '%';
+}
+
+function zoomIn() { scale = Math.min(scale * 1.25, 50); applyTransform(); }
+function zoomOut() { scale = Math.max(scale / 1.25, 0.2); applyTransform(); }
+
+function fitToPage() {
+  const svg = chart.querySelector('svg');
+  if (!svg) return;
+  // Reset to scale=1 to measure true rendered size
+  scale = 1; panX = 0; panY = 0; applyTransform();
+  // Force layout recalc
+  void svg.offsetWidth;
+  const vw = container.clientWidth, vh = container.clientHeight;
+  // Use the rendered pixel size of the SVG at scale=1
+  const rect = svg.getBoundingClientRect();
+  const sw = rect.width, sh = rect.height;
+  if (sw === 0 || sh === 0) return;
+  const pad = 24;
+  scale = Math.min((vw - pad) / sw, (vh - pad) / sh);
+  panX = (vw - sw * scale) / 2;
+  panY = (vh - sh * scale) / 2;
+  applyTransform();
+}
+
+// Fit to page on load once mermaid finishes rendering
+const observer = new MutationObserver(() => {
+  const svg = chart.querySelector('svg');
+  if (svg) { observer.disconnect(); setTimeout(fitToPage, 100); }
+});
+observer.observe(chart, { childList: true, subtree: true });
+
+container.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = container.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  const oldScale = scale;
+  if (e.deltaY < 0) scale = Math.min(scale * 1.1, 50);
+  else scale = Math.max(scale / 1.1, 0.2);
+  panX = mx - (mx - panX) * (scale / oldScale);
+  panY = my - (my - panY) * (scale / oldScale);
+  applyTransform();
+}, { passive: false });
+
+container.addEventListener('mousedown', e => {
+  dragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
+  container.classList.add('grabbing');
+});
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  panX = e.clientX - startX; panY = e.clientY - startY;
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  dragging = false; container.classList.remove('grabbing');
+});
+
+// Touch support
+let lastTouchDist = 0;
+container.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    dragging = true;
+    startX = e.touches[0].clientX - panX;
+    startY = e.touches[0].clientY - panY;
+  } else if (e.touches.length === 2) {
+    lastTouchDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  }
+}, { passive: false });
+container.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (e.touches.length === 1 && dragging) {
+    panX = e.touches[0].clientX - startX;
+    panY = e.touches[0].clientY - startY;
+    applyTransform();
+  } else if (e.touches.length === 2) {
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    if (lastTouchDist) {
+      scale = Math.min(Math.max(scale * (dist / lastTouchDist), 0.2), 50);
+      applyTransform();
+    }
+    lastTouchDist = dist;
+  }
+}, { passive: false });
+container.addEventListener('touchend', () => { dragging = false; lastTouchDist = 0; });
+</script>
+</body>
+</html>
