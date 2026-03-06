@@ -797,20 +797,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <text x="30" y="24" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#6b1515" text-anchor="middle">d20</text>
           <text x="30" y="38" font-family="Crimson Pro,serif" font-size="7" fill="#8b1a1a" text-anchor="middle">roll</text>
           <!-- + -->
-          <text x="68" y="33" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
+          <text x="69" y="32" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
           <!-- Casting Mod -->
           <rect x="80" y="8" width="100" height="38" rx="5" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.5"/>
           <text x="130" y="22" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Spellcasting</text>
           <text x="130" y="33" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Ability Mod</text>
           <text x="130" y="43" font-family="Crimson Pro,serif" font-size="6" fill="#6b4226" text-anchor="middle">INT / WIS / CHA</text>
           <!-- + -->
-          <text x="190" y="33" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
+          <text x="191" y="32" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
           <!-- Prof -->
           <rect x="202" y="8" width="64" height="38" rx="5" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.5"/>
           <text x="234" y="23" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#1a4a2a" text-anchor="middle">Prof</text>
           <text x="234" y="37" font-family="Crimson Pro,serif" font-size="6.5" fill="#2d5a3d" text-anchor="middle">always</text>
           <!-- arrow -->
-          <line x1="276" y1="27" x2="302" y2="27" stroke="#2c2416" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="273" y1="27" x2="299" y2="27" stroke="#2c2416" stroke-width="1.5" marker-end="url(#arrow)"/>
           <!-- Gate -->
           <rect x="306" y="8" width="82" height="38" rx="5" fill="rgba(26,107,107,0.15)" stroke="#1a6b6b" stroke-width="1.5"/>
           <text x="347" y="24" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#0f4f4f" text-anchor="middle">≥ AC?</text>
@@ -837,55 +837,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- SVG DIAGRAM 4: Save Spell (two-part) -->
       <div class="diagram">
-        <svg viewBox="0 0 400 124" xmlns="http://www.w3.org/2000/svg">
-          <!-- CASTER SIDE: DC -->
-          <text x="4" y="10" font-family="Cinzel,serif" font-size="7" font-weight="700" fill="#3b3678" text-anchor="start">CASTER SETS DC:</text>
-          <rect x="2" y="14" width="38" height="38" rx="5" fill="rgba(244,237,228,0.8)" stroke="#2c2416" stroke-width="1.2"/>
-          <text x="21" y="32" font-family="Cinzel,serif" font-size="11" font-weight="700" fill="#2c2416" text-anchor="middle">8</text>
-          <text x="21" y="44" font-family="Crimson Pro,serif" font-size="5.5" fill="#6b5d4f" text-anchor="middle">fixed base</text>
-          <text x="48" y="37" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
-          <rect x="60" y="16" width="100" height="32" rx="5" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.5"/>
-          <text x="110" y="30" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Spellcasting Mod</text>
-          <text x="110" y="42" font-family="Crimson Pro,serif" font-size="6" fill="#6b4226" text-anchor="middle">INT / WIS / CHA</text>
-          <text x="168" y="37" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
-          <rect x="180" y="16" width="56" height="32" rx="5" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.5"/>
-          <text x="208" y="30" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#1a4a2a" text-anchor="middle">Prof</text>
-          <text x="208" y="42" font-family="Crimson Pro,serif" font-size="6.5" fill="#2d5a3d" text-anchor="middle">always</text>
-          <text x="244" y="37" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">=</text>
-          <rect x="256" y="14" width="62" height="36" rx="5" fill="rgba(26,107,107,0.15)" stroke="#1a6b6b" stroke-width="2"/>
-          <text x="287" y="29" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#0f4f4f" text-anchor="middle">Spell</text>
-          <text x="287" y="42" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#0f4f4f" text-anchor="middle">Save DC</text>
+        <svg viewBox="0 0 400 148" xmlns="http://www.w3.org/2000/svg">
+          <!-- CASTER SIDE: DC — matching Path A: y=8, h=38, same x/widths -->
+          <text x="4" y="6" font-family="Cinzel,serif" font-size="7" font-weight="700" fill="#3b3678" text-anchor="start">CASTER SETS DC:</text>
+          <rect x="2" y="8" width="56" height="38" rx="5" fill="rgba(244,237,228,0.8)" stroke="#2c2416" stroke-width="1.2"/>
+          <text x="30" y="26" font-family="Cinzel,serif" font-size="11" font-weight="700" fill="#2c2416" text-anchor="middle">8</text>
+          <text x="30" y="40" font-family="Crimson Pro,serif" font-size="5.5" fill="#6b5d4f" text-anchor="middle">fixed base</text>
+          <text x="69" y="32" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
+          <rect x="80" y="8" width="100" height="38" rx="5" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.5"/>
+          <text x="130" y="25" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Spellcasting Mod</text>
+          <text x="130" y="39" font-family="Crimson Pro,serif" font-size="6" fill="#6b4226" text-anchor="middle">INT / WIS / CHA</text>
+          <text x="191" y="32" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
+          <rect x="202" y="8" width="64" height="38" rx="5" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.5"/>
+          <text x="234" y="25" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#1a4a2a" text-anchor="middle">Prof</text>
+          <text x="234" y="39" font-family="Crimson Pro,serif" font-size="6.5" fill="#2d5a3d" text-anchor="middle">always</text>
+          <text x="286" y="32" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">=</text>
+          <rect x="306" y="8" width="82" height="38" rx="5" fill="rgba(26,107,107,0.15)" stroke="#1a6b6b" stroke-width="2"/>
+          <text x="347" y="24" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#0f4f4f" text-anchor="middle">Spell</text>
+          <text x="347" y="38" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#0f4f4f" text-anchor="middle">Save DC</text>
+
+          <!-- DC note -->
+          <text x="200" y="58" font-family="Crimson Pro,serif" font-size="6.5" fill="#3b3678" text-anchor="middle" font-style="italic">Your spell DC is always the same unless your spellcasting mod or proficiency change.</text>
 
           <!-- Separator -->
-          <line x1="0" y1="56" x2="396" y2="56" stroke="#c9b99a" stroke-width="0.8" stroke-dasharray="4,3"/>
+          <line x1="0" y1="64" x2="396" y2="64" stroke="#c9b99a" stroke-width="0.8" stroke-dasharray="4,3"/>
 
-          <!-- TARGET SIDE: Save Roll -->
-          <text x="4" y="70" font-family="Cinzel,serif" font-size="7" font-weight="700" fill="#1a6b6b" text-anchor="start">EACH TARGET ROLLS:</text>
-          <rect x="2" y="76" width="56" height="32" rx="5" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1.5"/>
-          <text x="30" y="90" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#6b1515" text-anchor="middle">d20</text>
-          <text x="30" y="102" font-family="Crimson Pro,serif" font-size="7" fill="#8b1a1a" text-anchor="middle">roll</text>
-          <text x="66" y="97" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
-          <rect x="78" y="76" width="90" height="32" rx="5" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.5"/>
-          <text x="123" y="90" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Save Ability Mod</text>
-          <text x="123" y="101" font-family="Crimson Pro,serif" font-size="6" fill="#6b4226" text-anchor="middle">DEX for Fireball</text>
-          <text x="176" y="97" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416">+</text>
-          <rect x="188" y="76" width="56" height="32" rx="5" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.5"/>
-          <text x="216" y="90" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#1a4a2a" text-anchor="middle">Prof</text>
-          <text x="216" y="101" font-family="Crimson Pro,serif" font-size="6" fill="#2d5a3d" text-anchor="middle">if proficient</text>
+          <!-- TARGET SIDE: Save Roll — matching Path A: y=76, h=38, same x/widths -->
+          <text x="4" y="74" font-family="Cinzel,serif" font-size="7" font-weight="700" fill="#1a6b6b" text-anchor="start">EACH TARGET ROLLS:</text>
+          <rect x="2" y="76" width="56" height="38" rx="5" fill="#e8c4c4" stroke="#8b1a1a" stroke-width="1.5"/>
+          <text x="30" y="92" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="#6b1515" text-anchor="middle">d20</text>
+          <text x="30" y="106" font-family="Crimson Pro,serif" font-size="7" fill="#8b1a1a" text-anchor="middle">roll</text>
+          <text x="69" y="100" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
+          <rect x="80" y="76" width="100" height="38" rx="5" fill="#dfc9a8" stroke="#6b4226" stroke-width="1.5"/>
+          <text x="130" y="93" font-family="Cinzel,serif" font-size="7.5" font-weight="700" fill="#5a3a14" text-anchor="middle">Save Ability Mod</text>
+          <text x="130" y="106" font-family="Crimson Pro,serif" font-size="6" fill="#6b4226" text-anchor="middle">DEX for Fireball</text>
+          <text x="191" y="100" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#2c2416" text-anchor="middle">+</text>
+          <rect x="202" y="76" width="64" height="38" rx="5" fill="#b8dbc5" stroke="#2d5a3d" stroke-width="1.5"/>
+          <text x="234" y="93" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#1a4a2a" text-anchor="middle">Prof</text>
+          <text x="234" y="106" font-family="Crimson Pro,serif" font-size="6" fill="#2d5a3d" text-anchor="middle">if proficient</text>
 
           <!-- Result -->
-          <line x1="254" y1="92" x2="280" y2="92" stroke="#2c2416" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <rect x="284" y="76" width="110" height="32" rx="5" fill="rgba(26,107,107,0.12)" stroke="#1a6b6b" stroke-width="1.5"/>
-          <text x="339" y="88" font-family="Crimson Pro,serif" font-size="7.5" font-weight="600" fill="#8b1a1a" text-anchor="middle">≤ DC → full damage</text>
-          <text x="339" y="100" font-family="Crimson Pro,serif" font-size="7.5" font-weight="600" fill="#2d5a3d" text-anchor="middle">> DC → half damage</text>
+          <line x1="273" y1="95" x2="299" y2="95" stroke="#2c2416" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="306" y="76" width="82" height="38" rx="5" fill="rgba(26,107,107,0.12)" stroke="#1a6b6b" stroke-width="1.5"/>
+          <text x="347" y="98" font-family="Crimson Pro,serif" font-size="8" font-weight="600" fill="#1a4a2a" text-anchor="middle">Spell Effect</text>
 
           <!-- Notes -->
-          <text x="200" y="118" font-family="Crimson Pro,serif" font-size="7" fill="#3b3678" text-anchor="middle" font-style="italic">Caster does NOT roll d20 — only the targets do. Damage = what the spell says, rolled once, applied to all.</text>
+          <text x="200" y="126" font-family="Crimson Pro,serif" font-size="7" fill="#3b3678" text-anchor="middle" font-style="italic">Caster does NOT roll d20 — only the targets do. Damage = what the spell says, rolled once, applied to all.</text>
+          <text x="200" y="137" font-family="Crimson Pro,serif" font-size="7" fill="#3b3678" text-anchor="middle" font-style="italic">Spell might specify effect on DC roll success as well (e.g. half damage, no effect, etc.)</text>
         </svg>
       </div>
 
       <div class="gotcha">
-        <strong>Nat 20 on a saving throw?</strong> In 2024 rules, nat 20 = <em>auto-success</em> and nat 1 = <em>auto-fail</em> on all d20 tests. But only attack rolls get <em>critical hit</em> bonus damage — saves just succeed or fail.
+        <strong>Nat 20 on saving throw?</strong> Nothing special — nat 20/nat 1 only matter for <em>attack rolls</em>.
+        A save or ability check of 20 that doesn't meet the DC still fails.
       </div>
     </div>
   </div>
@@ -902,8 +906,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <td>Bard, Sorcerer, Warlock, Paladin</td>
     </tr>
   </table>
-
-<div style="text-align:right; font-size:7pt; color:var(--text-dim); margin-top:4px; opacity:0.6;">© 2026 by Dungeon Mistress CyberGwen</div>
 
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
 <a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
