@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>maxomedia.ch · Digitalagentur Bern</title>
+<meta name="description" content="Digitale Journeys im Flow. Strategie, Technologie, kreative Kommunikation — und KI die das alles zusammenbringt.">
+<meta name="theme-color" content="#2F313C">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --color-ash: #2F313C;
+  --color-elm: #226C6E;
+  --color-neon: #CCFF00;
+  --color-off-white: #F5F3EE;
+  --color-ice: #C5DAE0;
+  --color-white: #FFFFFF;
+  --color-muted: #8a8e96;
+
+  --font-family: 'Sora', sans-serif;
+
+  --type-giant: clamp(72px, 12vw, 180px);
+  --type-huge: clamp(48px, 7vw, 110px);
+  --type-big: clamp(32px, 4.5vw, 72px);
+  --type-body-xl: clamp(18px, 2.2vw, 32px);
+  --type-body: clamp(16px, 1.5vw, 24px);
+  --type-small: 11px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  --max-width-content: 1440px;
+  --max-width-narrow: 720px;
+
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body {
+  font-family: var(--font-family);
+  color: var(--color-ash);
+  background: var(--color-ash);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════ */
+.eyebrow {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-elm);
+  display: block;
+}
+.giant { font-size: var(--type-giant); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; }
+.huge  { font-size: var(--type-huge);  font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; }
+.big   { font-size: var(--type-big);   font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
+.highlight {
+  background: linear-gradient(180deg, transparent 55%, var(--color-neon) 55%);
+  display: inline;
+  padding: 0 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION BASE
+   ═══════════════════════════════════════════════════════════ */
+section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-4xl) clamp(24px, 5vw, 80px);
+  overflow: hidden;
+}
+.section-inner {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.section-bg-num {
+  position: absolute;
+  font-size: clamp(200px, 30vw, 450px);
+  font-weight: 800;
+  opacity: 0.03;
+  color: currentColor;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ═══════════════════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-neon);
+  z-index: 10000;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING PILL NAV
+   ═══════════════════════════════════════════════════════════ */
+.nav-pill {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(47, 49, 60, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 40px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.nav-pill.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-pill a {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.nav-pill a:hover,
+.nav-pill a.active {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-pill a.nav-cta {
+  background: var(--color-neon);
+  color: var(--color-ash);
+}
+.nav-pill a.nav-cta:hover {
+  box-shadow: 0 4px 16px rgba(204, 255, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BACK LINK
+   ═══════════════════════════════════════════════════════════ */
+.back-link {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1001;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-link:hover { color: var(--color-neon); }
+.back-link.dark-mode { color: rgba(0,0,0,0.3); }
+.back-link.dark-mode:hover { color: var(--color-elm); }
+
+/* Fixed logo (appears on scroll past hero) */
+.fixed-logo {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  width: 40px;
+  height: auto;
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.fixed-logo.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §1 — HERO
+   ═══════════════════════════════════════════════════════════ */
+#hero {
+  background: linear-gradient(135deg, #2F313C, #1a1c24);
+  color: var(--color-white);
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#hero .eyebrow { color: var(--color-neon); margin-bottom: var(--space-lg); }
+.hero-watermark {
+  position: absolute;
+  font-size: clamp(200px, 40vw, 600px);
+  font-weight: 800;
+  color: rgba(255,255,255,0.02);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  line-height: 1;
+}
+.hero-title { overflow: hidden; }
+.hero-title .word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.hero-subtitle {
+  font-size: var(--type-body-xl);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 640px;
+  margin: var(--space-2xl) auto 0;
+  line-height: 1.5;
+}
+.hero-subtitle .sub-word {
+  display: inline-block;
+  opacity: 0;
+}
+.hero-ctas {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-3xl);
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--color-neon);
+  color: var(--color-ash);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(204, 255, 0, 0.3);
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-ghost {
+  display: inline-block;
+  background: transparent;
+  color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.btn-ghost:hover {
+  border-color: var(--color-white);
+  background: rgba(255,255,255,0.05);
+  transform: translateY(-4px);
+}
+.btn-ghost:active { transform: scale(0.98); }
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.scroll-indicator .arrow-down {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid var(--color-neon);
+  border-bottom: 2px solid var(--color-neon);
+  transform: rotate(45deg);
+  animation: pulse-arrow 2s ease-in-out infinite;
+}
+@keyframes pulse-arrow {
+  0%, 100% { opacity: 0.3; transform: rotate(45deg) translate(0, 0); }
+  50% { opacity: 1; transform: rotate(45deg) translate(4px, 4px); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §2 — TRUST BAR
+   ═══════════════════════════════════════════════════════════ */
+#trust {
+  background: var(--color-ash);
+  color: var(--color-white);
+  min-height: auto;
+  padding-top: var(--space-4xl);
+  padding-bottom: var(--space-4xl);
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  max-width: 900px;
+  margin: 0 auto var(--space-3xl);
+  text-align: center;
+}
+.stat-item .stat-number {
+  font-size: var(--type-huge);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-neon);
+}
+.stat-item .stat-suffix {
+  font-size: var(--type-big);
+  font-weight: 800;
+  color: var(--color-neon);
+}
+.stat-item .stat-label {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+}
+.marquee-container {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  margin-top: var(--space-3xl);
+}
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: marquee-scroll 25s linear infinite;
+}
+.marquee-item {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §3 — EMPATHY (pinned word reveal)
+   ═══════════════════════════════════════════════════════════ */
+#empathy {
+  background: var(--color-off-white);
+  color: var(--color-ash);
+}
+.empathy-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.empathy-container .reveal-word {
+  display: inline-block;
+  font-size: clamp(40px, 6vw, 90px);
+  font-weight: 400;
+  line-height: 1.2;
+  opacity: 0.08;
+  transition: none;
+  margin: 0 0.12em;
+}
+.empathy-container .reveal-word.active {
+  opacity: 1;
+}
+.empathy-container .reveal-word.elm-word {
+  font-weight: 600;
+  color: var(--color-elm);
+}
+.empathy-container .reveal-word.elm-word.active {
+  text-shadow: 0 0 40px rgba(34, 108, 110, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §4 — FLOW PRINZIP (fold-away panels)
+   ═══════════════════════════════════════════════════════════ */
+#flow {
+  background: var(--color-elm);
+  color: var(--color-white);
+  perspective: 1200px;
+  padding: 0;
+}
+.flow-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  perspective: 1200px;
+}
+.flow-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-4xl) clamp(24px, 5vw, 80px);
+  transform-origin: top center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  background: var(--color-elm);
+  color: var(--color-white);
+}
+.flow-panel .flow-num {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-xl);
+  color: var(--color-neon);
+}
+.flow-panel h2 {
+  font-size: var(--type-huge);
+  font-weight: 800;
+  line-height: 0.95;
+  margin-bottom: var(--space-sm);
+}
+.flow-panel .flow-quote {
+  font-size: var(--type-big);
+  font-weight: 300;
+  font-style: italic;
+  opacity: 0.8;
+  margin-bottom: var(--space-lg);
+}
+.flow-panel p {
+  font-size: var(--type-body-xl);
+  max-width: 560px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.flow-panel:nth-child(1) { z-index: 3; }
+.flow-panel:nth-child(2) { z-index: 2; }
+.flow-panel:nth-child(3) { z-index: 1; }
+.flow-bg-num {
+  position: absolute;
+  font-size: clamp(200px, 30vw, 450px);
+  font-weight: 800;
+  opacity: 0.05;
+  color: var(--color-white);
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §5 — KI-USP
+   ═══════════════════════════════════════════════════════════ */
+#ki {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+#ki .eyebrow { color: var(--color-neon); }
+.ki-headline {
+  font-size: var(--type-big);
+  font-weight: 700;
+  margin: var(--space-md) 0 var(--space-3xl);
+  line-height: 1.1;
+}
+.ki-headline .letter {
+  display: inline-block;
+}
+.ki-headline .letter.space {
+  width: 0.3em;
+}
+.ki-watermark {
+  position: absolute;
+  font-size: clamp(200px, 40vw, 600px);
+  font-weight: 800;
+  color: rgba(255,255,255,0.02);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  line-height: 1;
+}
+/* Chat */
+.chat-container {
+  max-width: 680px;
+  margin: 0 auto var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.chat-bubble {
+  max-width: 85%;
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: 16px;
+  font-size: var(--type-body);
+  line-height: 1.6;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--color-off-white);
+  color: var(--color-ash);
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.bot {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid var(--color-neon);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 0 24px rgba(204, 255, 0, 0.08);
+}
+.chat-bubble .chat-label {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+.chat-bubble.user .chat-label { color: var(--color-elm); }
+.chat-bubble.bot .chat-label { color: var(--color-neon); }
+.typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px 0;
+}
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: var(--color-neon);
+  border-radius: 50%;
+  animation: typing-bounce 1.4s ease-in-out infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Journey Visualization */
+.journey-viz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: var(--space-3xl) auto;
+  max-width: 700px;
+  flex-wrap: wrap;
+}
+.journey-node {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1.1;
+}
+.journey-connector {
+  width: 48px;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.journey-node.ki-glow {
+  border-color: var(--color-neon);
+  box-shadow: 0 0 24px rgba(204, 255, 0, 0.3);
+  color: var(--color-neon);
+}
+
+/* Feature Cards */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  max-width: 960px;
+  margin: var(--space-3xl) auto 0;
+}
+.feature-card {
+  border: 2px solid var(--color-neon);
+  border-radius: 12px;
+  padding: var(--space-xl);
+  background: rgba(204, 255, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(204, 255, 0, 0.1);
+}
+.feature-card h3 {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-neon);
+}
+.feature-card p {
+  font-size: var(--type-body);
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.ki-cta-link {
+  display: inline-block;
+  background: var(--color-neon);
+  color: var(--color-ash);
+  font-size: var(--type-body);
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: var(--space-2xl);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: 100px;
+  transition: all 0.3s ease;
+}
+.ki-cta-link:hover {
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §6 — LEISTUNGEN (Accordion)
+   ═══════════════════════════════════════════════════════════ */
+#leistungen {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+.accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.accordion-item {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+.accordion-header {
+  background: rgba(255,255,255,0.06);
+  color: var(--color-white);
+  padding: var(--space-lg) var(--space-xl);
+  font-size: clamp(16px, 2.5vw, 28px);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-family);
+  transition: color 0.2s ease;
+  min-height: 44px;
+}
+.accordion-header:hover {
+  color: var(--color-neon);
+}
+.accordion-icon {
+  color: var(--color-neon);
+  font-size: 28px;
+  font-weight: 300;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+.accordion-item.open .accordion-icon {
+  transform: rotate(45deg);
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.accordion-content-inner {
+  padding: var(--space-xl);
+  font-size: var(--type-body);
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+.accordion-link {
+  display: inline-block;
+  color: var(--color-neon);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: var(--space-md);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.accordion-link:hover {
+  transform: translateX(8px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §7 — REFERENZEN
+   ═══════════════════════════════════════════════════════════ */
+#referenzen {
+  background: var(--color-off-white);
+  color: var(--color-ash);
+}
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  max-width: 960px;
+  margin: var(--space-3xl) auto 0;
+}
+.case-card {
+  border-radius: 16px;
+  padding: var(--space-2xl);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform, opacity;
+}
+.case-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+}
+.case-card .case-tag {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+.case-card h3 {
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  line-height: 1.1;
+}
+.case-card .case-result {
+  font-size: var(--type-big);
+  font-weight: 800;
+  color: var(--color-neon);
+  line-height: 1;
+  margin-top: var(--space-lg);
+}
+.case-card-dark {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+.case-card-dark .case-tag { color: var(--color-neon); }
+.case-card-elm {
+  background: var(--color-elm);
+  color: var(--color-white);
+}
+.case-card-elm .case-tag { color: var(--color-neon); }
+.case-card-neon {
+  background: var(--color-white);
+  border: 2px solid var(--color-neon);
+  color: var(--color-ash);
+}
+.case-card-neon .case-tag { color: var(--color-elm); }
+.case-card-neon .case-result { color: var(--color-elm); }
+.cases-cta {
+  text-align: center;
+  margin-top: var(--space-3xl);
+}
+.cases-cta a {
+  color: var(--color-elm);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--type-body);
+  transition: color 0.2s ease;
+}
+.cases-cta a:hover { color: var(--color-ash); }
+
+/* ═══════════════════════════════════════════════════════════
+   §8 — TEAM
+   ═══════════════════════════════════════════════════════════ */
+#team {
+  background: var(--color-ash);
+  color: var(--color-white);
+  text-align: center;
+}
+.avatar-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin: var(--space-3xl) auto;
+  flex-wrap: wrap;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--color-elm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-white);
+  transition: transform 0.3s ease;
+  will-change: transform, opacity;
+}
+.avatar:hover {
+  transform: translateY(-12px);
+}
+.team-quote {
+  font-size: var(--type-body-xl);
+  font-style: italic;
+  color: var(--color-muted);
+  max-width: 600px;
+  margin: 0 auto var(--space-2xl);
+  line-height: 1.5;
+}
+.team-cta a {
+  color: var(--color-neon);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--type-body);
+  transition: all 0.2s ease;
+}
+.team-cta a:hover {
+  transform: translateX(8px);
+  display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §9 — CTA + FOOTER
+   ═══════════════════════════════════════════════════════════ */
+#cta {
+  background: linear-gradient(135deg, var(--color-elm), var(--color-ash));
+  color: var(--color-white);
+  text-align: center;
+  padding-bottom: var(--space-2xl);
+}
+.cta-heading {
+  font-size: var(--type-giant);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  will-change: transform;
+}
+.cta-sub {
+  font-size: var(--type-body-xl);
+  font-weight: 300;
+  opacity: 0.6;
+  margin: var(--space-xl) auto 0;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+/* Calendar Widget */
+.calendar-widget {
+  max-width: 420px;
+  margin: var(--space-3xl) auto;
+  background: var(--color-white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  color: var(--color-ash);
+  text-align: left;
+}
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.cal-header h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.cal-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-muted);
+  padding: 8px;
+  font-family: var(--font-family);
+  min-width: 44px;
+  min-height: 44px;
+}
+.cal-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: var(--space-sm) var(--space-xl);
+  gap: 4px;
+}
+.cal-days-header span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-align: center;
+  letter-spacing: 1px;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0 var(--space-xl) var(--space-md);
+  gap: 4px;
+}
+.cal-day {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: default;
+  color: var(--color-muted);
+}
+.cal-day.available {
+  color: var(--color-ash);
+  background: rgba(34, 108, 110, 0.08);
+  cursor: pointer;
+}
+.cal-day.selected {
+  background: var(--color-elm);
+  color: var(--color-white);
+}
+.cal-day.empty { visibility: hidden; }
+.cal-times {
+  display: flex;
+  gap: var(--space-sm);
+  padding: 0 var(--space-xl) var(--space-lg);
+  flex-wrap: wrap;
+}
+.cal-time {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(0,0,0,0.1);
+  color: var(--color-ash);
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.cal-time.selected {
+  background: var(--color-elm);
+  color: var(--color-white);
+  border-color: var(--color-elm);
+}
+.cal-confirm {
+  display: block;
+  width: calc(100% - var(--space-xl) * 2);
+  margin: 0 var(--space-xl) var(--space-xl);
+  background: var(--color-neon);
+  color: var(--color-ash);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  min-height: 44px;
+}
+.cal-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(204, 255, 0, 0.3);
+}
+.cal-confirm:active { transform: scale(0.98); }
+
+.cta-alt {
+  margin-top: var(--space-2xl);
+  font-size: var(--type-body);
+  opacity: 0.6;
+}
+.cta-alt a {
+  color: var(--color-neon);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.cta-alt a:hover { color: var(--color-white); }
+
+/* Footer */
+.site-footer {
+  background: var(--color-ash);
+  color: var(--color-muted);
+  padding: var(--space-2xl) clamp(24px, 5vw, 80px);
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+.footer-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+.footer-links a {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--color-white); }
+
+/* ═══════════════════════════════════════════════════════════
+   ASK A MAXO OVERLAY
+   ═══════════════════════════════════════════════════════════ */
+.maxo-trigger {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  z-index: 999;
+  background: var(--color-neon);
+  color: var(--color-ash);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(204, 255, 0, 0.3);
+  transition: transform 0.25s, box-shadow 0.25s;
+  min-height: 44px;
+}
+.maxo-trigger:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(204, 255, 0, 0.4);
+}
+.maxo-trigger:active { transform: scale(0.98); }
+.maxo-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.maxo-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.maxo-chat {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100vw - 48px);
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  z-index: 9999;
+  overflow: hidden;
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+.maxo-chat.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.maxo-chat-header {
+  background: var(--color-ash);
+  color: var(--color-white);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.maxo-chat-header h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.maxo-close {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: var(--font-family);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.maxo-close:hover { color: var(--color-white); }
+.maxo-messages {
+  padding: var(--space-xl);
+}
+.maxo-msg {
+  background: var(--color-off-white);
+  border-radius: 12px;
+  padding: var(--space-md) var(--space-lg);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ash);
+}
+.maxo-input-area {
+  padding: var(--space-md) var(--space-xl) var(--space-xl);
+  display: flex;
+  gap: var(--space-sm);
+}
+.maxo-input {
+  flex: 1;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  outline: none;
+  min-height: 44px;
+}
+.maxo-input:disabled {
+  background: var(--color-off-white);
+  cursor: not-allowed;
+}
+.maxo-send {
+  background: var(--color-neon);
+  color: var(--color-ash);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: not-allowed;
+  opacity: 0.5;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NOISE OVERLAY
+   ═══════════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .stats-row { grid-template-columns: 1fr; gap: var(--space-2xl); }
+  .feature-grid { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+  .journey-viz { gap: 0; }
+  .journey-node { width: 48px; height: 48px; font-size: 8px; }
+  .journey-connector { width: 24px; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .avatar { width: 72px; height: 72px; font-size: 22px; }
+  .calendar-widget { max-width: 100%; }
+  .cal-times { justify-content: center; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  .nav-pill a.nav-hide-mobile { display: none; }
+  .maxo-chat { width: calc(100vw - 32px); right: 16px; bottom: 16px; }
+  .maxo-trigger { bottom: 80px; right: 16px; }
+}
+
+@media (min-width: 1440px) {
+  .section-inner { padding: 0 var(--space-3xl); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-subtitle .sub-word { opacity: 1; }
+  .chat-bubble { opacity: 1; }
+  .marquee-track { animation: none; }
+  .scroll-indicator { display: none; }
+  .scroll-progress { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- Back link -->
+<a href="index.html" class="back-link" id="backLink">← Zurück</a>
+
+<!-- Fixed logo (appears on scroll past hero) -->
+<img id="fixedLogo" class="fixed-logo" src="media/logo.png" alt="maxomedia">
+
+<!-- Floating Pill Nav -->
+<nav class="nav-pill" id="navPill" aria-label="Seitennavigation">
+  <a href="#hero" data-section="hero">Start</a>
+  <a href="#flow" data-section="flow" class="nav-hide-mobile">Flow</a>
+  <a href="#ki" data-section="ki">KI</a>
+  <a href="#leistungen" data-section="leistungen">Leistungen</a>
+  <a href="#referenzen" data-section="referenzen" class="nav-hide-mobile">Referenzen</a>
+  <a href="#cta" data-section="cta" class="nav-cta">Projekt starten</a>
+</nav>
+
+<!-- Ask a Maxo! -->
+<button class="maxo-trigger" id="maxoTrigger" aria-label="Chat öffnen">💬 Ask a Maxo!</button>
+<div class="maxo-backdrop" id="maxoBackdrop" aria-hidden="true"></div>
+<div class="maxo-chat" id="maxoChat" role="dialog" aria-label="Ask a Maxo Chat">
+  <div class="maxo-chat-header">
+    <h4>Ask a Maxo!</h4>
+    <button class="maxo-close" id="maxoClose" aria-label="Chat schliessen">×</button>
+  </div>
+  <div class="maxo-messages">
+    <div class="maxo-msg">Hallo! 👋 Ich bin dein Maxo-Assistent. Wie kann ich dir helfen?</div>
+  </div>
+  <div class="maxo-input-area">
+    <input class="maxo-input" type="text" placeholder="Nachricht eingeben..." disabled>
+    <button class="maxo-send" disabled>→</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §1 — HERO
+     ═══════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-watermark" aria-hidden="true">MXM</div>
+  <div class="section-inner" style="text-align:center;">
+    <img src="media/logo.png" alt="maxomedia" style="width: 90px; height: 90px; object-fit: contain; margin-bottom: var(--space-lg);">
+    <span class="eyebrow" id="heroEyebrow">DIGITALAGENTUR BERN</span>
+    <h1 class="hero-title giant" id="heroTitle">
+      <span class="word">Digitale</span> <span class="word">Journeys</span> <span class="word">im</span> <span class="word"><span class="highlight">Flow.</span></span>
+    </h1>
+    <p class="hero-subtitle" id="heroSub">
+      <span class="sub-word">Strategie,</span>
+      <span class="sub-word">Technologie,</span>
+      <span class="sub-word">kreative</span>
+      <span class="sub-word">Kommunikation</span>
+      <span class="sub-word">—</span>
+      <span class="sub-word">und</span>
+      <span class="sub-word">KI</span>
+      <span class="sub-word">die</span>
+      <span class="sub-word">das</span>
+      <span class="sub-word">alles</span>
+      <span class="sub-word">zusammenbringt.</span>
+    </p>
+    <div class="hero-ctas" id="heroCtas">
+      <a href="#cta" class="btn-primary">Projekt starten →</a>
+      <a href="#flow" class="btn-ghost">Flow entdecken ↓</a>
+    </div>
+  </div>
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="arrow-down"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §2 — TRUST BAR
+     ═══════════════════════════════════════════════════════════ -->
+<section id="trust">
+  <div class="section-inner">
+    <div class="stats-row" id="statsRow">
+      <div class="stat-item">
+        <span class="stat-number" data-target="150">0</span><span class="stat-suffix">+</span>
+        <div class="stat-label">Projekte</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="30">0</span>
+        <div class="stat-label">Jahre Erfahrung</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="7">0</span>
+        <div class="stat-label">Kompetenzen</div>
+      </div>
+    </div>
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <span class="marquee-item">SC BERN</span>
+        <span class="marquee-item">KANTON BERN</span>
+        <span class="marquee-item">BKW</span>
+        <span class="marquee-item">PRO JUVENTUTE</span>
+        <span class="marquee-item">WIRTSCHAFTSSCHULE THUN</span>
+        <span class="marquee-item">STADT BERN</span>
+        <span class="marquee-item">SBB</span>
+        <span class="marquee-item">MIGROS</span>
+        <span class="marquee-item">SC BERN</span>
+        <span class="marquee-item">KANTON BERN</span>
+        <span class="marquee-item">BKW</span>
+        <span class="marquee-item">PRO JUVENTUTE</span>
+        <span class="marquee-item">WIRTSCHAFTSSCHULE THUN</span>
+        <span class="marquee-item">STADT BERN</span>
+        <span class="marquee-item">SBB</span>
+        <span class="marquee-item">MIGROS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §3 — EMPATHY (pinned word reveal)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="empathy">
+  <div class="section-inner">
+    <div class="empathy-container" id="empathyContainer"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §4 — FLOW PRINZIP (fold-away panels)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="flow">
+  <div class="flow-wrapper" id="flowWrapper">
+    <div class="flow-panel" id="flowPanel1">
+      <div class="flow-bg-num" style="right:-5%;top:10%;" aria-hidden="true">01</div>
+      <span class="flow-num">PHASE 01</span>
+      <div class="flow-quote">«Ich habe es gesehen.»</div>
+      <h2>Aufmerksamkeit</h2>
+      <p>Der User nimmt die Botschaft wahr. Die erste Impression zählt — und wir designen dafür, dass sie bleibt.</p>
+    </div>
+    <div class="flow-panel" id="flowPanel2">
+      <div class="flow-bg-num" style="left:-5%;top:15%;" aria-hidden="true">02</div>
+      <span class="flow-num">PHASE 02</span>
+      <div class="flow-quote">«Ich will es haben.»</div>
+      <h2>Interaktion</h2>
+      <p>Der User wechselt vom Zuschauer zum Mitspieler. Interaction ist nicht optional — sie ist die Brücke.</p>
+    </div>
+    <div class="flow-panel" id="flowPanel3">
+      <div class="flow-bg-num" style="right:-5%;bottom:10%;" aria-hidden="true">03</div>
+      <span class="flow-num">PHASE 03</span>
+      <div class="flow-quote">«Ich bleibe dran.»</div>
+      <h2>Loyalität</h2>
+      <p>Das Erlebnis wird zur Gewohnheit. Retention passiert durch Konsistenz und kontinuierlichen Wert.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §5 — KI-USP
+     ═══════════════════════════════════════════════════════════ -->
+<section id="ki">
+  <div class="ki-watermark" aria-hidden="true">AI</div>
+  <div class="section-inner">
+    <span class="eyebrow">KI-POWER</span>
+    <h2 class="ki-headline" id="kiHeadline">Während andere erklären,<br>bauen wir <span class="highlight">damit.</span></h2>
+
+    <div class="chat-container" id="kiChat">
+      <div class="chat-bubble user">
+        <span class="chat-label">Du</span>
+        Wie kann KI unsere Customer Journey verbessern?
+      </div>
+      <div class="chat-bubble bot">
+        <span class="chat-label">KI</span>
+        <span class="bot-text">Mit KI erkennen wir, wo eure Kunden abbrechen. Dann optimieren wir nicht wild — wir redesignen mit Daten.</span>
+      </div>
+      <div class="chat-bubble user">
+        <span class="chat-label">Du</span>
+        Das ist genau was wir brauchen.
+      </div>
+    </div>
+
+    <div class="journey-viz" id="journeyViz">
+      <div class="journey-node" data-ki="false">Aware&shy;ness</div>
+      <div class="journey-connector"></div>
+      <div class="journey-node" data-ki="true">Interest</div>
+      <div class="journey-connector"></div>
+      <div class="journey-node" data-ki="true">Decision</div>
+      <div class="journey-connector"></div>
+      <div class="journey-node" data-ki="false">Action</div>
+      <div class="journey-connector"></div>
+      <div class="journey-node" data-ki="true">Loyalty</div>
+    </div>
+
+    <div class="feature-grid" id="featureGrid">
+      <div class="feature-card">
+        <h3>Daten-Driven</h3>
+        <p>Journeys formen durch echte Nutzer-Patterns</p>
+      </div>
+      <div class="feature-card">
+        <h3>Automatisiert Insights</h3>
+        <p>KI erkennt Chancen, Menschen treffen Entscheidungen</p>
+      </div>
+      <div class="feature-card">
+        <h3>Human in Control</h3>
+        <p>Nie AI für AI's Sake — nur wenn es hilft</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:var(--space-2xl);">
+      <a href="#" class="ki-cta-link">KI erleben →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §6 — LEISTUNGEN
+     ═══════════════════════════════════════════════════════════ -->
+<section id="leistungen">
+  <div class="section-inner">
+    <span class="eyebrow" style="color:var(--color-neon);">Was wir tun</span>
+    <h2 class="big" style="margin:var(--space-md) 0 var(--space-3xl); color:var(--color-white);">Unsere <span class="highlight">Leistungen</span></h2>
+
+    <div class="accordion" id="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Strategie & Beratung</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Wir verstehen eure Geschäftsziele, eure Kunden und euer Potenzial. Dann bauen wir einen Fahrplan.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Campaigning</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Von Social Media bis Paid Advertising. Jede Kampagne ist ein Experiment — und wir lernen schnell.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>User Experience</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Wir designen für Menschen, nicht für Besprechungsräume. Jeder Klick soll sich richtig anfühlen.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Visual Design</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Design, das kommuniziert. Clean, mutig, konsistent.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Web Development</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Von Frontend bis Backend. Code ist Craft — wir nehmen es ernst.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Marketing Automation</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Richtige Nachricht, richtiger Moment, richtige Person.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>AI Chatbots</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Intelligente Chatbots, die Kunden beraten, qualifizieren und konvertieren — rund um die Uhr.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" aria-expanded="false">
+          <span>Analytics & Optimierung</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Daten erzählen Geschichten. A/B Tests, Heatmaps, User Sessions.
+            <a href="#" class="accordion-link">Mehr erfahren →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §7 — REFERENZEN
+     ═══════════════════════════════════════════════════════════ -->
+<section id="referenzen">
+  <div class="section-inner">
+    <span class="eyebrow">Ergebnisse die sprechen</span>
+    <h2 class="big" style="margin:var(--space-md) 0;">Unsere <span class="highlight">Arbeit</span></h2>
+
+    <div class="cases-grid" id="casesGrid">
+      <div class="case-card case-card-dark">
+        <span class="case-tag">E-Commerce</span>
+        <h3>Shop Hero</h3>
+        <div class="case-result">+340%</div>
+        <p style="opacity:0.6;margin-top:var(--space-sm);">Conversion</p>
+      </div>
+      <div class="case-card case-card-elm">
+        <span class="case-tag">SaaS</span>
+        <h3>DataFlow Pro</h3>
+        <div class="case-result">−60%</div>
+        <p style="opacity:0.6;margin-top:var(--space-sm);">Bounce Rate</p>
+      </div>
+      <div class="case-card case-card-neon">
+        <span class="case-tag">B2B</span>
+        <h3>TechConsult Bern</h3>
+        <div class="case-result">4× ROI</div>
+      </div>
+    </div>
+
+    <div class="cases-cta">
+      <a href="#">Alle Cases →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §8 — TEAM
+     ═══════════════════════════════════════════════════════════ -->
+<section id="team">
+  <div class="section-inner">
+    <span class="eyebrow" style="color:var(--color-neon);">Wer wir sind</span>
+    <h2 class="big" style="margin:var(--space-md) 0; color:var(--color-white);">Menschen die digital <span class="highlight">denken</span></h2>
+
+    <div class="avatar-row" id="avatarRow">
+      <div class="avatar">SZ</div>
+      <div class="avatar">GL</div>
+      <div class="avatar">BK</div>
+      <div class="avatar">TM</div>
+      <div class="avatar">RS</div>
+    </div>
+
+    <p class="team-quote">«30 Jahre Erfahrung. Bern. Keine Buzzwords.»</p>
+
+    <div class="team-cta">
+      <a href="#">Team kennenlernen →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §9 — CTA + FOOTER
+     ═══════════════════════════════════════════════════════════ -->
+<section id="cta">
+  <div class="section-inner" style="text-align:center;">
+    <h2 class="cta-heading" id="ctaHeading">Projekt<br>starten.</h2>
+    <p class="cta-sub">30 Minuten. Ein Gespräch. Alles was Sie brauchen.</p>
+
+    <div class="calendar-widget" id="calendarWidget">
+      <div class="cal-header">
+        <button aria-label="Vorheriger Monat">‹</button>
+        <h4>März 2026</h4>
+        <button aria-label="Nächster Monat">›</button>
+      </div>
+      <div class="cal-days-header">
+        <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+      </div>
+      <div class="cal-grid">
+        <!-- Wk 1: March 2026 starts on Sunday -->
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day">1</span>
+        <!-- Wk 2 -->
+        <span class="cal-day available">2</span>
+        <span class="cal-day available">3</span>
+        <span class="cal-day available">4</span>
+        <span class="cal-day available">5</span>
+        <span class="cal-day available">6</span>
+        <span class="cal-day">7</span>
+        <span class="cal-day">8</span>
+        <!-- Wk 3 -->
+        <span class="cal-day available">9</span>
+        <span class="cal-day available">10</span>
+        <span class="cal-day available">11</span>
+        <span class="cal-day selected">12</span>
+        <span class="cal-day available">13</span>
+        <span class="cal-day">14</span>
+        <span class="cal-day">15</span>
+        <!-- Wk 4 -->
+        <span class="cal-day available">16</span>
+        <span class="cal-day available">17</span>
+        <span class="cal-day available">18</span>
+        <span class="cal-day available">19</span>
+        <span class="cal-day available">20</span>
+        <span class="cal-day">21</span>
+        <span class="cal-day">22</span>
+        <!-- Wk 5 -->
+        <span class="cal-day available">23</span>
+        <span class="cal-day available">24</span>
+        <span class="cal-day available">25</span>
+        <span class="cal-day available">26</span>
+        <span class="cal-day available">27</span>
+        <span class="cal-day">28</span>
+        <span class="cal-day">29</span>
+        <!-- Wk 6 -->
+        <span class="cal-day available">30</span>
+        <span class="cal-day available">31</span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+      </div>
+      <div class="cal-times">
+        <span class="cal-time">09:00</span>
+        <span class="cal-time">10:30</span>
+        <span class="cal-time selected">14:00</span>
+        <span class="cal-time">15:30</span>
+      </div>
+      <button class="cal-confirm">Termin bestätigen →</button>
+    </div>
+
+    <p class="cta-alt">Oder frag direkt: <button onclick="openMaxo()" style="background:none;border:none;color:var(--color-neon);font-family:var(--font-family);font-weight:700;font-size:inherit;cursor:pointer;text-decoration:underline;min-height:44px;">Ask a Maxo!</button></p>
+    <p class="cta-alt">Oder direkt schreiben: <a href="mailto:hallo@maxomedia.ch">hallo@maxomedia.ch</a></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© 2026 maxomedia AG, Bern</span>
+    <div class="footer-links">
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ─── REDUCED MOTION CHECK ───
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── ASK A MAXO ───
+function openMaxo() {
+  document.getElementById('maxoBackdrop').classList.add('open');
+  document.getElementById('maxoChat').classList.add('open');
+  document.getElementById('maxoTrigger').style.display = 'none';
+}
+function closeMaxo() {
+  document.getElementById('maxoBackdrop').classList.remove('open');
+  document.getElementById('maxoChat').classList.remove('open');
+  document.getElementById('maxoTrigger').style.display = '';
+}
+document.getElementById('maxoTrigger').addEventListener('click', openMaxo);
+document.getElementById('maxoClose').addEventListener('click', closeMaxo);
+document.getElementById('maxoBackdrop').addEventListener('click', closeMaxo);
+
+// ─── SCROLL PROGRESS BAR ───
+if (!prefersReducedMotion) {
+  ScrollTrigger.create({
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      document.getElementById('scrollProgress').style.transform = 'scaleX(' + self.progress + ')';
+    }
+  });
+}
+
+// ─── NAV PILL ───
+const navPill = document.getElementById('navPill');
+const navLinks = navPill.querySelectorAll('a');
+const sections = document.querySelectorAll('section');
+
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'bottom 80%',
+  onEnter: () => navPill.classList.add('visible'),
+  onLeaveBack: () => navPill.classList.remove('visible'),
+});
+
+sections.forEach(sec => {
+  ScrollTrigger.create({
+    trigger: sec,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: () => setActiveNav(sec.id),
+    onEnterBack: () => setActiveNav(sec.id),
+  });
+});
+
+function setActiveNav(id) {
+  navLinks.forEach(a => {
+    if (!a.classList.contains('nav-cta')) {
+      a.classList.toggle('active', a.dataset.section === id);
+    }
+  });
+  const backLink = document.getElementById('backLink');
+  const lightSections = ['empathy', 'referenzen'];
+  backLink.classList.toggle('dark-mode', lightSections.includes(id));
+
+  const fixedLogo = document.getElementById('fixedLogo');
+  fixedLogo.classList.toggle('visible', id !== 'hero');
+}
+
+// Smooth scroll for nav
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      gsap.to(window, { scrollTo: { y: target, offsetY: 0 }, duration: 1, ease: 'power2.inOut' });
+    }
+  });
+});
+
+if (prefersReducedMotion) {
+  // Show everything, no animations
+  navPill.classList.add('visible');
+  document.querySelectorAll('.chat-bubble').forEach(b => b.style.opacity = '1');
+  document.querySelectorAll('.hero-subtitle .sub-word').forEach(w => w.style.opacity = '1');
+  // Build empathy words visible
+} else {
+
+// ─── SCROLL INDICATOR: hide on first scroll ───
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'top top',
+  end: '+=100',
+  onLeave: () => gsap.to('#scrollIndicator', { opacity: 0, duration: 0.5 }),
+});
+
+// ─── §1 HERO ───
+const heroTl = gsap.timeline();
+heroTl
+  .from('#heroEyebrow', { opacity: 0, y: 20, duration: 0.6 })
+  .from('.hero-title .word', { opacity: 0, y: 60, duration: 0.8, stagger: 0.15, ease: 'power3.out' })
+  .to('.hero-subtitle .sub-word', { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.3')
+  .from('.hero-ctas', { opacity: 0, y: 30, duration: 0.6 }, '-=0.2')
+  .from('#scrollIndicator', { opacity: 0, duration: 0.6 }, '-=0.2');
+
+// Hero scroll-away
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  }
+})
+.to('.hero-title', { y: -100, opacity: 0, ease: 'none' })
+.to('#heroSub', { opacity: 0, y: -40, ease: 'none' }, 0)
+.to('.hero-ctas', { opacity: 0, y: -30, ease: 'none' }, 0)
+.to('#scrollIndicator', { opacity: 0, ease: 'none' }, 0);
+
+
+// ─── §2 TRUST: counter animation ───
+document.querySelectorAll('.stat-number').forEach(num => {
+  const target = parseInt(num.dataset.target);
+  ScrollTrigger.create({
+    trigger: num,
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        num.textContent = Math.round(current);
+      }, 30);
+    }
+  });
+});
+
+
+// ─── §3 EMPATHY: pinned word reveal ───
+const empathyText = 'Ihre Kunden verlieren sich auf dem Weg. Zu viele Touchpoints. Zu wenig Zusammenhang. Ihre Website ist eine Broschüre — kein Erlebnis.';
+const elmWords = ['verlieren', 'Zusammenhang.', 'Erlebnis.'];
+const empathyContainer = document.getElementById('empathyContainer');
+
+empathyText.split(' ').forEach(w => {
+  const span = document.createElement('span');
+  span.className = 'reveal-word';
+  if (elmWords.includes(w)) span.classList.add('elm-word');
+  span.textContent = w;
+  empathyContainer.appendChild(span);
+});
+
+const empathyWords = empathyContainer.querySelectorAll('.reveal-word');
+
+ScrollTrigger.create({
+  trigger: '#empathy',
+  start: 'top top',
+  end: () => '+=' + (window.innerHeight * 2),
+  pin: true,
+  scrub: 0.5,
+  onUpdate: (self) => {
+    const progress = self.progress;
+    empathyWords.forEach((word, i) => {
+      const wordProgress = i / empathyWords.length;
+      word.classList.toggle('active', progress > wordProgress);
+    });
+  }
+});
+
+
+// ─── §4 FLOW: fold-away panels ───
+const flowTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#flow',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 3),
+    pin: true,
+    scrub: 0.6,
+  }
+});
+
+flowTl
+  .to('#flowPanel1', {
+    rotateX: -90,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.in',
+    transformOrigin: 'top center',
+  })
+  .to({}, { duration: 0.5 })
+  .to('#flowPanel2', {
+    rotateX: -90,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.in',
+    transformOrigin: 'top center',
+  })
+  .to({}, { duration: 0.5 });
+
+// Flow bg num parallax
+document.querySelectorAll('.flow-bg-num').forEach(num => {
+  gsap.to(num, {
+    yPercent: -50,
+    scrollTrigger: {
+      trigger: '#flow',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+});
+
+
+// ─── §5 KI: letter fly-in + chat bubbles + journey viz ───
+
+// Split headline into letter spans
+const kiHeadline = document.getElementById('kiHeadline');
+function splitTextNode(node, parent) {
+  node.textContent.split('').forEach(ch => {
+    const span = document.createElement('span');
+    span.className = ch === ' ' ? 'letter space' : 'letter';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    parent.insertBefore(span, node);
+  });
+  parent.removeChild(node);
+}
+[...kiHeadline.childNodes].forEach(node => {
+  if (node.nodeType === 3) { // text node
+    splitTextNode(node, kiHeadline);
+  } else if (node.nodeName === 'SPAN' && node.classList.contains('highlight')) {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === 3) splitTextNode(child, node);
+    });
+  }
+  // <br> stays as-is
+});
+
+const kiLetters = kiHeadline.querySelectorAll('.letter');
+gsap.set(kiLetters, { opacity: 0, y: 40, rotateX: -90 });
+gsap.set('#ki .eyebrow', { opacity: 0 });
+const kiHighlight = kiHeadline.querySelector('.highlight');
+if (kiHighlight) gsap.set(kiHighlight, { backgroundImage: 'none' });
+
+const kiBubbles = document.querySelectorAll('#kiChat .chat-bubble');
+const kiChatTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#ki',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 2.5),
+    pin: true,
+    scrub: 0.5,
+  }
+});
+
+// Phase 1: eyebrow + letter fly-in
+kiChatTl.to('#ki .eyebrow', { opacity: 1, duration: 0.3 }, 0);
+kiChatTl.to(kiLetters, {
+  opacity: 1, y: 0, rotateX: 0,
+  duration: 0.02, stagger: 0.02, ease: 'back.out(1.7)',
+}, 0.1);
+
+// Phase 1b: highlight reveal after letters land
+if (kiHighlight) {
+  kiChatTl.to(kiHighlight, {
+    backgroundImage: 'linear-gradient(180deg, transparent 55%, var(--color-neon) 55%)',
+    duration: 0.1,
+  }, 0.7);
+}
+
+// Phase 2: chat bubbles (shifted to start after headline)
+kiBubbles.forEach((bubble, i) => {
+  const isUser = bubble.classList.contains('user');
+  gsap.set(bubble, { opacity: 0, x: isUser ? 60 : -60 });
+  kiChatTl.to(bubble, {
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+  }, 0.7 + i * 0.8);
+});
+
+// Journey viz: glow KI nodes on scroll
+document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
+  ScrollTrigger.create({
+    trigger: node,
+    start: 'top 80%',
+    onEnter: () => node.classList.add('ki-glow'),
+    onLeaveBack: () => node.classList.remove('ki-glow'),
+  });
+});
+
+// Feature cards stagger
+gsap.from('#featureGrid .feature-card', {
+  y: 60,
+  opacity: 0,
+  stagger: 0.15,
+  scrollTrigger: {
+    trigger: '#featureGrid',
+    start: 'top 80%',
+    end: 'top 40%',
+    scrub: true,
+  }
+});
+
+
+// ─── §6 ACCORDION ───
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    const content = item.querySelector('.accordion-content');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.accordion-item').forEach(ai => {
+      ai.classList.remove('open');
+      ai.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+      ai.querySelector('.accordion-content').style.maxHeight = '0';
+    });
+
+    // Toggle clicked
+    if (!isOpen) {
+      item.classList.add('open');
+      header.setAttribute('aria-expanded', 'true');
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  });
+});
+
+// Auto-open first on scroll
+ScrollTrigger.create({
+  trigger: '#accordion',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    setTimeout(() => {
+      const first = document.querySelector('.accordion-item');
+      first.classList.add('open');
+      first.querySelector('.accordion-header').setAttribute('aria-expanded', 'true');
+      first.querySelector('.accordion-content').style.maxHeight = first.querySelector('.accordion-content').scrollHeight + 'px';
+    }, 400);
+  }
+});
+
+
+// ─── §7 REFERENZEN: staggered fly-in ───
+gsap.from('#casesGrid .case-card', {
+  y: 60,
+  opacity: 0,
+  stagger: 0.15,
+  scrollTrigger: {
+    trigger: '#casesGrid',
+    start: 'top 80%',
+    end: 'top 40%',
+    scrub: true,
+  }
+});
+
+
+// ─── §8 TEAM: staggered entrance ───
+gsap.from('#avatarRow .avatar', {
+  y: 40,
+  opacity: 0,
+  stagger: 0.12,
+  scrollTrigger: {
+    trigger: '#avatarRow',
+    start: 'top 80%',
+    end: 'top 50%',
+    scrub: true,
+  }
+});
+
+gsap.from('.team-quote', {
+  y: 30,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '.team-quote',
+    start: 'top 85%',
+    end: 'top 60%',
+    scrub: true,
+  }
+});
+
+
+// ─── §9 CTA: scale-up heading ───
+gsap.from('#ctaHeading', {
+  scale: 0.5,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#cta',
+    start: 'top 70%',
+    end: 'top 20%',
+    scrub: true,
+  }
+});
+
+gsap.from('#calendarWidget', {
+  y: 60,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#calendarWidget',
+    start: 'top 80%',
+    end: 'top 50%',
+    scrub: true,
+  }
+});
+
+// Recalculate all ScrollTriggers after layout settles
+ScrollTrigger.refresh();
+
+} // end if !prefersReducedMotion
+
+// ─── BUILD EMPATHY WORDS (for reduced-motion too) ───
+if (prefersReducedMotion) {
+  const empathyText2 = 'Ihre Kunden verlieren sich auf dem Weg. Zu viele Touchpoints. Zu wenig Zusammenhang. Ihre Website ist eine Broschüre — kein Erlebnis.';
+  const elmWords2 = ['verlieren', 'Zusammenhang.', 'Erlebnis.'];
+  const ec = document.getElementById('empathyContainer');
+  if (ec && !ec.querySelector('.reveal-word')) {
+    empathyText2.split(' ').forEach(w => {
+      const span = document.createElement('span');
+      span.className = 'reveal-word active';
+      if (elmWords2.includes(w)) span.classList.add('elm-word');
+      span.textContent = w;
+      ec.appendChild(span);
+    });
+  }
+}
+
+</script>
+</body>
+</html>

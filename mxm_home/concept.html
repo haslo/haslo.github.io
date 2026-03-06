@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konzept · maxomedia.ch Relaunch · Team Bubu & Gwen</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ash: #2F313C;
+  --elm: #226C6E;
+  --elm-dark: #1a5254;
+  --neon: #CCFF00;
+  --neon-dim: rgba(204,255,0,0.15);
+  --ice: #C5DAE0;
+  --off: #F5F3EE;
+  --white: #FFFFFF;
+  --muted: #8a8e96;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Sora',sans-serif; color:var(--ash); background:var(--off); overflow-x:hidden; }
+
+/* ═══ UTILITY ═══ */
+.pad { padding:0 clamp(24px,5vw,80px); }
+.full { width:100%; }
+section { min-height:100vh; display:flex; flex-direction:column; justify-content:center; position:relative; }
+.eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase;
+  margin-bottom:24px; display:block;
+}
+
+/* ═══ GIANT TYPE ═══ */
+.giant {
+  font-size:clamp(72px, 12vw, 180px);
+  font-weight:800; line-height:0.9; letter-spacing:-0.03em;
+}
+.huge {
+  font-size:clamp(48px, 7vw, 110px);
+  font-weight:800; line-height:0.95; letter-spacing:-0.02em;
+}
+.big {
+  font-size:clamp(32px, 4.5vw, 72px);
+  font-weight:700; line-height:1.05; letter-spacing:-0.01em;
+}
+.body-xl {
+  font-size:clamp(18px, 2.2vw, 32px);
+  font-weight:400; line-height:1.5;
+}
+.body-l {
+  font-size:clamp(16px, 1.5vw, 24px);
+  font-weight:400; line-height:1.6;
+}
+.mono {
+  font-size:11px; font-family:'Sora',monospace; letter-spacing:2px; text-transform:uppercase; font-weight:600;
+}
+
+/* ═══ COLORS ═══ */
+.bg-ash { background:var(--ash); color:var(--white); }
+.bg-elm { background:var(--elm); color:var(--white); }
+.bg-off { background:var(--off); color:var(--ash); }
+.bg-white { background:var(--white); color:var(--ash); }
+.bg-neon { background:var(--neon); color:var(--ash); }
+.c-neon { color:var(--neon); }
+.c-elm { color:var(--elm); }
+.c-muted { color:var(--muted); }
+.c-ice { color:var(--ice); }
+.highlight {
+  background:linear-gradient(180deg, transparent 55%, var(--neon) 55%);
+  display:inline; padding:0 4px;
+}
+
+/* ═══ NAV (floating pill) ═══ */
+.nav-pill {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:1000;
+  background:rgba(47,49,60,0.92); backdrop-filter:blur(16px);
+  border-radius:40px; padding:6px 8px;
+  display:flex; align-items:center; gap:4px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.25);
+}
+.nav-pill a {
+  color:rgba(255,255,255,0.55); font-size:12px; font-weight:600;
+  padding:8px 16px; border-radius:30px; text-decoration:none; transition:all .25s;
+  white-space:nowrap;
+}
+.nav-pill a:hover { color:var(--white); background:rgba(255,255,255,0.08); }
+.nav-pill .cta {
+  background:var(--neon); color:var(--ash); font-weight:700;
+  padding:8px 20px; border-radius:30px; text-decoration:none; font-size:12px;
+}
+
+/* ═══ COVER ═══ */
+.cover {
+  min-height:100vh; background:var(--ash); color:var(--white);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0 clamp(24px,5vw,80px) 80px; position:relative;
+}
+.cover::before {
+  content:'MXM'; position:absolute; top:50%; left:50%; transform:translate(-50%,-55%);
+  font-size:clamp(200px,35vw,500px); font-weight:800; color:rgba(255,255,255,0.03);
+  letter-spacing:-0.05em; pointer-events:none;
+}
+
+/* ═══ SWATCHES ═══ */
+.swatch-row { display:flex; gap:0; border-radius:16px; overflow:hidden; height:200px; }
+.swatch {
+  flex:1; display:flex; flex-direction:column; justify-content:flex-end;
+  padding:16px; font-size:12px; font-weight:600; position:relative;
+}
+.swatch .name { font-size:20px; font-weight:800; margin-bottom:4px; }
+
+/* ═══ SPLIT ═══ */
+.split { display:grid; grid-template-columns:1fr 1fr; min-height:auto; }
+.split > div { display:flex; flex-direction:column; justify-content:center; padding:clamp(32px,5vw,80px); }
+
+/* ═══ ACCORDION ═══ */
+.accordion-item {
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  padding:clamp(24px,3vw,48px) 0;
+}
+.accordion-item .label {
+  font-size:clamp(40px, 6vw, 96px);
+  font-weight:800; line-height:1; letter-spacing:-0.02em;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.accordion-item .desc {
+  font-size:clamp(14px,1.3vw,20px); color:rgba(255,255,255,0.5);
+  max-width:600px; margin-top:12px; line-height:1.6;
+}
+.accordion-item .plus { color:var(--neon); font-weight:300; font-size:clamp(32px,4vw,64px); }
+
+/* ═══ CARDS ═══ */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:20px; }
+.card {
+  background:var(--white); border-radius:16px; padding:clamp(24px,3vw,40px);
+  border:1px solid rgba(0,0,0,0.06); transition:transform .3s, box-shadow .3s;
+}
+.card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(34,108,110,0.1); }
+.card h3 { font-size:clamp(20px,2vw,28px); font-weight:800; margin-bottom:12px; }
+.card p { font-size:14px; color:var(--muted); line-height:1.7; }
+
+/* ═══ FLOW STEPS ═══ */
+.flow-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+.flow-step {
+  padding:clamp(32px,4vw,64px); display:flex; flex-direction:column; justify-content:space-between;
+  min-height:50vh; position:relative;
+}
+.flow-step:not(:last-child) { border-right:1px solid rgba(255,255,255,0.1); }
+.flow-step .num {
+  font-size:clamp(80px,10vw,160px); font-weight:800; color:rgba(255,255,255,0.06);
+  line-height:1; margin-bottom:auto;
+}
+.flow-step h3 {
+  font-size:clamp(28px,3.5vw,56px); font-weight:800; margin-bottom:16px;
+}
+.flow-step p { font-size:clamp(14px,1.2vw,18px); color:rgba(255,255,255,0.6); line-height:1.6; }
+
+/* ═══ KI CARDS ═══ */
+.ki-card {
+  border:1px solid rgba(204,255,0,0.15); border-radius:16px;
+  padding:clamp(24px,3vw,40px); transition:transform .3s, border-color .3s;
+}
+.ki-card:hover { transform:translateY(-4px); border-color:rgba(204,255,0,0.4); }
+.ki-card h3 { font-size:clamp(24px,3vw,40px); font-weight:800; color:var(--neon); margin-bottom:12px; }
+.ki-card p { font-size:clamp(14px,1.3vw,20px); color:rgba(255,255,255,0.5); line-height:1.6; }
+
+/* ═══ FOOTER ═══ */
+.doc-footer {
+  text-align:center; padding:48px 24px; font-size:11px; color:var(--muted);
+  border-top:1px solid rgba(0,0,0,0.06);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width:768px) {
+  .split { grid-template-columns:1fr; }
+  .flow-steps { grid-template-columns:1fr; }
+  .flow-step:not(:last-child) { border-right:none; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .swatch-row { flex-direction:column; height:auto; }
+  .swatch { min-height:80px; }
+  .kompetenz-phases { flex-direction:column; }
+}
+.back-link {
+  position: fixed; top: 24px; left: 24px; z-index: 10001;
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  font-size: 12px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; transition: color 0.3s;
+}
+.back-link:hover { color: var(--neon); }
+a.ref { color: inherit; text-decoration: underline; text-decoration-color: var(--neon); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+a.ref:hover { text-decoration-color: currentColor; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Zurück</a>
+
+<!-- ═══════════════════════════════════════════
+     FLOATING NAV
+     ═══════════════════════════════════════════ -->
+<nav class="nav-pill">
+  <a href="#kernidee">Idee</a>
+  <a href="#kompetenzen">Kompetenzen</a>
+  <a href="#visuell">Visuell</a>
+  <a href="#homepage">Homepage</a>
+  <a href="#patterns">Patterns</a>
+  <a href="#entscheid">Entscheid</a>
+  <span class="cta">Team Bubu & Gwen</span>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     COVER
+     ═══════════════════════════════════════════ -->
+<div class="cover">
+  <span class="eyebrow c-neon">Design-Konzept · maxomedia.ch Relaunch 2026</span>
+  <h1 class="giant" style="max-width:90%;">
+    Wir denken<br>
+    von der <span class="c-neon">Journey</span><br>
+    her.
+  </h1>
+  <p class="body-l" style="color:rgba(255,255,255,0.5);max-width:600px;margin-top:32px;">
+    Strategie, Technologie, kreative Kommunikation — und KI die das alles zusammenbringt. Das Konzept für eine Website die zeigt was maxomedia kann, statt es nur zu behaupten.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     KERNIDEE
+     ═══════════════════════════════════════════ -->
+<section id="kernidee" class="bg-off pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow c-elm">Kernidee</span>
+  <h2 class="huge" style="max-width:900px;">
+    Die Website <span class="highlight">zeigt</span> was maxomedia kann — statt es zu behaupten.
+  </h2>
+  <p class="body-xl c-muted" style="max-width:700px;margin-top:32px;">
+    maxomedia redet von User Journeys und Flow. Also muss die Website selbst eine Journey sein, die den User in den Flow bringt. Kein Broschüren-Design. Eine Erfahrung.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     POSITIONIERUNG
+     ═══════════════════════════════════════════ -->
+<section class="bg-ash pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow c-neon">Positionierung</span>
+  <h2 class="huge" style="max-width:900px;">
+    KI-Agentur die in <span class="c-neon">Journeys</span> denkt — nicht in Tools oder Trends.
+  </h2>
+  <p class="body-xl" style="color:rgba(255,255,255,0.5);max-width:700px;margin-top:32px;">
+    Andere Agenturen erklären KI. maxomedia baut damit. Das muss auf der Website spürbar sein — nicht als Claim, sondern als Erlebnis. Der "Ask a Maxo!"-Chat, die Flow-Methodik als Scroll-Story, die Ergebnisse als harte Zahlen.
+  </p>
+  <p class="big c-neon" style="max-width:900px;margin-top:48px;">
+    «User Journey first. AI where it helps. Human in control.»
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     STIMMUNG
+     ═══════════════════════════════════════════ -->
+<section class="bg-elm pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow" style="color:rgba(255,255,255,0.4);">Stimmung</span>
+  <h2 class="giant" style="max-width:800px;">
+    Dunkel.<br>
+    Mutig.<br>
+    Ruhig.
+  </h2>
+  <p class="body-xl" style="color:rgba(255,255,255,0.6);max-width:640px;margin-top:32px;">
+    Kein visueller Lärm. Wenige Farben, viel Luft, riesige Schrift. Die Seite atmet Selbstbewusstsein. Effekte sind da, aber sie dienen dem Inhalt — kein Gimmick. Eher <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a> als <a class="ref" href="https://www.awwwards.com" target="_blank">Awwwards</a>-Feuerwerk.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     VISUELLES PRINZIP
+     ═══════════════════════════════════════════ -->
+<section id="visuell" class="bg-off pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow c-elm">Visuelles Prinzip</span>
+  <h2 class="huge" style="max-width:900px;">
+    <span class="highlight">Wenige Farben</span>, grosse Schrift, Inhalt der sich beim Scrollen entfaltet.
+  </h2>
+  <p class="body-xl c-muted" style="max-width:700px;margin-top:32px;">
+    Die prämierte Agenturen 2025/26 zeigen alle dasselbe Muster: 2–3 Farben, riesige Typografie, ein einziges klares Statement. Wir folgen diesem Prinzip — mit unserer eigenen Palette.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FARBEN
+     ═══════════════════════════════════════════ -->
+<section class="bg-white pad" style="padding-top:100px;padding-bottom:100px;">
+  <span class="eyebrow c-elm">Farbkonzept</span>
+  <h2 class="huge" style="margin-bottom:48px;">
+    Elm + Neon.<br>
+    <span class="c-muted" style="font-weight:400;font-size:0.5em;">Sonst nichts.</span>
+  </h2>
+
+  <div class="swatch-row" style="margin-bottom:20px;">
+    <div class="swatch" style="background:var(--ash);color:var(--white);flex:2;">
+      <div class="name">Ash</div>
+      <div>#2F313C · Dark Sections, Text, Nav</div>
+    </div>
+    <div class="swatch" style="background:var(--elm);color:var(--white);flex:2;">
+      <div class="name">Elm</div>
+      <div>#226C6E · Primary, Links, Akzent-Sections</div>
+    </div>
+    <div class="swatch" style="background:var(--neon);color:var(--ash);flex:1.5;">
+      <div class="name">Luminous</div>
+      <div>#CCFF00 · CTA, Highlights, Akzent</div>
+    </div>
+  </div>
+
+  <div class="swatch-row" style="height:120px;">
+    <div class="swatch" style="background:var(--off);color:var(--ash);border:1px solid #e5e5e0;">
+      <div class="name">Off-White</div>
+      <div>#F5F3EE · Hintergrund (statt reinem Weiss)</div>
+    </div>
+    <div class="swatch" style="background:var(--ice);color:var(--ash);">
+      <div class="name">Ice Blue</div>
+      <div>#C5DAE0 · Subtiler Support, Hover-States</div>
+    </div>
+    <div class="swatch" style="background:var(--white);color:var(--ash);border:1px solid #e5e5e0;">
+      <div class="name">White</div>
+      <div>#FFFFFF · Cards, Content-Flächen</div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;max-width:700px;">
+    <p class="body-l c-muted">
+      Kein Spice, kein Olive, kein Anzac. Wir picken <strong style="color:var(--ash)">drei Farben</strong> und setzen sie konsequent ein. Elm ist der Trend 2026 (Deep Teal + Earthy). Neon ist unser Differenzierungsmerkmal. Ash trägt alles.
+    </p>
+    <p class="body-l c-muted" style="margin-top:16px;">
+      Off-White statt reines #FFF — reduziert Augenbelastung, wirkt wärmer, ist 2026 Standard bei allen Gewinnern (<a class="ref" href="https://landonorris.com" target="_blank">Lando Norris</a>, <a class="ref" href="https://www.tricks.de" target="_blank">tricks</a>, <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>).
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TYPOGRAFIE
+     ═══════════════════════════════════════════ -->
+<section class="bg-ash pad" style="padding-top:100px;padding-bottom:100px;">
+  <span class="eyebrow c-neon">Typografie</span>
+
+  <div style="margin-bottom:80px;">
+    <div class="mono c-muted" style="margin-bottom:16px;">Hero Headlines · 12–18vw</div>
+    <div class="giant c-neon" style="font-size:clamp(80px,15vw,220px);">
+      Flow.
+    </div>
+  </div>
+
+  <div style="margin-bottom:80px;">
+    <div class="mono c-muted" style="margin-bottom:16px;">Section Headlines · 7–10vw</div>
+    <div class="huge" style="font-size:clamp(56px,9vw,140px);">
+      Erkennen.<br>
+      <span class="c-neon">Entfernen.</span><br>
+      Adaptieren.
+    </div>
+  </div>
+
+  <div style="margin-bottom:80px;">
+    <div class="mono c-muted" style="margin-bottom:16px;">Sub Headlines · 4–5vw</div>
+    <div class="big">
+      KI die Journeys messbar<br>
+      verbessert — nicht buzzwords.
+    </div>
+  </div>
+
+  <div style="margin-bottom:80px;">
+    <div class="mono c-muted" style="margin-bottom:16px;">Body XL · 2–3vw</div>
+    <div class="body-xl" style="max-width:800px;color:rgba(255,255,255,0.7);">
+      Maxomedia verbindet Strategie, Technologie und kreative Kommunikation. Als KI-Agentur denken wir konsequent von der User Journey her.
+    </div>
+  </div>
+
+  <div>
+    <div class="mono c-muted" style="margin-bottom:16px;">Body · 1.5vw</div>
+    <div class="body-l" style="max-width:700px;color:rgba(255,255,255,0.5);">
+      Sora in allen Gewichtungen — von Light (300) für Body bis ExtraBold (800) für Headlines. Kein zweiter Font nötig. Die Grösse macht die Hierarchie, nicht die Schriftwahl.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════ -->
+<section class="bg-off pad" style="padding-top:100px;padding-bottom:100px;">
+  <span class="eyebrow c-elm">Navigation</span>
+  <h2 class="huge" style="margin-bottom:48px;">
+    Vier Punkte.<br>
+    <span class="c-elm">Floating Pill.</span>
+  </h2>
+
+  <div style="margin-bottom:48px;">
+    <div style="background:var(--ash);border-radius:40px;padding:8px 10px;display:inline-flex;align-items:center;gap:6px;">
+      <span style="color:var(--white);font-weight:800;font-size:14px;padding:0 16px;letter-spacing:1px;">MXM</span>
+      <a style="color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:10px 20px;border-radius:30px;text-decoration:none;">Leistungen</a>
+      <a style="color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:10px 20px;border-radius:30px;text-decoration:none;">Referenzen</a>
+      <a style="color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:10px 20px;border-radius:30px;text-decoration:none;">Über uns</a>
+      <a style="color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:10px 20px;border-radius:30px;text-decoration:none;">Wissen</a>
+      <span style="background:var(--neon);color:var(--ash);font-weight:700;padding:10px 24px;border-radius:30px;font-size:13px;margin-left:4px;">Projekt starten →</span>
+    </div>
+  </div>
+
+  <div class="body-l c-muted" style="max-width:700px;margin-bottom:48px;">
+    Floating Bottom-Nav (wie <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>, <a class="ref" href="https://www.dayy.com" target="_blank">DAYY</a>). Vier Inhaltspunkte + CTA. Die Nav folgt beim Scrollen und highlightet die aktuelle Section. Auf Mobile: Hamburger → Fullscreen-Overlay.
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;">
+    <div>
+      <div class="mono c-elm" style="margin-bottom:12px;">Sitemap (7 Punkte)</div>
+      <div style="font-size:15px;line-height:2.2;">
+        <span style="text-decoration:line-through;color:var(--muted);">Flow Prinzip</span> → Homepage Scrollytelling<br>
+        <strong>Leistungen</strong> → bleibt<br>
+        <span style="text-decoration:line-through;color:var(--muted);">KI & Flow</span> → Homepage Scrollytelling<br>
+        <strong>Referenzen</strong> → bleibt<br>
+        <strong>Über uns</strong> → bleibt<br>
+        <strong>Wissen</strong> → bleibt<br>
+        <span style="text-decoration:line-through;color:var(--muted);">Kontakt</span> → CTA-Button
+      </div>
+    </div>
+    <div>
+      <div class="mono c-elm" style="margin-bottom:12px;">Nav (4 + CTA)</div>
+      <div style="font-size:15px;line-height:2.2;">
+        <strong>Leistungen</strong> — 7 Kompetenzmodule<br>
+        <strong>Referenzen</strong> — Cases mit KPIs<br>
+        <strong>Über uns</strong> — Team, Werte, Karriere<br>
+        <strong>Wissen</strong> — Blog, Insights<br>
+        <span style="background:var(--neon);color:var(--ash);padding:2px 12px;border-radius:20px;font-weight:700;">Projekt starten →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     KOMPETENZ #1: USER JOURNEY
+     ═══════════════════════════════════════════ -->
+<section id="kompetenzen" class="bg-off pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow c-elm">Kompetenz #1 · User Journey</span>
+  <h2 class="huge" style="max-width:900px;">
+    Vom <span class="highlight">Parcours</span><br>
+    zum <span class="highlight">Parkur</span>.
+  </h2>
+  <p class="body-xl c-muted" style="max-width:700px;margin-top:32px;">
+    Parcours = Hindernislauf. Parkour = effizient von A nach B. maxomedia macht aus dem einen das andere. Customer Centred Transformation: User:innen konsequent ins Zentrum stellen, Stolpersteine eliminieren, durchgängiges Kundenerlebnis schaffen.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:48px;margin-top:64px;max-width:900px;">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:baseline;">
+      <div class="huge c-elm" style="font-size:clamp(36px,5vw,72px);">01</div>
+      <div>
+        <div style="font-size:clamp(24px,2.5vw,36px);font-weight:800;color:var(--elm);margin-bottom:8px;">Aufmerksamkeit</div>
+        <p class="body-l c-muted">«Ich habe es gesehen.» — Richtige Botschaft, richtiger Touchpoint, trotz fragmentierter Medienlandschaft.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:baseline;">
+      <div class="huge c-elm" style="font-size:clamp(36px,5vw,72px);">02</div>
+      <div>
+        <div style="font-size:clamp(24px,2.5vw,36px);font-weight:800;color:var(--elm);margin-bottom:8px;">Interaktion</div>
+        <p class="body-l c-muted">«Ich will es haben.» — Vom Konzept bis GoLive. Die Website als zentralster Anlaufpunkt.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:baseline;">
+      <div class="huge c-elm" style="font-size:clamp(36px,5vw,72px);">03</div>
+      <div>
+        <div style="font-size:clamp(24px,2.5vw,36px);font-weight:800;color:var(--elm);margin-bottom:8px;">Loyalität</div>
+        <p class="body-l c-muted">«Ich bleibe dran.» — Kundenbindung durch Marketing-Automatisierung. Akquise kostet 5× mehr als Halten.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-l c-muted" style="max-width:700px;margin-top:40px;font-style:italic;">
+    Auf der neuen Site wird das Parkur-Prinzip zum «Flow Prinzip» — und die Homepage selbst wird zur erlebbaren Journey.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     KOMPETENZ #2: KI
+     ═══════════════════════════════════════════ -->
+<section class="bg-ash pad" style="padding-top:120px;padding-bottom:120px;">
+  <span class="eyebrow c-neon">Kompetenz #2 · KI</span>
+  <h2 class="huge" style="max-width:900px;">
+    KI die man<br>
+    <span class="c-neon">anfassen</span> kann.
+  </h2>
+  <p class="body-xl" style="color:rgba(255,255,255,0.5);max-width:700px;margin-top:32px;">
+    maxomedia erklärt nicht was KI kann — die Site lässt es erleben. Drei konkrete Elemente machen KI greifbar, ohne buzzword-heavy zu werden:
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:64px;max-width:1000px;">
+    <div class="ki-card">
+      <h3>Fake-Conversation</h3>
+      <p>Scrollytelling als Chat. Eine simulierte Bot-Konversation baut sich beim Scrollen auf — Frage, Antwort, Folgefrage. Die Konversation IST das UI-Element. Kein Video, kein Screenshot.</p>
+    </div>
+    <div class="ki-card">
+      <h3>Journey-Visualisierung</h3>
+      <p>Interaktive User Journey die sich selbst anpasst. Bei jedem Schritt leuchtet auf, wo KI eingreift — Chatbot, Content-Generierung, Predictive Analytics, Persistent Memory.</p>
+    </div>
+    <div class="ki-card">
+      <h3>«Probier's aus»</h3>
+      <p>Embedded Mini-Demo mit echtem Bot direkt auf der Site. Kein Link, kein Formular — echte Interaktion. Zeigt was maxomedia baut, nicht was maxomedia behauptet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     HOMEPAGE STRUCTURE
+     ═══════════════════════════════════════════ -->
+<section id="homepage" class="bg-ash pad" style="padding-top:100px;padding-bottom:100px;border-top:1px solid rgba(204,255,0,0.1);">
+  <span class="eyebrow c-neon">Homepage-Struktur</span>
+  <h2 class="huge" style="margin-bottom:64px;">
+    <span class="c-neon">9 Sections.</span><br>
+    Ein Arc.
+  </h2>
+
+  <div style="max-width:900px;">
+
+    <div style="border-left:3px solid var(--neon);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-neon" style="margin-bottom:8px;">01 · Hero</div>
+      <div class="big" style="color:var(--white);font-size:clamp(28px,3.5vw,48px);margin-bottom:8px;">
+        Digitale Journeys<br>im <span class="c-neon">Flow.</span>
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Giant Type, Ash-Hintergrund. Tagline + 2 CTAs (Projekt starten / Flow entdecken). Kein Bild, kein Video — nur Schrift und Neon-Akzent. Wie <a class="ref" href="https://schwarz-matt.com" target="_blank">Schwarz+Matt</a>, aber mit unserer Palette.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-muted" style="margin-bottom:8px;">02 · Trust-Leiste</div>
+      <div class="big" style="color:var(--white);font-size:clamp(22px,2.5vw,36px);margin-bottom:8px;">
+        Logos + Kennzahlen
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Logo-Marquee (wie <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>). 3 Kennzahlen animiert hochzählend: "150+ Projekte", "15 Jahre Erfahrung", "7 Kompetenzen".
+      </p>
+    </div>
+
+    <div style="border-left:3px solid var(--elm);padding-left:32px;margin-bottom:48px;">
+      <div class="mono" style="color:var(--ice);margin-bottom:8px;">03 · Empathy · Das Problem</div>
+      <div class="big" style="color:var(--white);font-size:clamp(28px,3.5vw,48px);margin-bottom:8px;">
+        Ihre User verlieren<br>sich auf dem Weg.
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Off-White Section. Grosser Text, emotional. Benennt das Problem das maxomedia löst. Scroll-reveal, Text baut sich Wort für Wort auf.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid var(--neon);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-neon" style="margin-bottom:8px;">04 · Flow Prinzip · Scrollytelling</div>
+      <div class="big" style="color:var(--neon);font-size:clamp(28px,3.5vw,48px);margin-bottom:8px;">
+        Aufmerksamkeit → Interaktion → Loyalität
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        DAS Herzstück. Full-viewport Scrollytelling. 3 Phasen die sich beim Scrollen entfalten. Jede Phase: Giant Headline + Erklärung + visuelles Element. Elm-Hintergrund. Parkur-Prinzip → Flow Prinzip, erlebbar gemacht.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid var(--neon);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-neon" style="margin-bottom:8px;">05 · KI-USP</div>
+      <div class="big" style="color:var(--white);font-size:clamp(28px,3.5vw,48px);margin-bottom:8px;">
+        Während andere KI<br><span class="c-neon">erklären</span>, bauen wir damit.
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Fake-Conversation als Scrollytelling + Journey-Visualisierung die KI-Touchpoints aufleuchten lässt + "Probier's aus"-Teaser mit echtem Bot. Drei Elemente die KI greifbar machen.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-muted" style="margin-bottom:8px;">06 · Leistungen</div>
+      <div class="big" style="color:var(--white);font-size:clamp(22px,2.5vw,36px);margin-bottom:8px;">
+        Giant Accordion
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        7 Kompetenzmodule als fullwidth Accordion (wie <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>). Jeder Service: riesige Headline + "+" Icon in Neon. Expand zeigt Kurzbeschrieb + Link zur Detailseite.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-muted" style="margin-bottom:8px;">07 · Referenzen</div>
+      <div class="big" style="color:var(--white);font-size:clamp(22px,2.5vw,36px);margin-bottom:8px;">
+        3 Cases mit KPIs
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Ausgewählte Cases als grosse Cards. Jeder Case: Herausforderung → Lösung → messbare Ergebnisse. Zahlen prominent ("+340% Conversion", "−60% Bounce Rate").
+      </p>
+    </div>
+
+    <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:32px;margin-bottom:48px;">
+      <div class="mono c-muted" style="margin-bottom:8px;">08 · Team Teaser</div>
+      <div class="big" style="color:var(--white);font-size:clamp(22px,2.5vw,36px);margin-bottom:8px;">
+        Gesichter zeigen
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Nicht nur Namen — echte Fotos, kurze menschliche Steckbriefe. <a class="ref" href="https://www.silberpuls.de" target="_blank">Silberpuls</a> und <a class="ref" href="https://www.tricks.de" target="_blank">tricks</a> zeigen: Trust kommt durch Gesichter.
+      </p>
+    </div>
+
+    <div style="border-left:3px solid var(--neon);padding-left:32px;">
+      <div class="mono c-neon" style="margin-bottom:8px;">09 · CTA-Abschluss</div>
+      <div class="big" style="color:var(--neon);font-size:clamp(28px,3.5vw,48px);margin-bottom:8px;">
+        Projekt starten.
+      </div>
+      <p class="body-l" style="color:rgba(255,255,255,0.5);">
+        Giant CTA. Elm-Hintergrund, Neon-Button. Calendly-Embed (30-Min Gespräch). "Ask a Maxo!" Chat-Einstieg als Alternative. Standort Bern + Social Links.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FLOW PRINZIP DEMO
+     ═══════════════════════════════════════════ -->
+<div class="bg-elm full">
+  <div class="pad" style="padding-top:80px;padding-bottom:32px;">
+    <span class="eyebrow" style="color:rgba(255,255,255,0.4);">So könnte Section 04 aussehen</span>
+    <h2 class="huge" style="margin-bottom:0;">Das Flow Prinzip</h2>
+  </div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="num">01</div>
+      <div>
+        <h3>Aufmerksamkeit</h3>
+        <p>«Ich habe es gesehen.» Wir sorgen dafür, dass Ihre Kunden an den passenden Touchpoints mit der richtigen Botschaft überzeugen — trotz fragmentierter Medienlandschaft.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">02</div>
+      <div>
+        <h3 class="c-neon">Interaktion</h3>
+        <p>«Ich will es haben.» Die Website als zentralster Anlaufpunkt. Vom Konzept bis GoLive — Reibung eliminieren, Flow ermöglichen.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">03</div>
+      <div>
+        <h3>Loyalität</h3>
+        <p>«Ich bleibe dran.» Das System passt sich dem User an — nicht umgekehrt. Marketing-Automatisierung und KI machen es möglich: Echtzeit, personalisiert, messbar.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LEISTUNGEN DEMO
+     ═══════════════════════════════════════════ -->
+<div class="bg-ash pad" style="padding-top:80px;padding-bottom:80px;">
+  <span class="eyebrow c-muted">So könnte Section 06 aussehen</span>
+  <h2 class="huge" style="margin-bottom:48px;">Leistungen</h2>
+
+  <div>
+    <div class="accordion-item">
+      <div class="label">Strategie & Beratung <span class="plus">+</span></div>
+      <div class="desc">Von der Analyse bis zum Massnahmenplan — wir denken in Journeys, nicht in Einzelmassnahmen.</div>
+    </div>
+    <div class="accordion-item">
+      <div class="label">Campaigning <span class="plus">+</span></div>
+    </div>
+    <div class="accordion-item">
+      <div class="label">User Experience <span class="plus">+</span></div>
+    </div>
+    <div class="accordion-item">
+      <div class="label">Visual Design <span class="plus">+</span></div>
+    </div>
+    <div class="accordion-item">
+      <div class="label">Web Development <span class="plus">+</span></div>
+    </div>
+    <div class="accordion-item">
+      <div class="label">Marketing Automation <span class="plus">+</span></div>
+    </div>
+    <div class="accordion-item">
+      <div class="label" style="border-bottom:none;">Analytics <span class="plus">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PATTERNS
+     ═══════════════════════════════════════════ -->
+<section id="patterns" class="bg-off pad" style="padding-top:100px;padding-bottom:100px;">
+  <span class="eyebrow c-elm">Patterns & Technik</span>
+  <h2 class="huge" style="margin-bottom:48px;">
+    Was wir<br>
+    <span class="highlight">einsetzen.</span>
+  </h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>Scroll-Reveal</h3>
+      <p>Jede Section baut sich beim Scrollen auf — staggered, von unten. Minimum für alle Elemente. CSS-basiert wo möglich (Intersection Observer + CSS transitions), JS nur für komplexere Sequenzen.</p>
+    </div>
+    <div class="card">
+      <h3>Scrollytelling</h3>
+      <p>Section 04 (Flow Prinzip) und Section 05 (KI-USP) als full-viewport scroll-driven experiences. Parallax auf den Nummern, Text-Reveal auf den Inhalten. Fake-Chat baut sich beim Scrollen auf.</p>
+    </div>
+    <div class="card">
+      <h3>Dark/Light Wechsel</h3>
+      <p>Sections alternieren zwischen Ash (dark) und Off-White (light). Elm für das Flow Prinzip. Erzeugt visuellen Rhythmus ohne zusätzliche Farben.</p>
+    </div>
+    <div class="card">
+      <h3>Giant Accordion</h3>
+      <p>Leistungen als fullwidth Accordion mit riesiger Typografie (6–10vw). Neon "+" Icons. Expand/Collapse mit smooth animation. Referenz: <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>.</p>
+    </div>
+    <div class="card">
+      <h3>Floating Pill Nav</h3>
+      <p>Bottom-fixed, pill-shaped, semi-transparent mit Backdrop-Blur. Trackt aktuelle Section via Intersection Observer. CTA-Button immer sichtbar.</p>
+    </div>
+    <div class="card">
+      <h3>Neon Highlighter</h3>
+      <p>Schlüsselwörter bekommen einen Neon-Hintergrund-Stripe (wie einen Textmarker). Animiert beim Scroll-Reveal. Referenz: <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>.</p>
+    </div>
+    <div class="card">
+      <h3>Counter Animation</h3>
+      <p>Kennzahlen (Trust-Leiste, Case Study KPIs) zählen animiert hoch wenn sie in den Viewport kommen. Einfach, effektiv, überall eingesetzt.</p>
+    </div>
+    <div class="card">
+      <h3>Logo Marquee</h3>
+      <p>Endlose horizontale Scroll-Animation der Client-Logos. CSS-only (animation: scroll infinite linear). Kein JS nötig. Referenz: <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>, <a class="ref" href="https://www.silberpuls.de" target="_blank">Silberpuls</a>.</p>
+    </div>
+    <div class="card">
+      <h3>Performance First</h3>
+      <p>Kein Framework-Overhead für die Challenge — vanilla HTML/CSS/JS. Sora via Google Fonts. Lazy Loading für Bilder. Animationen via CSS transitions + Intersection Observer. Ziel: &lt;2s First Contentful Paint.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     VORBILDER
+     ═══════════════════════════════════════════ -->
+<section class="bg-off pad" style="padding-top:0;padding-bottom:100px;min-height:auto;">
+  <span class="eyebrow c-elm">Vorbilder</span>
+  <h2 class="huge" style="margin-bottom:48px;">
+    In dieser <span class="highlight">Liga</span><br>
+    wollen wir spielen.
+  </h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1000px;">
+    <div class="card">
+      <h3>Boldheart</h3>
+      <div style="font-size:12px;color:var(--elm);margin-bottom:12px;"><a href="https://boldheart.io" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--neon);">boldheart.io</a> · Berlin</div>
+      <p>Dark + Neon-Akzent. Giant Accordion für Services. Floating Nav. Neon-Highlighter auf Schlüsselwörtern. Am nächsten an dem was wir wollen.</p>
+    </div>
+    <div class="card">
+      <h3>Lando Norris</h3>
+      <div style="font-size:12px;color:var(--elm);margin-bottom:12px;"><a href="https://landonorris.com" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--neon);">landonorris.com</a> · <a href="https://www.awwwards.com" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--neon);">Awwwards</a> SOTY</div>
+      <p>Beige + Schwarz + Neon. Scroll-driven Bildwelten. Parallax auf jedem Element. Zeigt wie weit man gehen kann ohne es zu übertreiben.</p>
+    </div>
+    <div class="card">
+      <h3>Schwarz+Matt</h3>
+      <div style="font-size:12px;color:var(--elm);margin-bottom:12px;"><a href="https://schwarz-matt.com" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--neon);">schwarz-matt.com</a> · Hamburg</div>
+      <p>Type-Only Hero. Eine Farbe. Bewusst wenig Motion. Beweist: man braucht nicht viel wenn die Haltung stimmt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ENTSCHEID
+     ═══════════════════════════════════════════ -->
+<section id="entscheid" class="bg-ash pad" style="padding-top:100px;padding-bottom:100px;">
+  <span class="eyebrow c-neon">Zusammenfassung</span>
+  <h2 class="giant" style="margin-bottom:48px;max-width:95%;">
+    Die Website<br>
+    <span class="c-neon">ist</span> die<br>
+    Journey.
+  </h2>
+
+  <div class="split" style="max-width:1000px;">
+    <div style="padding:0 32px 0 0;">
+      <div class="body-xl" style="color:rgba(255,255,255,0.7);">
+        Nicht erklären was wir können — <strong style="color:var(--white)">zeigen</strong>. Das Flow Prinzip als Scrollytelling. KI als Fake-Chat, Journey-Visualisierung und echte Bot-Demo. Ergebnisse als Zahlen. Die Website demonstriert maxomedia's Kompetenz durch ihre eigene Existenz.
+      </div>
+    </div>
+    <div style="padding:0;">
+      <div class="body-l" style="color:rgba(255,255,255,0.4);">
+        Farben: Elm + Neon + Ash<br>
+        Typo: Sora, 12vw Heroes<br>
+        Nav: 4 Items + CTA, Floating Pill<br>
+        Hero: Giant Type, kein Bild<br>
+        Sections: Dark/Light Wechsel<br>
+        Motion: Scroll-Reveal, Scrollytelling<br>
+        Patterns: Accordion, Marquee, Counter<br>
+        Kompetenz 1: User Journey (Flow Prinzip)<br>
+        Kompetenz 2: KI (Chat, Viz, Demo)<br>
+        Tech: Vanilla HTML/CSS/JS<br>
+        Referenzen: <a class="ref" href="https://boldheart.io" target="_blank">Boldheart</a>, <a class="ref" href="https://landonorris.com" target="_blank">Lando Norris</a>, <a class="ref" href="https://www.dayy.com" target="_blank">DAYY</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="big c-neon" style="max-width:900px;margin-top:64px;">
+    Weil es die gleiche Sprache spricht wie die Positionierung.
+  </p>
+  <p class="body-xl" style="color:rgba(255,255,255,0.4);max-width:700px;margin-top:16px;">
+    maxomedia redet von Flow — die Site IST Flow. maxomedia setzt KI ein — die Site ZEIGT KI. maxomedia denkt in Journeys — die Site IST eine Journey.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<div class="doc-footer" style="padding-bottom:100px;">
+  maxomedia.ch Relaunch · Design-Konzept · Team Bubu & Gwen · März 2026
+</div>
+
+</body>
+</html>

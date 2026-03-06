@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentur-Website Trends 2025/26 — Research für maxomedia Relaunch</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ash: #2F313C;
+  --elm: #226C6E;
+  --elm-lt: #e8f4f4;
+  --spice: #6C3C32;
+  --anzac: #E09B40;
+  --anzac-lt: #fdf4e7;
+  --ice: #C5DAE0;
+  --neon: #CCFF00;
+  --white: #fff;
+  --off: #F7F8FA;
+  --muted: #6B7280;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Sora',sans-serif; color:var(--ash); background:var(--off); line-height:1.65; }
+
+/* NAV */
+.topnav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(47,49,60,0.97); backdrop-filter:blur(12px);
+  padding:0 32px; height:52px;
+  display:flex; align-items:center; gap:24px;
+  border-bottom:2px solid var(--neon);
+}
+.topnav .brand { color:var(--neon); font-weight:800; font-size:12px; letter-spacing:2px; text-transform:uppercase; }
+.topnav a { color:rgba(255,255,255,0.6); font-size:11px; font-weight:500; text-decoration:none; transition:color .2s; }
+.topnav a:hover { color:var(--neon); }
+.back-link {
+  position: fixed; top: 24px; left: 24px; z-index: 10001;
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; transition: color 0.3s;
+}
+.back-link:hover { color: var(--neon); }
+
+/* HERO */
+.hero {
+  background:var(--ash); color:var(--white);
+  padding:80px 32px 64px; text-align:center;
+}
+.hero h1 { font-size:clamp(28px,4vw,48px); font-weight:800; line-height:1.1; margin-bottom:16px; }
+.hero h1 span { color:var(--neon); }
+.hero .sub { font-size:18px; color:rgba(255,255,255,0.6); max-width:700px; margin:0 auto 32px; }
+.hero .context {
+  display:inline-block; background:rgba(204,255,0,0.1); border:1px solid rgba(204,255,0,0.3);
+  border-radius:8px; padding:16px 24px; font-size:13px; color:rgba(255,255,255,0.8);
+  max-width:640px; line-height:1.7; text-align:left;
+}
+.hero .context strong { color:var(--neon); }
+
+/* SECTIONS */
+.section { max-width:1100px; margin:0 auto; padding:64px 24px 0; }
+.section-title {
+  font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:var(--elm); margin-bottom:8px;
+}
+.section h2 { font-size:clamp(22px,3vw,32px); font-weight:800; margin-bottom:24px; line-height:1.2; }
+
+/* AWARD PLATFORMS */
+.platforms-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin-bottom:48px;
+}
+.platform-card {
+  background:var(--white); border-radius:12px; padding:24px;
+  border:1px solid #e5e7eb; transition:box-shadow .2s;
+}
+.platform-card:hover { box-shadow:0 8px 32px rgba(34,108,110,0.12); }
+.platform-card .name { font-weight:700; font-size:16px; margin-bottom:4px; }
+.platform-card .url { font-size:11px; color:var(--elm); font-family:monospace; margin-bottom:12px; }
+.platform-card .desc { font-size:13px; color:var(--muted); line-height:1.6; }
+.platform-card .tag {
+  display:inline-block; font-size:10px; font-weight:700; padding:3px 8px;
+  border-radius:12px; margin-top:10px; margin-right:4px;
+}
+.tag-intl { background:#e8f4f4; color:var(--elm); }
+.tag-dach { background:#fdf4e7; color:#b07a20; }
+.tag-ch { background:#ffe0e0; color:var(--spice); }
+
+/* WINNERS */
+.winners-table {
+  width:100%; border-collapse:collapse; font-size:13px; margin-bottom:48px;
+  background:var(--white); border-radius:12px; overflow:hidden;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.winners-table thead { background:var(--ash); color:var(--white); }
+.winners-table th { padding:14px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.winners-table td { padding:12px 16px; border-bottom:1px solid #f0f1f3; vertical-align:top; }
+.winners-table tr:nth-child(even) td { background:#fafbfc; }
+.winners-table tr:hover td { background:var(--elm-lt); }
+.rank { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; font-weight:800; font-size:12px; }
+.rank-gold { background:var(--anzac); color:var(--white); }
+.rank-silver { background:var(--ice); color:var(--ash); }
+.rank-bronze { background:#d4a574; color:var(--white); }
+.rank-other { background:#eee; color:var(--muted); }
+.source-tag { font-size:10px; background:var(--elm-lt); color:var(--elm); padding:2px 8px; border-radius:10px; font-weight:600; white-space:nowrap; }
+
+/* TREND CARDS */
+.trends-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; margin-bottom:48px;
+}
+.trend-card {
+  background:var(--white); border-radius:14px; overflow:hidden;
+  border:1px solid #e5e7eb; transition:all .25s;
+}
+.trend-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(34,108,110,0.1); }
+.trend-header {
+  padding:20px 24px 12px; display:flex; align-items:center; gap:12px;
+}
+.trend-icon {
+  width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0;
+}
+.trend-header h3 { font-size:16px; font-weight:700; }
+.trend-body { padding:0 24px 20px; font-size:13px; color:var(--muted); line-height:1.7; }
+.trend-body strong { color:var(--ash); }
+
+/* RELEVANCE BAR */
+.relevance { margin-top:12px; }
+.relevance-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.relevance-bar { height:6px; background:#eee; border-radius:3px; overflow:hidden; }
+.relevance-fill { height:100%; border-radius:3px; transition:width .5s; }
+.rel-critical { background:var(--elm); }
+.rel-high { background:var(--anzac); }
+.rel-medium { background:var(--ice); }
+
+/* MUST-DO */
+.mustdo-list { list-style:none; margin-bottom:48px; }
+.mustdo-list li {
+  background:var(--white); border-radius:12px; padding:20px 24px;
+  margin-bottom:12px; border-left:4px solid var(--elm);
+  display:flex; gap:16px; align-items:flex-start;
+  transition:border-color .2s;
+}
+.mustdo-list li:hover { border-left-color:var(--neon); }
+.mustdo-num {
+  width:32px; height:32px; border-radius:50%; background:var(--elm); color:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:14px; flex-shrink:0;
+}
+.mustdo-content h4 { font-size:15px; font-weight:700; margin-bottom:4px; }
+.mustdo-content p { font-size:13px; color:var(--muted); line-height:1.6; }
+.mustdo-content .why { font-size:12px; color:var(--elm); font-weight:600; margin-top:6px; }
+
+/* TAKEAWAY */
+.takeaway {
+  background:var(--ash); color:var(--white); border-radius:16px;
+  padding:48px; margin-bottom:64px; position:relative; overflow:hidden;
+}
+.takeaway::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:200px; height:200px; border-radius:50%;
+  background:var(--neon); opacity:0.08;
+}
+.takeaway h2 { color:var(--neon); margin-bottom:16px; }
+.takeaway p { font-size:15px; color:rgba(255,255,255,0.75); line-height:1.8; max-width:800px; }
+.takeaway p strong { color:var(--white); }
+
+/* SOURCES */
+.sources { font-size:12px; color:var(--muted); margin-bottom:64px; }
+.sources h3 { font-size:13px; font-weight:700; color:var(--ash); margin-bottom:12px; }
+.sources a { color:var(--elm); text-decoration:none; }
+.sources a:hover { text-decoration:underline; }
+.sources ul { list-style:none; }
+.sources li { padding:4px 0; }
+.sources li::before { content:'→ '; color:var(--elm); font-weight:700; }
+
+/* FOOTER */
+footer {
+  text-align:center; padding:32px; font-size:11px; color:var(--muted);
+  border-top:1px solid #e5e7eb;
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Zurück</a>
+
+
+<!-- NAV -->
+<nav class="topnav">
+  <span class="brand">MXM Research</span>
+  <a href="#platforms">Award-Plattformen</a>
+  <a href="#winners">Gewinner</a>
+  <a href="#sites">Real Sites</a>
+  <a href="#trends">Trends</a>
+  <a href="#mustdo">Must-Dos</a>
+  <a href="#takeaway">Fazit</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Agentur-Websites <span>2025/26</span></h1>
+  <p class="sub">Prämierungen, Trends und Must-Dos für den maxomedia Relaunch</p>
+  <div class="context">
+    <strong>Kontext:</strong> Maxomedia verbindet Strategie, Technologie und kreative Kommunikation. Als KI-Agentur denken wir konsequent von der User Journey her – nicht von Tools oder Trends. Wir setzen KI ein, weil sie Journeys messbar verbessert: von der ersten Aufmerksamkeit bis zur langfristigen Kundenbindung.
+  </div>
+</div>
+
+<!-- AWARD PLATFORMS -->
+<div class="section" id="platforms">
+  <div class="section-title">Wo werden Agentur-Websites bewertet?</div>
+  <h2>Die relevanten Award-Plattformen</h2>
+
+  <div class="platforms-grid">
+    <div class="platform-card">
+      <div class="name">Awwwards</div>
+      <div class="url"><a href="https://www.awwwards.com" target="_blank" style="color:var(--elm);text-decoration:none;">awwwards.com</a></div>
+      <div class="desc">Der Goldstandard. Internationale Jury aus Designer:innen und Developer:innen bewertet Design, Usability, Kreativität und Content. Kategorien: Site of the Day/Month/Year, Agency of the Year. 2025-Gewinner: <strong>Immersive Garden</strong> (Agency), <strong>Lando Norris / OFF+BRAND</strong> (Site of the Year).</div>
+      <span class="tag tag-intl">International</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">CSS Design Awards</div>
+      <div class="url"><a href="https://www.cssdesignawards.com" target="_blank" style="color:var(--elm);text-decoration:none;">cssdesignawards.com</a></div>
+      <div class="desc">200+ internationale Juror:innen. Bewertet UI, UX und Innovation. Eigene Agency-Gallery mit filterbaren Kategorien. Website of the Year 2025 Showcase verfügbar.</div>
+      <span class="tag tag-intl">International</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">German Web Awards</div>
+      <div class="url"><a href="https://www.germanwebawards.com" target="_blank" style="color:var(--elm);text-decoration:none;">germanwebawards.com</a></div>
+      <div class="desc">Deutschlands beste Webagenturen nach Design, psychologischem Know-how, Service und Kundenzufriedenheit. 6. Ausgabe 2025. Top-Gewinner: <strong>DAYY</strong> (Köln/Berlin, Kunden: Allianz, Red Bull, Zalando).</div>
+      <span class="tag tag-dach">DACH</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">BVDW Creative Rankings</div>
+      <div class="url"><a href="https://www.bvdw.org" target="_blank" style="color:var(--elm);text-decoration:none;">bvdw.org</a></div>
+      <div class="desc">Jährliches Ranking der besten digitalen Kreativleistungen in Deutschland. Wertet 19 Awards aus (Deutscher Digital Award, Red Dot, Webby, ADC, Annual Multimedia u.a.) und vergibt Creative Points.</div>
+      <span class="tag tag-dach">DACH</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">Annual Multimedia Award</div>
+      <div class="url"><a href="https://www.annual-multimedia.de" target="_blank" style="color:var(--elm);text-decoration:none;">annual-multimedia.de</a></div>
+      <div class="desc">Seit über 20 Jahren der relevanteste deutsche Wettbewerb für digitale Projekte. 82 Projekte in der 2025-Ausgabe prämiert. Submission-Deadline 2026: September.</div>
+      <span class="tag tag-dach">DACH</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">Master of Swiss Web</div>
+      <div class="url"><a href="https://www.netzwoche.ch" target="_blank" style="color:var(--elm);text-decoration:none;">netzwoche.ch</a></div>
+      <div class="desc">Schweizer Branchenpreis. Unic hält den Rekord mit 5 Auszeichnungen. Bewertet Usability, Design und technische Umsetzung im Schweizer Markt.</div>
+      <span class="tag tag-ch">Schweiz</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">The FWA</div>
+      <div class="url"><a href="https://thefwa.com" target="_blank" style="color:var(--elm);text-decoration:none;">thefwa.com</a></div>
+      <div class="desc">Favourite Website Awards — seit 2000 die älteste Web-Award-Plattform. Tägliche Auszeichnungen für kreative Websites. Starker Fokus auf Innovation und Technik.</div>
+      <span class="tag tag-intl">International</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="name">Red Dot / ADC</div>
+      <div class="url"><a href="https://www.red-dot.de" target="_blank" style="color:var(--elm);text-decoration:none;">red-dot.de</a> / <a href="https://www.adc.de" target="_blank" style="color:var(--elm);text-decoration:none;">adc.de</a></div>
+      <div class="desc">Klassische Design-Awards mit Digital-Kategorien. Foundry (Berlin/Zürich) ist die meistprämierte Agentur beim German Brand Award 2018–2023, mit Red Dot, ADC DE + CH, Cannes Lions.</div>
+      <span class="tag tag-dach">DACH</span><span class="tag tag-intl">International</span>
+    </div>
+  </div>
+</div>
+
+<!-- WINNERS TABLE -->
+<div class="section" id="winners">
+  <div class="section-title">Wer hat 2025/26 abgeräumt?</div>
+  <h2>Best bewertete Agentur-Websites & Projekte</h2>
+
+  <table class="winners-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Agentur / Projekt</th>
+        <th>Land</th>
+        <th>Warum prämiert?</th>
+        <th>Quelle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="rank rank-gold">1</span></td>
+        <td><a href="https://immersive-g.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Immersive Garden</strong></a><br><span style="color:var(--muted);font-size:12px">Agency of the Year 2025</span></td>
+        <td>FR (Paris)</td>
+        <td>Digital Production Studio — Design, Animation, Development. Immersive 3D-Experiences, WebGL-Storytelling. 39/196 Jury-Stimmen.</td>
+        <td><span class="source-tag">Awwwards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-gold">1</span></td>
+        <td><a href="https://landonorris.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>OFF+BRAND — Lando Norris</strong></a><br><span style="color:var(--muted);font-size:12px">Site of the Year 2025</span></td>
+        <td>UK (Schottland)</td>
+        <td>Dynamic interactions, bold visuals, 3D, Colorful. High-Performance-Plattform mit kinetic storytelling. 43/253 Stimmen.</td>
+        <td><span class="source-tag">Awwwards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-gold">1</span></td>
+        <td><a href="https://www.dayy.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>DAYY</strong></a><br><span style="color:var(--muted);font-size:12px">Beste Webagentur DE 2025</span></td>
+        <td>DE (Köln/Berlin)</td>
+        <td>Höchste Bewertung über alle Kategorien: Design, Psychologie, Service, Kundenzufriedenheit. Kunden: Allianz, Red Bull, Zalando.</td>
+        <td><span class="source-tag">German Web Awards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-silver">2</span></td>
+        <td><a href="https://www.silberpuls.de" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Silberpuls</strong></a></td>
+        <td>DE</td>
+        <td>Rang 2 bei German Web Awards 2025.</td>
+        <td><span class="source-tag">German Web Awards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-bronze">3</span></td>
+        <td><strong>Amplio (TMC)</strong></td>
+        <td>DE</td>
+        <td>Rang 3 bei German Web Awards 2025.</td>
+        <td><span class="source-tag">German Web Awards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-other">★</span></td>
+        <td><a href="https://foundry.ch" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Foundry</strong></a><br><span style="color:var(--muted);font-size:12px">Berlin / Zürich / New York</span></td>
+        <td>DE / CH</td>
+        <td>Meistprämierte Agentur beim German Brand Award (2018–2023). Red Dot, ADC DE+CH, Cannes Lions, EFFIE, Deutscher Digital Award.</td>
+        <td><span class="source-tag">Clutch</span><span class="source-tag" style="margin-left:4px">Multiple</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-other">★</span></td>
+        <td><a href="https://www.clou.ch" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Clou — Agency Portfolio</strong></a></td>
+        <td>CH</td>
+        <td>Schweizer Agenturportfolio mit Awwwards-Anerkennung.</td>
+        <td><span class="source-tag">Awwwards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-other">★</span></td>
+        <td><a href="https://www.unic.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Unic</strong></a></td>
+        <td>CH</td>
+        <td>5× Master of Swiss Web. Mehr Usability-Awards als jede andere Schweizer Agentur.</td>
+        <td><span class="source-tag">Master of Swiss Web</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-other">★</span></td>
+        <td><strong>Cartier — Watches & Wonders 2025</strong></td>
+        <td>INT</td>
+        <td>Awwwards Site of the Day. Immersive Luxus-Experience, Scrollytelling.</td>
+        <td><span class="source-tag">Awwwards</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank rank-other">★</span></td>
+        <td><a href="https://pechschwarz.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>pechschwarz</strong></a> / <a href="https://schwarz-matt.com" target="_blank" style="color:var(--ash);text-decoration:underline;text-decoration-color:var(--neon);text-underline-offset:3px;"><strong>Schwarz+Matt</strong></a> / <strong>JUNG&BANSE</strong></td>
+        <td>DE</td>
+        <td>Ränge 6–8 bei German Web Awards. Starke Design-First-Ansätze.</td>
+        <td><span class="source-tag">German Web Awards</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- REAL SITES -->
+<div class="section" id="sites">
+  <div class="section-title">Wie sehen die prämierte Sites wirklich aus?</div>
+  <h2>Beobachtungen aus der Praxis</h2>
+
+  <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:48px;">
+
+    <!-- Immersive Garden -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:var(--neon);color:var(--ash);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">AGENCY OF THE YEAR</span>
+            <span style="font-size:12px;color:var(--muted);">Awwwards 2025</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">Immersive Garden</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://immersive-g.com" target="_blank" style="color:var(--elm);">immersive-g.com</a> · Paris
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Vollflächig, fast leer — Logo + Tagline + "Scroll down". Subtile 3D-Reliefs (Blumen/Blätter) als Textur, kein Video.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Extrem minimale UI. Kein klassisches Menü sichtbar, nur "About" und "See all projects". Content entfaltet sich komplett via Scroll. WebGL-Canvas als Hintergrund. Scroll-Speed ist customized (smooth/inertia).<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Alles reagiert auf Scroll — 3D-Elemente morphen, Text faded in/out, Projekte sliden rein. Kein einziger harter Seitenwechsel.<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Fast monochrom (warm grey/beige). Farbe kommt erst durch die Projekte.
+          </div>
+        </div>
+        <div style="background:#f0ede8;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:var(--muted);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;">🌿</div>
+            <div style="font-weight:700;color:var(--ash);">3D Relief + Scroll</div>
+            <div>Monochromes Hero, alles entfaltet sich beim Scrollen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lando Norris -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:var(--anzac);color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">SITE OF THE YEAR</span>
+            <span style="font-size:12px;color:var(--muted);">Awwwards 2025</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">Lando Norris / OFF+BRAND</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://landonorris.com" target="_blank" style="color:var(--elm);">landonorris.com</a> · Schottland
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Grossformatige Fotos, asymmetrisch platziert. Handschriftliche Signatur. Warmer Beige-Ton + Schwarz für Kontrast.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Bento-artige Bild-Kollage die beim Scrollen in den Viewport slided. Helmets-Gallery als Grid-of-Cards mit Hover-Zoom. Dark mode wechselt mit Light mode sektionsweise. "Store" CTA in Neon-Grün oben rechts.<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Bilder fliegen von den Rändern rein (staggered). Parallax auf fast jedem Element. Scroll-reveal überall, aber mit unterschiedlichen Timings.<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Beige (#f0ede3) + Schwarz + Neon-Grün als Akzent. Klingt bekannt? 😏
+          </div>
+        </div>
+        <div style="background:#1a1a1a;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:rgba(255,255,255,0.6);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;">🏎️</div>
+            <div style="font-weight:700;color:var(--neon);">Dark/Light Sections + Neon Akzent</div>
+            <div>Bento Grid, scroll-reveal, parallax auf jedem Element</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAYY -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:var(--elm);color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#1 GERMAN WEB AWARDS</span>
+            <span style="font-size:12px;color:var(--muted);">2025</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">DAYY</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://www.dayy.com" target="_blank" style="color:var(--elm);">dayy.com</a> · Köln / Berlin
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Kein klassischer Hero — Gradient-Hintergrund (dunkelblau → hellblau → beige) der sich beim Scrollen verändert. Content-Cards gleiten von rechts rein.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Scroll-driven Carousel: links wechselnder Text ("People work with us to Envision Innovative Strategies / Discover Novel Opportunities"), rechts detaillierte Capability-Cards mit animierten Daten-Visualisierungen. Floating Bottom-Nav (Work · Services · About · Contact).<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Alles scroll-gesteuert. Cards sliden, Gradient morpht, Text rotiert. Next.js + WebGL Canvas im Hintergrund. Kein page reload — alles SPA.<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Gradient-Palette: Navy → Sky → Sand. Dezent, professional. Kunden: Allianz, Red Bull, Zalando.
+          </div>
+        </div>
+        <div style="background:linear-gradient(180deg,#1a2a5e 0%,#7db4d0 50%,#e8d8c4 100%);display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:rgba(255,255,255,0.9);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;">🌊</div>
+            <div style="font-weight:700;">Gradient Morph + Floating Nav</div>
+            <div>Scroll-driven cards, kein Page Reload</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pechschwarz -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:#555;color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#6 GERMAN WEB AWARDS</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">pechschwarz</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://pechschwarz.com" target="_blank" style="color:var(--elm);">pechschwarz.com</a>
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> 3D-Produktrender (Makita-Werkzeug) fullscreen mit rotating Headlines ("Branding Agentur für Differenzierung / Veränderung"). Pill-shaped Nav.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Availability-Indicator im CTA (grüner Dot = "wir haben Kapazität"). Mini-Projekt-Preview persistent oben rechts. Projekte als grosse Bilder mit Circle-Overlays.<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Headlines rotieren automatisch, 3D-Objekt dreht sich leicht. Scroll-reveal auf den Sections darunter. Moderate Animation — nicht overdone.<br><br>
+            <strong style="color:var(--ash);">Nav:</strong> Projekte · Services · Profil · Feed+ — nur 4 Items!
+          </div>
+        </div>
+        <div style="background:#e8e8e8;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:var(--ash);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;">🔧</div>
+            <div style="font-weight:700;">3D Render Hero + Availability CTA</div>
+            <div>Rotating Headlines, 4-Item Pill Nav</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schwarz+Matt -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:#555;color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#7 GERMAN WEB AWARDS</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">Schwarz+Matt</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://www.schwarz-matt.com" target="_blank" style="color:var(--elm);">schwarz-matt.com</a> · Hamburg
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Riesige Typografie — "S+M" füllt den gesamten Viewport. Dunkelgrün monochrom. Kein Bild, kein Video, nur Buchstaben.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Klassische Horizontal-Nav (Leistungen, Branchen, Arbeiten, Über uns, Karriere, Kontakt — 6 Items). Intro-Text → 3 simple Textlinks → Client-Logos. Sehr clean, kaum Motion. Wenige grosse Sections.<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Minimal — scroll-reveal auf Sections, aber kein scroll-jacking, keine Parallax. Bewusst zurückhaltend.<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Dunkelgrün monochrom — eine einzige Farbe, stark eingesetzt. Beweist: man braucht nicht viel.
+          </div>
+        </div>
+        <div style="background:#006644;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:rgba(255,255,255,0.8);font-size:13px;">
+            <div style="font-size:100px;font-weight:900;color:rgba(255,255,255,0.15);margin-bottom:8px;">S+M</div>
+            <div style="font-weight:700;color:var(--white);">Type-Only Hero + Monochrom</div>
+            <div>Klassische Nav, bewusst wenig Motion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Silberpuls -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:var(--ice);color:var(--ash);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#2 GERMAN WEB AWARDS</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">Silberpuls</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://www.silberpuls.de" target="_blank" style="color:var(--elm);">silberpuls.de</a>
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Team-Fotos in einem animierten Kreis arrangiert, Headline im Zentrum: "Let's make something meaningful".<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Nav: Services ▾ · Cases · Team · Press · Jobs · Contact (5 Items + Dropdown). Testimonials mit Google-Rating (5.0 ★) prominent. Dark-section für Social Proof.<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Die Kreis-Anordnung rotiert leicht, Fotos haben Hover-Effekte. Ansonsten moderate Scroll-Reveals.<br><br>
+            <strong style="color:var(--ash);">Takeaway:</strong> Menschen zeigen, nicht nur Arbeit. Trust-Signals (Google Rating) direkt auf der Homepage.
+          </div>
+        </div>
+        <div style="background:#faf9f7;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:var(--muted);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;">👥</div>
+            <div style="font-weight:700;color:var(--ash);">Team-First Hero + Trust Signals</div>
+            <div>Google 5.0 ★ Rating prominent</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- tricks -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:#555;color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#4 GERMAN WEB AWARDS</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">tricks</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://www.tricks.de" target="_blank" style="color:var(--elm);">tricks.de</a> · Bielefeld
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Team-Foto von oben + Neon-Gelb Akzent-Shape. Headline in Serif+Italic-Mix. Warm beige background.<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Pill-Nav (tricks · Projekte · Team · Kontakt — 4 Items). Trust-Badges (Google 5.0, ProvenExpert 5.0, Facebook 100%, German Web Awards Top 5) direkt unter der Headline. Agenturvideo mit Timer-Badge ("72 Sek.")<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Minimal — Scroll-reveal, kein scroll-jacking. Fokus auf Content-Klarheit, nicht Effekt.<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Beige (#ede9df) + Neon-Gelb (#d4e600) + Schwarz. Fast identische Palette-Idee wie unser Elm+Neon-Ansatz!
+          </div>
+        </div>
+        <div style="background:#ede9df;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:var(--ash);font-size:13px;">
+            <div style="font-size:64px;margin-bottom:8px;"><span style="font-family:Georgia,serif;font-style:italic;font-size:48px;font-weight:700;">tricks</span></div>
+            <div style="display:inline-block;background:#d4e600;color:var(--ash);font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:8px;">Neon-Gelb + Beige</div>
+            <div>Serif-Mix, Trust Badges, Pill Nav</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boldheart -->
+    <div style="background:var(--white);border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding:32px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="background:#555;color:var(--white);font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;">#9 GERMAN WEB AWARDS</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:8px;">Boldheart</h3>
+          <p style="font-size:12px;color:var(--elm);font-family:monospace;margin-bottom:16px;">
+            <a href="https://www.boldheart.io" target="_blank" style="color:var(--elm);">boldheart.io</a> · Berlin
+          </p>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--ash);">Hero:</strong> Minimal dark — nur "Boldheart" zentriert auf schwarzem Hintergrund. Dann scroll-reveal: "We help companies build software products that drive growth". Live-Uhr + Standort (Berlin, Germany). CTA: "Contact us" + "Get a response within <strong>4 hours</strong>".<br><br>
+            <strong style="color:var(--ash);">Patterns:</strong> Services als <strong>Giant Accordion</strong> (Innovation Strategy, Product Discovery, UI/UX Design, Development, Product Management, Venture Building) — jeder Titel fullwidth, ~40px+ font-size, neon-grüne "+" Icons. Clients-Section: Headline mit <strong>Neon-Highlighter-Marks</strong> auf Schlüsselwörtern + handgezeichnete Pfeil-Scribbles. Logo-Marquee (Valora, PwC, notus, holisticly, bridl).<br><br>
+            <strong style="color:var(--ash);">Motion:</strong> Scroll-reveal auf allen Sections. Highlighter-Marks animieren beim Einblenden. Floating bottom nav trackt aktuelle Section (Services → Clients → Projects → Awards → About).<br><br>
+            <strong style="color:var(--ash);">Farbe:</strong> Schwarz + Off-White (#f0ede8) + <span style="background:var(--neon);color:var(--ash);padding:1px 6px;border-radius:4px;font-weight:700;">Neon-Grün</span> als Akzent. Identisches Pattern: Projects in Purple-Gradient-Cards.
+          </div>
+        </div>
+        <div style="background:#1a1a1a;display:flex;align-items:center;justify-content:center;padding:24px;min-height:300px;">
+          <div style="text-align:center;color:rgba(255,255,255,0.6);font-size:13px;">
+            <div style="font-size:36px;font-weight:800;color:var(--white);margin-bottom:4px;">Innovation <span style="background:var(--neon);color:var(--ash);padding:0 6px;">Strategy</span></div>
+            <div style="font-size:36px;font-weight:800;color:var(--white);margin-bottom:16px;">UI/UX Design <span style="color:var(--neon);">+</span></div>
+            <div style="font-weight:700;color:var(--neon);">Giant Accordion + Neon Highlighter</div>
+            <div>Floating Nav, Live Clock, Hand-drawn Scribbles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pattern Summary -->
+  <div style="background:var(--elm);border-radius:14px;padding:40px;color:var(--white);margin-bottom:48px;">
+    <h3 style="color:var(--neon);font-size:18px;margin-bottom:20px;">Gemeinsame Patterns der Gewinner</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;font-size:13px;line-height:1.7;">
+      <div>
+        <strong style="color:var(--neon);">Navigation:</strong><br>
+        Max. 4–6 Hauptpunkte. Pill-shaped oder floating Navs im Trend. CTA immer rechts oben. Kein Mega-Menü bei den Top-Gewinnern.
+      </div>
+      <div>
+        <strong style="color:var(--neon);">Hero-Sektion:</strong><br>
+        Entweder: Riesige Typo (S+M) ODER immersive Visuals (Immersive Garden) ODER Team-Foto (Silberpuls, tricks). Nie alles gleichzeitig. Ein Statement, nicht drei.
+      </div>
+      <div>
+        <strong style="color:var(--neon);">Scroll & Motion:</strong><br>
+        Scroll-reveal auf ALLEN Sites — aber in verschiedenen Intensitäten. Die Top-Awwwards-Winner gehen all-in (WebGL, parallax, custom scroll). DACH-Agenturen sind moderater. Wichtig: smooth scroll + staggered reveals als Minimum.
+      </div>
+      <div>
+        <strong style="color:var(--neon);">Farbe:</strong><br>
+        2–3 Farben max. Monochrom + ein kräftiger Akzent ist das wiederkehrende Muster. Neon-Grün/Gelb als Akzent bei 3 von 7 Sites! Warm beige statt reines Weiss.
+      </div>
+      <div>
+        <strong style="color:var(--neon);">Trust & Social Proof:</strong><br>
+        DACH-Agenturen zeigen Ratings (Google, ProvenExpert) und Award-Badges prominent. Client-Logos früh auf der Page. Die internationalen Awwwards-Winner verzichten darauf — das Werk spricht.
+      </div>
+      <div>
+        <strong style="color:var(--neon);">Struktur Homepage:</strong><br>
+        Hero → Positionierung (1–2 Sätze) → Projekte/Cases → Leistungen → Team/Trust → CTA. Immer. Bei allen. Die Reihenfolge variiert leicht, aber der Arc ist identisch.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRENDS -->
+<div class="section" id="trends">
+  <div class="section-title">Was ist technisch & gestalterisch hoch im Kurs?</div>
+  <h2>Design- und Tech-Trends 2025/26</h2>
+
+  <div class="trends-grid">
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#e8f4f4;color:var(--elm);">🌊</div>
+        <h3>Scrollytelling</h3>
+      </div>
+      <div class="trend-body">
+        Scroll als Input, Animation als Output — das dominante Pattern für Premium-Websites. Content wird in Kapitel unterteilt, die sich beim Scrollen entfalten. Parallax, progressive reveals, horizontale Abschnitte. <strong>Nicht nur für Magazine</strong> — auch auf Product Pages, Impact Reports, Karriereseiten. User bestimmt das Tempo, nicht ein Video.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:95%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#fdf4e7;color:var(--anzac);">✦</div>
+        <h3>Kinetic Typography</h3>
+      </div>
+      <div class="trend-body">
+        Text der sich bewegt, stretcht, rotiert oder auf Cursor/Scroll reagiert. Verwandelt statische Headlines in Storytelling-Elemente. <strong>Landing Pages mit mutiger Typografie sehen bis 37% höhere Reading Completion Rates.</strong> Passt perfekt zu Sora als expressivem Font.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:90%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#2F313C;color:var(--neon);">◐</div>
+        <h3>Dark Mode als Standard</h3>
+      </div>
+      <div class="trend-body">
+        Kein Bonus mehr, sondern <strong>Erwartung</strong>. Dynamisches Theming mit optimierten Farbpaletten für Lesbarkeit. Automatische Adaption an System-Preferences. Spart Akku auf OLED, reduziert Augenbelastung. Muss bewusst gestaltet werden, nicht nur invertiert.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-high" style="width:70%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#e8f4f4;color:var(--elm);">🤖</div>
+        <h3>AI-Powered Experiences</h3>
+      </div>
+      <div class="trend-body">
+        AI-Chatbots sind jetzt proaktiv, konversational und <strong>agentic</strong> — sie lösen mehrstufige Aufgaben und antizipieren Nutzerbedürfnisse. Personalisierung in Echtzeit: adaptive Navigation, rollenbasierte UX, kontextabhängige Content-Empfehlungen. <strong>Genau die maxomedia-Story.</strong>
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:100%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#fdf4e7;color:var(--anzac);">🧱</div>
+        <h3>Modulare Bento-Layouts</h3>
+      </div>
+      <div class="trend-body">
+        Fluid block-based Designs mit subtilen Spacing-Variationen, <strong>bewusster Asymmetrie</strong> und grosszügigem Whitespace. Weg vom starren 12-Column-Grid hin zu organischeren, editorial-inspirierten Kompositionen. Cognitive ease durch Luft.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-high" style="width:80%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#e8f4f4;color:var(--elm);">🎯</div>
+        <h3>Micro-Interactions</h3>
+      </div>
+      <div class="trend-body">
+        Subtile, kontextbewusste Mini-Animationen: Button-Ripples, Form-Guidance, Confirmation States, Hover-Reveals. <strong>Geben sofortiges Feedback</strong> und bauen User Trust auf, ohne abzulenken. Fühlt sich lebendig an, nicht busy.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:85%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:var(--anzac-lt);color:var(--spice);">🎨</div>
+        <h3>Earthy Tones + Electric Accents</h3>
+      </div>
+      <div class="trend-body">
+        Deep Teals, muted Blue-Greens und erdige Neutrals gepaart mit <strong>vibrant Electric Accents</strong>. Weiche, ungebleichte Hintergründe ersetzen reines Weiss. Reduziert Augenbelastung, wirkt wärmer und menschlicher. <strong>Unsere Palette (Elm + Neon) ist exakt dieser Trend.</strong>
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:95%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#2F313C;color:var(--white);">⚡</div>
+        <h3>Performance = UX = SEO</h3>
+      </div>
+      <div class="trend-body">
+        Langsame Website = verlorene Kunden. Google belohnt Speed weiterhin im Ranking. <strong>Optimierte Bilder, System Fonts als Fallback, Mobile-First-Optimierung.</strong> Sustainability-Aspekt: weniger Datenvolumen = kleinerer CO₂-Footprint. Lean Code ist gutes Design.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-high" style="width:75%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#e8f4f4;color:var(--elm);">♿</div>
+        <h3>Accessibility als Baseline</h3>
+      </div>
+      <div class="trend-body">
+        Nicht mehr optional. Farbkontrast, skalierbare Typografie, Keyboard-Navigation und Screenreader-Support als <strong>Grundvoraussetzung</strong>. Profitiert alle User, nicht nur solche mit Einschränkungen. European Accessibility Act ab 2025 verschärft die Lage rechtlich.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-high" style="width:80%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#fdf4e7;color:var(--anzac);">🔧</div>
+        <h3>Operational Websites</h3>
+      </div>
+      <div class="trend-body">
+        Websites sind keine Broschüren mehr. Sie integrieren <strong>Buchungskalender, automatisierte Offerten, interaktive Konfiguratoren, CRM-Anbindung</strong>. Die Site selbst wird zum Tool. Passt zu maxomedias "Ask a Maxo!" Chatbot-Ansatz und Calendly-Integration.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-critical" style="width:90%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:#e8f4f4;color:var(--elm);">🧭</div>
+        <h3>Simplified Navigation</h3>
+      </div>
+      <div class="trend-body">
+        Weniger Top-Level-Items, cleanere Mega-Menus, leichtere Sticky Headers. <strong>Personalisierte Navigation</strong> die sich an Nutzerverhalten anpasst. Führt User effizienter zum Ziel ohne sie mit Optionen zu überladen.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-high" style="width:75%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <div class="trend-header">
+        <div class="trend-icon" style="background:var(--anzac-lt);color:var(--spice);">🖼</div>
+        <h3>3D & WebGL (leichtgewichtig)</h3>
+      </div>
+      <div class="trend-body">
+        Interaktive 3D-Modelle, scroll-triggered Animationen, AR-Previews. <strong>Aber:</strong> Leichtgewichtig und purpose-driven. Three.js, WebGL, Spline. Nicht als Gimmick sondern als funktionales Storytelling-Element. Immersive Garden und Resn setzen den Standard.
+        <div class="relevance"><div class="relevance-label">Relevanz für MXM</div><div class="relevance-bar"><div class="relevance-fill rel-medium" style="width:50%"></div></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MUST-DOS -->
+<div class="section" id="mustdo">
+  <div class="section-title">Konkret für den maxomedia Relaunch</div>
+  <h2>Was wir unbedingt tun sollten</h2>
+
+  <ol class="mustdo-list">
+    <li>
+      <span class="mustdo-num">1</span>
+      <div class="mustdo-content">
+        <h4>Scrollytelling für das Flow Prinzip</h4>
+        <p>Die drei Ebenen (Erkennen → Entfernen → Adaptieren) schreien nach scroll-driven storytelling. Jede Phase wird beim Scrollen sichtbar, mit Animationen die den Inhalt greifbar machen.</p>
+        <div class="why">↳ Das Flow Prinzip IST eine Story — erzählen wir sie auch so.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">2</span>
+      <div class="mustdo-content">
+        <h4>KI nicht erklären — zeigen</h4>
+        <p>Integrierter AI-Chat ("Ask a Maxo!") direkt auf der Site, nicht als Link zu einem externen Tool. Personalisierte Empfehlungen, adaptive Inhalte. Die Website selbst demonstriert was maxomedia mit KI kann.</p>
+        <div class="why">↳ Trend: Operational Websites + AI-Powered Experiences = unser USP live.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">3</span>
+      <div class="mustdo-content">
+        <h4>Elm (#226C6E) + Neon (#CCFF00) als Hero-Kombi</h4>
+        <p>Unsere Palette trifft den Trend perfekt: Deep Teal als Basis, Luminous als Akzent. Wenige Farben, stark eingesetzt. Ash (#2F313C) für Text und Dark Sections.</p>
+        <div class="why">↳ Earthy + Electric ist DER Farbtrend 2026. Wir haben die Farben schon.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">4</span>
+      <div class="mustdo-content">
+        <h4>Kinetic Typography mit Sora</h4>
+        <p>Sora ist bold, geometrisch und expressiv — ideal für animierte Headlines. Text der auf Scroll reagiert, sich aufbaut, morpht. Macht die Site sofort erkennbar und erhöht die Reading Completion.</p>
+        <div class="why">↳ +37% Reading Completion bei bold kinetic type. Sora kann das.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">5</span>
+      <div class="mustdo-content">
+        <h4>Micro-Interactions überall</h4>
+        <p>Button-Hover-States, Card-Reveals, Scroll-Indikatoren, Form-Feedback. Die Site muss sich lebendig anfühlen. Nicht flashy, sondern responsive — jede Interaktion gibt Feedback.</p>
+        <div class="why">↳ Zeigt Handwerk und Detailverliebtheit. Walk the talk.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">6</span>
+      <div class="mustdo-content">
+        <h4>Case Studies mit KPIs prominent</h4>
+        <p>Prämierte Sites zeigen messbare Ergebnisse: Conversion-Steigerung, Traffic-Wachstum, ROI. Nicht nur "schöne Bilder" sondern Zahlen die überzeugen. Filter nach Branche/Leistung.</p>
+        <div class="why">↳ maxomedia denkt in Journeys und Ergebnissen — die Cases müssen das belegen.</div>
+      </div>
+    </li>
+    <li>
+      <span class="mustdo-num">7</span>
+      <div class="mustdo-content">
+        <h4>Performance-Budget einhalten</h4>
+        <p>Schnelle Ladezeiten sind SEO-Faktor und UX zugleich. Optimierte Assets, kein unnötiger JS-Ballast, lazy loading. Animationen per CSS wo möglich, JS nur wo nötig.</p>
+        <div class="why">↳ Langsame Agentur-Website = Glaubwürdigkeitsproblem.</div>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<!-- TAKEAWAY -->
+<div class="section" id="takeaway">
+  <div class="takeaway">
+    <div class="section-title" style="color:rgba(255,255,255,0.4);">TL;DR</div>
+    <h2>Was die Gewinner gemeinsam haben</h2>
+    <p>
+      Die bestbewerteten Agentur-Websites 2025/26 haben eines gemeinsam: <strong>sie demonstrieren ihre Kompetenz durch die Website selbst</strong>, nicht durch Behauptungen. Immersive Garden gewinnt Agency of the Year nicht wegen Claims, sondern weil ihre Site State-of-the-Art WebGL-Storytelling IST.
+    </p>
+    <p style="margin-top:16px;">
+      Für maxomedia heisst das: <strong>Die Website muss die User Journey leben, nicht nur davon erzählen.</strong> Flow Prinzip als Scrollytelling. KI als integrierter Chat. Ergebnisse als Zahlen. Die Farbpalette (Elm + Neon) trifft den Trend. Sora als Font ist expressiv genug. Die Zutaten sind da — wir müssen sie mutig einsetzen.
+    </p>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section">
+  <div class="sources">
+    <h3>Quellen</h3>
+    <ul>
+      <li><a href="https://www.awwwards.com/annual-awards-2025/agency-of-the-year" target="_blank">Awwwards — Agency of the Year 2025</a></li>
+      <li><a href="https://www.awwwards.com/annual-awards-2025/site-of-the-year" target="_blank">Awwwards — Site of the Year 2025</a></li>
+      <li><a href="https://www.awwwards.com/websites/Switzerland/" target="_blank">Awwwards — Switzerland Websites</a></li>
+      <li><a href="https://www.germanwebawards.com/winner" target="_blank">German Web Awards — Winners 6th Edition</a></li>
+      <li><a href="https://www.annual-multimedia.de/" target="_blank">Annual Multimedia Award 2025/26</a></li>
+      <li><a href="https://www.bvdw.org/en/events/german-digital-award/" target="_blank">BVDW — German Digital Award & Creative Rankings</a></li>
+      <li><a href="https://www.cssdesignawards.com/woty2025/" target="_blank">CSS Design Awards — Website of the Year 2025</a></li>
+      <li><a href="https://kontra.agency/top-web-design-trends-for-2026/" target="_blank">Kontra Agency — Web Design Trends 2026</a></li>
+      <li><a href="https://www.organica.agency/en/magazine/web-design-2026-what-we-learned-in-2025-and-the-trends-shaping-modern-websites/" target="_blank">Organica — Web Design 2026: Lessons from 2025</a></li>
+      <li><a href="https://www.figma.com/resource-library/web-design-trends/" target="_blank">Figma — Top Web Design Trends 2026</a></li>
+      <li><a href="https://www.remoteface.com/10-web-design-trends-that-will-dominate-2025-2026/" target="_blank">Remoteface — 10 Web Design Trends 2025-2026</a></li>
+      <li><a href="https://clutch.co/de/agencies/design" target="_blank">Clutch.co — Top Design Agencies Germany</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  maxomedia Relaunch Research · Team Bubu & Gwen · März 2026 · Erstellt mit Claude
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage Konzept – maxomedia.ch Relaunch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #2F313C;
+            color: #F5F3EE;
+            line-height: 1.6;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #CCFF00;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #B0B0B0;
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 60px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #226C6E;
+            color: #CCFF00;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            color: #F5F3EE;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #CCFF00;
+            margin-bottom: 4px;
+        }
+
+        p, li {
+            font-size: 14px;
+            color: #D0CEC8;
+            line-height: 1.7;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: rgba(34, 108, 110, 0.3);
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .section-card:hover {
+            background: rgba(34, 108, 110, 0.5);
+            border-color: rgba(204, 255, 0, 0.4);
+        }
+
+        .section-number {
+            display: inline-block;
+            background: rgba(204, 255, 0, 0.15);
+            color: #CCFF00;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .section-card .copy {
+            font-size: 14px;
+            color: #D0CEC8;
+            margin-top: 12px;
+            line-height: 1.7;
+        }
+
+        .section-card .copy strong {
+            color: #F5F3EE;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background: rgba(204, 255, 0, 0.1);
+            color: #CCFF00;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin: 4px 8px 4px 0;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-elm {
+            background: rgba(34, 108, 110, 0.4);
+            color: #C5DAE0;
+        }
+
+        /* Implementation Details (collapsible) */
+        details {
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(204, 255, 0, 0.6);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        summary:hover {
+            color: #CCFF00;
+        }
+
+        summary::marker {
+            color: rgba(204, 255, 0, 0.4);
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: #CCFF00;
+        }
+
+        .impl-content {
+            padding: 16px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Inspiration Notice */
+        .inspiration-notice {
+            background: rgba(204, 255, 0, 0.08);
+            border: 1px solid rgba(204, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 40px;
+            font-size: 13px;
+            color: #D0CEC8;
+            line-height: 1.7;
+        }
+
+        .inspiration-notice strong {
+            color: #CCFF00;
+        }
+
+        /* Persistent Box */
+        .persistent-box {
+            background: rgba(204, 255, 0, 0.1);
+            border: 1px solid rgba(204, 255, 0, 0.3);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .persistent-box h3 { margin-top: 0; }
+
+        .persistent-item {
+            padding: 12px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.15);
+        }
+
+        .persistent-item:last-child { border-bottom: none; }
+        .persistent-item strong { color: #CCFF00; }
+
+        /* Tech Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .tech-card {
+            background: rgba(34, 108, 110, 0.3);
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .tech-card h4 { margin-bottom: 12px; }
+        .tech-card p { font-size: 13px; }
+        .tech-card strong { color: #F5F3EE; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #808080;
+            font-size: 12px;
+            border-top: 1px solid rgba(204, 255, 0, 0.1);
+            margin-top: 80px;
+        }
+
+        /* Back Link */
+        .back-link {
+            position: fixed; top: 24px; left: 24px; z-index: 10001;
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; transition: color 0.3s;
+        }
+        .back-link:hover { color: #CCFF00; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main { padding: 100px 20px 60px; }
+            h1 { font-size: 32px; }
+            h2 { font-size: 22px; }
+            .tech-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Zurück</a>
+
+    <main>
+        <h1>Homepage Konzept</h1>
+        <p class="subtitle">Detailkonzept für die Homepage — Section für Section, mit Implementierungs-Hinweisen</p>
+
+        <div class="inspiration-notice">
+            <strong>Hinweis für Claude Code:</strong> Die Implementierungsdetails in diesem Dokument sind als <strong>Inspiration</strong> gedacht, nicht als Copy-Paste-Vorlage. Du bist der Coding Agent mit den Frontend-Skills und MCP-Tools — nutze dein eigenes Urteil für die beste technische Umsetzung. Die Konzeptbeschreibungen und Copy-Texte sind verbindlich, die Code-Snippets sind Richtungsweiser.
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Überblick: 9 Sections, eine Journey</h2>
+
+        <p style="margin-bottom: 24px;">Die Homepage ist eine durchkomponierte Scroll-Journey von Hero bis CTA. Jede Section hat einen klaren Zweck im Conversion-Funnel. Der rote Faden: «Digitale Journeys im Flow» — das maxomedia-Versprechen, erlebbar gemacht.</p>
+
+        <div style="margin-bottom: 40px;">
+            <span class="tag">01 Hero</span>
+            <span class="tag">02 Trust Bar</span>
+            <span class="tag">03 Empathy</span>
+            <span class="tag">04 Flow Prinzip</span>
+            <span class="tag">05 KI-USP</span>
+            <span class="tag">06 Leistungen</span>
+            <span class="tag">07 Referenzen</span>
+            <span class="tag">08 Team</span>
+            <span class="tag">09 CTA</span>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 01 — Hero</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 01</span>
+            <h4>Hero · Der erste Eindruck</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Sofortige Positionierung. maxomedia = Digitalagentur Bern, die anders denkt.<br><br>
+                <strong>Eyebrow:</strong> DIGITALAGENTUR BERN<br>
+                <strong>Headline:</strong> Digitale Journeys im Flow.<br>
+                <strong>Subline:</strong> Strategie, Technologie, kreative Kommunikation — und KI die das alles zusammenbringt.<br><br>
+                <strong>CTAs:</strong> «Projekt starten →» (primary/neon) + «Flow entdecken ↓» (ghost/outline)<br><br>
+                <strong>Hintergrund:</strong> Ash mit subtlem Gradient (135deg zu #1a1c24). Optional: «MXM» Watermark bei 3% opacity hinter dem Text. Scroll-Indicator unten (animated chevron).
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Fullscreen</span>
+                <span class="tag">Dark Section</span>
+                <span class="tag">Kinetic Typography</span>
+                <span class="tag">GSAP word-by-word reveal</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">ANIMATION: GSAP word-by-word reveal
+- Headline in einzelne Wörter splitten (JS)
+- Jedes Wort startet bei opacity: 0
+- Animation auf Seitenload: 1.2s, stagger 0.08s/Wort
+- ScrollTrigger: trigger "top 80%", toggleActions: "play none none none"
+
+GSAP Config (Inspiration):
+gsap.to(".word", {
+  opacity: 1, duration: 0.5, stagger: 0.08,
+  scrollTrigger: { trigger: ".hero", start: "top 80%" }
+})
+
+RESPONSIVE:
+- Mobile: Single column CTAs, stacked vertical
+- Font scaling mit clamp() für Headline</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 02 — Trust Bar</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 02</span>
+            <h4>Trust Bar · Glaubwürdigkeit aufbauen</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Social Proof. Schnell Vertrauen schaffen durch Zahlen und bekannte Partner.<br><br>
+                <strong>Stats (3er-Grid, zentriert):</strong><br>
+                · <strong>150+</strong> Projekte<br>
+                · <strong>30</strong> Jahre Erfahrung (seit 1996)<br>
+                · <strong>7</strong> Kompetenzen<br><br>
+                <strong>Marquee:</strong> Logo-Leiste mit Partner/Kunden-Logos, infinite horizontal scroll. Doppelte Items für nahtlose Schleife.
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Dark Section</span>
+                <span class="tag">Counter Animation</span>
+                <span class="tag">Logo Marquee</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">COUNTER: Zahlen zählen von 0 → Zielwert bei Scroll-Eintritt
+- Dauer: 1.5s, snap to integers, stagger 0.2s
+- ScrollTrigger: trigger ".trust-stats", start "top 80%"
+
+MARQUEE: CSS translateX, 20s linear infinite
+- 6+ Items × 120px + gaps
+- Doppelte Items am Ende für Loop
+
+LAYOUT: 3-spaltig bei Desktop, 1-2 Spalten responsive</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 03 — Empathy</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 03</span>
+            <h4>Das Problem · Empathie schaffen</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Pain Point ansprechen. Der Besucher soll sich verstanden fühlen.<br><br>
+                <strong>Copy (grosser Text, word-by-word reveal):</strong><br>
+                «Ihre Kunden <em>verlieren</em> sich auf dem Weg. Zu viele Touchpoints. Zu wenig <em>Zusammenhang</em>. Ihre Website ist eine Broschüre — kein <em>Erlebnis</em>.»<br><br>
+                <strong>Hervorgehobene Wörter</strong> (verlieren, Zusammenhang, Erlebnis) werden in Elm-Farbe highlighted.<br><br>
+                <strong>Hintergrund:</strong> Light Section (Off-White #F5F3EE), Kontrast zur vorherigen Dark Section.
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Light Section</span>
+                <span class="tag">Pinned Scrollytelling</span>
+                <span class="tag">Word-by-word reveal</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">ANIMATION: Word-by-Word Reveal mit Pinning
+- Text in Wörter splitten (JS), jedes bei opacity: 0.3
+- ScrollTrigger pinnt Section (Dauer: ~2 Viewport-Heights)
+- Während Scroll: Wörter faden zu opacity: 1
+- Highlight-Wörter werden farbig (Elm #226C6E)
+
+GSAP (Inspiration):
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".empathy-text",
+    start: "top 20%", end: "bottom 80%",
+    scrub: 0.5, pin: true
+  }
+});
+words.forEach((word, i) => {
+  tl.to(word, { opacity: 1, duration: 0.3 }, i * 0.08);
+});
+
+STYLE: Huge type clamp(48px, 7vw, 110px), fw: 400, highlights fw: 600</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 04 — Flow Prinzip</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 04</span>
+            <h4>Das Flow Prinzip · Das Herzstück</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> maxomedia's USP erlebbar machen. 3 Phasen der Customer Journey als immersive Scrollytelling-Experience.<br><br>
+                <strong>Phase 1 — Aufmerksamkeit</strong><br>
+                Quote: «Ich habe es gesehen.»<br>
+                Text: Der User nimmt die Botschaft wahr. Die erste Impression zählt — und wir designen dafür, dass sie bleibt.<br><br>
+                <strong>Phase 2 — Interaktion</strong><br>
+                Quote: «Ich will es haben.»<br>
+                Text: Der User wechselt vom Zuschauer zum Mitspieler. Interaction ist nicht optional — sie ist die Brücke.<br><br>
+                <strong>Phase 3 — Loyalität</strong><br>
+                Quote: «Ich bleibe dran.»<br>
+                Text: Das Erlebnis wird zur Gewohnheit. Retention passiert durch Konsistenz und kontinuierlichen Wert.<br><br>
+                <strong>Visuell:</strong> Parallax Hintergrund-Nummern (01, 02, 03) bei 10% opacity, riesen Schrift. Phasen morphen per Scroll ineinander.
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Elm Section</span>
+                <span class="tag">Pinned Scrollytelling</span>
+                <span class="tag">Phase-Morphing</span>
+                <span class="tag">Parallax</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">SETUP: 3 Phasen-Divs, absolut positioniert, Pin Dauer: 3× Viewport
+- Snap zu Phasen bei 0%, 33%, 66%, 100%
+
+GSAP ScrollTrigger (Inspiration):
+const scrollytelling = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".flow-phases",
+    start: "top top", end: "bottom bottom",
+    scrub: 1, pin: true,
+    snap: { snapTo: [0, 0.33, 0.66, 1], duration: 0.6, ease: "power1.inOut" }
+  }
+});
+
+// Crossfade: Phase 1 → Phase 2 → Phase 3
+scrollytelling.to(".phase:nth-child(1)", { opacity: 1 }, 0);
+scrollytelling.to(".phase:nth-child(1)", { opacity: 0 }, 0.3);
+scrollytelling.to(".phase:nth-child(2)", { opacity: 1 }, 0.25);
+// etc.
+
+PARALLAX: .phase-number yPercent: -50, scrub 0.5
+STYLE: Elm #226C6E background, phase-title huge type fw: 800</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 05 — KI-USP</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 05</span>
+            <h4>KI-Power · Während andere erklären, bauen wir damit</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> KI-Kompetenz zeigen, nicht nur behaupten. Fake-Chat als Scrollytelling.<br><br>
+                <strong>Chat-Verlauf (staggered entrance):</strong><br>
+                · User: «Wie kann KI unsere Customer Journey verbessern?»<br>
+                · Bot: «Ich analysiere gerade eure Touchpoints...» (+ Typing Indicator)<br>
+                · Bot: «Mit KI erkennen wir, wo eure Kunden abbrechen. Dann optimieren wir nicht wild — wir redesignen mit Daten.»<br>
+                · User: «Das ist genau was wir brauchen.»<br><br>
+                <strong>Journey-Visualisierung:</strong> Vereinfachte User-Journey-Grafik, in der KI-Touchpoints beim Scrollen aufleuchten (Neon-Glow). Zeigt visuell wo KI in einer typischen Journey eingreift.<br><br>
+                <strong>3 Feature Cards (Neon-Border):</strong><br>
+                · Daten-Driven — Journeys formen durch echte Nutzer-Patterns<br>
+                · Automatisiert Insights — KI erkennt Chancen, Menschen treffen Entscheidungen<br>
+                · Human in Control — Nie AI für AI's Sake — nur wenn es hilft<br><br>
+                <strong>CTA:</strong> «KI erleben →» (→ Deep-Link zu /ki)<br>
+                <strong>"Probier's aus"-Teaser:</strong> Button «Ask a Maxo!» öffnet ein Chat-Fenster-Overlay (Fake — sieht aus wie ein echtes Chat-UI mit Willkommensnachricht, funktioniert aber noch nicht. Platzhalter für spätere Live-Integration).
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Dark Section</span>
+                <span class="tag">Fake Chat</span>
+                <span class="tag">Journey-Viz</span>
+                <span class="tag">Bot-Teaser (Fake)</span>
+                <span class="tag">Staggered Cards</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">CHAT BUBBLES: fadeInUp 0.5s ease, staggered delays (0s, 0.3s, 0.8s, 1.1s)
+- User: rechts-aligned, bg rgba(255,255,255,0.1)
+- Bot: links-aligned, bg rgba(204,255,0,0.15), border neon
+
+TYPING INDICATOR: 3 dots, 8px, animation 0.6s infinite
+- Stagger: dot 2 +0.1s, dot 3 +0.2s
+
+JOURNEY-VIZ: Vereinfachte horizontale Pipeline
+- 5-6 Touchpoint-Nodes (z.B. Awareness → Interest → Decision → Action → Loyalty)
+- KI-Touchpoints leuchten beim Scroll auf (neon glow, box-shadow animation)
+- ScrollTrigger: nodes staggered highlighten
+
+AI CARDS: 3-spaltige grid, gap 24px
+- Border: 2px solid neon, border-radius 12px
+- Hover: bg rgba(204,255,0,0.05), translateY -8px
+
+ASK A MAXO TEASER:
+- Button bottom-right: "Ask a Maxo! 💬"
+- Click öffnet ein Chat-Overlay (fixed, z-index 9999)
+- Overlay zeigt Fake-UI: Header "Ask a Maxo!", Willkommensnachricht, Input-Feld
+- Input ist disabled / Submit tut nichts — reiner Platzhalter
+- Close-Button (×) schliesst Overlay wieder</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 06 — Leistungen</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 06</span>
+            <h4>Leistungen · Was wir tun</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Services als Accordion. Kompakt, scannable, mit Deep-Links zu Unterseiten.<br><br>
+                <strong>7 Accordion-Items:</strong><br>
+                · <strong>Strategie &amp; Beratung</strong> — Wir verstehen eure Geschäftsziele, eure Kunden und euer Potenzial. Dann bauen wir einen Fahrplan.<br>
+                · <strong>Campaigning</strong> — Von Social Media bis Paid Advertising. Jede Kampagne ist ein Experiment — und wir lernen schnell.<br>
+                · <strong>User Experience</strong> — Wir designen für Menschen, nicht für Besprechungsräume. Jeder Klick soll sich richtig anfühlen.<br>
+                · <strong>Visual Design</strong> — Design, das kommuniziert. Clean, mutig, konsistent.<br>
+                · <strong>Web Development</strong> — Von Frontend bis Backend. Code ist Craft — wir nehmen es ernst.<br>
+                · <strong>Marketing Automation</strong> — Richtige Nachricht, richtiger Moment, richtige Person.<br>
+                · <strong>Analytics &amp; Optimierung</strong> — Daten erzählen Geschichten. A/B Tests, Heatmaps, User Sessions.<br><br>
+                Jedes Item hat einen «Mehr erfahren →» Link zur Detail-Seite (/leistungen/...).
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Dark Section</span>
+                <span class="tag">Accordion</span>
+                <span class="tag">Click-to-Expand</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">ACCORDION: Click-to-Expand, CSS max-height transition
+- Header: title-xl, fw: 700, padding 32px 0
+- Icon: + rotiert zu × bei active (rotate 45deg)
+- Content: max-height 0 → 500px, overflow hidden
+- Single-open: andere Items schliessen bei Klick
+
+HOVER: Header wird neon-farbig
+LINK: accordion-link in neon, translateX 8px on hover</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 07 — Referenzen</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 07</span>
+            <h4>Ergebnisse die sprechen · Unsere Arbeit</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Ergebnisse statt Versprechen. 3 Case-Study-Cards mit messbaren Resultaten.<br><br>
+                <strong>Card 1 (Dark bg):</strong> Shop Hero · E-Commerce<br>
+                Challenge: Conversion-Rate stagniert, Checkout-Abbruchquote über 40%.<br>
+                Ergebnis: <strong>+340% Conversion</strong> nach 6 Monaten<br><br>
+                <strong>Card 2 (Elm bg):</strong> DataFlow Pro · SaaS<br>
+                Challenge: Hohe Bounce Rate, unklare User Journey.<br>
+                Ergebnis: <strong>−60% Bounce Rate</strong><br><br>
+                <strong>Card 3 (Neon border):</strong> TechConsult Bern · B2B Services<br>
+                Challenge: Lead Generation teuer, qualified Leads rar.<br>
+                Ergebnis: <strong>4× ROI</strong> in 8 Wochen<br><br>
+                <strong>CTA:</strong> «Alle Cases →» (→ /referenzen)
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Light Section</span>
+                <span class="tag">Staggered Fly-In</span>
+                <span class="tag">3 Card Variants</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">CARDS: 3er responsive grid (auto-fit, minmax 300px)
+- 3 Varianten: case-card-dark, case-card-elm, case-card-neon
+- Staggered entrance: slideInUp 0.6s, delays 0/0.15/0.3s
+- Hover: translateY -12px
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+RESULT NUMBERS: huge type (clamp 48-110px), fw: 800, neon color</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 08 — Team</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 08</span>
+            <h4>Wer wir sind · Menschen die digital denken</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Agentur personalisieren. Gesichter zeigen (oder Initialen als Placeholder).<br><br>
+                <strong>Avatare:</strong> 5-6 runde Avatare (100px, Elm-Background, Initialen als Text). Hover: translateY -12px.<br><br>
+                <strong>Quote:</strong> «27 Jahre Erfahrung. Bern. Keine Buzzwords.» (italic, dezent)<br><br>
+                <strong>CTA:</strong> «Team kennenlernen →» (→ /ueber-uns)
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Dark Section</span>
+                <span class="tag">Avatar Row</span>
+                <span class="tag">Optional Parallax</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">AVATARS: flex row, gap 24px, align-items flex-end
+- 100px circles, bg elm, fw: 700, 32px text
+- Hover: translateY -12px, transition 0.3s
+
+OPTIONAL PARALLAX:
+gsap.to(".avatar", {
+  yPercent: -20, stagger: 0.1,
+  scrollTrigger: { trigger: section, scrub: 1 }
+});</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Section 09 — CTA / Footer</h2>
+
+        <div class="section-card">
+            <span class="section-number">SECTION 09</span>
+            <h4>Projekt starten · Der Abschluss</h4>
+            <div class="copy">
+                <strong>Zweck:</strong> Conversion. Ein klarer, einfacher Call-to-Action.<br><br>
+                <strong>Headline:</strong> Projekt starten.<br>
+                <strong>Subline:</strong> 30 Minuten. Ein Gespräch. Alles was Sie brauchen.<br><br>
+                <strong>Google Calendar Embed:</strong> Eingebetteter Buchungskalender (Google Calendar Appointment Scheduling). Zeigt verfügbare 30-Min-Slots direkt inline. Sieht aus wie ein echtes Booking-Widget — für den Pitch als Platzhalter-UI bauen, spätere echte Integration per iframe/API.<br><br>
+                <strong>Alternative:</strong> «Oder frag direkt:» → «Ask a Maxo!» Chat-Button (gleicher Fake-Overlay wie in S05)<br>
+                <strong>Fallback:</strong> Oder direkt schreiben: hallo@maxomedia.ch<br><br>
+                <strong>Operational Website:</strong> Diese Section demonstriert den Trends-Anspruch "Operational Websites" — die Site IST das Tool (Buchen, Chatten, Kontaktieren), nicht nur eine Broschüre.<br><br>
+                <strong>Footer darunter:</strong> © 2026 maxomedia AG, Bern · Social Links (LinkedIn, Twitter, Instagram) · Impressum / Datenschutz<br><br>
+                <strong>Hintergrund:</strong> Gradient von Elm → Ash (135deg)
+            </div>
+            <div style="margin-top: 12px;">
+                <span class="tag">Gradient Section</span>
+                <span class="tag">Google Calendar Embed</span>
+                <span class="tag">Operational Website</span>
+                <span class="tag">Giant Headline</span>
+            </div>
+
+            <details>
+                <summary>Implementierungsdetails</summary>
+                <div class="impl-content">LAYOUT: text-align center
+- Headline: giant type, fw: 800
+- Subline: body-xl, opacity 0.7, mb: 60px
+
+GOOGLE CALENDAR EMBED (Platzhalter):
+- Container: max-width 600px, centered, border-radius 16px
+- Fake Kalender-UI: Monatsansicht mit klickbaren Slots
+- Styling: Off-White bg, Elm-Akzente für verfügbare Tage, Neon für selected
+- Später ersetzbar durch echtes Google Calendar iframe:
+  &lt;iframe src="https://calendar.google.com/calendar/appointments/..."&gt;
+- Für Pitch: statisches HTML das aussieht wie ein Booking-Widget
+
+ASK A MAXO CHAT-BUTTON:
+- Gleicher Fake-Overlay wie in S05 (wiederverwendbare Komponente)
+
+FOOTER: flex space-between, 12px, opacity 0.5
+- Social links in flex row, gap 16px
+- Impressum/Datenschutz rechts
+
+OPTIONAL: Scale animation auf Headline bei Scroll
+gsap.to(title, { scale: 1.05, scrollTrigger: { scrub: 0.5 } });</div>
+            </details>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Globale Elemente</h2>
+
+        <div class="persistent-box">
+            <h3 style="margin-top: 0;">Persistent auf der Homepage</h3>
+
+            <div class="persistent-item">
+                <strong>Floating Pill Navigation</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Bottom-fixed, backdrop-blur, 4 Items + CTA «Projekt starten». Responsive Hamburger auf Mobile.</span>
+            </div>
+
+            <div class="persistent-item">
+                <strong>Ask a Maxo! Chat-Button</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Bottom-right corner. Conversational AI für Quick Questions & Lead Qualification.</span>
+            </div>
+
+            <div class="persistent-item">
+                <strong>Scroll Progress Indicator</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Optional: dünne Neon-Linie oben oder seitlich, zeigt Scroll-Fortschritt.</span>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Durchgängige Patterns (für Claude Code)</h2>
+
+        <div class="inspiration-notice">
+            <strong>Wichtig:</strong> Diese Patterns sind keine einzelnen Sections, sondern durchgängige Prinzipien die <strong>überall auf der Homepage</strong> gelten sollen. Claude Code soll sie bei jeder Section mitdenken.
+        </div>
+
+        <div class="section-card">
+            <h4>Kinetic Typography</h4>
+            <div class="copy">
+                <strong>Prinzip:</strong> Text ist nicht statisch — er reagiert auf Scroll und Viewport. Sora ist bold und geometrisch genug dafür. Kinetic Type hebt die Reading Completion um bis zu 37% (Trend-Research).<br><br>
+                <strong>Wo konkret:</strong><br>
+                · <strong>S01 Hero:</strong> Headline baut sich Wort für Wort auf (word-by-word reveal)<br>
+                · <strong>S03 Empathy:</strong> Text faded beim Scrollen ein, Highlight-Wörter bekommen Farbe<br>
+                · <strong>S04 Flow:</strong> Phase-Titel sliden/faden mit Scroll rein<br>
+                · <strong>S06 Leistungen:</strong> Accordion-Headlines könnten beim Hover leicht skalieren oder letter-spacing ändern<br>
+                · <strong>S09 CTA:</strong> "Projekt starten." Giant Type, optional subtle scale bei Scroll<br><br>
+                <strong>Nicht übertreiben:</strong> Kein Stretchen, kein Rotieren, kein Cursor-Tracking. Smooth und purposeful, nicht flashy. Fokus auf opacity, transform (translateY/scale), und stagger.
+            </div>
+        </div>
+
+        <div class="section-card" style="margin-top: 20px;">
+            <h4>Micro-Interactions</h4>
+            <div class="copy">
+                <strong>Prinzip:</strong> Jede Interaktion gibt sofortiges visuelles Feedback. Die Site fühlt sich lebendig an, nicht busy. Zeigt Handwerk und Detailverliebtheit — walk the talk.<br><br>
+                <strong>Wo konkret:</strong><br>
+                · <strong>Buttons:</strong> Hover → translateY(-4px) + box-shadow. Active → scale(0.98). Neon-Buttons: Glow-Effekt bei Hover<br>
+                · <strong>Cards:</strong> Hover → translateY(-8px bis -12px) + shadow-Verstärkung. Staggered entrance beim Scroll-Eintritt<br>
+                · <strong>Accordion:</strong> + Icon rotiert smooth zu × (45deg). Content expandiert mit ease-Transition<br>
+                · <strong>Links:</strong> Color-transition 0.2s. "Mehr erfahren →" verschiebt sich bei Hover nach rechts (translateX 8px)<br>
+                · <strong>Scroll-Indicator:</strong> Bounce-Animation im Hero, verschwindet nach erstem Scroll<br>
+                · <strong>Trust-Zahlen:</strong> Counter-Animation beim Scroll-Eintritt (nicht sofort, erst wenn sichtbar)<br>
+                · <strong>Chat-Overlay:</strong> Slide-in von unten-rechts mit ease-out<br>
+                · <strong>Nav Pill:</strong> Active-Section highlighted, smooth transition zwischen States<br><br>
+                <strong>Timing:</strong> Alle transitions 0.2–0.3s ease. Nie länger als 0.5s. Keine Animation ohne Zweck.
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <h2>Technische Dokumentation</h2>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h4>Frontend Stack</h4>
+                <p><strong>HTML5</strong> semantisch. <strong>CSS3</strong> mit CSS Variables, Grid/Flex. <strong>JS</strong> vanilla für Interaktionen. <strong>GSAP 3.12.5</strong> + ScrollTrigger für Animationen.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Animation Library</h4>
+                <p><strong>GSAP 3.12.5</strong> mit ScrollTrigger. Scrub Mode für scroll-linked animations. Snap für Phase-Snapping im Flow-Prinzip.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Typografie</h4>
+                <p><strong>Google Fonts: Sora</strong> (300–800). <strong>CSS Clamp()</strong> für responsive sizing. Line-height 1.3–1.6 je nach Grösse.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Performance Targets</h4>
+                <p><strong>FCP</strong> &lt; 1s. <strong>TTI</strong> &lt; 2s. <strong>LCP</strong> &lt; 2.5s. <strong>CLS</strong> &lt; 0.1. Lazy-load Animations via ScrollTrigger.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Responsive Design</h4>
+                <p>Mobile First. Breakpoints: <strong>768px</strong> (tablet), <strong>1440px</strong> (desktop). Fluid Typography mit clamp().</p>
+            </div>
+            <div class="tech-card">
+                <h4>Accessibility</h4>
+                <p><strong>prefers-reduced-motion</strong>: alle Animations disabled. Semantic HTML. ARIA Labels für Accordion states.</p>
+            </div>
+        </div>
+
+        <details>
+            <summary>Design System: CSS Variables</summary>
+            <div class="impl-content">:root {
+  --ash: #2F313C;           /* Dark base */
+  --elm: #226C6E;           /* Teal accent */
+  --neon: #CCFF00;          /* Bright yellow */
+  --off-white: #F5F3EE;     /* Light background */
+  --ice: #C5DAE0;           /* Subtle blue-gray */
+
+  /* Responsive Typography */
+  --giant: clamp(72px, 12vw, 180px);
+  --huge: clamp(48px, 7vw, 110px);
+  --big: clamp(32px, 4.5vw, 72px);
+  --title-xl: clamp(24px, 5vw, 72px);
+  --body-xl: clamp(18px, 3vw, 32px);
+  --body-base: clamp(14px, 2vw, 18px);
+  --eyebrow: clamp(10px, 1.5vw, 14px);
+}</div>
+        </details>
+
+        <details style="margin-top: 12px;">
+            <summary>Deployment Checklist</summary>
+            <div class="impl-content">☐ Google Fonts mit font-display: swap
+☐ GSAP & ScrollTrigger geladen (CDN oder vendor/)
+☐ prefers-reduced-motion media query aktiv
+☐ Buttons: 40px min tap target auf Mobile
+☐ Alle Links mit :hover & :focus states
+☐ Lighthouse: LCP &lt;2.5s, CLS &lt;0.1, TTI &lt;2s
+☐ Responsive: 375px, 768px, 1440px getestet
+☐ Form inputs accessible (label/aria-label)
+☐ Image alt tags, lazy loading
+☐ Meta tags: viewport, theme-color, og:image
+☐ Sitemaps & robots.txt
+☐ Analytics & tracking events
+☐ Performance monitoring aktiv</div>
+        </details>
+
+    </main>
+
+    <footer>
+        <p>maxomedia.ch Relaunch · Homepage Konzept · Team Bubu & Gwen · März 2026</p>
+    </footer>
+</body>
+</html>

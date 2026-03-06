@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>maxomedia.ch · UI Kit · Team Bubu & Gwen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS-Variables - Design System */
+        :root {
+            --color-ash: #2F313C;
+            --color-elm: #226C6E;
+            --color-neon: #CCFF00;
+            --color-off-white: #F5F3EE;
+            --color-ice: #C5DAE0;
+            --color-white: #FFFFFF;
+
+            --font-family: 'Sora', sans-serif;
+
+            /* Type Scale */
+            --type-giant: clamp(72px, 12vw, 180px);
+            --type-huge: clamp(48px, 7vw, 110px);
+            --type-big: clamp(32px, 4.5vw, 72px);
+            --type-body-xl: clamp(18px, 2.2vw, 32px);
+            --type-body: clamp(16px, 1.5vw, 24px);
+            --type-small: 11px;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --space-4xl: 96px;
+
+            /* Layout */
+            --max-width-content: 1440px;
+            --max-width-narrow: 720px;
+            --section-padding: 96px var(--space-md);
+
+            /* Shadows & Effects */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-white);
+            color: var(--color-ash);
+            line-height: 1.6;
+        }
+
+        /* Sticky Navigation */
+        nav.sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(47, 49, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--space-md) var(--space-lg);
+        }
+
+        nav.sticky-nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+            max-width: var(--max-width-content);
+            margin: 0 auto;
+        }
+
+        nav.sticky-nav a {
+            color: var(--color-off-white);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav.sticky-nav a:hover {
+            color: var(--color-neon);
+        }
+
+        /* Section Structure */
+        section {
+            padding: var(--section-padding);
+            max-width: var(--max-width-content);
+            margin: 0 auto;
+            scroll-margin-top: 80px;
+        }
+
+        section:nth-child(odd) {
+            background: var(--color-white);
+        }
+
+        section:nth-child(even) {
+            background: var(--color-off-white);
+        }
+
+        section > h1 {
+            font-size: var(--type-huge);
+            font-weight: 800;
+            margin-bottom: var(--space-2xl);
+            color: var(--color-ash);
+        }
+
+        section > h2 {
+            font-size: var(--type-big);
+            font-weight: 700;
+            margin-bottom: var(--space-xl);
+            color: var(--color-ash);
+        }
+
+        /* Eyebrow Labels */
+        .eyebrow {
+            font-size: var(--type-small);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+            margin-bottom: var(--space-md);
+        }
+
+        /* ============ 1. COLORS ============ */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .color-swatch {
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--color-white);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .color-swatch-preview {
+            width: 100%;
+            height: 120px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .color-swatch-info {
+            padding: var(--space-md);
+        }
+
+        .color-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .color-hex {
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+            color: var(--color-elm);
+            margin-bottom: var(--space-sm);
+        }
+
+        .color-var {
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.5);
+            margin-bottom: var(--space-sm);
+        }
+
+        .color-usage {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+            line-height: 1.5;
+        }
+
+        .usage-ratio {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: var(--color-ash);
+            border-radius: 8px;
+            color: var(--color-white);
+        }
+
+        .ratio-bar {
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 32px;
+            margin-bottom: var(--space-md);
+        }
+
+        .ratio-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-ash);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ratio-ash { width: 40%; background: var(--color-ash); color: white; }
+        .ratio-elm { width: 25%; background: var(--color-elm); color: white; }
+        .ratio-neon { width: 10%; background: var(--color-neon); color: var(--color-ash); }
+        .ratio-off-white { width: 20%; background: var(--color-off-white); border: 1px solid rgba(0, 0, 0, 0.1); }
+        .ratio-ice { width: 3%; background: var(--color-ice); }
+        .ratio-white { width: 2%; background: var(--color-white); border: 1px solid rgba(0, 0, 0, 0.1); }
+
+        .ratio-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--space-md);
+            font-size: 12px;
+        }
+
+        /* ============ 2. TYPOGRAPHY ============ */
+        .type-scale {
+            display: grid;
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .type-example {
+            padding: var(--space-lg);
+            background: var(--color-white);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .type-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+            margin-bottom: var(--space-md);
+        }
+
+        .type-specs {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+            margin-bottom: var(--space-md);
+        }
+
+        .type-giant-demo {
+            font-size: var(--type-giant);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--color-ash);
+        }
+
+        .type-huge-demo {
+            font-size: var(--type-huge);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--color-ash);
+        }
+
+        .type-big-demo {
+            font-size: var(--type-big);
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--color-ash);
+        }
+
+        .type-body-xl-demo {
+            font-size: var(--type-body-xl);
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--color-ash);
+        }
+
+        .type-body-demo {
+            font-size: var(--type-body);
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--color-ash);
+        }
+
+        .type-small-demo {
+            font-size: var(--type-small);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+        }
+
+        .weight-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .weight-sample {
+            padding: var(--space-md);
+            background: var(--color-off-white);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .weight-text {
+            font-size: 18px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .weight-name {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .w300 { font-weight: 300; }
+        .w400 { font-weight: 400; }
+        .w500 { font-weight: 500; }
+        .w600 { font-weight: 600; }
+        .w700 { font-weight: 700; }
+        .w800 { font-weight: 800; }
+
+        /* ============ 3. BUTTONS ============ */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .button-group-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+        }
+
+        button, .btn {
+            font-family: var(--font-family);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+        }
+
+        /* Button Sizes */
+        .btn-xs {
+            font-size: 11px;
+            padding: 6px 12px;
+            letter-spacing: 1px;
+        }
+
+        .btn-sm {
+            font-size: 12px;
+            padding: 8px 16px;
+            letter-spacing: 1px;
+        }
+
+        .btn-md {
+            font-size: 14px;
+            padding: 12px 24px;
+            letter-spacing: 1px;
+        }
+
+        .btn-lg {
+            font-size: 16px;
+            padding: 16px 32px;
+            letter-spacing: 1px;
+        }
+
+        /* Button Variants */
+        .btn-primary {
+            background: var(--color-neon);
+            color: var(--color-ash);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(204, 255, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--color-elm);
+            color: var(--color-white);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-dark {
+            background: var(--color-ash);
+            color: var(--color-white);
+        }
+
+        .btn-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline-elm {
+            background: transparent;
+            color: var(--color-elm);
+            border: 2px solid var(--color-elm);
+        }
+
+        .btn-outline-elm:hover {
+            background: var(--color-elm);
+            color: var(--color-white);
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            color: var(--color-ash);
+            border: 2px solid var(--color-ash);
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--color-ash);
+            color: var(--color-white);
+        }
+
+        .btn-ghost {
+            background: rgba(47, 49, 60, 0.1);
+            color: var(--color-ash);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(47, 49, 60, 0.2);
+        }
+
+        .btn-ghost-inverse {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--color-white);
+        }
+
+        .btn-ghost-inverse:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--color-elm);
+            padding: 0;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-arrow::after {
+            content: '→';
+            margin-left: 4px;
+        }
+
+        /* ============ 4. TAGS & BADGES ============ */
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .tag-elm { background: var(--color-elm); color: white; }
+        .tag-neon { background: var(--color-neon); color: var(--color-ash); }
+        .tag-ash { background: var(--color-ash); color: white; }
+        .tag-ice { background: var(--color-ice); color: var(--color-ash); }
+
+        .tag-outline-elm { background: transparent; border: 1px solid var(--color-elm); color: var(--color-elm); }
+        .tag-outline-neon { background: transparent; border: 1px solid var(--color-neon); color: var(--color-neon); }
+        .tag-outline-ash { background: transparent; border: 1px solid var(--color-ash); color: var(--color-ash); }
+        .tag-outline-ice { background: transparent; border: 1px solid var(--color-ice); color: var(--color-elm); }
+        .tag-off-white { background: var(--color-off-white); color: var(--color-ash); }
+        .tag-outline-off-white { background: transparent; border: 1px solid var(--color-off-white); color: var(--color-off-white); }
+
+        .tag-dot::before {
+            content: '●';
+            font-size: 8px;
+        }
+
+        .tag-group {
+            margin-bottom: var(--space-xl);
+        }
+
+        .tag-group-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+            margin-bottom: var(--space-md);
+            display: block;
+        }
+
+        /* ============ 5. CARDS ============ */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .card-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .card-grid-4 .card-title {
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        .card-grid-4 .card-text {
+            font-size: 14px;
+        }
+
+        .card-grid-4 .card {
+            padding: var(--space-lg);
+        }
+
+        .card {
+            padding: var(--space-xl);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-standard {
+            background: var(--color-white);
+        }
+
+        .card-dark {
+            background: var(--color-ash);
+            color: var(--color-white);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card-elm {
+            background: var(--color-elm);
+            color: var(--color-white);
+            border: none;
+        }
+
+        .card-neon {
+            background: var(--color-white);
+            border-top: 4px solid var(--color-neon);
+        }
+
+        .card-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 240px;
+        }
+
+        .card-stat-number {
+            font-size: var(--type-giant);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: var(--space-md);
+        }
+
+        .card-stat-label {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card-ki {
+            background: var(--color-ash);
+            color: var(--color-white);
+            border: 2px solid var(--color-neon);
+            box-shadow: 0 0 24px rgba(204, 255, 0, 0.3);
+            position: relative;
+        }
+
+        .card-title {
+            font-size: var(--type-big);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+        }
+
+        .card-text {
+            font-size: var(--type-body);
+            line-height: 1.6;
+        }
+
+        /* ============ 6. FORM ELEMENTS ============ */
+        .form-section {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-ash);
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="search"],
+        textarea,
+        select {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 16px;
+            font-family: var(--font-family);
+            font-size: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            background: var(--color-white);
+            color: var(--color-ash);
+            transition: all 0.3s;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232F313C' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        select option {
+            font-family: var(--font-family);
+            padding: 8px 16px;
+            background: var(--color-white);
+            color: var(--color-ash);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="search"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--color-elm);
+            box-shadow: 0 0 0 3px rgba(34, 108, 110, 0.1);
+        }
+
+        input[type="text"].error,
+        input[type="email"].error {
+            border-color: #E74C3C;
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: #E74C3C;
+            margin-top: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .checkbox-label,
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--color-elm);
+        }
+
+        .toggle-switch {
+            display: inline-flex;
+            align-items: center;
+            width: 48px;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--color-elm);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        /* ============ 7. NAVIGATION ============ */
+        .floating-pill-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(47, 49, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            pointer-events: none;
+            margin: 0 auto;
+        }
+
+        .floating-pill-nav button {
+            pointer-events: auto;
+            padding: 8px 16px;
+            font-size: 12px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .floating-pill-nav button:hover {
+            background: var(--color-neon);
+            color: var(--color-ash);
+        }
+
+        .nav-concept {
+            padding: var(--space-lg);
+            background: var(--color-off-white);
+            border-radius: 8px;
+            border-left: 4px solid var(--color-elm);
+        }
+
+        .nav-concept-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-elm);
+            margin-bottom: var(--space-md);
+        }
+
+        /* ============ 8. ACCORDION ============ */
+        .accordion {
+            display: grid;
+            gap: var(--space-md);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .accordion-item {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: var(--space-lg);
+            background: var(--color-ash);
+            color: var(--color-white);
+            border: none;
+            font-family: var(--font-family);
+            font-size: clamp(16px, 6vw, 28px);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+
+        .accordion-header:hover {
+            background: rgba(47, 49, 60, 0.9);
+        }
+
+        .accordion-icon {
+            font-size: 24px;
+            color: var(--color-neon);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: var(--space-md);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            background: var(--color-white);
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-text {
+            padding: var(--space-lg);
+            font-size: var(--type-body);
+            line-height: 1.8;
+        }
+
+        /* ============ 9. NEON HIGHLIGHTER ============ */
+        .highlight-demo {
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .highlight {
+            background: linear-gradient(to right, transparent 0%, transparent 55%, var(--color-neon) 55%, var(--color-neon) 100%);
+            padding: 4px 0;
+            display: inline-block;
+        }
+
+        /* ============ 10. SECTION PATTERNS ============ */
+        .pattern-demo {
+            display: grid;
+            gap: var(--space-3xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .dark-section {
+            background: var(--color-ash);
+            color: var(--color-white);
+            padding: var(--space-3xl);
+            border-radius: 8px;
+            margin-bottom: var(--space-md);
+        }
+
+        .light-section {
+            background: var(--color-off-white);
+            color: var(--color-ash);
+            padding: var(--space-3xl);
+            border-radius: 8px;
+            margin-bottom: var(--space-md);
+        }
+
+        .dark-section h3,
+        .light-section h3 {
+            font-size: var(--type-huge);
+            font-weight: 800;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* ============ 11. SPACING & LAYOUT ============ */
+        .spacing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .spacing-table th,
+        .spacing-table td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 13px;
+        }
+
+        .spacing-table th {
+            background: var(--color-ash);
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .spacing-sample {
+            display: inline-block;
+            background: var(--color-neon);
+            color: var(--color-ash);
+            font-weight: 600;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--color-ash);
+            color: var(--color-ice);
+            padding: var(--space-2xl) var(--space-md);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-top: var(--space-4xl);
+        }
+
+        /* ============ UTILITIES ============ */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .grid-item {
+            padding: var(--space-lg);
+            background: var(--color-ash);
+            color: var(--color-white);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .copy-box {
+            padding: var(--space-md);
+            background: var(--color-off-white);
+            border-left: 4px solid var(--color-neon);
+            border-radius: 4px;
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+            word-break: break-all;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .copy-box:hover {
+            background: rgba(204, 255, 0, 0.1);
+        }
+        .back-link {
+            position: fixed; top: 24px; left: 24px; z-index: 10001;
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--color-neon); }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Zurück</a>
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <ul>
+            <li><a href="#colors">Farben</a></li>
+            <li><a href="#typography">Typografie</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#tags">Tags & Badges</a></li>
+            <li><a href="#cards">Karten</a></li>
+            <li><a href="#forms">Formular-Elemente</a></li>
+            <li><a href="#navigation">Navigation</a></li>
+            <li><a href="#accordion">Akkordeon</a></li>
+            <li><a href="#highlights">Highlights</a></li>
+            <li><a href="#patterns">Muster</a></li>
+            <li><a href="#spacing">Abstände</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============ 1. COLORS ============ -->
+    <section id="colors">
+        <h1>Farbpalette</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Sechsfarbiges Design-System mit ausgewogenen Nutzungsverhältnissen für visuelle Hierarchie und Barrierefreiheit.
+        </p>
+
+        <div class="color-grid">
+            <!-- Ash -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-ash);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">Ash</div>
+                    <div class="color-hex">#2F313C</div>
+                    <div class="color-var">--color-ash</div>
+                    <div class="color-usage">Primärer dunkler Hintergrund. Text, UI-Container, Hero-Bereiche. 40% Nutzung.</div>
+                </div>
+            </div>
+
+            <!-- Elm -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-elm);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">Elm</div>
+                    <div class="color-hex">#226C6E</div>
+                    <div class="color-var">--color-elm</div>
+                    <div class="color-usage">Sekundärer Akzent. Links, Highlights, Symbole. 25% Nutzung.</div>
+                </div>
+            </div>
+
+            <!-- Neon -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-neon);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">Neon</div>
+                    <div class="color-hex">#CCFF00</div>
+                    <div class="color-var">--color-neon</div>
+                    <div class="color-usage">Primärer CTA. Fette Highlights, elektrische Akzente. 10% Nutzung.</div>
+                </div>
+            </div>
+
+            <!-- Off-White -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-off-white);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">Off-White</div>
+                    <div class="color-hex">#F5F3EE</div>
+                    <div class="color-var">--color-off-white</div>
+                    <div class="color-usage">Sekundärer Hintergrund. Helle Abschnitte, Atemraum. 20% Nutzung.</div>
+                </div>
+            </div>
+
+            <!-- Ice -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-ice);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">Ice</div>
+                    <div class="color-hex">#C5DAE0</div>
+                    <div class="color-var">--color-ice</div>
+                    <div class="color-usage">Subtiler Akzent, gedämpfte Sekundärfarbe. Ränder, Overlays. 3% Nutzung.</div>
+                </div>
+            </div>
+
+            <!-- White -->
+            <div class="color-swatch">
+                <div class="color-swatch-preview" style="background: var(--color-white); border: 1px solid rgba(0, 0, 0, 0.2);"></div>
+                <div class="color-swatch-info">
+                    <div class="color-name">White</div>
+                    <div class="color-hex">#FFFFFF</div>
+                    <div class="color-var">--color-white</div>
+                    <div class="color-usage">Text auf dunklem, Kartenhintergründe. 2% Nutzung.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="usage-ratio">
+            <p style="font-size: 12px; font-weight: 700; margin-bottom: var(--space-md); letter-spacing: 2px;">FLÄCHENVERTEILUNG</p>
+            <div class="ratio-bar">
+                <div class="ratio-segment ratio-ash">40%</div>
+                <div class="ratio-segment ratio-elm">25%</div>
+                <div class="ratio-segment ratio-off-white">20%</div>
+                <div class="ratio-segment ratio-neon">10%</div>
+                <div class="ratio-segment ratio-ice">3%</div>
+                <div class="ratio-segment ratio-white">2%</div>
+            </div>
+            <div class="ratio-legend">
+                <div><strong>Ash:</strong> 40%</div>
+                <div><strong>Elm:</strong> 25%</div>
+                <div><strong>Off-White:</strong> 20%</div>
+                <div><strong>Neon:</strong> 10%</div>
+                <div><strong>Ice:</strong> 3%</div>
+                <div><strong>White:</strong> 2%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 2. TYPOGRAPHY ============ -->
+    <section id="typography">
+        <h1>Typografie-System</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Sora Schriftfamilie (Gewichte 300–800) mit responsiver Typografie-Skala via clamp() für flüssige Größenanpassung. Alle Beispiele werden bei Live-Breakpoints angezeigt.
+        </p>
+
+        <div class="type-scale">
+            <!-- Giant -->
+            <div class="type-example">
+                <div class="type-label">Giant / Hero-Überschrift</div>
+                <div class="type-specs">Größe: clamp(72px, 12vw, 180px) | Stärke: 800</div>
+                <div class="type-giant-demo">Transformieren Sie Ihre digitale Präsenz</div>
+            </div>
+
+            <!-- Huge -->
+            <div class="type-example">
+                <div class="type-label">Huge / Section-Überschrift</div>
+                <div class="type-specs">Größe: clamp(48px, 7vw, 110px) | Stärke: 800</div>
+                <div class="type-huge-demo">Mutiges Design, grenzenlose Möglichkeiten</div>
+            </div>
+
+            <!-- Big -->
+            <div class="type-example">
+                <div class="type-label">Big / Unter-Überschrift</div>
+                <div class="type-specs">Größe: clamp(32px, 4.5vw, 72px) | Stärke: 700</div>
+                <div class="type-big-demo">Geschaffen für Wirkung und Klarheit</div>
+            </div>
+
+            <!-- Body XL -->
+            <div class="type-example">
+                <div class="type-label">Body XL / Führungstext</div>
+                <div class="type-specs">Größe: clamp(18px, 2.2vw, 32px) | Stärke: 400</div>
+                <div class="type-body-xl-demo">Wir erstellen digitale Erfahrungen, die zählen. Grenzen verschieben, Schönheit schaffen.</div>
+            </div>
+
+            <!-- Body -->
+            <div class="type-example">
+                <div class="type-label">Body / Standardtext</div>
+                <div class="type-specs">Größe: clamp(16px, 1.5vw, 24px) | Stärke: 400</div>
+                <div class="type-body-demo">Jedes Projekt beginnt mit Verständnis. Wir hören zu, planen strategisch und entwerfen Lösungen, die bei Ihrer Zielgruppe ankommen. Von der Konzeption bis zum Start bringen wir Klarheit und Kreativität in jedes Detail.</div>
+            </div>
+
+            <!-- Small/Label -->
+            <div class="type-example">
+                <div class="type-label">Small / Augenbrauen-Etikett</div>
+                <div class="type-specs">Größe: 11px | Stärke: 700 | Letter-spacing: 4px | Großbuchstaben</div>
+                <div class="type-small-demo">Digitale Exzellenz</div>
+            </div>
+
+            <!-- Weight Showcase -->
+            <div class="type-example">
+                <div class="type-label">Gewichts-Showcase (alle 24px)</div>
+                <div class="type-specs">Zeigt den vollständigen Gewichtsbereich von Light bis ExtraBold</div>
+                <div class="weight-showcase">
+                    <div class="weight-sample">
+                        <div class="weight-text w300">Light</div>
+                        <div class="weight-name">Weight 300</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="weight-text w400">Regular</div>
+                        <div class="weight-name">Weight 400</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="weight-text w500">Medium</div>
+                        <div class="weight-name">Weight 500</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="weight-text w600">SemiBold</div>
+                        <div class="weight-name">Weight 600</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="weight-text w700">Bold</div>
+                        <div class="weight-name">Weight 700</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="weight-text w800">ExtraBold</div>
+                        <div class="weight-name">Weight 800</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 3. BUTTONS ============ -->
+    <section id="buttons">
+        <h1>Buttons</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Sieben Varianten in vier Größen. Alle Buttons unterstützen Icons über den Pfeil-Modifikator.
+        </p>
+
+        <div class="button-grid">
+            <!-- Primärer Buttons -->
+            <div class="button-group">
+                <span class="button-group-label">Primär (Neon)</span>
+                <button class="btn btn-primary btn-xs">XS Button</button>
+                <button class="btn btn-primary btn-sm">SM Button</button>
+                <button class="btn btn-primary btn-md">MD Button</button>
+                <button class="btn btn-primary btn-lg">LG Button</button>
+                <button class="btn btn-primary btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Sekundärer Buttons -->
+            <div class="button-group">
+                <span class="button-group-label">Sekundär (Elm)</span>
+                <button class="btn btn-secondary btn-xs">XS Button</button>
+                <button class="btn btn-secondary btn-sm">SM Button</button>
+                <button class="btn btn-secondary btn-md">MD Button</button>
+                <button class="btn btn-secondary btn-lg">LG Button</button>
+                <button class="btn btn-secondary btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Dark Buttons -->
+            <div class="button-group">
+                <span class="button-group-label">Dark (Ash)</span>
+                <button class="btn btn-dark btn-xs">XS Button</button>
+                <button class="btn btn-dark btn-sm">SM Button</button>
+                <button class="btn btn-dark btn-md">MD Button</button>
+                <button class="btn btn-dark btn-lg">LG Button</button>
+                <button class="btn btn-dark btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Outline Elm -->
+            <div class="button-group">
+                <span class="button-group-label">Outline Elm</span>
+                <button class="btn btn-outline-elm btn-xs">XS Button</button>
+                <button class="btn btn-outline-elm btn-sm">SM Button</button>
+                <button class="btn btn-outline-elm btn-md">MD Button</button>
+                <button class="btn btn-outline-elm btn-lg">LG Button</button>
+                <button class="btn btn-outline-elm btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Outline Dark -->
+            <div class="button-group">
+                <span class="button-group-label">Outline Dark</span>
+                <button class="btn btn-outline-dark btn-xs">XS Button</button>
+                <button class="btn btn-outline-dark btn-sm">SM Button</button>
+                <button class="btn btn-outline-dark btn-md">MD Button</button>
+                <button class="btn btn-outline-dark btn-lg">LG Button</button>
+                <button class="btn btn-outline-dark btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Ghost -->
+            <div class="button-group">
+                <span class="button-group-label">Ghost</span>
+                <button class="btn btn-ghost btn-xs">XS Button</button>
+                <button class="btn btn-ghost btn-sm">SM Button</button>
+                <button class="btn btn-ghost btn-md">MD Button</button>
+                <button class="btn btn-ghost btn-lg">LG Button</button>
+                <button class="btn btn-ghost btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Ghost Inverse (on dark) -->
+            <div class="button-group" style="background: var(--color-ash); padding: var(--space-md); border-radius: 4px;">
+                <span class="button-group-label" style="color: var(--color-neon);">Ghost Inverse</span>
+                <button class="btn btn-ghost-inverse btn-xs">XS Button</button>
+                <button class="btn btn-ghost-inverse btn-sm">SM Button</button>
+                <button class="btn btn-ghost-inverse btn-md">MD Button</button>
+                <button class="btn btn-ghost-inverse btn-lg">LG Button</button>
+                <button class="btn btn-ghost-inverse btn-md btn-arrow">Mit Pfeil</button>
+            </div>
+
+            <!-- Link-Stil -->
+            <div class="button-group">
+                <span class="button-group-label">Link-Stil</span>
+                <button class="btn btn-link btn-xs">XS Link</button>
+                <button class="btn btn-link btn-sm">SM Link</button>
+                <button class="btn btn-link btn-md">MD Link</button>
+                <button class="btn btn-link btn-lg">LG Link</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 4. TAGS & BADGES ============ -->
+    <section id="tags">
+        <h1>Tags & Badges</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Pillenförmige Tags in fünf Farbvarianten. Optionale Outline und Punkt-Indikatoren. Darstellung auf hellem und dunklem Hintergrund.
+        </p>
+
+        <!-- Light Background -->
+        <div class="eyebrow" style="margin-bottom: var(--space-lg);">Auf hellem Hintergrund</div>
+        <div style="background: var(--color-off-white); padding: var(--space-xl); border-radius: 8px; margin-bottom: var(--space-2xl);">
+            <div class="tag-group">
+                <span class="tag-group-label">Solid-Varianten</span>
+                <div class="tag-grid">
+                    <span class="tag tag-elm">Elm</span>
+                    <span class="tag tag-neon">Neon</span>
+                    <span class="tag tag-ash">Ash</span>
+                    <span class="tag tag-ice">Ice</span>
+                    <span class="tag tag-off-white" style="border: 1px solid rgba(0,0,0,0.1);">Off-White</span>
+                </div>
+            </div>
+
+            <div class="tag-group">
+                <span class="tag-group-label">Outline-Varianten</span>
+                <div class="tag-grid">
+                    <span class="tag tag-outline-elm">Elm</span>
+                    <span class="tag tag-outline-neon" style="color: var(--color-ash);">Neon</span>
+                    <span class="tag tag-outline-ash">Ash</span>
+                    <span class="tag tag-outline-ice" style="color: var(--color-ash);">Ice</span>
+                </div>
+            </div>
+
+            <div class="tag-group" style="margin-bottom: 0;">
+                <span class="tag-group-label">Solid mit Punkt</span>
+                <div class="tag-grid">
+                    <span class="tag tag-elm tag-dot">Elm</span>
+                    <span class="tag tag-neon tag-dot">Neon</span>
+                    <span class="tag tag-ash tag-dot">Ash</span>
+                    <span class="tag tag-ice tag-dot">Ice</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Background -->
+        <div class="eyebrow" style="margin-bottom: var(--space-lg);">Auf dunklem Hintergrund</div>
+        <div style="background: var(--color-ash); padding: var(--space-xl); border-radius: 8px; margin-bottom: var(--space-2xl);">
+            <div class="tag-group">
+                <span class="tag-group-label" style="color: var(--color-neon);">Solid-Varianten</span>
+                <div class="tag-grid">
+                    <span class="tag tag-elm">Elm</span>
+                    <span class="tag tag-neon">Neon</span>
+                    <span class="tag tag-ice">Ice</span>
+                    <span class="tag tag-off-white">Off-White</span>
+                </div>
+            </div>
+
+            <div class="tag-group">
+                <span class="tag-group-label" style="color: var(--color-neon);">Outline-Varianten</span>
+                <div class="tag-grid">
+                    <span class="tag tag-outline-elm" style="color: var(--color-ice);">Elm</span>
+                    <span class="tag tag-outline-neon">Neon</span>
+                    <span class="tag tag-outline-ice">Ice</span>
+                    <span class="tag tag-outline-off-white">Off-White</span>
+                </div>
+            </div>
+
+            <div class="tag-group" style="margin-bottom: 0;">
+                <span class="tag-group-label" style="color: var(--color-neon);">Solid mit Punkt</span>
+                <div class="tag-grid">
+                    <span class="tag tag-elm tag-dot">Elm</span>
+                    <span class="tag tag-neon tag-dot">Neon</span>
+                    <span class="tag tag-ice tag-dot">Ice</span>
+                    <span class="tag tag-off-white tag-dot">Off-White</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 5. CARDS ============ -->
+    <section id="cards">
+        <h1>Kartenkomponenten</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Sechs Kartenvarianten für verschiedene Inhaltstypen und Betonung. Zwei Layouts: gross (2 Spalten) und kompakt (4 Spalten).
+        </p>
+
+        <div class="eyebrow" style="margin-bottom: var(--space-lg);">Gross — 2 Spalten</div>
+        <div class="card-grid">
+            <div class="card card-standard">
+                <div class="card-title">Standard Karte</div>
+                <div class="card-text">Weisser Hintergrund mit subtiler Grenze und Hover-Lift. Perfekt für Featured Content, Produkte oder Fallstudien.</div>
+                <div style="margin-top: var(--space-lg);">
+                    <button class="btn btn-primary btn-sm">Mehr erfahren</button>
+                </div>
+            </div>
+
+            <div class="card card-dark">
+                <div class="card-title">Dark Karte</div>
+                <div class="card-text">Ash-Hintergrund mit weissem Text. Ideal für Funktionsankündigungen, Testimonials oder Premium-Angebote.</div>
+                <div style="margin-top: var(--space-lg);">
+                    <button class="btn btn-primary btn-sm">Erkunden</button>
+                </div>
+            </div>
+
+            <div class="card card-elm">
+                <div class="card-title">Elm Accent</div>
+                <div class="card-text">Elm-Hintergrund mit weissem Text. Für sekundäre CTAs, Service-Highlights oder Kategorie-Karten.</div>
+                <div style="margin-top: var(--space-lg);">
+                    <button class="btn btn-ghost-inverse btn-sm">Mehr anzeigen</button>
+                </div>
+            </div>
+
+            <div class="card card-neon">
+                <div class="card-title">Neon Accent</div>
+                <div class="card-text">Weisser Hintergrund mit Neon-Oberkante. Perfekt zum Hervorheben von ausgewählten Elementen oder Premium-Content-Blöcken.</div>
+                <div style="margin-top: var(--space-lg);">
+                    <button class="btn btn-primary btn-sm">Loslegen</button>
+                </div>
+            </div>
+
+            <div class="card card-standard card-stat">
+                <div class="card-stat-number">27+</div>
+                <div class="card-stat-label">Jahre Erfahrung</div>
+            </div>
+
+            <div class="card card-ki">
+                <div class="card-title">KI-Karte</div>
+                <div class="card-text">Leuchtende Neon-Grenze auf dunklem Hintergrund. Perfekt für hochmoderne Funktionen oder Premium-Services.</div>
+                <div style="margin-top: var(--space-lg);">
+                    <button class="btn btn-ghost-inverse btn-sm">Jetzt testen</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="eyebrow" style="margin-bottom: var(--space-lg);">Kompakt — 4 Spalten</div>
+        <div class="card-grid-4">
+            <div class="card card-standard">
+                <div class="card-title">Standard</div>
+                <div class="card-text">Weiss, subtile Grenze, Hover-Lift.</div>
+                <div style="margin-top: var(--space-md);">
+                    <button class="btn btn-primary btn-xs">Mehr</button>
+                </div>
+            </div>
+
+            <div class="card card-dark">
+                <div class="card-title">Dark</div>
+                <div class="card-text">Ash-Hintergrund, weisser Text.</div>
+                <div style="margin-top: var(--space-md);">
+                    <button class="btn btn-primary btn-xs">Erkunden</button>
+                </div>
+            </div>
+
+            <div class="card card-elm">
+                <div class="card-title">Elm Accent</div>
+                <div class="card-text">Elm-Hintergrund, weisser Text.</div>
+                <div style="margin-top: var(--space-md);">
+                    <button class="btn btn-ghost-inverse btn-xs">Anzeigen</button>
+                </div>
+            </div>
+
+            <div class="card card-neon">
+                <div class="card-title">Neon Accent</div>
+                <div class="card-text">Weiss mit Neon-Oberkante.</div>
+                <div style="margin-top: var(--space-md);">
+                    <button class="btn btn-primary btn-xs">Loslegen</button>
+                </div>
+            </div>
+
+            <div class="card card-standard card-stat" style="min-height: 160px;">
+                <div class="card-stat-number" style="font-size: var(--type-big);">27+</div>
+                <div class="card-stat-label" style="font-size: 12px;">Jahre Erfahrung</div>
+            </div>
+
+            <div class="card card-ki">
+                <div class="card-title">KI-Karte</div>
+                <div class="card-text">Neon-Glow auf dunklem Grund.</div>
+                <div style="margin-top: var(--space-md);">
+                    <button class="btn btn-ghost-inverse btn-xs">Testen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 6. FORM ELEMENTS ============ -->
+    <section id="forms">
+        <h1>Formular-Elemente & States</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Vollständige Formulareingabe-Bibliothek mit Fokus-, Fehler- und interaktiven Zuständen.
+        </p>
+
+        <!-- Texteingaben -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Texteingaben</h2>
+            <div class="form-group">
+                <label for="text-default">Standard-Zustand</label>
+                <input type="text" id="text-default" placeholder="Text eingeben...">
+            </div>
+            <div class="form-group">
+                <label for="text-focused">Fokussiert-Zustand (klicken zum Testen)</label>
+                <input type="text" id="text-focused" placeholder="Hier klicken für Fokus-Zustand...">
+            </div>
+            <div class="form-group">
+                <label for="text-error">Fehler-Zustand</label>
+                <input type="text" id="text-error" class="error" placeholder="Ungültige Eingabe" value="user@invalid">
+                <div class="form-error">Bitte geben Sie eine gültige E-Mail-Adresse ein</div>
+            </div>
+        </div>
+
+        <!-- Textarea -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Textarea</h2>
+            <div class="form-group">
+                <label for="textarea">Nachricht</label>
+                <textarea id="textarea" placeholder="Ihre Nachricht eingeben..."></textarea>
+            </div>
+        </div>
+
+        <!-- Select -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Dropdown auswählen</h2>
+            <div class="form-group">
+                <label for="select">Wählen Sie eine Option</label>
+                <select id="select">
+                    <option>Wählen Sie eine Option...</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Kontrollkästchen -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Kontrollkästchen</h2>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" checked>
+                    <span>Ich stimme den AGB zu</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox">
+                    <span>Abonnieren Sie unseren Newsletter</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox">
+                    <span>Merken Sie meine Voreinstellungen</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Optionsschaltflächen -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Optionsschaltflächen</h2>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="option" checked>
+                    <span>Option A</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="option">
+                    <span>Option B</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="option">
+                    <span>Option C</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Umschalter -->
+        <div class="form-section">
+            <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Umschalter</h2>
+            <div style="display: flex; gap: var(--space-lg); flex-wrap: wrap;">
+                <div>
+                    <label style="display: flex; align-items: center; gap: var(--space-md); cursor: pointer;">
+                        <div class="toggle-switch"></div>
+                        <span>Inaktiv</span>
+                    </label>
+                </div>
+                <div>
+                    <label style="display: flex; align-items: center; gap: var(--space-md); cursor: pointer;">
+                        <div class="toggle-switch active"></div>
+                        <span>Aktiv</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 7. NAVIGATION ============ -->
+    <section id="navigation">
+        <h1>Navigation</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Navigationskomponenten für die primäre Seitenstruktur und mobile Interaktionen.
+        </p>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Schwebende Pillen-Navigation</h2>
+        <div style="background: var(--color-ash); padding: var(--space-xl); border-radius: 8px; margin-bottom: var(--space-md);">
+            <div style="font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--color-neon); margin-bottom: var(--space-md);">Schwebende Pillen-Navigation Konzept</div>
+            <p style="font-size: var(--type-body); margin-bottom: var(--space-lg); color: var(--color-off-white);">
+                Am unteren Rand fixiert, dunkler Hintergrund (rgba 95% mit Unschärfe), minimale Pillenform. Zeigt Hauptnavigationselemente mit Neon-Hoverzuständen an. Responsive: einzelne Reihe auf dem Desktop, kollabiert zu Hamburger auf Mobilgeräte.
+            </p>
+            <div style="display: inline-flex; gap: var(--space-md); flex-wrap: wrap; background: rgba(255,255,255,0.08); padding: var(--space-md) var(--space-lg); border-radius: 32px; border: 1px solid rgba(255,255,255,0.1);">
+                <button class="btn btn-ghost-inverse btn-sm" style="pointer-events: auto;">Startseite</button>
+                <button class="btn btn-ghost-inverse btn-sm" style="pointer-events: auto;">Leistungen</button>
+                <button class="btn btn-ghost-inverse btn-sm" style="pointer-events: auto;">Arbeiten</button>
+                <button class="btn btn-ghost-inverse btn-sm" style="pointer-events: auto;">Über</button>
+                <button class="btn btn-primary btn-sm" style="pointer-events: auto; border-radius: 20px;">Kontakt</button>
+            </div>
+        </div>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg); margin-top: var(--space-2xl);">Mobiles Hamburger-Menü</h2>
+        <div style="background: var(--color-ash); padding: var(--space-xl); border-radius: 8px;">
+            <div style="font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--color-neon); margin-bottom: var(--space-md);">Mobiles Hamburger-Konzept</div>
+            <p style="font-size: var(--type-body); margin-bottom: var(--space-lg); color: var(--color-off-white);">
+                Hamburger-Symbol (drei horizontale Linien) transformiert sich auf Klick zu X. Schiebt in Vollbildschirm oder Seitenleistenmenü mit riesigem Typ (6-10vw). Dunkler Hintergrund (Ash), weisser Text, Neon-Akzente beim Hover. Sanfte Animationen.
+            </p>
+            <div style="font-size: 24px; font-weight: 800; color: var(--color-off-white);">☰</div>
+            <p style="font-size: 12px; color: var(--color-ice); margin-top: var(--space-md);">
+                Umsetzung: <code style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 3px; color: var(--color-neon);">position: fixed; z-index</code> mit <code style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 3px; color: var(--color-neon);">transform: translateX</code> Animation
+            </p>
+        </div>
+    </section>
+
+    <!-- ============ 8. ACCORDION ============ -->
+    <section id="accordion">
+        <h1>Akkordeon</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Giant-Akkordeon-Header mit Neon-"+"-Symbolen. Ideal für Leistungen (Services) Abschnitte.
+        </p>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Strategie & Beratung</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Wir beginnen jedes Projekt, indem wir Ihr Geschäft, Ihr Publikum und Ihre Ziele verstehen. Durch Forschung und Strategiesitzungen entwickeln wir eine klare Vision, die Design und Entwicklung leitet. Unser Ansatz stellt sicher, dass jede Entscheidung absichtlich und messbar ist.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Design & Marke</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Von der visuellen Identität bis zu digitalen Interfaces erstellen wir Erfahrungen, die ankommen. Unsere Designsprache ist mutig, minimal und absichtlich – auf der Grundlage echter Benutzerforschung und Designprinzipien. Wir entwerfen für alle Geräte und alle Benutzer.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Web-Entwicklung</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Wir erstellen schnelle, zugängliche und entzückende digitale Produkte. Mit modernen Frameworks und Best Practices erstellen wir responsive Sites, die auf allen Geräten funktionieren. Von HTML/CSS bis zu komplexen Anwendungen bringen wir Designs mit sauberen Code zum Leben.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Inhalt & SEO</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Großes Design benötigt großartigen Inhalt. Wir entwickeln Messaging- und SEO-Strategien, die Ihre Geschichte authentisch erzählen. Von Copywriting bis zu Content Management stellen wir sicher, dass Ihre digitale Präsenz klar, überzeugend und auffindbar ist.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Analytik & Optimierung</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Der Start ist erst der Anfang. Wir überwachen die Leistung, sammeln Benutzererkenntnisse und verbessern Ihre digitale Erfahrung kontinuierlich. Datengesteuerte Entscheidungen halten Ihre Site schnell, ansprechend und effektiv.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Unterstützung & Wartung</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-text">
+                        Ihre Website entwickelt sich ständig weiter. Wir bieten laufende Unterstützung, Sicherheitsupdates und Funktionserweiterungen, um Ihre digitale Präsenz reibungslos zu halten. Betrachten Sie uns als Ihr digitales Team, das immer bereit ist, zu helfen.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.parentElement;
+                    item.classList.toggle('active');
+                });
+            });
+        </script>
+    </section>
+
+    <!-- ============ 9. NEON HIGHLIGHTER ============ -->
+    <section id="highlights">
+        <h1>Neon-Highlight-Effekt</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Linearer Gradient-Highlight (55% transparent, 55% Neon) für Betonung und visuellen Pop.
+        </p>
+
+        <div class="highlight-demo">
+            <p style="font-size: var(--type-huge); font-weight: 800; line-height: 1.3;">
+                Wir schaffen digitale Erfahrungen mit <span class="highlight">mutiger Gestaltung</span> und <span class="highlight">sauberen Code</span>, die echte Ergebnisse liefern.
+            </p>
+        </div>
+
+        <div class="copy-box">
+            background: linear-gradient(to right, transparent 0%, transparent 55%, #CCFF00 55%, #CCFF00 100%);
+        </div>
+
+        <p style="font-size: 13px; color: rgba(0, 0, 0, 0.6); margin-top: var(--space-lg);">
+            Perfekt zum Hervorheben von Schlüsselsätzen in Überschriften und Bodytext. Wendet einen semi-transparenten Neon-Hintergrund an, der bei 55% der Textbreite beginnt.
+        </p>
+    </section>
+
+    <!-- ============ 10. SECTION PATTERNS ============ -->
+    <section id="patterns">
+        <h1>Section-Patterns</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Dunkel-/Hellwechselmuster mit konsistenten Abstands-Token.
+        </p>
+
+        <div class="pattern-demo">
+            <div class="dark-section">
+                <h3>Dark Section (Ash-Hintergrund)</h3>
+                <p style="font-size: var(--type-body); margin-bottom: var(--space-lg);">
+                    Perfekt für Hero-Abschnitte, Featured Content oder wichtige Botschaften. Hoher Kontrast mit weißem Text gewährleistet hervorragende Lesbarkeit. Kombinieren Sie mit Neon-Akzenten für kühne CTAs.
+                </p>
+                <button class="btn btn-primary btn-md btn-arrow">Mehr erkunden</button>
+            </div>
+
+            <div class="light-section">
+                <h3>Light Section (Off-White-Hintergrund)</h3>
+                <p style="font-size: var(--type-body); margin-bottom: var(--space-lg);">
+                    Atemraum und visuelle Trennung. Verwenden Sie für Sekundeninhalte, Fallstudien-Details oder Funktionslisten. Erzeugt ein ruhiges, zugängliches Gefühl ohne reines Weiß.
+                </p>
+                <button class="btn btn-secondary btn-md btn-arrow">Mehr erfahren</button>
+            </div>
+
+            <div class="dark-section">
+                <h3>Abstands-Referenz</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-md); margin-top: var(--space-lg);">
+                    <div style="padding: var(--space-xs); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">XS: 4px</div>
+                    <div style="padding: var(--space-sm); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">SM: 8px</div>
+                    <div style="padding: var(--space-md); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">MD: 16px</div>
+                    <div style="padding: var(--space-lg); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">LG: 24px</div>
+                    <div style="padding: var(--space-xl); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">XL: 32px</div>
+                    <div style="padding: var(--space-2xl); background: rgba(204, 255, 0, 0.2); border-radius: 4px; text-align: center; font-size: 12px;">2XL: 48px</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 11. SPACING & LAYOUT ============ -->
+    <section id="spacing">
+        <h1>Abstände & Layout</h1>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-2xl); color: rgba(0, 0, 0, 0.7);">
+            Dokumentierte Abstands-Token, maximale Breiten und Layout-Werte für konsistente Implementierung.
+        </p>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg);">Abstands-Skala</h2>
+        <table class="spacing-table">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Wert</th>
+                    <th>CSS-Variable</th>
+                    <th>Verwendung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="spacing-sample">XS</span></td>
+                    <td>4px</td>
+                    <td><code>--space-xs</code></td>
+                    <td>Mikro-Abstände, Symbol-Lücken</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">SM</span></td>
+                    <td>8px</td>
+                    <td><code>--space-sm</code></td>
+                    <td>Enge Komponenten-Abstände</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">MD</span></td>
+                    <td>16px</td>
+                    <td><code>--space-md</code></td>
+                    <td>Padding, Element-Ränder</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">LG</span></td>
+                    <td>24px</td>
+                    <td><code>--space-lg</code></td>
+                    <td>Interner Abstand im Abschnitt</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">XL</span></td>
+                    <td>32px</td>
+                    <td><code>--space-xl</code></td>
+                    <td>Komponenten-Gruppen</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">2XL</span></td>
+                    <td>48px</td>
+                    <td><code>--space-2xl</code></td>
+                    <td>Zwischen Abschnitten</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">3XL</span></td>
+                    <td>64px</td>
+                    <td><code>--space-3xl</code></td>
+                    <td>Große Abschnittslücken</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">4XL</span></td>
+                    <td>96px</td>
+                    <td><code>--space-4xl</code></td>
+                    <td>Größere Layout-Umbrüche</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg); margin-top: var(--space-2xl);">Layout-Token</h2>
+        <table class="spacing-table">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Wert</th>
+                    <th>CSS-Variable</th>
+                    <th>Verwendung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="spacing-sample">Max Width Inhalt</span></td>
+                    <td>1440px</td>
+                    <td><code>--max-width-content</code></td>
+                    <td>Hauptinhalts-Container</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">Max Width Eng</span></td>
+                    <td>720px</td>
+                    <td><code>--max-width-narrow</code></td>
+                    <td>Text-schwere Abschnitte, Formulare</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">Abschnitt-Padding</span></td>
+                    <td>96px 16px</td>
+                    <td><code>--section-padding</code></td>
+                    <td>Standardabschnitt vertikal/horizontal</td>
+                </tr>
+                <tr>
+                    <td><span class="spacing-sample">Schriftfamilie</span></td>
+                    <td>Sora</td>
+                    <td><code>--font-family</code></td>
+                    <td>Alle Typografie</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg); margin-top: var(--space-2xl);">Responsive Raster</h2>
+        <p style="font-size: var(--type-body); margin-bottom: var(--space-lg); color: rgba(0, 0, 0, 0.7);">
+            Das primäre Raster verwendet <code style="background: var(--color-off-white); padding: 4px 8px; border-radius: 3px;">repeat(auto-fit, minmax(280px, 1fr))</code> für flexible, responsive Layouts.
+        </p>
+        <div class="grid-demo">
+            <div class="grid-item">Spalte 1</div>
+            <div class="grid-item">Spalte 2</div>
+            <div class="grid-item">Spalte 3</div>
+            <div class="grid-item">Spalte 4</div>
+            <div class="grid-item">Responsive auf Mobilgeräten</div>
+        </div>
+
+        <h2 style="font-size: var(--type-big); font-weight: 700; margin-bottom: var(--space-lg); margin-top: var(--space-2xl);">Schatten-Skala</h2>
+        <table class="spacing-table">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Wert</th>
+                    <th>Verwendung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>--shadow-sm</code></td>
+                    <td><code>0 2px 4px rgba(0,0,0,0.1)</code></td>
+                    <td>Subtile Hover-Zustände</td>
+                </tr>
+                <tr>
+                    <td><code>--shadow-md</code></td>
+                    <td><code>0 4px 12px rgba(0,0,0,0.15)</code></td>
+                    <td>Standarderhebungen</td>
+                </tr>
+                <tr>
+                    <td><code>--shadow-lg</code></td>
+                    <td><code>0 12px 32px rgba(0,0,0,0.2)</code></td>
+                    <td>Hohe Betonung, Modals</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        maxomedia.ch Relaunch · UI Kit · Team Bubu & Gwen · März 2026
+    </footer>
+</body>
+</html>

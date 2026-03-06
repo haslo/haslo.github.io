@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrollytelling · maxomedia.ch · Team Bubu & Gwen</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM TOKENS (from UI Kit)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --color-ash: #2F313C;
+  --color-elm: #226C6E;
+  --color-neon: #CCFF00;
+  --color-off-white: #F5F3EE;
+  --color-ice: #C5DAE0;
+  --color-white: #FFFFFF;
+  --color-muted: #8a8e96;
+
+  --font-family: 'Sora', sans-serif;
+
+  --type-giant: clamp(72px, 12vw, 180px);
+  --type-huge: clamp(48px, 7vw, 110px);
+  --type-big: clamp(32px, 4.5vw, 72px);
+  --type-body-xl: clamp(18px, 2.2vw, 32px);
+  --type-body: clamp(16px, 1.5vw, 24px);
+  --type-small: 11px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  --max-width-content: 1440px;
+  --max-width-narrow: 720px;
+
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; /* GSAP handles smoothness */ }
+body {
+  font-family: var(--font-family);
+  color: var(--color-ash);
+  background: var(--color-ash);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ═══════════════════════════════════════════════════════════ */
+.eyebrow {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-elm);
+  display: block;
+}
+.giant { font-size: var(--type-giant); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; }
+.huge  { font-size: var(--type-huge);  font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; }
+.big   { font-size: var(--type-big);   font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
+.highlight {
+  background: linear-gradient(180deg, transparent 55%, var(--color-neon) 55%);
+  display: inline;
+  padding: 0 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION BASE
+   ═══════════════════════════════════════════════════════════ */
+section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-4xl) clamp(24px, 5vw, 80px);
+  overflow: hidden;
+}
+.section-inner {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Background section numbers */
+.section-bg-num {
+  position: absolute;
+  font-size: clamp(200px, 30vw, 450px);
+  font-weight: 800;
+  opacity: 0.03;
+  color: currentColor;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING PILL NAV
+   ═══════════════════════════════════════════════════════════ */
+.nav-pill {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(47, 49, 60, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 40px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.nav-pill.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-pill a {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.nav-pill a:hover,
+.nav-pill a.active {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-pill a.active {
+  background: var(--color-neon);
+  color: var(--color-ash);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §1 — HERO
+   ═══════════════════════════════════════════════════════════ */
+#hero {
+  background: var(--color-ash);
+  color: var(--color-white);
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#hero .eyebrow { color: var(--color-neon); margin-bottom: var(--space-lg); }
+.hero-title {
+  overflow: hidden;
+}
+.hero-title .word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.hero-subtitle {
+  font-size: var(--type-body-xl);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 600px;
+  margin: var(--space-2xl) auto 0;
+  line-height: 1.5;
+}
+.hero-subtitle .sub-word {
+  display: inline-block;
+  opacity: 0;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.scroll-indicator .arrow-down {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid var(--color-neon);
+  border-bottom: 2px solid var(--color-neon);
+  transform: rotate(45deg);
+  animation: pulse-arrow 2s ease-in-out infinite;
+}
+@keyframes pulse-arrow {
+  0%, 100% { opacity: 0.3; transform: rotate(45deg) translate(0, 0); }
+  50% { opacity: 1; transform: rotate(45deg) translate(4px, 4px); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §2 — WORD-BY-WORD REVEAL
+   ═══════════════════════════════════════════════════════════ */
+#words {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+.words-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.words-container .reveal-word {
+  display: inline-block;
+  font-size: var(--type-big);
+  font-weight: 700;
+  line-height: 1.3;
+  opacity: 0.08;
+  transition: none;
+  margin: 0 0.15em;
+}
+.words-container .reveal-word.active {
+  opacity: 1;
+}
+.words-container .reveal-word.neon-word {
+  color: var(--color-neon);
+}
+.words-container .reveal-word.neon-word.active {
+  text-shadow: 0 0 30px rgba(204, 255, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §3 — CARDS FLY IN
+   ═══════════════════════════════════════════════════════════ */
+#cards {
+  background: var(--color-off-white);
+  color: var(--color-ash);
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  max-width: 900px;
+  margin: var(--space-3xl) auto 0;
+}
+@media (max-width: 640px) {
+  .cards-grid { grid-template-columns: 1fr; }
+}
+.ingredient-card {
+  border-radius: 8px;
+  padding: var(--space-xl);
+  will-change: transform, opacity;
+}
+.ingredient-card .card-num {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  opacity: 0.5;
+}
+.ingredient-card h3 {
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  line-height: 1.1;
+}
+.ingredient-card p {
+  font-size: var(--type-body);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* Card variants */
+.card-standard {
+  background: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--color-ash);
+}
+.card-neon {
+  background: var(--color-white);
+  border-top: 4px solid var(--color-neon);
+  color: var(--color-ash);
+}
+.card-elm {
+  background: var(--color-elm);
+  color: var(--color-white);
+}
+.card-elm .card-num { color: var(--color-neon); }
+.card-dark {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+.card-dark .card-num { color: var(--color-neon); }
+
+/* ═══════════════════════════════════════════════════════════
+   §4 — PARALLAX
+   ═══════════════════════════════════════════════════════════ */
+#parallax {
+  background: var(--color-elm);
+  color: var(--color-white);
+  min-height: 200vh;
+  justify-content: flex-start;
+  padding-top: 20vh;
+}
+.parallax-layer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  will-change: transform;
+}
+.parallax-bg-text {
+  font-size: clamp(150px, 25vw, 400px);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+}
+.parallax-mid {
+  text-align: center;
+}
+.parallax-mid h2 {
+  font-size: var(--type-huge);
+  font-weight: 800;
+  line-height: 0.95;
+  margin-bottom: var(--space-lg);
+}
+.parallax-mid p {
+  font-size: var(--type-body-xl);
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.parallax-neon-stripe {
+  height: 4px;
+  background: var(--color-neon);
+  width: 120px;
+  margin: var(--space-2xl) auto;
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §5 — FOLD-AWAY PANELS
+   ═══════════════════════════════════════════════════════════ */
+#fold {
+  background: var(--color-off-white);
+  color: var(--color-ash);
+  perspective: 1200px;
+  padding: 0;
+}
+.fold-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  perspective: 1200px;
+}
+.fold-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-4xl) clamp(24px, 5vw, 80px);
+  transform-origin: top center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.fold-panel h2 {
+  font-size: var(--type-huge);
+  font-weight: 800;
+  line-height: 0.95;
+  margin-bottom: var(--space-lg);
+}
+.fold-panel p {
+  font-size: var(--type-body-xl);
+  max-width: 560px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.fold-panel .fold-num {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-xl);
+}
+.fold-panel:nth-child(1) { background: var(--color-ash); color: var(--color-white); z-index: 3; }
+.fold-panel:nth-child(1) .fold-num { color: var(--color-neon); }
+.fold-panel:nth-child(2) { background: var(--color-elm); color: var(--color-white); z-index: 2; }
+.fold-panel:nth-child(2) .fold-num { color: var(--color-neon); }
+.fold-panel:nth-child(3) { background: var(--color-off-white); color: var(--color-ash); z-index: 1; }
+.fold-panel:nth-child(3) .fold-num { color: var(--color-elm); }
+
+/* ═══════════════════════════════════════════════════════════
+   §6 — COUNTER + ACCORDION
+   ═══════════════════════════════════════════════════════════ */
+#stats {
+  background: var(--color-off-white);
+  color: var(--color-ash);
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  max-width: 900px;
+  margin: 0 auto var(--space-3xl);
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .stats-row { grid-template-columns: 1fr; }
+}
+.stat-item .stat-number {
+  font-size: var(--type-huge);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-elm);
+}
+.stat-item .stat-suffix {
+  font-size: var(--type-big);
+  font-weight: 800;
+  color: var(--color-elm);
+}
+.stat-item .stat-label {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+}
+
+/* Accordion */
+.accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.accordion-item {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+.accordion-header {
+  background: var(--color-ash);
+  color: var(--color-white);
+  padding: var(--space-lg) var(--space-xl);
+  font-size: clamp(16px, 2.5vw, 28px);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-family);
+}
+.accordion-icon {
+  color: var(--color-neon);
+  font-size: 28px;
+  font-weight: 300;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+.accordion-item.open .accordion-icon {
+  transform: rotate(45deg);
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  background: var(--color-white);
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.accordion-content-inner {
+  padding: var(--space-xl);
+  font-size: var(--type-body);
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §7 — AI CHAT
+   ═══════════════════════════════════════════════════════════ */
+#chat {
+  background: var(--color-ash);
+  color: var(--color-white);
+}
+.chat-container {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.chat-bubble {
+  max-width: 85%;
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: 16px;
+  font-size: var(--type-body);
+  line-height: 1.6;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--color-off-white);
+  color: var(--color-ash);
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.bot {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid var(--color-neon);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 0 24px rgba(204, 255, 0, 0.08);
+}
+.chat-bubble .chat-label {
+  font-size: var(--type-small);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+.chat-bubble.user .chat-label { color: var(--color-elm); }
+.chat-bubble.bot .chat-label { color: var(--color-neon); }
+.typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px 0;
+}
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: var(--color-neon);
+  border-radius: 50%;
+  animation: typing-bounce 1.4s ease-in-out infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   §8 — CTA FINALE
+   ═══════════════════════════════════════════════════════════ */
+#cta {
+  background: var(--color-elm);
+  color: var(--color-white);
+  text-align: center;
+  min-height: 100vh;
+}
+.cta-heading {
+  font-size: var(--type-giant);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  will-change: transform;
+}
+.cta-sub {
+  font-size: var(--type-body-xl);
+  font-weight: 300;
+  opacity: 0.6;
+  margin: var(--space-xl) auto 0;
+  max-width: 500px;
+  line-height: 1.5;
+}
+.cta-button {
+  display: inline-block;
+  margin-top: var(--space-3xl);
+  background: var(--color-neon);
+  color: var(--color-ash);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  will-change: transform;
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(204, 255, 0, 0.3);
+}
+.cta-button .btn-arrow {
+  margin-left: 8px;
+  display: inline-block;
+  transition: transform 0.25s;
+}
+.cta-button:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BACK LINK
+   ═══════════════════════════════════════════════════════════ */
+.back-link {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 1001;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-link:hover { color: var(--color-neon); }
+.back-link.dark-mode { color: rgba(0,0,0,0.3); }
+.back-link.dark-mode:hover { color: var(--color-elm); }
+
+/* ═══════════════════════════════════════════════════════════
+   NOISE OVERLAY
+   ═══════════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+</style>
+</head>
+<body>
+
+<!-- Back to index -->
+<a href="index.html" class="back-link" id="backLink">← Zurück</a>
+
+<!-- Floating Pill Nav -->
+<nav class="nav-pill" id="navPill">
+  <a href="#hero" data-section="hero">Start</a>
+  <a href="#words" data-section="words">Was?</a>
+  <a href="#cards" data-section="cards">Zutaten</a>
+  <a href="#parallax" data-section="parallax">Parallax</a>
+  <a href="#fold" data-section="fold">Klappen</a>
+  <a href="#stats" data-section="stats">Zahlen</a>
+  <a href="#chat" data-section="chat">KI</a>
+  <a href="#cta" data-section="cta">Go!</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §1 — HERO
+     ═══════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="section-inner" style="text-align:center;">
+    <span class="eyebrow" id="heroEyebrow">Eine Demo in acht Akten</span>
+    <h1 class="hero-title giant" id="heroTitle">
+      <span class="word">Scroll</span><span class="word"><span class="highlight">ytelling</span></span>
+    </h1>
+    <p class="hero-subtitle" id="heroSub">
+      <span class="sub-word">Die</span>
+      <span class="sub-word">Kunst,</span>
+      <span class="sub-word">Geschichten</span>
+      <span class="sub-word">beim</span>
+      <span class="sub-word">Scrollen</span>
+      <span class="sub-word">zu</span>
+      <span class="sub-word">erzählen.</span>
+    </p>
+  </div>
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="arrow-down"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §2 — WORD-BY-WORD REVEAL
+     ═══════════════════════════════════════════════════════════ -->
+<section id="words">
+  <div class="section-inner">
+    <div class="words-container" id="wordsContainer">
+      <span class="eyebrow" style="color:var(--color-neon); margin-bottom:var(--space-3xl); display:block;">01 · Was ist Scrollytelling?</span>
+    </div>
+  </div>
+  <div class="section-bg-num" style="right:-5%; top:10%; color:var(--color-white);">01</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §3 — CARDS FLY IN
+     ═══════════════════════════════════════════════════════════ -->
+<section id="cards">
+  <div class="section-inner">
+    <span class="eyebrow">02 · Die Zutaten</span>
+    <h2 class="huge" style="margin-top:var(--space-md);">Was brauchst du<br><span class="highlight">dafür?</span></h2>
+    <div class="cards-grid" id="cardsGrid">
+      <div class="ingredient-card card-standard">
+        <div class="card-num">01 · Grundlage</div>
+        <h3>Timing</h3>
+        <p>Wann erscheint was? Scroll-Position als Timeline — der User bestimmt das Tempo.</p>
+      </div>
+      <div class="ingredient-card card-neon">
+        <div class="card-num">02 · Dynamik</div>
+        <h3>Bewegung</h3>
+        <p>Elemente gleiten, drehen, skalieren. Jede Transformation erzählt einen Teil der Geschichte.</p>
+      </div>
+      <div class="ingredient-card card-elm">
+        <div class="card-num">03 · Spannung</div>
+        <h3>Kontrast</h3>
+        <p>Hell auf dunkel, gross auf klein, schnell auf langsam. Gegensätze erzeugen Aufmerksamkeit.</p>
+      </div>
+      <div class="ingredient-card card-dark">
+        <div class="card-num">04 · Magie</div>
+        <h3>Überraschung</h3>
+        <p>Das Unerwartete bleibt im Kopf. Ein Moment, der die Regeln bricht.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-bg-num" style="left:-5%; bottom:5%;">02</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §4 — PARALLAX
+     ═══════════════════════════════════════════════════════════ -->
+<section id="parallax">
+  <div class="parallax-layer" id="paraBg1" style="top:10%;">
+    <div class="parallax-bg-text">SCROLL</div>
+  </div>
+  <div class="parallax-layer" id="paraBg2" style="top:60%;">
+    <div class="parallax-bg-text">DEPTH</div>
+  </div>
+  <div class="parallax-layer" id="paraBg3" style="top:110%;">
+    <div class="parallax-bg-text">LAYERS</div>
+  </div>
+
+  <div class="section-inner parallax-mid" id="paraContent" style="position:relative; z-index:5; padding-top:10vh;">
+    <span class="eyebrow" style="color:var(--color-neon);">03 · Parallax in Aktion</span>
+    <h2 class="huge" style="margin-top:var(--space-md);">Tiefe durch<br><span class="highlight">Geschwindigkeit</span></h2>
+    <div class="parallax-neon-stripe"></div>
+    <p style="font-size:var(--type-body-xl); max-width:600px; margin:0 auto; line-height:1.6; opacity:0.7;">
+      Verschiedene Ebenen bewegen sich unterschiedlich schnell. Das Auge liest: Raum, Tiefe, Dimension.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §5 — FOLD-AWAY PANELS
+     ═══════════════════════════════════════════════════════════ -->
+<section id="fold">
+  <div class="fold-wrapper" id="foldWrapper">
+    <div class="fold-panel" id="foldPanel1">
+      <span class="fold-num">04 · Akt Eins</span>
+      <h2>Aufmerk&shy;samkeit</h2>
+      <p>Der erste Moment zählt. Ein starkes Bild, eine provokante Frage — und der User bleibt.</p>
+    </div>
+    <div class="fold-panel" id="foldPanel2">
+      <span class="fold-num">04 · Akt Zwei</span>
+      <h2>Spannung</h2>
+      <p>Die Geschichte baut sich auf. Jedes Scrollen enthüllt ein neues Fragment. Neugier treibt weiter.</p>
+    </div>
+    <div class="fold-panel" id="foldPanel3">
+      <span class="fold-num">04 · Akt Drei</span>
+      <h2>Auflösung</h2>
+      <p>Der Knoten löst sich. Die Botschaft landet. Was bleibt, ist ein Erlebnis — nicht nur eine Seite.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §6 — COUNTERS + ACCORDION
+     ═══════════════════════════════════════════════════════════ -->
+<section id="stats">
+  <div class="section-inner">
+    <span class="eyebrow">05 · Alles zusammen</span>
+    <h2 class="huge" style="margin-top:var(--space-md); margin-bottom:var(--space-3xl);">In <span class="highlight">Zahlen</span></h2>
+
+    <div class="stats-row" id="statsRow">
+      <div class="stat-item">
+        <span class="stat-number" data-target="300">0</span><span class="stat-suffix">%</span>
+        <div class="stat-label">Mehr Verweildauer</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="8">0</span><span class="stat-suffix">×</span>
+        <div class="stat-label">Höhere Engagement-Rate</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="92">0</span><span class="stat-suffix">%</span>
+        <div class="stat-label">Scrollen bis zum Ende</div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span>Warum Scrollytelling wirkt</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Menschen erinnern sich an Erlebnisse, nicht an Informationen. Scrollytelling verwandelt passive Inhalte in aktive Erfahrungen — der User steuert das Tempo, und das schafft Involvement.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span>Wann es sich lohnt</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Bei komplexen Themen, die Schritt für Schritt erklärt werden müssen. Bei emotionalen Stories, die Raum brauchen. Bei Produkten, die man erleben muss, statt nur darüber zu lesen.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span>Die technische Basis</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            GSAP ScrollTrigger, CSS Custom Properties, semantisches HTML. Kein Framework-Overhead — performant, zugänglich, und in jedem modernen Browser lauffähig.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-bg-num" style="right:-5%; top:5%;">05</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §7 — AI CHAT (Fake Conversation)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="chat">
+  <div class="section-inner">
+    <span class="eyebrow" style="color:var(--color-neon); text-align:center; display:block;">06 · KI in Aktion</span>
+    <h2 class="huge" style="text-align:center; margin:var(--space-md) 0 var(--space-3xl);"><span class="highlight">Scrollytelling</span> Chat</h2>
+
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-bubble user">
+        <span class="chat-label">Du</span>
+        Was macht gutes Scrollytelling aus?
+      </div>
+      <div class="chat-bubble bot">
+        <span class="chat-label">KI</span>
+        <span class="bot-text">Drei Dinge: <strong>Rhythmus</strong>, <strong>Überraschung</strong> und <strong>Kontrolle</strong>. Der User muss das Gefühl haben, die Geschichte selbst zu steuern — obwohl jedes Detail choreografiert ist.</span>
+      </div>
+      <div class="chat-bubble user">
+        <span class="chat-label">Du</span>
+        Und wie unterscheidet es sich von normalen Animationen?
+      </div>
+      <div class="chat-bubble bot">
+        <span class="chat-label">KI</span>
+        <span class="bot-text">Normale Animationen spielen automatisch ab. Scrollytelling bindet die Animation an den Scroll — der User wird zum Regisseur. Das erzeugt eine ganz andere Art von Engagement.</span>
+      </div>
+      <div class="chat-bubble user">
+        <span class="chat-label">Du</span>
+        Ist das nicht viel Aufwand?
+      </div>
+      <div class="chat-bubble bot">
+        <span class="chat-label">KI</span>
+        <span class="bot-text">Mit den richtigen Tools nicht. GSAP + ScrollTrigger machen 80% der Arbeit. Der Rest ist Storytelling — und das braucht kein Framework, nur gute Ideen.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     §8 — CTA FINALE
+     ═══════════════════════════════════════════════════════════ -->
+<section id="cta">
+  <div class="section-inner" style="text-align:center;">
+    <span class="eyebrow" style="color:var(--color-neon);">07 · Finale</span>
+    <h2 class="cta-heading" id="ctaHeading">Jetzt<br>loslegen.</h2>
+    <p class="cta-sub" id="ctaSub">Scrollytelling ist kein Trend — es ist die Art, wie wir im Web Geschichten erzählen werden.</p>
+    <a href="index.html" class="cta-button" id="ctaBtn">
+      Zurück zur Übersicht <span class="btn-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── NAV PILL: show after hero, track active section ───
+const navPill = document.getElementById('navPill');
+const navLinks = navPill.querySelectorAll('a');
+const sections = document.querySelectorAll('section');
+
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'bottom 80%',
+  onEnter: () => navPill.classList.add('visible'),
+  onLeaveBack: () => navPill.classList.remove('visible'),
+});
+
+sections.forEach(sec => {
+  ScrollTrigger.create({
+    trigger: sec,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: () => setActiveNav(sec.id),
+    onEnterBack: () => setActiveNav(sec.id),
+  });
+});
+
+function setActiveNav(id) {
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.dataset.section === id);
+  });
+  // Toggle back-link color on light sections
+  const backLink = document.getElementById('backLink');
+  const lightSections = ['cards', 'stats'];
+  backLink.classList.toggle('dark-mode', lightSections.includes(id));
+}
+
+// Smooth scroll for nav
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      gsap.to(window, { scrollTo: { y: target, offsetY: 0 }, duration: 1, ease: 'power2.inOut' });
+    }
+  });
+});
+
+// ─── §1 HERO: entrance + scroll-away ───
+const heroTl = gsap.timeline();
+heroTl
+  .from('#heroEyebrow', { opacity: 0, y: 20, duration: 0.6 })
+  .from('.hero-title .word', { opacity: 0, y: 60, duration: 0.8, stagger: 0.15, ease: 'power3.out' })
+  .to('.hero-subtitle .sub-word', { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.3')
+  .from('#scrollIndicator', { opacity: 0, duration: 0.6 }, '-=0.2');
+
+// Hero scroll-away
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  }
+})
+.to('.hero-title .word:first-child', { x: -200, opacity: 0, ease: 'none' })
+.to('.hero-title .word:last-child', { x: 200, opacity: 0, ease: 'none' }, 0)
+.to('#heroSub', { opacity: 0, y: -40, ease: 'none' }, 0)
+.to('#scrollIndicator', { opacity: 0, ease: 'none' }, 0);
+
+
+// ─── §2 WORD-BY-WORD REVEAL ───
+const wordsText = 'Scrollytelling verbindet Narration mit Interaktion. Der User scrollt — und die Geschichte entfaltet sich Wort für Wort, Szene für Szene. Nicht klicken. Nicht warten. Einfach scrollen.';
+const neonWords = ['Narration', 'Interaktion', 'scrollt', 'entfaltet', 'scrollen.'];
+const wordsContainer = document.getElementById('wordsContainer');
+
+wordsText.split(' ').forEach(w => {
+  const span = document.createElement('span');
+  span.className = 'reveal-word';
+  if (neonWords.includes(w)) span.classList.add('neon-word');
+  span.textContent = w;
+  wordsContainer.appendChild(span);
+});
+
+const revealWords = wordsContainer.querySelectorAll('.reveal-word');
+
+ScrollTrigger.create({
+  trigger: '#words',
+  start: 'top top',
+  end: () => '+=' + (window.innerHeight * 2.5),
+  pin: true,
+  scrub: 0.5,
+  onUpdate: (self) => {
+    const progress = self.progress;
+    revealWords.forEach((word, i) => {
+      const wordProgress = i / revealWords.length;
+      word.classList.toggle('active', progress > wordProgress);
+    });
+  }
+});
+
+
+// ─── §3 CARDS FLY IN ───
+const cardAnims = [
+  { x: -300, rotation: -15 },  // from left, rotated
+  { x: 300, rotation: 10 },    // from right, rotated
+  { y: 300, rotation: -8 },    // from bottom
+  { x: 300, y: 200, rotation: 15 }, // from bottom-right (grätsch!)
+];
+
+const cards = document.querySelectorAll('.ingredient-card');
+const cardsTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#cards',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 1.5),
+    pin: true,
+    scrub: 0.8,
+  }
+});
+
+cards.forEach((card, i) => {
+  const anim = cardAnims[i];
+  cardsTl.from(card, {
+    x: anim.x || 0,
+    y: anim.y || 0,
+    rotation: anim.rotation || 0,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+  }, i * 0.3);
+});
+
+
+// ─── §4 PARALLAX LAYERS ───
+gsap.to('#paraBg1', {
+  y: -300,
+  scrollTrigger: {
+    trigger: '#parallax',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true,
+  }
+});
+gsap.to('#paraBg2', {
+  y: -500,
+  scrollTrigger: {
+    trigger: '#parallax',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true,
+  }
+});
+gsap.to('#paraBg3', {
+  y: -700,
+  scrollTrigger: {
+    trigger: '#parallax',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true,
+  }
+});
+// Foreground content parallax
+gsap.from('#paraContent', {
+  y: 100,
+  opacity: 0.5,
+  scrollTrigger: {
+    trigger: '#parallax',
+    start: 'top 80%',
+    end: 'top 20%',
+    scrub: true,
+  }
+});
+
+
+// ─── §5 FOLD-AWAY PANELS ───
+const foldTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#fold',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 3),
+    pin: true,
+    scrub: 0.6,
+  }
+});
+
+foldTl
+  // Panel 1 folds away
+  .to('#foldPanel1', {
+    rotateX: -90,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.in',
+    transformOrigin: 'top center',
+  })
+  // Panel 2 visible for a beat, then folds
+  .to({}, { duration: 0.5 })
+  .to('#foldPanel2', {
+    rotateX: -90,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.in',
+    transformOrigin: 'top center',
+  })
+  // Panel 3 stays
+  .to({}, { duration: 0.5 });
+
+
+// ─── §6 COUNTERS ───
+const statNumbers = document.querySelectorAll('.stat-number');
+statNumbers.forEach(num => {
+  const target = parseInt(num.dataset.target);
+  ScrollTrigger.create({
+    trigger: num,
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      gsap.to(num, {
+        duration: 1.8,
+        ease: 'power2.out',
+        onUpdate: function() {
+          num.textContent = Math.round(gsap.getProperty(num, '--val') || 0);
+        },
+        '--val': target,
+      });
+      // Alternative: use a simple counter
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        num.textContent = Math.round(current);
+      }, 30);
+    }
+  });
+});
+
+// ─── §6 ACCORDION ───
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    const content = item.querySelector('.accordion-content');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.accordion-item').forEach(ai => {
+      ai.classList.remove('open');
+      ai.querySelector('.accordion-content').style.maxHeight = '0';
+    });
+
+    // Toggle clicked
+    if (!isOpen) {
+      item.classList.add('open');
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  });
+});
+
+// Scroll-triggered accordion open
+ScrollTrigger.create({
+  trigger: '#accordion',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    setTimeout(() => {
+      const first = document.querySelector('.accordion-item');
+      first.classList.add('open');
+      first.querySelector('.accordion-content').style.maxHeight = first.querySelector('.accordion-content').scrollHeight + 'px';
+    }, 400);
+  }
+});
+
+
+// ─── §7 AI CHAT: scroll-driven reveal ───
+const chatBubbles = document.querySelectorAll('.chat-bubble');
+const chatTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#chat',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 2),
+    pin: true,
+    scrub: 0.5,
+  }
+});
+
+chatBubbles.forEach((bubble, i) => {
+  const isUser = bubble.classList.contains('user');
+  chatTl
+    .to(bubble, {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+    }, i * 0.8);
+
+  // Set initial state
+  gsap.set(bubble, {
+    opacity: 0,
+    x: isUser ? 60 : -60,
+  });
+});
+
+
+// ─── §8 CTA: scale up heading ───
+gsap.from('#ctaHeading', {
+  scale: 0.3,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#cta',
+    start: 'top 70%',
+    end: 'top 20%',
+    scrub: true,
+  }
+});
+
+gsap.from('#ctaSub', {
+  y: 40,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#cta',
+    start: 'top 50%',
+    end: 'top 20%',
+    scrub: true,
+  }
+});
+
+gsap.from('#ctaBtn', {
+  y: 60,
+  opacity: 0,
+  scale: 0.8,
+  scrollTrigger: {
+    trigger: '#cta',
+    start: 'top 40%',
+    end: 'top 10%',
+    scrub: true,
+  }
+});
+
+// ─── SECTION BG NUMBERS: slow parallax ───
+document.querySelectorAll('.section-bg-num').forEach(num => {
+  gsap.to(num, {
+    y: -150,
+    scrollTrigger: {
+      trigger: num.parentElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+});
+
+</script>
+</body>
+</html>

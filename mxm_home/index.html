@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>maxomedia.ch Relaunch · Team Bubu & Gwen</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ash: #2F313C;
+  --elm: #226C6E;
+  --neon: #CCFF00;
+  --ice: #C5DAE0;
+  --off: #F5F3EE;
+  --white: #FFFFFF;
+  --muted: #8a8e96;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Sora',sans-serif;
+  background:var(--off);
+  color:var(--ash);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(32px,8vw,96px) clamp(24px,5vw,80px);
+}
+
+.eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase;
+  color:var(--elm); margin-bottom:16px;
+}
+
+h1 {
+  font-size:clamp(48px,7vw,110px);
+  font-weight:800; line-height:0.95; letter-spacing:-0.02em;
+  margin-bottom:12px;
+}
+
+h1 .neon {
+  background:linear-gradient(180deg, transparent 55%, var(--neon) 55%);
+  display:inline; padding:0 4px;
+}
+
+.subtitle {
+  font-size:clamp(16px,1.5vw,24px);
+  color:var(--muted); font-weight:400; line-height:1.6;
+  margin-bottom:clamp(40px,6vw,80px);
+  max-width:520px;
+}
+
+.cards {
+  counter-reset:card-num;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  width:100%;
+  max-width:960px;
+}
+
+.card {
+  background:var(--white);
+  border-radius:16px;
+  padding:clamp(28px,3vw,40px);
+  text-decoration:none;
+  color:var(--ash);
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  transition:transform 0.2s, box-shadow 0.2s;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  position:relative;
+  counter-increment:card-num;
+}
+
+.card::after {
+  content:counter(card-num);
+  position:absolute;
+  top:16px;
+  right:16px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--white);
+  background:var(--ash);
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card-wide::after {
+  background:var(--elm);
+}
+
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.12);
+}
+
+.card .tag {
+  font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:var(--elm);
+}
+
+.card h2 {
+  font-size:clamp(22px,2.5vw,32px);
+  font-weight:700; line-height:1.1; letter-spacing:-0.01em;
+}
+
+.card p {
+  font-size:14px; color:var(--muted); line-height:1.5;
+}
+
+.card .arrow {
+  margin-top:auto;
+  font-size:20px;
+  color:var(--neon);
+  background:var(--ash);
+  width:40px; height:40px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+
+.card:hover .arrow {
+  background:var(--elm);
+}
+
+footer {
+  margin-top:clamp(40px,6vw,80px);
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.deliverables {
+  width:100%;
+  max-width:960px;
+  margin-top:clamp(32px,4vw,56px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.del-col {
+  background:var(--white);
+  border-radius:12px;
+  padding:24px 28px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.del-col h3 {
+  font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+.del-col.must h3 { color:var(--elm); }
+.del-col.may h3 { color:var(--muted); }
+
+.del-col ul {
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.del-col li {
+  font-size:14px;
+  line-height:1.5;
+  padding-left:16px;
+  position:relative;
+}
+
+.del-col li::before {
+  content:'●';
+  position:absolute;
+  left:0;
+  color:var(--elm);
+  font-size:10px;
+  top:2px;
+}
+
+.del-col li.done::before {
+  content:'✓';
+  font-weight:800;
+  font-size:9px;
+  top:2px;
+  left:-1px;
+  color:var(--neon);
+  background:var(--ash);
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  text-align:center;
+  line-height:14px;
+}
+
+.del-col li span {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.card .methods {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:4px;
+}
+
+.card .pill {
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:1px;
+  padding:4px 10px;
+  border-radius:99px;
+  white-space:nowrap;
+}
+
+.pill.cowork {
+  background:var(--elm);
+  color:var(--white);
+}
+
+.pill.code {
+  background:var(--ash);
+  color:var(--neon);
+}
+
+.pill .note {
+  font-weight:400;
+  opacity:0.7;
+  margin-left:4px;
+}
+
+.card-wide {
+  grid-column: 1 / -1;
+}
+
+@media (max-width:600px) {
+  .deliverables { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<img src="media/logo.png" alt="maxomedia" style="height:48px; margin-bottom:24px;">
+<span class="eyebrow">AI Design Challenge · März 2026</span>
+<h1>maxomedia<span class="neon">.ch</span></h1>
+<p class="subtitle">Website-Relaunch Deliverables von Team Bubu & Gwen</p>
+
+<div class="cards">
+  <a href="trends.html" class="card">
+    <span class="tag">Research</span>
+    <h2>Trends 2025/26</h2>
+    <p>Award-Plattformen, Gewinner-Analyse, Design- und Tech-Trends.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="concept.html" class="card">
+    <span class="tag">Blueprint</span>
+    <h2>Grobkonzept</h2>
+    <p>Content-Strategie, Seitenstruktur und Design-Entscheidungen.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code<span class="note">(spider)</span></span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="uikit.html" class="card">
+    <span class="tag">Must</span>
+    <h2>UI Kit</h2>
+    <p>Farben, Typografie, Buttons, Cards — das visuelle Fundament.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="sitemap.html" class="card">
+    <span class="tag">Research</span>
+    <h2>Sitemap</h2>
+    <p>Seitenstruktur und Navigation des neuen maxomedia.ch.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="scrollytelling.html" class="card">
+    <span class="tag">Demo</span>
+    <h2>Scrollytelling</h2>
+    <p>Fullscreen-Animationen, Scroll-Reveals und GSAP-Magic in Aktion.</p>
+    <div class="methods"><span class="pill code">Code</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="homepage-konzept.html" class="card">
+    <span class="tag">Blueprint</span>
+    <h2>Homepage Konzept</h2>
+    <p>Detailkonzept für die Homepage — Section für Section, mit Implementierungs-Hinweisen.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="homepage.html" class="card card-wide">
+    <span class="tag">Must</span>
+    <h2>Homepage</h2>
+    <p>Die fertige Homepage — 9 Sections, GSAP Scrollytelling, Ask a Maxo!, Fake-Kalender.</p>
+    <div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code</span></div>
+    <span class="arrow">→</span>
+  </a>
+</div>
+
+<div class="deliverables">
+  <div class="del-col must">
+    <h3>Must-have</h3>
+    <ul>
+      <li class="done">UI Kit <span>— Farben, Typo, Komponenten</span></li>
+      <li class="done">Homepage <span>— lauffähiges HTML</span></li>
+    </ul>
+  </div>
+  <div class="del-col may">
+    <h3>Kann</h3>
+    <ul>
+      <li class="done">Flow Page <span>(als Teil der Homepage)</span></li>
+      <li>KI-USP-Hub</li>
+      <li>Case Study / Referenz</li>
+      <li>Leistungen</li>
+      <li>Weitere Seitentypen</li>
+    </ul>
+  </div>
+</div>
+
+<footer>Team Bubu & Gwen · KOK Pitch</footer>
+
+</body>
+</html>

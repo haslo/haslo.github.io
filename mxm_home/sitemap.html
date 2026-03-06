@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>maxomedia.ch Sitemap – Website Relaunch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #2F313C;
+            color: #F5F3EE;
+            line-height: 1.6;
+        }
+
+        /* Floating Pill Navigation */
+        nav.pill-nav {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(34, 108, 110, 0.95);
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(204, 255, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        nav.pill-nav .logo {
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #CCFF00;
+        }
+
+        nav.pill-nav a {
+            font-size: 13px;
+            text-decoration: none;
+            color: #F5F3EE;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        nav.pill-nav a:hover {
+            color: #CCFF00;
+        }
+
+        nav.pill-nav .cta {
+            background: #CCFF00;
+            color: #2F313C;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        nav.pill-nav .cta:hover {
+            background: #F5F3EE;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #CCFF00;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #B0B0B0;
+            margin-bottom: 60px;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 60px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #226C6E;
+            color: #CCFF00;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            color: #F5F3EE;
+        }
+
+        /* Page Cards */
+        .page-card {
+            background: rgba(34, 108, 110, 0.3);
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .page-card:hover {
+            background: rgba(34, 108, 110, 0.5);
+            border-color: rgba(204, 255, 0, 0.4);
+        }
+
+        .page-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #CCFF00;
+            margin-bottom: 4px;
+        }
+
+        .page-card .route {
+            font-size: 12px;
+            color: #B0B0B0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            margin-bottom: 12px;
+        }
+
+        .page-card .sections {
+            font-size: 14px;
+            color: #D0CEC8;
+            margin-top: 12px;
+        }
+
+        .section-item {
+            display: inline-block;
+            background: rgba(204, 255, 0, 0.1);
+            color: #CCFF00;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin: 4px 8px 4px 0;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Migration Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background: rgba(34, 108, 110, 0.2);
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: rgba(34, 108, 110, 0.5);
+            border-bottom: 2px solid #226C6E;
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            color: #CCFF00;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.08);
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: rgba(34, 108, 110, 0.3);
+        }
+
+        .status-kept {
+            color: #90EE90;
+            font-weight: 600;
+        }
+
+        .status-updated {
+            color: #CCFF00;
+            font-weight: 600;
+        }
+
+        .status-new {
+            color: #FF6B9D;
+            font-weight: 600;
+        }
+
+        /* Tree Structure */
+        .tree {
+            margin: 24px 0;
+            padding-left: 20px;
+            border-left: 2px solid #226C6E;
+        }
+
+        .tree-item {
+            padding: 8px 0;
+            padding-left: 16px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .tree-item::before {
+            content: '└─';
+            position: absolute;
+            left: 0;
+            color: #226C6E;
+            font-weight: 700;
+        }
+
+        .tree-item.main::before {
+            content: '●';
+            color: #CCFF00;
+        }
+
+        .tree-item.sub::before {
+            content: '○';
+            color: #226C6E;
+        }
+
+        .tree-item .label {
+            color: #CCFF00;
+            font-weight: 600;
+        }
+
+        .tree-item .route-label {
+            color: #B0B0B0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        /* Persistent Elements Box */
+        .persistent-box {
+            background: rgba(204, 255, 0, 0.1);
+            border: 1px solid rgba(204, 255, 0, 0.3);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .persistent-box h3 {
+            margin-top: 0;
+        }
+
+        .persistent-item {
+            padding: 12px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.15);
+        }
+
+        .persistent-item:last-child {
+            border-bottom: none;
+        }
+
+        .persistent-item strong {
+            color: #CCFF00;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #808080;
+            font-size: 12px;
+            border-top: 1px solid rgba(204, 255, 0, 0.1);
+            margin-top: 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav.pill-nav {
+                flex-wrap: wrap;
+                gap: 16px;
+                padding: 12px 16px;
+                top: 12px;
+                left: 12px;
+                right: 12px;
+                transform: none;
+                width: auto;
+            }
+
+            nav.pill-nav .cta {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            main {
+                padding: 100px 20px 60px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            td, th {
+                padding: 10px;
+            }
+        }
+        .back-link {
+            position: fixed; top: 24px; left: 24px; z-index: 10001;
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; transition: color 0.3s;
+        }
+        .back-link:hover { color: #CCFF00; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Zurück</a>
+    <!-- Floating Pill Navigation -->
+    <nav class="pill-nav">
+        <span class="logo">MXM</span>
+        <a href="#services">Leistungen</a>
+        <a href="#references">Referenzen</a>
+        <a href="#about">Über uns</a>
+        <a href="#knowledge">Wissen</a>
+        <a href="#contact" class="cta">Projekt starten →</a>
+    </nav>
+
+    <main>
+        <h1>maxomedia.ch Sitemap</h1>
+        <p class="subtitle">Website Relaunch · Struktur & Content-Architektur</p>
+
+        <!-- Navigation Structure Overview -->
+        <h2>Navigation & Globale Struktur</h2>
+
+        <h3>Floating Pill Navigation (persistent)</h3>
+        <div class="page-card">
+            <p style="font-size: 14px; color: #D0CEC8;">
+                Fixed position in top center. 5 items + CTA button. Responsive hamburger on mobile.
+            </p>
+            <div style="margin-top: 12px;">
+                <span class="section-item">MXM (Logo/Home)</span>
+                <span class="section-item">Leistungen</span>
+                <span class="section-item">Referenzen</span>
+                <span class="section-item">Über uns</span>
+                <span class="section-item">Wissen</span>
+                <span class="section-item">Projekt starten →</span>
+            </div>
+        </div>
+
+        <!-- Site Tree Structure -->
+        <h2>Seitenstruktur</h2>
+
+        <div class="tree">
+            <!-- Home -->
+            <div class="tree-item main">
+                <span class="label">Home</span>
+                <span class="route-label">(/)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">01 Hero</div>
+                <div class="tree-item sub">02 Trust-Leiste</div>
+                <div class="tree-item sub">03 Empathy</div>
+                <div class="tree-item sub">04 Flow Prinzip Scrollytelling</div>
+                <div class="tree-item sub">05 KI-USP (→ /ki deep-link)</div>
+                <div class="tree-item sub">06 Leistungen Accordion</div>
+                <div class="tree-item sub">07 Referenzen Highlight</div>
+                <div class="tree-item sub">08 Team Preview</div>
+                <div class="tree-item sub">09 CTA Section</div>
+            </div>
+
+            <!-- Leistungen -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Leistungen</span>
+                <span class="route-label">(/leistungen)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Overview</div>
+                <div class="tree-item sub">→ Strategie & Beratung (/leistungen/strategie)</div>
+                <div class="tree-item sub">→ Campaigning (/leistungen/campaigning)</div>
+                <div class="tree-item sub">→ User Experience (/leistungen/ux)</div>
+                <div class="tree-item sub">→ Visual Design (/leistungen/design)</div>
+                <div class="tree-item sub">→ Web Development (/leistungen/development)</div>
+                <div class="tree-item sub">→ Marketing Automation (/leistungen/automation)</div>
+                <div class="tree-item sub">→ Analytics (/leistungen/analytics)</div>
+            </div>
+
+            <!-- KI & Flow -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">KI & Flow</span>
+                <span class="route-label">(/ki) – NEU</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">USP Hub (auch von Homepage Sektion 05 linkbar)</div>
+            </div>
+
+            <!-- Flow Prinzip -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Flow Prinzip</span>
+                <span class="route-label">(/flow)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Methodology Deep-Dive (auch embedded in Homepage Sektion 04)</div>
+            </div>
+
+            <!-- Referenzen -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Referenzen</span>
+                <span class="route-label">(/referenzen)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Filterable Case Studies</div>
+            </div>
+
+            <!-- Über uns -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Über uns</span>
+                <span class="route-label">(/ueber-uns)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Team</div>
+                <div class="tree-item sub">Werte</div>
+                <div class="tree-item sub">Karriere</div>
+            </div>
+
+            <!-- Wissen -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Wissen</span>
+                <span class="route-label">(/wissen) – NEU</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Blog & Insights</div>
+            </div>
+
+            <!-- Kontakt -->
+            <div class="tree-item main" style="margin-top: 24px;">
+                <span class="label">Kontakt</span>
+                <span class="route-label">(/kontakt)</span>
+            </div>
+            <div style="padding-left: 30px; border-left: 1px solid #226C6E; margin-top: 8px; padding-top: 8px;">
+                <div class="tree-item sub">Calendly Integration</div>
+                <div class="tree-item sub">Kontaktformular</div>
+                <div class="tree-item sub">Ask a Maxo! Chat</div>
+            </div>
+        </div>
+
+        <!-- Detailed Page Breakdown -->
+        <h2>Seiten-Details</h2>
+
+        <h3>Home (/)</h3>
+        <div class="page-card">
+            <h4>Landing Page – Hero bis Conversion</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Die zentrale Eingangsseite mit allen USPs in Scrollytelling-Format.
+            </p>
+            <div class="sections">
+                <span class="section-item">Hero + Headline</span>
+                <span class="section-item">Trust-Leiste (Clients)</span>
+                <span class="section-item">Empathy Section</span>
+                <span class="section-item">Flow Scrollytelling</span>
+                <span class="section-item">KI Hub Preview</span>
+                <span class="section-item">Leistungen</span>
+                <span class="section-item">Case Study Preview</span>
+                <span class="section-item">Team</span>
+                <span class="section-item">CTA</span>
+            </div>
+        </div>
+
+        <h3>Leistungen (/leistungen)</h3>
+        <div class="page-card">
+            <h4>Services Overview + 7 Sub-Pages</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Hub-Seite mit Übersicht; jede Leistung hat Detailseite mit eigener Expertise-Darstellung.
+            </p>
+            <div class="sections">
+                <span class="section-item">Strategie & Beratung</span>
+                <span class="section-item">Campaigning</span>
+                <span class="section-item">UX</span>
+                <span class="section-item">Visual Design</span>
+                <span class="section-item">Development</span>
+                <span class="section-item">Marketing Automation</span>
+                <span class="section-item">Analytics</span>
+            </div>
+        </div>
+
+        <h3>KI & Flow (/ki)</h3>
+        <div class="page-card">
+            <h4>NEU – USP Hub & Differentiator</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Dedizierte Seite für Flow Prinzip & KI-Integration. Kann auch von Homepage Sektion 05 verlinkt sein.
+            </p>
+            <div class="sections">
+                <span class="section-item">Methodology</span>
+                <span class="section-item">Use Cases</span>
+                <span class="section-item">Team Expertise</span>
+            </div>
+        </div>
+
+        <h3>Flow Prinzip (/flow)</h3>
+        <div class="page-card">
+            <h4>Deep-Dive Methodology</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Ausführliche Erklärung des Flow-Prinzips. Deep-Link möglich von Homepage Sektion 04.
+            </p>
+            <div class="sections">
+                <span class="section-item">Framework</span>
+                <span class="section-item">Case Studies</span>
+                <span class="section-item">Process</span>
+            </div>
+        </div>
+
+        <h3>Referenzen (/referenzen)</h3>
+        <div class="page-card">
+            <h4>Case Studies mit Filterung</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Filterable Portfolio nach Industrie, Leistung, Größe. Individuelle Case Study Pages.
+            </p>
+            <div class="sections">
+                <span class="section-item">Filter (Kategorie)</span>
+                <span class="section-item">Case Study Cards</span>
+                <span class="section-item">Detail Pages</span>
+            </div>
+        </div>
+
+        <h3>Über uns (/ueber-uns)</h3>
+        <div class="page-card">
+            <h4>Team, Values, Kultur</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Team-Präsentation, Unternehmens-DNA, Karriere-Link.
+            </p>
+            <div class="sections">
+                <span class="section-item">Team Profiles</span>
+                <span class="section-item">Vision & Values</span>
+                <span class="section-item">Karriere CTA</span>
+            </div>
+        </div>
+
+        <h3>Wissen (/wissen)</h3>
+        <div class="page-card">
+            <h4>NEU – Blog & Insights</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Content Hub für Artikel, Guides, Gedanken zum Thema Digital & Strategy.
+            </p>
+            <div class="sections">
+                <span class="section-item">Blog List</span>
+                <span class="section-item">Categories</span>
+                <span class="section-item">Individual Articles</span>
+            </div>
+        </div>
+
+        <h3>Kontakt (/kontakt)</h3>
+        <div class="page-card">
+            <h4>Multi-Channel Contact</h4>
+            <p style="font-size: 14px; color: #D0CEC8; margin-top: 12px;">
+                Calendly, Formular, Chat-Integration für verschiedene Kommunikationswege.
+            </p>
+            <div class="sections">
+                <span class="section-item">Calendly</span>
+                <span class="section-item">Form</span>
+                <span class="section-item">Ask a Maxo! Chat</span>
+            </div>
+        </div>
+
+        <!-- Migration & Bestand -->
+        <h2>Migration: Bestand → Neu</h2>
+
+        <p style="color: #B0B0B0; margin-bottom: 20px; font-size: 14px;">
+            Übersicht, was vom bestehenden maxomedia.ch übernommen, aktualisiert oder neu erstellt wird.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Bestand (alte Site)</th>
+                    <th>Route (alt)</th>
+                    <th>Neue Route</th>
+                    <th>Status</th>
+                    <th>Notizen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Home</td>
+                    <td>/</td>
+                    <td>/</td>
+                    <td><span class="status-updated">Überarbeitet</span></td>
+                    <td>Neuer Hero, Scrollytelling, erweiterte Sektionen</td>
+                </tr>
+                <tr>
+                    <td>Agentur / Team</td>
+                    <td>/agentur</td>
+                    <td>/ueber-uns</td>
+                    <td><span class="status-updated">Umbenannt</span></td>
+                    <td>Struktur erweitert (Values, Karriere)</td>
+                </tr>
+                <tr>
+                    <td>Leistungen</td>
+                    <td>/leistungen</td>
+                    <td>/leistungen</td>
+                    <td><span class="status-updated">Erweitert</span></td>
+                    <td>7 Detail-Pages hinzugefügt</td>
+                </tr>
+                <tr>
+                    <td>Projekte / Portfolio</td>
+                    <td>/projekte</td>
+                    <td>/referenzen</td>
+                    <td><span class="status-updated">Umbenannt</span></td>
+                    <td>Mit Filterung, neue Case Study Struktur</td>
+                </tr>
+                <tr>
+                    <td>Blog / News</td>
+                    <td>/blog</td>
+                    <td>/wissen</td>
+                    <td><span class="status-updated">Umbenannt</span></td>
+                    <td>NEU: Insights & Thought Leadership Hub</td>
+                </tr>
+                <tr>
+                    <td>Kontakt</td>
+                    <td>/kontakt</td>
+                    <td>/kontakt</td>
+                    <td><span class="status-kept">Beibehalten</span></td>
+                    <td>+ Calendly & Chat-Integration</td>
+                </tr>
+                <tr>
+                    <td>–</td>
+                    <td>–</td>
+                    <td>/ki</td>
+                    <td><span class="status-new">Neu</span></td>
+                    <td>USP Hub für Flow & KI-Integration</td>
+                </tr>
+                <tr>
+                    <td>–</td>
+                    <td>–</td>
+                    <td>/flow</td>
+                    <td><span class="status-new">Neu</span></td>
+                    <td>Methodology Deep-Dive</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Persistent Elements -->
+        <h2>Globale, Persistente Elemente</h2>
+
+        <div class="persistent-box">
+            <h3 style="margin-top: 0;">Immer präsent auf allen Seiten</h3>
+
+            <div class="persistent-item">
+                <strong>Floating Pill Navigation</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Top center, fixed. 5 nav items + CTA. Responsive Hamburger auf Mobile.</span>
+            </div>
+
+            <div class="persistent-item">
+                <strong>Ask a Maxo! Chat-Button</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Bottom-right corner. Conversational AI für Quick Questions & Lead Qualification.</span>
+            </div>
+
+            <div class="persistent-item">
+                <strong>Footer</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Contact Info, Links zu allen Haupt-Seiten, Newsletter Signup, Social Links, Impressum/Datenschutz.</span>
+            </div>
+
+            <div class="persistent-item">
+                <strong>Theme Toggle (optional)</strong><br>
+                <span style="color: #B0B0B0; font-size: 13px;">Dark/Light Mode Option (Dark as default).</span>
+            </div>
+        </div>
+
+        <!-- Design Language Reference -->
+        <h2>Design Language Reference</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
+            <div class="page-card">
+                <h4>Farbpalette</h4>
+                <div style="margin-top: 12px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 24px; height: 24px; background: #226C6E; border-radius: 4px; margin-right: 12px;"></div>
+                        <span style="font-size: 13px;">Elm #226C6E</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 24px; height: 24px; background: #2F313C; border-radius: 4px; margin-right: 12px;"></div>
+                        <span style="font-size: 13px;">Ash #2F313C (Background)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 24px; height: 24px; background: #CCFF00; border-radius: 4px; margin-right: 12px;"></div>
+                        <span style="font-size: 13px; color: #2F313C;">Neon #CCFF00</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 24px; height: 24px; background: #F5F3EE; border-radius: 4px; margin-right: 12px; border: 1px solid #666;"></div>
+                        <span style="font-size: 13px;">Off-White #F5F3EE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-card">
+                <h4>Typografie</h4>
+                <div style="margin-top: 12px;">
+                    <p style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Sora Bold 700</p>
+                    <p style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Sora SemiBold 600</p>
+                    <p style="font-size: 16px; font-weight: 400;">Sora Regular 400</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div style="background: rgba(204, 255, 0, 0.05); border: 1px solid rgba(204, 255, 0, 0.15); border-radius: 8px; padding: 24px; margin-bottom: 40px;">
+            <h3 style="margin-top: 0; color: #CCFF00;">Implementation Notes</h3>
+            <ul style="color: #D0CEC8; font-size: 14px; line-height: 1.8;">
+                <li>Alle Seiten nutzen das Dark Theme (#2F313C Background)</li>
+                <li>Floating Navigation bleibt über allen Inhalten (z-index: 1000)</li>
+                <li>Ask a Maxo! Chat als Web Component (API integrierbar)</li>
+                <li>Responsive Design: Hamburger-Nav auf &lt;768px</li>
+                <li>Sora Font von Google Fonts (kein offline-Fallback nötig, fast universelle Unterstützung)</li>
+                <li>Deep-Linking zwischen /ki, /flow und Homepage-Sektionen für flexible Navigation</li>
+                <li>Case Studies mit Metadata (Kategorie, Größe, Dauer) für intelligente Filterung</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>maxomedia.ch Relaunch · Sitemap · Team Bubu & Gwen · März 2026</p>
+    </footer>
+</body>
+</html>
