@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <style>
 /* ═══════════════════════════════════════════════════════════
    DESIGN SYSTEM TOKENS
@@ -199,21 +200,15 @@ section {
 .back-link.dark-mode { color: rgba(0,0,0,0.3); }
 .back-link.dark-mode:hover { color: var(--color-elm); }
 
-/* Fixed logo (appears on scroll past hero) */
+/* Fixed logo (always visible, shrinks on scroll) */
 .fixed-logo {
   position: fixed;
   top: 24px;
   left: 24px;
-  width: 40px;
+  width: 56px;
   height: auto;
   z-index: 1001;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.fixed-logo.visible {
   opacity: 1;
-  pointer-events: auto;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -226,8 +221,35 @@ section {
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow: hidden;
 }
+#hero .section-inner { position: relative; z-index: 2; }
 #hero .eyebrow { color: var(--color-neon); margin-bottom: var(--space-lg); }
+#journey-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 65% at 50% 50%, transparent 15%, rgba(47,49,60,0.55) 70%, rgba(26,28,36,0.92) 100%);
+}
+.hero-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--color-ash));
+}
 .hero-watermark {
   position: absolute;
   font-size: clamp(200px, 40vw, 600px);
@@ -238,7 +260,7 @@ section {
   z-index: 1;
   line-height: 1;
 }
-.hero-title { overflow: hidden; }
+.hero-title { overflow: visible; }
 .hero-title .word {
   display: inline-block;
   will-change: transform, opacity;
@@ -248,7 +270,7 @@ section {
   font-weight: 300;
   color: rgba(255, 255, 255, 0.5);
   max-width: 640px;
-  margin: var(--space-2xl) auto 0;
+  margin: var(--space-3xl) auto 0;
   line-height: 1.5;
 }
 .hero-subtitle .sub-word {
@@ -259,7 +281,7 @@ section {
   display: flex;
   gap: var(--space-md);
   justify-content: center;
-  margin-top: var(--space-3xl);
+  margin-top: var(--space-xl);
   flex-wrap: wrap;
 }
 .btn-primary {
@@ -310,11 +332,12 @@ section {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
+  z-index: 3;
 }
 .scroll-indicator .arrow-down {
   width: 24px;
@@ -395,32 +418,31 @@ section {
    §3 — EMPATHY (pinned word reveal)
    ═══════════════════════════════════════════════════════════ */
 #empathy {
-  background: var(--color-off-white);
-  color: var(--color-ash);
+  background: var(--color-ash);
+  color: var(--color-white);
 }
 .empathy-container {
-  max-width: 1000px;
+  max-width: 1080px;
   margin: 0 auto;
   text-align: center;
 }
 .empathy-container .reveal-word {
   display: inline-block;
   font-size: clamp(40px, 6vw, 90px);
-  font-weight: 400;
-  line-height: 1.2;
+  font-weight: 700;
+  line-height: 1.3;
   opacity: 0.08;
   transition: none;
-  margin: 0 0.12em;
+  margin: 0 0.15em;
 }
 .empathy-container .reveal-word.active {
   opacity: 1;
 }
-.empathy-container .reveal-word.elm-word {
-  font-weight: 600;
-  color: var(--color-elm);
+.empathy-container .reveal-word.neon-word {
+  color: var(--color-neon);
 }
-.empathy-container .reveal-word.elm-word.active {
-  text-shadow: 0 0 40px rgba(34, 108, 110, 0.2);
+.empathy-container .reveal-word.neon-word.active {
+  text-shadow: 0 0 30px rgba(204, 255, 0, 0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -504,7 +526,17 @@ section {
 #ki {
   background: var(--color-ash);
   color: var(--color-white);
+  overflow: hidden;
 }
+#ki-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+#ki .section-inner { position: relative; z-index: 2; }
 #ki .eyebrow { color: var(--color-neon); }
 .ki-headline {
   font-size: var(--type-big);
@@ -755,73 +787,125 @@ section {
   background: var(--color-off-white);
   color: var(--color-ash);
 }
-.cases-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-lg);
-  max-width: 960px;
-  margin: var(--space-3xl) auto 0;
+.ref-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
 }
-.case-card {
+.ref-header .eyebrow { color: var(--color-elm); }
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.ref-card {
+  background: var(--color-white);
+  border: 1px solid rgba(34,108,110,0.1);
   border-radius: 16px;
-  padding: var(--space-2xl);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
-.case-card:hover {
-  transform: translateY(-12px);
-  box-shadow: var(--shadow-lg);
+.ref-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+  border-color: rgba(34,108,110,0.25);
 }
-.case-card .case-tag {
-  font-size: var(--type-small);
+.ref-thumb {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.ref-thumb-1 { background: linear-gradient(135deg, #1a5254, var(--color-elm)); }
+.ref-thumb-2 { background: linear-gradient(135deg, #7a3a00, #E09B40); }
+.ref-thumb-3 { background: linear-gradient(135deg, var(--color-ash), #1a1c24); }
+.ref-thumb-labels {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ref-tag {
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: var(--space-md);
-  display: block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.15);
+  color: var(--color-white);
+  backdrop-filter: blur(8px);
 }
-.case-card h3 {
-  font-size: clamp(22px, 3vw, 36px);
+.ref-body { padding: 24px; }
+.ref-title {
+  font-size: 17px;
   font-weight: 700;
-  margin-bottom: var(--space-sm);
-  line-height: 1.1;
-}
-.case-card .case-result {
-  font-size: var(--type-big);
-  font-weight: 800;
-  color: var(--color-neon);
-  line-height: 1;
-  margin-top: var(--space-lg);
-}
-.case-card-dark {
-  background: var(--color-ash);
-  color: var(--color-white);
-}
-.case-card-dark .case-tag { color: var(--color-neon); }
-.case-card-elm {
-  background: var(--color-elm);
-  color: var(--color-white);
-}
-.case-card-elm .case-tag { color: var(--color-neon); }
-.case-card-neon {
-  background: var(--color-white);
-  border: 2px solid var(--color-neon);
+  margin-bottom: 8px;
   color: var(--color-ash);
 }
-.case-card-neon .case-tag { color: var(--color-elm); }
-.case-card-neon .case-result { color: var(--color-elm); }
-.cases-cta {
+.ref-excerpt {
+  font-size: 13.5px;
+  color: var(--color-muted);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.ref-kpis {
+  display: flex;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.ref-kpi-val {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--color-elm);
+}
+.ref-kpi-label {
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 2px;
+}
+.ref-cta {
   text-align: center;
   margin-top: var(--space-3xl);
 }
-.cases-cta a {
+.ref-cta a {
   color: var(--color-elm);
   font-weight: 600;
   text-decoration: none;
   font-size: var(--type-body);
-  transition: color 0.2s ease;
+  padding: 12px 32px;
+  border: 2px solid var(--color-elm);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
-.cases-cta a:hover { color: var(--color-ash); }
+.ref-cta a:hover {
+  background: var(--color-elm);
+  color: var(--color-white);
+}
+
+/* Reveal animation for cards */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
 
 /* ═══════════════════════════════════════════════════════════
    §8 — TEAM
@@ -829,50 +913,125 @@ section {
 #team {
   background: var(--color-ash);
   color: var(--color-white);
-  text-align: center;
 }
-.avatar-row {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-lg);
-  margin: var(--space-3xl) auto;
-  flex-wrap: wrap;
+.team-header { margin-bottom: var(--space-3xl); }
+.team-headline {
+  font-size: var(--type-big);
+  font-weight: 800;
+  line-height: 0.97;
+  letter-spacing: -2px;
+  color: var(--color-white);
+  margin: var(--space-md) 0;
 }
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: var(--color-elm);
+.team-sub {
+  font-size: var(--type-body);
+  color: var(--color-muted);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 480px;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.team-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255,255,255,0.04);
+  will-change: transform, opacity;
+}
+.team-card:hover {
+  border-color: rgba(34,108,110,0.3);
+  box-shadow: 0 12px 40px rgba(34,108,110,0.15);
+  transform: translateY(-4px);
+}
+.team-avatar {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+}
+.team-avatar-placeholder {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 52px;
+}
+.team-card:nth-child(1) .team-avatar-placeholder { background: linear-gradient(145deg, #226C6E, #1a5254); }
+.team-card:nth-child(2) .team-avatar-placeholder { background: linear-gradient(145deg, #6C3C32, #4a2a22); }
+.team-card:nth-child(3) .team-avatar-placeholder { background: linear-gradient(145deg, #666633, #4a4a22); }
+.team-info { padding: 22px; }
+.team-name {
+  font-size: 17px;
+  font-weight: 800;
   color: var(--color-white);
-  transition: transform 0.3s ease;
-  will-change: transform, opacity;
+  letter-spacing: -0.3px;
 }
-.avatar:hover {
-  transform: translateY(-12px);
-}
-.team-quote {
-  font-size: var(--type-body-xl);
-  font-style: italic;
-  color: var(--color-muted);
-  max-width: 600px;
-  margin: 0 auto var(--space-2xl);
-  line-height: 1.5;
-}
-.team-cta a {
-  color: var(--color-neon);
+.team-role {
+  font-size: 12px;
+  color: var(--color-elm);
   font-weight: 600;
-  text-decoration: none;
-  font-size: var(--type-body);
-  transition: all 0.2s ease;
+  margin-top: 3px;
 }
-.team-cta a:hover {
-  transform: translateX(8px);
-  display: inline-block;
+.team-bio-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(34,108,110,0.92);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.team-card:hover .team-bio-overlay,
+.team-card.touch-active .team-bio-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.team-bio-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-white);
+}
+.team-bio-role {
+  font-size: 11px;
+  color: var(--color-neon);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 4px 0 14px;
+}
+.team-bio-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.team-bio-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.team-bio-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(204,255,0,0.15);
+  color: var(--color-neon);
+  letter-spacing: 0.5px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1212,6 +1371,9 @@ body::after {
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .ref-grid { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 768px) {
   .stats-row { grid-template-columns: 1fr; gap: var(--space-2xl); }
   .feature-grid { grid-template-columns: 1fr; }
@@ -1220,8 +1382,9 @@ body::after {
   .journey-viz { gap: 0; }
   .journey-node { width: 48px; height: 48px; font-size: 8px; }
   .journey-connector { width: 24px; }
-  .cases-grid { grid-template-columns: 1fr; }
-  .avatar { width: 72px; height: 72px; font-size: 22px; }
+  .ref-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-bio-overlay { padding: 20px; }
   .calendar-widget { max-width: 100%; }
   .cal-times { justify-content: center; }
   .footer-inner { flex-direction: column; text-align: center; }
@@ -1249,6 +1412,11 @@ body::after {
   .marquee-track { animation: none; }
   .scroll-indicator { display: none; }
   .scroll-progress { display: none; }
+  #journey-canvas { display: none; }
+  .hero-vignette { display: none; }
+  .team-card, .ref-card { transition: none; }
+  .team-bio-overlay { transition: none; }
+  .reveal-card { opacity: 1; transform: none; transition: none; }
 }
 </style>
 </head>
@@ -1294,25 +1462,20 @@ body::after {
      §1 — HERO
      ═══════════════════════════════════════════════════════════ -->
 <section id="hero">
+  <canvas id="journey-canvas"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
   <div class="hero-watermark" aria-hidden="true">MXM</div>
   <div class="section-inner" style="text-align:center;">
-    <img src="media/logo.png" alt="maxomedia" style="width: 90px; height: 90px; object-fit: contain; margin-bottom: var(--space-lg);">
     <span class="eyebrow" id="heroEyebrow">DIGITALAGENTUR BERN</span>
     <h1 class="hero-title giant" id="heroTitle">
-      <span class="word">Digitale</span> <span class="word">Journeys</span> <span class="word">im</span> <span class="word"><span class="highlight">Flow.</span></span>
+      <span class="word">User</span> <span class="word">Journeys</span><br>
+      <span class="word">im</span> <span class="word"><span class="highlight">Flow.</span></span>
     </h1>
     <p class="hero-subtitle" id="heroSub">
-      <span class="sub-word">Strategie,</span>
-      <span class="sub-word">Technologie,</span>
-      <span class="sub-word">kreative</span>
-      <span class="sub-word">Kommunikation</span>
-      <span class="sub-word">—</span>
-      <span class="sub-word">und</span>
-      <span class="sub-word">KI</span>
-      <span class="sub-word">die</span>
-      <span class="sub-word">das</span>
-      <span class="sub-word">alles</span>
-      <span class="sub-word">zusammenbringt.</span>
+      <span class="sub-word">Strategie.</span>
+      <span class="sub-word">Technologie.</span>
+      <span class="sub-word">KI.</span>
     </p>
     <div class="hero-ctas" id="heroCtas">
       <a href="#cta" class="btn-primary">Projekt starten →</a>
@@ -1372,7 +1535,9 @@ body::after {
      ═══════════════════════════════════════════════════════════ -->
 <section id="empathy">
   <div class="section-inner">
-    <div class="empathy-container" id="empathyContainer"></div>
+    <div class="empathy-container" id="empathyContainer">
+      <span class="eyebrow" style="color:var(--color-neon); margin-bottom:var(--space-lg); display:block;">WAS IST EINE USER JOURNEY?</span>
+    </div>
   </div>
 </section>
 
@@ -1409,6 +1574,7 @@ body::after {
      §5 — KI-USP
      ═══════════════════════════════════════════════════════════ -->
 <section id="ki">
+  <canvas id="ki-canvas"></canvas>
   <div class="ki-watermark" aria-hidden="true">AI</div>
   <div class="section-inner">
     <span class="eyebrow">KI-POWER</span>
@@ -1576,31 +1742,72 @@ body::after {
      ═══════════════════════════════════════════════════════════ -->
 <section id="referenzen">
   <div class="section-inner">
-    <span class="eyebrow">Ergebnisse die sprechen</span>
-    <h2 class="big" style="margin:var(--space-md) 0;">Unsere <span class="highlight">Arbeit</span></h2>
-
-    <div class="cases-grid" id="casesGrid">
-      <div class="case-card case-card-dark">
-        <span class="case-tag">E-Commerce</span>
-        <h3>Shop Hero</h3>
-        <div class="case-result">+340%</div>
-        <p style="opacity:0.6;margin-top:var(--space-sm);">Conversion</p>
-      </div>
-      <div class="case-card case-card-elm">
-        <span class="case-tag">SaaS</span>
-        <h3>DataFlow Pro</h3>
-        <div class="case-result">−60%</div>
-        <p style="opacity:0.6;margin-top:var(--space-sm);">Bounce Rate</p>
-      </div>
-      <div class="case-card case-card-neon">
-        <span class="case-tag">B2B</span>
-        <h3>TechConsult Bern</h3>
-        <div class="case-result">4× ROI</div>
+    <div class="ref-header">
+      <div>
+        <span class="eyebrow">Referenzen</span>
+        <h2 class="big" style="margin:var(--space-md) 0;">Projekte, die messbare<br><span class="highlight">Ergebnisse</span> liefern.</h2>
       </div>
     </div>
 
-    <div class="cases-cta">
-      <a href="#">Alle Cases →</a>
+    <div class="ref-grid" id="refGrid">
+      <div class="ref-card reveal-card">
+        <div class="ref-thumb ref-thumb-1">
+          <span style="position:relative;z-index:1;filter:drop-shadow(0 2px 12px rgba(0,0,0,.4));">🔬</span>
+          <div class="ref-thumb-labels">
+            <span class="ref-tag">KI-Integration</span>
+            <span class="ref-tag">Chatbot</span>
+          </div>
+        </div>
+        <div class="ref-body">
+          <div class="ref-title">WiSTy — KI-Kundenberater</div>
+          <p class="ref-excerpt">RAG-basierter Produktberater, der Kundenfragen in Echtzeit beantwortet und den Support entlastet hat.</p>
+          <div class="ref-kpis">
+            <div><div class="ref-kpi-val">−60%</div><div class="ref-kpi-label">Support-Aufwand</div></div>
+            <div><div class="ref-kpi-val">+38%</div><div class="ref-kpi-label">Conversion Rate</div></div>
+            <div><div class="ref-kpi-val">92%</div><div class="ref-kpi-label">Zufriedenheit</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal-card reveal-delay-1">
+        <div class="ref-thumb ref-thumb-2">
+          <span style="position:relative;z-index:1;filter:drop-shadow(0 2px 12px rgba(0,0,0,.4));">🏒</span>
+          <div class="ref-thumb-labels">
+            <span class="ref-tag">Campaigning</span>
+            <span class="ref-tag">TikTok</span>
+          </div>
+        </div>
+        <div class="ref-body">
+          <div class="ref-title">SC Bern — Mutz-Kampagne</div>
+          <p class="ref-excerpt">TikTok-First Kampagne, die eine neue jüngere Zielgruppe für den SC Bern erschlossen hat.</p>
+          <div class="ref-kpis">
+            <div><div class="ref-kpi-val">2.1M</div><div class="ref-kpi-label">Impressions</div></div>
+            <div><div class="ref-kpi-val">+120%</div><div class="ref-kpi-label">Follower</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal-card reveal-delay-2">
+        <div class="ref-thumb ref-thumb-3">
+          <span style="position:relative;z-index:1;filter:drop-shadow(0 2px 12px rgba(0,0,0,.4));">📊</span>
+          <div class="ref-thumb-labels">
+            <span class="ref-tag">Analytics</span>
+            <span class="ref-tag">KI</span>
+          </div>
+        </div>
+        <div class="ref-body">
+          <div class="ref-title">Predictive Media Analytics</div>
+          <p class="ref-excerpt">ML-gestützte Budgetsteuerung. Schnellere Entscheidungen, weniger Waste, bessere Ergebnisse.</p>
+          <div class="ref-kpis">
+            <div><div class="ref-kpi-val">3×</div><div class="ref-kpi-label">Schnellere Insights</div></div>
+            <div><div class="ref-kpi-val">−25%</div><div class="ref-kpi-label">Media Waste</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-cta">
+      <a href="#">Alle Projekte →</a>
     </div>
   </div>
 </section>
@@ -1610,21 +1817,63 @@ body::after {
      ═══════════════════════════════════════════════════════════ -->
 <section id="team">
   <div class="section-inner">
-    <span class="eyebrow" style="color:var(--color-neon);">Wer wir sind</span>
-    <h2 class="big" style="margin:var(--space-md) 0; color:var(--color-white);">Menschen die digital <span class="highlight">denken</span></h2>
-
-    <div class="avatar-row" id="avatarRow">
-      <div class="avatar">SZ</div>
-      <div class="avatar">GL</div>
-      <div class="avatar">BK</div>
-      <div class="avatar">TM</div>
-      <div class="avatar">RS</div>
+    <div class="team-header">
+      <span class="eyebrow" style="color:var(--color-neon);">Das Team</span>
+      <h2 class="team-headline">Menschen<br>im Flow.</h2>
+      <p class="team-sub">Strategen, Gestalterinnen und Projektprofis — vereint im Flow-Prinzip.</p>
     </div>
-
-    <p class="team-quote">«30 Jahre Erfahrung. Bern. Keine Buzzwords.»</p>
-
-    <div class="team-cta">
-      <a href="#">Team kennenlernen →</a>
+    <div class="team-grid" id="teamGrid">
+      <div class="team-card reveal-card">
+        <div class="team-avatar"><div class="team-avatar-placeholder">👔</div></div>
+        <div class="team-info">
+          <div class="team-name">Simon Muster</div>
+          <div class="team-role">CEO</div>
+        </div>
+        <div class="team-bio-overlay">
+          <div class="team-bio-name">Simon Muster</div>
+          <div class="team-bio-role">CEO</div>
+          <div class="team-bio-text">Markenmensch mit Weitblick. Verbindet Strategie mit Stil und sieht das grosse Ganze.</div>
+          <div class="team-bio-tags">
+            <span class="team-bio-tag">Markenopfer</span>
+            <span class="team-bio-tag">Vogelperspektive</span>
+            <span class="team-bio-tag">Stil</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal-card reveal-delay-1">
+        <div class="team-avatar"><div class="team-avatar-placeholder">🎨</div></div>
+        <div class="team-info">
+          <div class="team-name">Claudia Schmid</div>
+          <div class="team-role">Digital Art Director</div>
+        </div>
+        <div class="team-bio-overlay">
+          <div class="team-bio-name">Claudia Schmid</div>
+          <div class="team-bio-role">Digital Art Director</div>
+          <div class="team-bio-text">Gestaltet digitale Erlebnisse mit klarer Haltung. Zwischen Pixel und Pinsel zuhause.</div>
+          <div class="team-bio-tags">
+            <span class="team-bio-tag">Zwei Räder</span>
+            <span class="team-bio-tag">Hören</span>
+            <span class="team-bio-tag">Credo</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal-card reveal-delay-2">
+        <div class="team-avatar"><div class="team-avatar-placeholder">🌿</div></div>
+        <div class="team-info">
+          <div class="team-name">Delia Siegrist</div>
+          <div class="team-role">Projektmanagerin</div>
+        </div>
+        <div class="team-bio-overlay">
+          <div class="team-bio-name">Delia Siegrist</div>
+          <div class="team-bio-role">Projektmanagerin</div>
+          <div class="team-bio-text">Hält Projekte im Flow. Optimistisch, strukturiert und immer unterwegs zu neuen Horizonten.</div>
+          <div class="team-bio-tags">
+            <span class="team-bio-tag">Optimistisch</span>
+            <span class="team-bio-tag">Reisefüdli</span>
+            <span class="team-bio-tag">Natur</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1790,11 +2039,9 @@ function setActiveNav(id) {
     }
   });
   const backLink = document.getElementById('backLink');
-  const lightSections = ['empathy', 'referenzen'];
+  const lightSections = ['referenzen'];
   backLink.classList.toggle('dark-mode', lightSections.includes(id));
 
-  const fixedLogo = document.getElementById('fixedLogo');
-  fixedLogo.classList.toggle('visible', id !== 'hero');
 }
 
 // Smooth scroll for nav
@@ -1833,19 +2080,28 @@ heroTl
   .from('.hero-ctas', { opacity: 0, y: 30, duration: 0.6 }, '-=0.2')
   .from('#scrollIndicator', { opacity: 0, duration: 0.6 }, '-=0.2');
 
+// Fixed logo shrink on hero scroll
+gsap.to('.fixed-logo', {
+  width: 40,
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+});
+
 // Hero scroll-away
 gsap.timeline({
   scrollTrigger: {
     trigger: '#hero',
     start: 'top top',
-    end: 'bottom top',
+    end: '70% top',
     scrub: 1,
   }
 })
-.to('.hero-title', { y: -100, opacity: 0, ease: 'none' })
+.to('.hero-title span:nth-of-type(1)', { x: -200, opacity: 0, ease: 'none' })
+.to('.hero-title span:nth-of-type(2)', { x: 200, opacity: 0, ease: 'none' }, 0)
+.to('.hero-title span:nth-of-type(3)', { x: -150, opacity: 0, ease: 'none' }, 0)
+.to('.hero-title span:nth-of-type(4)', { x: 150, opacity: 0, ease: 'none' }, 0)
 .to('#heroSub', { opacity: 0, y: -40, ease: 'none' }, 0)
 .to('.hero-ctas', { opacity: 0, y: -30, ease: 'none' }, 0)
-.to('#scrollIndicator', { opacity: 0, ease: 'none' }, 0);
+.to('#journey-canvas, .hero-vignette, .hero-bottom-fade', { opacity: 0, ease: 'none' }, 0);
 
 
 // ─── §2 TRUST: counter animation ───
@@ -1872,16 +2128,30 @@ document.querySelectorAll('.stat-number').forEach(num => {
 
 
 // ─── §3 EMPATHY: pinned word reveal ───
-const empathyText = 'Ihre Kunden verlieren sich auf dem Weg. Zu viele Touchpoints. Zu wenig Zusammenhang. Ihre Website ist eine Broschüre — kein Erlebnis.';
-const elmWords = ['verlieren', 'Zusammenhang.', 'Erlebnis.'];
+const empathyText = 'Ihre Kunden verlieren sich. Zu viele Touchpoints. Kein Zusammenhang. Kein Erlebnis. Keine Journey.';
+const neonWords = ['verlieren', 'Zusammenhang.', 'Journey.'];
 const empathyContainer = document.getElementById('empathyContainer');
 
 empathyText.split(' ').forEach(w => {
   const span = document.createElement('span');
   span.className = 'reveal-word';
-  if (elmWords.includes(w)) span.classList.add('elm-word');
+  if (neonWords.includes(w)) span.classList.add('neon-word');
   span.textContent = w;
   empathyContainer.appendChild(span);
+});
+
+// Wrap pairs to keep on one line
+const allWords = empathyContainer.querySelectorAll('.reveal-word');
+allWords.forEach((span, i) => {
+  if (i < allWords.length - 1 &&
+      ((span.textContent === 'Kein' && allWords[i+1].textContent === 'Zusammenhang.') ||
+       (span.textContent === 'Keine' && allWords[i+1].textContent === 'Journey.'))) {
+    const wrapper = document.createElement('span');
+    wrapper.style.whiteSpace = 'nowrap';
+    span.parentNode.insertBefore(wrapper, span);
+    wrapper.appendChild(span);
+    wrapper.appendChild(allWords[i+1]);
+  }
 });
 
 const empathyWords = empathyContainer.querySelectorAll('.reveal-word');
@@ -1971,7 +2241,6 @@ function splitTextNode(node, parent) {
 
 const kiLetters = kiHeadline.querySelectorAll('.letter');
 gsap.set(kiLetters, { opacity: 0, y: 40, rotateX: -90 });
-gsap.set('#ki .eyebrow', { opacity: 0 });
 const kiHighlight = kiHeadline.querySelector('.highlight');
 if (kiHighlight) gsap.set(kiHighlight, { backgroundImage: 'none' });
 
@@ -1986,8 +2255,7 @@ const kiChatTl = gsap.timeline({
   }
 });
 
-// Phase 1: eyebrow + letter fly-in
-kiChatTl.to('#ki .eyebrow', { opacity: 1, duration: 0.3 }, 0);
+// Phase 1: letter fly-in
 kiChatTl.to(kiLetters, {
   opacity: 1, y: 0, rotateX: 0,
   duration: 0.02, stagger: 0.02, ease: 'back.out(1.7)',
@@ -2013,6 +2281,33 @@ kiBubbles.forEach((bubble, i) => {
   }, 0.7 + i * 0.8);
 });
 
+// Phase 3: feature cards fly-in (post-pin, triggered by next section)
+const featureCards = document.querySelectorAll('#featureGrid .feature-card');
+const featureAnims = [
+  { x: -200, rotation: -12 },
+  { x: 200, rotation: 10 },
+  { y: 200, rotation: -8 },
+];
+featureCards.forEach((card, i) => {
+  const anim = featureAnims[i] || featureAnims[0];
+  gsap.set(card, { opacity: 0, x: anim.x || 0, y: anim.y || 0, rotation: anim.rotation || 0 });
+});
+const featureCardsTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#leistungen',
+    start: 'top bottom',
+    end: 'top 75%',
+    scrub: 0.8,
+  }
+});
+featureCards.forEach((card, i) => {
+  featureCardsTl.to(card, {
+    opacity: 1, x: 0, y: 0, rotation: 0,
+    duration: 1,
+    ease: 'power2.out',
+  }, i * 0.3);
+});
+
 // Journey viz: glow KI nodes on scroll
 document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
   ScrollTrigger.create({
@@ -2023,19 +2318,312 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
   });
 });
 
-// Feature cards stagger
-gsap.from('#featureGrid .feature-card', {
-  y: 60,
-  opacity: 0,
-  stagger: 0.15,
-  scrollTrigger: {
-    trigger: '#featureGrid',
-    start: 'top 80%',
-    end: 'top 40%',
-    scrub: true,
-  }
-});
 
+
+// ─── §5b KI NEURAL NETWORK CANVAS ───
+(function() {
+  const canvas = document.getElementById('ki-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const kiSection = document.getElementById('ki');
+
+  // Colors
+  const NEON = '#CCFF00';
+  const ELM = '#226C6E';
+  const DIM_WHITE = 'rgba(255,255,255,0.12)';
+
+  // Node config
+  const NODE_COUNT = 90;
+  const CONNECTION_DIST = 300;
+  const DATA_PARTICLE_COUNT = 40;
+
+  // Depth layers: 0=background, 1=mid, 2=foreground
+  const LAYER_PROPS = [
+    { sizeRange: [2, 4], opacity: 0.15, speed: 0.3, color: DIM_WHITE },
+    { sizeRange: [3, 6], opacity: 0.5, speed: 0.6, color: ELM },
+    { sizeRange: [4, 8], opacity: 0.9, speed: 1.0, color: NEON },
+  ];
+
+  // Binary text particles
+  const TEXT_LABELS = ['01', '0x', '>>', '10', 'FF', '::'];
+
+  // Pre-allocate nodes
+  const nodes = [];
+  const dataParticles = [];
+  let w = 0, h = 0;
+  let progress = 0;
+  let preProgress = 0; // 0→1 as KI scrolls from viewport bottom to viewport top
+  let sectionVisible = false;
+  let rafId = null;
+
+  function resize() {
+    const rect = kiSection.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = rect.width;
+    h = rect.height;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function initNodes() {
+    nodes.length = 0;
+    for (let i = 0; i < NODE_COUNT; i++) {
+      const layer = i < 30 ? 0 : i < 65 ? 1 : 2;
+      const lp = LAYER_PROPS[layer];
+      nodes.push({
+        baseX: Math.random() * w,
+        baseY: layer === 2 ? Math.random() * h * 0.6 : layer === 1 ? Math.random() * h * 0.8 : Math.random() * h,
+        x: 0, y: 0,
+        layer: layer,
+        size: lp.sizeRange[0] + Math.random() * (lp.sizeRange[1] - lp.sizeRange[0]),
+        color: lp.color,
+        baseOpacity: lp.opacity,
+        opacity: 0,
+        speed: lp.speed,
+        phaseX: Math.random() * Math.PI * 2,
+        phaseY: Math.random() * Math.PI * 2,
+        freqX: 0.3 + Math.random() * 0.5,
+        freqY: 0.2 + Math.random() * 0.4,
+        ampX: 15 + Math.random() * 25,
+        ampY: 10 + Math.random() * 20,
+        textLabel: Math.random() < 0.35 ? TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)] : null,
+        // Pulse for 3D depth feel
+        pulsePhase: Math.random() * Math.PI * 2,
+        pulseFreq: layer === 0 ? 0.4 + Math.random() * 0.3 : layer === 1 ? 0.6 + Math.random() * 0.4 : 0.8 + Math.random() * 0.5,
+        pulseAmp: layer === 0 ? 0.15 : layer === 1 ? 0.2 : 0.25,
+        renderSize: 0,
+        // Dispersal: angle/speed away from center
+        disperseAngle: 0,
+        disperseSpeed: 0.8 + Math.random() * 1.2,
+      });
+    }
+    // Compute dispersal angles from center
+    const cx = w / 2, cy = h / 2;
+    nodes.forEach(n => {
+      n.disperseAngle = Math.atan2(n.baseY - cy, n.baseX - cx);
+    });
+
+    // Data particles (flow along connections)
+    dataParticles.length = 0;
+    for (let i = 0; i < DATA_PARTICLE_COUNT; i++) {
+      dataParticles.push({
+        fromIdx: Math.floor(Math.random() * NODE_COUNT),
+        toIdx: Math.floor(Math.random() * NODE_COUNT),
+        t: Math.random(),
+        speed: 0.003 + Math.random() * 0.006,
+        size: 1.5 + Math.random() * 2,
+      });
+    }
+  }
+
+  function computeNodePositions(time) {
+    const cx = w / 2, cy = h / 2;
+
+    // Phase mapping:
+    // 0-0.15: data awakens (nodes drift, fade in)
+    // 0.15-0.35: network forms (connections draw)
+    // 0.35-0.55: dispersal (push outward)
+    // 0.55-1.0: ambient remnants
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const drift = time * n.speed;
+
+      // Base organic drift
+      let dx = Math.sin(drift * n.freqX + n.phaseX) * n.ampX;
+      let dy = Math.cos(drift * n.freqY + n.phaseY) * n.ampY;
+
+      // Pulse modulation for 3D depth
+      const pulse = 1 + Math.sin(drift * n.pulseFreq + n.pulsePhase) * n.pulseAmp;
+
+      if (progress < 0.35) {
+        // Phase 1-2: gentle drift
+        n.x = n.baseX + dx;
+        n.y = n.baseY + dy;
+        // Unified fade: max of preProgress and progress ramp — no discontinuity at pin
+        const fadeIn = Math.max(preProgress, Math.min(1, progress / 0.1));
+        n.opacity = n.baseOpacity * fadeIn * pulse;
+        n.renderSize = n.size * (1 + (pulse - 1) * 0.5);
+      } else if (progress < 0.55) {
+        // Phase 3: dispersal — push away from center
+        const disperseT = (progress - 0.35) / 0.2; // 0→1
+        const eased = disperseT * disperseT; // ease-in
+        const pushDist = eased * Math.max(w, h) * 0.7 * n.disperseSpeed;
+        n.x = n.baseX + dx + Math.cos(n.disperseAngle) * pushDist;
+        n.y = n.baseY + dy + Math.sin(n.disperseAngle) * pushDist;
+        n.opacity = n.baseOpacity * (1 - disperseT) * pulse;
+        n.renderSize = n.size * (1 + (pulse - 1) * 0.5);
+      } else {
+        // Phase 4: ambient remnants — only background nodes at edges
+        if (n.layer === 0) {
+          const edgeX = n.baseX < w * 0.3 ? n.baseX * 0.5 : n.baseX > w * 0.7 ? w - (w - n.baseX) * 0.5 + w * 0.3 : n.baseX;
+          n.x = edgeX + dx * 0.5;
+          n.y = n.baseY + dy * 0.5;
+          n.opacity = 0.06 * pulse;
+          n.renderSize = n.size * (1 + (pulse - 1) * 0.5);
+        } else {
+          n.opacity = 0;
+          n.renderSize = n.size;
+        }
+      }
+    }
+  }
+
+  function getConnectionOpacity(dist, maxDist) {
+    // Stronger at phase 2, fade with distance
+    const ep = Math.max(preProgress * 0.15, progress);
+    let networkStrength;
+    if (ep < 0.15) {
+      networkStrength = ep / 0.15 * 0.3;
+    } else if (ep < 0.35) {
+      networkStrength = 0.3 + ((ep - 0.15) / 0.2) * 0.7;
+    } else if (ep < 0.55) {
+      networkStrength = 1.0 - ((progress - 0.35) / 0.2);
+    } else {
+      return 0;
+    }
+    const distFade = 1 - (dist / maxDist);
+    return distFade * distFade * networkStrength * 0.4;
+  }
+
+  function render(time) {
+    if (!sectionVisible) { rafId = null; return; }
+    rafId = requestAnimationFrame(render);
+    const t = time * 0.001;
+
+    ctx.clearRect(0, 0, w, h);
+    computeNodePositions(t);
+
+    // Draw connections (phase 1-3)
+    const ep = Math.max(preProgress * 0.15, progress);
+    if (ep < 0.55 || progress < 0.55) {
+      const maxDist = CONNECTION_DIST * (ep < 0.15 ? 0.6 + ep / 0.15 * 0.4 : 1);
+      for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i].opacity <= 0) continue;
+        for (let j = i + 1; j < nodes.length; j++) {
+          if (nodes[j].opacity <= 0) continue;
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > maxDist) continue;
+          const alpha = getConnectionOpacity(dist, maxDist);
+          if (alpha < 0.01) continue;
+          // Color based on layer: neon if either is foreground, else teal
+          const isFg = nodes[i].layer === 2 || nodes[j].layer === 2;
+          ctx.beginPath();
+          // Slight curve for organic feel
+          const mx = (nodes[i].x + nodes[j].x) / 2 + (nodes[i].y - nodes[j].y) * 0.1;
+          const my = (nodes[i].y + nodes[j].y) / 2 + (nodes[j].x - nodes[i].x) * 0.1;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.quadraticCurveTo(mx, my, nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = isFg
+            ? 'rgba(204,255,0,' + alpha + ')'
+            : 'rgba(34,108,110,' + alpha + ')';
+          ctx.lineWidth = isFg ? 1.2 : 0.8;
+          ctx.stroke();
+        }
+      }
+
+      // Data particles flowing along connections
+      if (progress > 0.1 && progress < 0.5) {
+        const particleAlpha = progress < 0.35
+          ? Math.min(1, (progress - 0.1) / 0.1)
+          : 1 - (progress - 0.35) / 0.15;
+        for (let i = 0; i < dataParticles.length; i++) {
+          const dp = dataParticles[i];
+          const from = nodes[dp.fromIdx];
+          const to = nodes[dp.toIdx];
+          if (from.opacity <= 0 || to.opacity <= 0) continue;
+          const dx = to.x - from.x;
+          const dy = to.y - from.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > CONNECTION_DIST) continue;
+          dp.t += dp.speed;
+          if (dp.t > 1) { dp.t = 0; dp.fromIdx = dp.toIdx; dp.toIdx = Math.floor(Math.random() * NODE_COUNT); }
+          const px = from.x + dx * dp.t;
+          const py = from.y + dy * dp.t;
+          ctx.beginPath();
+          ctx.arc(px, py, dp.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(204,255,0,' + (particleAlpha * 0.7) + ')';
+          ctx.fill();
+        }
+      }
+    }
+
+    // Draw nodes
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n.opacity <= 0.005) continue;
+
+      // Glow for foreground nodes
+      if (n.layer === 2 && n.opacity > 0.3) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.renderSize * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(204,255,0,' + (n.opacity * 0.1) + ')';
+        ctx.fill();
+      }
+
+      // Node dot
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.renderSize, 0, Math.PI * 2);
+      ctx.fillStyle = n.color.startsWith('rgba')
+        ? n.color.replace(/[\d.]+\)$/, n.opacity + ')')
+        : n.color;
+      ctx.globalAlpha = n.opacity;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Text label near node
+      if (n.textLabel && n.opacity > 0.2 && progress < 0.5) {
+        ctx.font = (8 + n.layer * 2) + 'px monospace';
+        ctx.fillStyle = 'rgba(204,255,0,' + (n.opacity * 0.35) + ')';
+        ctx.fillText(n.textLabel, n.x + n.renderSize + 4, n.y + 3);
+      }
+    }
+  }
+
+  // Pre-pin scroll: fade in network as KI section enters viewport
+  ScrollTrigger.create({
+    trigger: '#ki',
+    start: 'top bottom',
+    end: 'top top',
+    onUpdate: function(self) { preProgress = self.progress; },
+  });
+
+  // Mirror the KI pin's scroll progress for the canvas
+  ScrollTrigger.create({
+    trigger: '#ki',
+    start: 'top top',
+    end: () => '+=' + (window.innerHeight * 2.5),
+    onUpdate: function(self) { progress = self.progress; },
+  });
+
+  // IntersectionObserver: start/stop render loop when section is visible
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      sectionVisible = entry.isIntersecting;
+      if (sectionVisible && !rafId) {
+        resize();
+        if (!nodes.length) initNodes();
+        rafId = requestAnimationFrame(render);
+      }
+    });
+  }, { rootMargin: '100px 0px' });
+  obs.observe(kiSection);
+
+  // Handle resize
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      resize();
+      initNodes();
+    }, 200);
+  });
+})();
 
 // ─── §6 ACCORDION ───
 document.querySelectorAll('.accordion-header').forEach(header => {
@@ -2076,43 +2664,16 @@ ScrollTrigger.create({
 });
 
 
-// ─── §7 REFERENZEN: staggered fly-in ───
-gsap.from('#casesGrid .case-card', {
-  y: 60,
-  opacity: 0,
-  stagger: 0.15,
-  scrollTrigger: {
-    trigger: '#casesGrid',
-    start: 'top 80%',
-    end: 'top 40%',
-    scrub: true,
-  }
-});
-
-
-// ─── §8 TEAM: staggered entrance ───
-gsap.from('#avatarRow .avatar', {
-  y: 40,
-  opacity: 0,
-  stagger: 0.12,
-  scrollTrigger: {
-    trigger: '#avatarRow',
-    start: 'top 80%',
-    end: 'top 50%',
-    scrub: true,
-  }
-});
-
-gsap.from('.team-quote', {
-  y: 30,
-  opacity: 0,
-  scrollTrigger: {
-    trigger: '.team-quote',
-    start: 'top 85%',
-    end: 'top 60%',
-    scrub: true,
-  }
-});
+// ─── §7 + §8: Reveal cards on scroll (CSS transition + IntersectionObserver) ───
+const revealCardObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('revealed');
+      revealCardObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal-card').forEach(el => revealCardObs.observe(el));
 
 
 // ─── §9 CTA: scale-up heading ───
@@ -2143,18 +2704,219 @@ ScrollTrigger.refresh();
 
 } // end if !prefersReducedMotion
 
+
+// ═══════════════════════════════════════════════════════════
+// THREE.JS PARTICLE JOURNEY (independent of GSAP reduced-motion)
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+if (typeof THREE !== 'undefined' && !prefersReducedMotion) {
+  const canvas = document.getElementById('journey-canvas');
+  if (canvas) {
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: false,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, canvas.offsetWidth / canvas.offsetHeight, 0.1, 200);
+    camera.position.set(0, 0, 22);
+
+    // Adaptive particle count
+    const isMobile = window.innerWidth < 768;
+    const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    const COUNT = isMobile ? 800 : isLowEnd ? 1200 : 2400;
+
+    // Per-particle data
+    const phases  = new Float32Array(COUNT);
+    const offsets = new Float32Array(COUNT);
+    const speeds  = new Float32Array(COUNT);
+    for (let i = 0; i < COUNT; i++) {
+      phases[i]  = Math.random();
+      offsets[i] = Math.random() * Math.PI * 2;
+      speeds[i]  = 0.12 + Math.random() * 0.08;
+    }
+
+    // Geometry
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(COUNT * 3);
+    const colors    = new Float32Array(COUNT * 3);
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+
+    // Colors — amber (chaos) → teal (convergence) → neon (flow)
+    const cAmber = new THREE.Color(0xE09B40);
+    const cTeal  = new THREE.Color(0x226C6E);
+    const cNeon  = new THREE.Color(0xCCFF00);
+    const tmpCol = new THREE.Color(); // reusable — no per-frame allocations
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.14,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.95,
+      sizeAttenuation: true,
+      depthWrite: false,
+    });
+    const particles = new THREE.Points(geo, mat);
+    scene.add(particles);
+
+    // Compute particle position along the journey — MORE depth than v2
+    function computePos(ph, off, t) {
+      const x = (ph - 0.5) * 44;
+      const chaos = Math.max(0, 1 - ph * 1.6);
+      const flow  = Math.min(1, Math.max(0, (ph - 0.35) / 0.4));
+
+      const pulse = 1 + Math.sin(t * 0.65 + off * 0.4) * 0.18;
+
+      const ySpread = (chaos * 10 + (1 - flow) * 3 + 1.5) * pulse;
+      const y = Math.sin(ph * 8 + off + t * 1.4) * ySpread * 0.55
+              + Math.cos(ph * 3 + off * 1.7 + t * 0.9) * ySpread * 0.3
+              + Math.sin(ph * 17 + off * 2.3 + t * 2.3) * ySpread * 0.09;
+
+      // Enhanced z-spread for MORE depth (16 vs v2's 12, 5 vs 3)
+      const zSpread = (chaos * 16 + (1 - flow) * 6 + 2) * pulse;
+      const z = Math.sin(ph * 5 + off * 0.9 + t * 1.1) * zSpread * 0.5
+              + Math.cos(ph * 2 + off * 2.1 + t * 0.7) * zSpread * 0.3
+              + Math.cos(ph * 11 + off * 1.5 + t * 1.9) * zSpread * 0.09;
+
+      const swirl = flow * (1 - flow) * 5;
+      const swirlA = t * 2.8 + off;
+
+      return {
+        x,
+        y: y + Math.sin(swirlA) * swirl,
+        z: z + Math.cos(swirlA) * swirl,
+      };
+    }
+
+    let time = 0;
+    let mx = 0, my = 0;
+    let camX = 0, camY = 0;
+
+    // Mouse parallax
+    document.addEventListener('mousemove', e => {
+      mx = (e.clientX / window.innerWidth  - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    // Pause when hero not visible
+    let heroVisible = true;
+    const heroEl = document.getElementById('hero');
+    const heroObs = new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }, { threshold: 0 });
+    heroObs.observe(heroEl);
+    document.addEventListener('visibilitychange', () => {
+      heroVisible = !document.hidden;
+    });
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!heroVisible) return;
+
+      time += 0.006;
+      const pos = geo.attributes.position.array;
+      const col = geo.attributes.color.array;
+
+      for (let i = 0; i < COUNT; i++) {
+        const speedMod = 1 + Math.sin(time * 2.0 + offsets[i] * 2) * 0.35;
+        phases[i] += speeds[i] * 0.001 * speedMod;
+        if (phases[i] > 1) phases[i] -= 1;
+
+        const p = computePos(phases[i], offsets[i], time);
+        pos[i*3]   = p.x;
+        pos[i*3+1] = p.y;
+        pos[i*3+2] = p.z;
+
+        // Color interpolation using reusable temp Color
+        const ph = phases[i];
+        if (ph < 0.45) {
+          tmpCol.copy(cAmber).lerp(cTeal, ph / 0.45);
+        } else {
+          tmpCol.copy(cTeal).lerp(cNeon, (ph - 0.45) / 0.55);
+        }
+
+        // Per-particle depth dimming — far-z particles darker
+        const depthFactor = Math.max(0.3, 1 - Math.abs(p.z) / 16);
+        col[i*3]   = tmpCol.r * depthFactor;
+        col[i*3+1] = tmpCol.g * depthFactor;
+        col[i*3+2] = tmpCol.b * depthFactor;
+      }
+
+      geo.attributes.position.needsUpdate = true;
+      geo.attributes.color.needsUpdate = true;
+
+      // Global particle size pulse
+      mat.size = 0.14 + Math.sin(time * 0.9) * 0.04;
+
+      // Stronger parallax (4.5x/2.5x vs v2's 3.5/2.0)
+      camX += (mx * 4.5 - camX) * 0.05;
+      camY += (-my * 2.5 - camY) * 0.05;
+      camera.position.x = camX;
+      camera.position.y = camY;
+      // Deeper camera z-breathing (±2.5 vs v2's ±1.5)
+      camera.position.z = 22 + Math.sin(time * 0.22) * 2.5;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Resize
+    window.addEventListener('resize', () => {
+      const w = canvas.offsetWidth, h = canvas.offsetHeight;
+      if (w && h) {
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+    }, { passive: true });
+
+    // Touch: toggle team card overlays on mobile
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('.team-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const wasActive = card.classList.contains('touch-active');
+          document.querySelectorAll('.team-card.touch-active').forEach(c => c.classList.remove('touch-active'));
+          if (!wasActive) card.classList.add('touch-active');
+        });
+      });
+    }
+  }
+}
+}); // end window load
+
+
 // ─── BUILD EMPATHY WORDS (for reduced-motion too) ───
 if (prefersReducedMotion) {
-  const empathyText2 = 'Ihre Kunden verlieren sich auf dem Weg. Zu viele Touchpoints. Zu wenig Zusammenhang. Ihre Website ist eine Broschüre — kein Erlebnis.';
-  const elmWords2 = ['verlieren', 'Zusammenhang.', 'Erlebnis.'];
+  const empathyText2 = 'Ihre Kunden verlieren sich. Zu viele Touchpoints. Kein Zusammenhang. Kein Erlebnis. Keine Journey.';
+  const neonWords2 = ['verlieren', 'Zusammenhang.', 'Journey.'];
   const ec = document.getElementById('empathyContainer');
   if (ec && !ec.querySelector('.reveal-word')) {
     empathyText2.split(' ').forEach(w => {
       const span = document.createElement('span');
       span.className = 'reveal-word active';
-      if (elmWords2.includes(w)) span.classList.add('elm-word');
+      if (neonWords2.includes(w)) span.classList.add('neon-word');
       span.textContent = w;
       ec.appendChild(span);
+    });
+    // Wrap pairs to keep on one line
+    const allWords2 = ec.querySelectorAll('.reveal-word');
+    allWords2.forEach((span, i) => {
+      if (i < allWords2.length - 1 &&
+          ((span.textContent === 'Kein' && allWords2[i+1].textContent === 'Zusammenhang.') ||
+           (span.textContent === 'Keine' && allWords2[i+1].textContent === 'Journey.'))) {
+        const wrapper = document.createElement('span');
+        wrapper.style.whiteSpace = 'nowrap';
+        span.parentNode.insertBefore(wrapper, span);
+        wrapper.appendChild(span);
+        wrapper.appendChild(allWords2[i+1]);
+      }
     });
   }
 }
