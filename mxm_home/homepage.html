@@ -2185,21 +2185,16 @@ const flowTl = gsap.timeline({
 
 flowTl
   .to('#flowPanel1', {
-    rotateX: -90,
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.in',
-    transformOrigin: 'top center',
+    rotateX: -90, opacity: 0, boxShadow: '0 -20px 60px rgba(0,0,0,0.4)',
+    duration: 1, ease: 'power2.in', transformOrigin: 'top center',
   })
+  .fromTo('#flowPanel2', { scale: 0.95 }, { scale: 1, duration: 0.3, ease: 'power2.out' }, 0.7)
   .to({}, { duration: 0.5 })
   .to('#flowPanel2', {
-    rotateX: -90,
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.in',
-    transformOrigin: 'top center',
+    rotateX: -90, opacity: 0, boxShadow: '0 -20px 60px rgba(0,0,0,0.4)',
+    duration: 1, ease: 'power2.in', transformOrigin: 'top center',
   })
-  .to({}, { duration: 0.5 });
+  .fromTo('#flowPanel3', { scale: 0.95 }, { scale: 1, duration: 0.3, ease: 'power2.out' }, 2.2);
 
 // Flow bg num parallax
 document.querySelectorAll('.flow-bg-num').forEach(num => {
@@ -2213,6 +2208,7 @@ document.querySelectorAll('.flow-bg-num').forEach(num => {
     }
   });
 });
+
 
 
 // ─── §5 KI: letter fly-in + chat bubbles + journey viz ───
@@ -2345,7 +2341,18 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
   ];
 
   // Binary text particles
-  const TEXT_LABELS = ['01', '0x', '>>', '10', 'FF', '::'];
+  const TEXT_LABELS = [
+    // hex
+    'A3', 'B7', 'C0', 'E9', '4F', '7D', 'FF', '0A', 'D2', '1F', '8B', 'FE', '3C', '9E', '6A',
+    'AB', 'CF', 'D8', 'E1', '2B', '5E', 'FA', '07', 'BC', '14', '9D', 'EA', 'F0', '71', 'DE',
+    'AC', 'DF', 'B1', 'E4', '3A', '6F', 'CB', '08', 'DA', '2E', '85', 'F7', 'C9', '53', 'BD',
+    // binary/numeric
+    '01', '10', '00', '11', '0x', '42', '64', '88', '16', '32',
+    // operators
+    '>>', '<<', '>=', '<=', '!=', '==', '&&', '||', '::', '->', '=>', '++', '--', '**', '//',
+    // logic/asm
+    'OR', 'ND', 'IF', 'NR', 'IO', 'OK', 'GO', 'FN', 'DB', 'AI',
+  ];
 
   // Pre-allocate nodes
   const nodes = [];
@@ -2389,7 +2396,9 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
         freqY: 0.2 + Math.random() * 0.4,
         ampX: 15 + Math.random() * 25,
         ampY: 10 + Math.random() * 20,
-        textLabel: Math.random() < 0.35 ? TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)] : null,
+        textLabel: Math.random() < 0.6 ? TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)] : null,
+        labelNextChange: 0.67 + Math.random() * 1,
+        labelTimer: 0,
         // Pulse for 3D depth feel
         pulsePhase: Math.random() * Math.PI * 2,
         pulseFreq: layer === 0 ? 0.4 + Math.random() * 0.3 : layer === 1 ? 0.6 + Math.random() * 0.4 : 0.8 + Math.random() * 0.5,
@@ -2413,13 +2422,19 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
         fromIdx: Math.floor(Math.random() * NODE_COUNT),
         toIdx: Math.floor(Math.random() * NODE_COUNT),
         t: Math.random(),
-        speed: 0.003 + Math.random() * 0.006,
-        size: 1.5 + Math.random() * 2,
+        speed: 0.008 + Math.random() * 0.012,
+        size: 2.5 + Math.random() * 2.5,
+        active: Math.random() < 0.3,
+        cooldown: Math.random() * 3,
       });
     }
   }
 
+  let lastTime = 0;
+  let dt = 0.016;
   function computeNodePositions(time) {
+    dt = lastTime ? time - lastTime : 0.016;
+    lastTime = time;
     const cx = w / 2, cy = h / 2;
 
     // Phase mapping:
@@ -2467,6 +2482,18 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
         } else {
           n.opacity = 0;
           n.renderSize = n.size;
+        }
+      }
+
+      // Mutate text labels every 2-5s
+      n.labelTimer += dt;
+      if (n.labelTimer >= n.labelNextChange) {
+        n.labelTimer = 0;
+        n.labelNextChange = 0.67 + Math.random() * 1;
+        if (n.textLabel) {
+          n.textLabel = Math.random() < 0.2 ? null : TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)];
+        } else {
+          if (Math.random() < 0.3) n.textLabel = TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)];
         }
       }
     }
@@ -2527,27 +2554,48 @@ document.querySelectorAll('.journey-node[data-ki="true"]').forEach(node => {
         }
       }
 
-      // Data particles flowing along connections
-      if (progress > 0.1 && progress < 0.5) {
-        const particleAlpha = progress < 0.35
-          ? Math.min(1, (progress - 0.1) / 0.1)
-          : 1 - (progress - 0.35) / 0.15;
+      // Data particles pulsing along connections
+      if (progress > 0.05 && progress < 0.55) {
+        const phaseAlpha = progress < 0.35
+          ? Math.min(1, (progress - 0.05) / 0.1)
+          : 1 - (progress - 0.35) / 0.2;
         for (let i = 0; i < dataParticles.length; i++) {
           const dp = dataParticles[i];
+          if (!dp.active) {
+            dp.cooldown -= dt;
+            if (dp.cooldown <= 0) {
+              dp.active = true;
+              dp.t = 0;
+              dp.fromIdx = Math.floor(Math.random() * NODE_COUNT);
+              dp.toIdx = Math.floor(Math.random() * NODE_COUNT);
+            }
+            continue;
+          }
           const from = nodes[dp.fromIdx];
           const to = nodes[dp.toIdx];
-          if (from.opacity <= 0 || to.opacity <= 0) continue;
+          if (from.opacity <= 0 || to.opacity <= 0) { dp.active = false; dp.cooldown = 1 + Math.random() * 2; continue; }
           const dx = to.x - from.x;
           const dy = to.y - from.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist > CONNECTION_DIST) continue;
+          if (dist > CONNECTION_DIST) { dp.active = false; dp.cooldown = 0.5 + Math.random() * 1.5; continue; }
           dp.t += dp.speed;
-          if (dp.t > 1) { dp.t = 0; dp.fromIdx = dp.toIdx; dp.toIdx = Math.floor(Math.random() * NODE_COUNT); }
+          if (dp.t > 1) {
+            dp.active = false;
+            dp.cooldown = 1 + Math.random() * 3;
+            continue;
+          }
           const px = from.x + dx * dp.t;
           const py = from.y + dy * dp.t;
+          const pulse = Math.sin(dp.t * Math.PI);
+          // Glow
           ctx.beginPath();
-          ctx.arc(px, py, dp.size, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(204,255,0,' + (particleAlpha * 0.7) + ')';
+          ctx.arc(px, py, dp.size * 4 * pulse, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(204,255,0,' + (pulse * 0.15 * phaseAlpha) + ')';
+          ctx.fill();
+          // Core
+          ctx.beginPath();
+          ctx.arc(px, py, dp.size * (0.6 + pulse * 0.4), 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(204,255,0,' + ((0.5 + pulse * 0.5) * phaseAlpha) + ')';
           ctx.fill();
         }
       }
@@ -2678,25 +2726,13 @@ document.querySelectorAll('.reveal-card').forEach(el => revealCardObs.observe(el
 
 // ─── §9 CTA: scale-up heading ───
 gsap.from('#ctaHeading', {
-  scale: 0.5,
-  opacity: 0,
-  scrollTrigger: {
-    trigger: '#cta',
-    start: 'top 70%',
-    end: 'top 20%',
-    scrub: true,
-  }
+  scale: 0.5, opacity: 0, y: 80,
+  scrollTrigger: { trigger: '#cta', start: 'top 70%', end: 'top 20%', scrub: true }
 });
 
 gsap.from('#calendarWidget', {
-  y: 60,
-  opacity: 0,
-  scrollTrigger: {
-    trigger: '#calendarWidget',
-    start: 'top 80%',
-    end: 'top 50%',
-    scrub: true,
-  }
+  y: 120, opacity: 0, scale: 0.9,
+  scrollTrigger: { trigger: '#calendarWidget', start: 'top 85%', end: 'top 45%', scrub: true }
 });
 
 // Recalculate all ScrollTriggers after layout settles

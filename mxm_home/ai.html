@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>maxomedia — AI Neural Network</title>
+<meta name="theme-color" content="#2F313C">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #2F313C; }
+canvas { display: block; width: 100vw; height: 100vh; cursor: none; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Colors
+  const NEON = '#CCFF00';
+  const ELM = '#226C6E';
+  const DIM_WHITE = 'rgba(255,255,255,0.12)';
+
+  // Node config — 3x the homepage
+  const NODE_COUNT = 270;
+  const CONNECTION_DIST = 300;
+  const DATA_PARTICLE_COUNT = 24;
+
+  // Depth layers: 0=background, 1=mid, 2=foreground
+  const LAYER_PROPS = [
+    { sizeRange: [2, 4], opacity: 0.15, speed: 0.3, color: DIM_WHITE },
+    { sizeRange: [3, 6], opacity: 0.5, speed: 0.6, color: ELM },
+    { sizeRange: [4, 8], opacity: 0.9, speed: 1.0, color: NEON },
+  ];
+
+  // Binary text particles
+  const TEXT_LABELS = [
+    // hex
+    'A3', 'B7', 'C0', 'E9', '4F', '7D', 'FF', '0A', 'D2', '1F', '8B', 'FE', '3C', '9E', '6A',
+    'AB', 'CF', 'D8', 'E1', '2B', '5E', 'FA', '07', 'BC', '14', '9D', 'EA', 'F0', '71', 'DE',
+    'AC', 'DF', 'B1', 'E4', '3A', '6F', 'CB', '08', 'DA', '2E', '85', 'F7', 'C9', '53', 'BD',
+    // binary/numeric
+    '01', '10', '00', '11', '0x', '42', '64', '88', '16', '32',
+    // operators
+    '>>', '<<', '>=', '<=', '!=', '==', '&&', '||', '::', '->', '=>', '++', '--', '**', '//',
+    // logic/asm
+    'OR', 'ND', 'IF', 'NR', 'IO', 'OK', 'GO', 'FN', 'DB', 'AI',
+  ];
+
+  // Pre-allocate
+  const nodes = [];
+  const dataParticles = [];
+  let w = 0, h = 0;
+  let rafId = null;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function initNodes() {
+    nodes.length = 0;
+    for (let i = 0; i < NODE_COUNT; i++) {
+      const layer = i < 90 ? 0 : i < 195 ? 1 : 2;
+      const lp = LAYER_PROPS[layer];
+      nodes.push({
+        baseX: -w * 0.05 + Math.random() * w * 1.1,
+        baseY: -h * 0.05 + Math.random() * h * 1.1,
+        x: 0, y: 0,
+        layer: layer,
+        size: lp.sizeRange[0] + Math.random() * (lp.sizeRange[1] - lp.sizeRange[0]),
+        color: lp.color,
+        baseOpacity: lp.opacity,
+        opacity: 0,
+        speed: lp.speed,
+        phaseX: Math.random() * Math.PI * 2,
+        phaseY: Math.random() * Math.PI * 2,
+        freqX: 0.3 + Math.random() * 0.5,
+        freqY: 0.2 + Math.random() * 0.4,
+        ampX: 15 + Math.random() * 25,
+        ampY: 10 + Math.random() * 20,
+        textLabel: Math.random() < 0.6 ? TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)] : null,
+        labelNextChange: 0.67 + Math.random() * 1,
+        labelTimer: 0,
+        pulsePhase: Math.random() * Math.PI * 2,
+        pulseFreq: layer === 0 ? 0.4 + Math.random() * 0.3 : layer === 1 ? 0.6 + Math.random() * 0.4 : 0.8 + Math.random() * 0.5,
+        pulseAmp: layer === 0 ? 0.15 : layer === 1 ? 0.2 : 0.25,
+        renderSize: 0,
+      });
+    }
+
+    // Data particles
+    dataParticles.length = 0;
+    for (let i = 0; i < DATA_PARTICLE_COUNT; i++) {
+      dataParticles.push({
+        fromIdx: Math.floor(Math.random() * NODE_COUNT),
+        toIdx: Math.floor(Math.random() * NODE_COUNT),
+        t: Math.random(),
+        speed: 0.008 + Math.random() * 0.012,
+        size: 2.5 + Math.random() * 2.5,
+        active: Math.random() < 0.3,
+        cooldown: Math.random() * 3,
+      });
+    }
+  }
+
+  function computeNodePositions(time, dt) {
+    // Slow breathing progress: oscillates between 0.08 and 0.28
+    const progress = 0.18 + Math.sin(time * 0.15) * 0.10;
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const drift = time * n.speed;
+
+      // Base organic drift
+      const dx = Math.sin(drift * n.freqX + n.phaseX) * n.ampX;
+      const dy = Math.cos(drift * n.freqY + n.phaseY) * n.ampY;
+
+      // Pulse modulation for 3D depth
+      const pulse = 1 + Math.sin(drift * n.pulseFreq + n.pulsePhase) * n.pulseAmp;
+
+      n.x = n.baseX + dx;
+      n.y = n.baseY + dy;
+      n.opacity = n.baseOpacity * pulse;
+      n.renderSize = n.size * (1 + (pulse - 1) * 0.5);
+
+      // Mutate text labels every 2-5s
+      n.labelTimer += dt;
+      if (n.labelTimer >= n.labelNextChange) {
+        n.labelTimer = 0;
+        n.labelNextChange = 0.67 + Math.random() * 1;
+        if (n.textLabel) {
+          n.textLabel = Math.random() < 0.2 ? null : TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)];
+        } else {
+          if (Math.random() < 0.3) n.textLabel = TEXT_LABELS[Math.floor(Math.random() * TEXT_LABELS.length)];
+        }
+      }
+    }
+
+    return progress;
+  }
+
+  function getConnectionOpacity(dist, maxDist, networkStrength) {
+    const distFade = 1 - (dist / maxDist);
+    return distFade * distFade * networkStrength * 0.4;
+  }
+
+  let lastTime = 0;
+  function render(time) {
+    rafId = requestAnimationFrame(render);
+    const t = time * 0.001;
+    const dt = lastTime ? t - lastTime : 0.016;
+    lastTime = t;
+
+    ctx.clearRect(0, 0, w, h);
+    const progress = computeNodePositions(t, dt);
+
+    // Network strength from breathing progress
+    let networkStrength;
+    if (progress < 0.15) {
+      networkStrength = progress / 0.15 * 0.3;
+    } else {
+      networkStrength = 0.3 + ((progress - 0.15) / 0.2) * 0.7;
+    }
+
+    // Draw connections
+    const maxDist = CONNECTION_DIST;
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].opacity <= 0) continue;
+      for (let j = i + 1; j < nodes.length; j++) {
+        if (nodes[j].opacity <= 0) continue;
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > maxDist) continue;
+        const alpha = getConnectionOpacity(dist, maxDist, networkStrength);
+        if (alpha < 0.01) continue;
+        const isFg = nodes[i].layer === 2 || nodes[j].layer === 2;
+        ctx.beginPath();
+        const mx = (nodes[i].x + nodes[j].x) / 2 + (nodes[i].y - nodes[j].y) * 0.1;
+        const my = (nodes[i].y + nodes[j].y) / 2 + (nodes[j].x - nodes[i].x) * 0.1;
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.quadraticCurveTo(mx, my, nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = isFg
+          ? 'rgba(204,255,0,' + alpha + ')'
+          : 'rgba(34,108,110,' + alpha + ')';
+        ctx.lineWidth = isFg ? 1.2 : 0.8;
+        ctx.stroke();
+      }
+    }
+
+    // Data particles pulsing along connections
+    for (let i = 0; i < dataParticles.length; i++) {
+      const dp = dataParticles[i];
+      if (!dp.active) {
+        dp.cooldown -= dt;
+        if (dp.cooldown <= 0) {
+          dp.active = true;
+          dp.t = 0;
+          dp.fromIdx = Math.floor(Math.random() * NODE_COUNT);
+          dp.toIdx = Math.floor(Math.random() * NODE_COUNT);
+        }
+        continue;
+      }
+      const from = nodes[dp.fromIdx];
+      const to = nodes[dp.toIdx];
+      if (from.opacity <= 0 || to.opacity <= 0) { dp.active = false; dp.cooldown = 1 + Math.random() * 2; continue; }
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > CONNECTION_DIST) { dp.active = false; dp.cooldown = 0.5 + Math.random() * 1.5; continue; }
+      dp.t += dp.speed;
+      if (dp.t > 1) {
+        dp.active = false;
+        dp.cooldown = 1 + Math.random() * 3;
+        continue;
+      }
+      const px = from.x + dx * dp.t;
+      const py = from.y + dy * dp.t;
+      // Pulse brightness: bright in middle of travel
+      const pulse = Math.sin(dp.t * Math.PI);
+      // Glow
+      ctx.beginPath();
+      ctx.arc(px, py, dp.size * 4 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(204,255,0,' + (pulse * 0.15) + ')';
+      ctx.fill();
+      // Core
+      ctx.beginPath();
+      ctx.arc(px, py, dp.size * (0.6 + pulse * 0.4), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(204,255,0,' + (0.5 + pulse * 0.5) + ')';
+      ctx.fill();
+    }
+
+    // Draw nodes
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n.opacity <= 0.005) continue;
+
+      // Glow for foreground nodes
+      if (n.layer === 2 && n.opacity > 0.3) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.renderSize * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(204,255,0,' + (n.opacity * 0.1) + ')';
+        ctx.fill();
+      }
+
+      // Node dot
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.renderSize, 0, Math.PI * 2);
+      ctx.fillStyle = n.color.startsWith('rgba')
+        ? n.color.replace(/[\d.]+\)$/, n.opacity + ')')
+        : n.color;
+      ctx.globalAlpha = n.opacity;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Text label near node
+      if (n.textLabel && n.opacity > 0.2) {
+        ctx.font = (8 + n.layer * 2) + 'px monospace';
+        ctx.fillStyle = 'rgba(204,255,0,' + (n.opacity * 0.35) + ')';
+        ctx.fillText(n.textLabel, n.x + n.renderSize + 4, n.y + 3);
+      }
+    }
+  }
+
+  // Init
+  resize();
+  initNodes();
+  rafId = requestAnimationFrame(render);
+
+  // Handle resize
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      resize();
+      initNodes();
+    }, 200);
+  });
+})();
+</script>
+</body>
+</html>
