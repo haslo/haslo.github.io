@@ -115,8 +115,15 @@ h1 .neon {
   font-size:14px; color:var(--muted); line-height:1.5;
 }
 
-.card .arrow {
+.card-bottom {
   margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.card .arrow {
   font-size:20px;
   color:var(--neon);
   background:var(--ash);
@@ -124,6 +131,7 @@ h1 .neon {
   border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   transition:background 0.2s;
+  flex-shrink:0;
 }
 
 .card:hover .arrow {
@@ -283,50 +291,43 @@ footer {
     <span class="tag">Research</span>
     <h2>Trends 2025/26</h2>
     <p>Award-Plattformen, Gewinner-Analyse, Design- und Tech-Trends.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span></div></div>
   </a>
   <a href="concept.html" class="card">
     <span class="tag">Blueprint</span>
     <h2>Grobkonzept</h2>
     <p>Content-Strategie, Seitenstruktur und Design-Entscheidungen.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code<span class="note">(spider)</span></span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code</span></div></div>
   </a>
   <a href="uikit.html" class="card">
     <span class="tag">Must</span>
     <h2>UI Kit</h2>
     <p>Farben, Typografie, Buttons, Cards — das visuelle Fundament.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span></div></div>
   </a>
   <a href="sitemap.html" class="card">
     <span class="tag">Research</span>
     <h2>Sitemap</h2>
     <p>Seitenstruktur und Navigation des neuen maxomedia.ch.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span></div></div>
   </a>
   <a href="scrollytelling.html" class="card">
     <span class="tag">Demo</span>
     <h2>Scrollytelling</h2>
     <p>Fullscreen-Animationen, Scroll-Reveals und GSAP-Magic in Aktion.</p>
-    <div class="methods"><span class="pill code">Code</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill code">Code</span></div></div>
   </a>
   <a href="homepage-konzept.html" class="card">
     <span class="tag">Blueprint</span>
     <h2>Homepage Konzept</h2>
     <p>Detailkonzept für die Homepage — Section für Section, mit Implementierungs-Hinweisen.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span></div></div>
   </a>
   <a href="homepage.html" class="card card-wide card-hero">
     <span class="tag">Must</span>
     <h2>Homepage</h2>
     <p>Die fertige Homepage — 9 Sections, GSAP Scrollytelling, Ask a Maxo!, Fake-Kalender.</p>
-    <div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div></div>
   </a>
 </div>
 
@@ -334,14 +335,12 @@ footer {
   <a href="funnel.html" class="card card-mini" data-num="7a">
     <span class="tag">Animation</span>
     <h2>Particle Funnel</h2>
-    <div class="methods"><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div></div>
   </a>
   <a href="ai.html" class="card card-mini" data-num="7b">
     <span class="tag">Animation</span>
     <h2>Neural Network</h2>
-    <div class="methods"><span class="pill code">Code</span></div>
-    <span class="arrow">→</span>
+    <div class="card-bottom"><span class="arrow">→</span><div class="methods"><span class="pill code">Code</span></div></div>
   </a>
 </div>
 
