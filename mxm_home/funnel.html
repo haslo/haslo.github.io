@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>maxomedia — Particle Funnel</title>
+<meta name="theme-color" content="#2F313C">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #2F313C; }
+canvas { display: block; width: 100vw; height: 100vh; cursor: none; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('canvas');
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: false,
+    alpha: true,
+    powerPreference: 'high-performance'
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x2F313C, 1);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(0, 0, 22);
+
+  // Adaptive particle count
+  const isMobile = window.innerWidth < 768;
+  const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+  const COUNT = isMobile ? 800 : isLowEnd ? 1200 : 2400;
+
+  // Per-particle data
+  const phases  = new Float32Array(COUNT);
+  const offsets = new Float32Array(COUNT);
+  const speeds  = new Float32Array(COUNT);
+  for (let i = 0; i < COUNT; i++) {
+    phases[i]  = Math.random();
+    offsets[i] = Math.random() * Math.PI * 2;
+    speeds[i]  = 0.12 + Math.random() * 0.08;
+  }
+
+  // Geometry
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(COUNT * 3);
+  const colors    = new Float32Array(COUNT * 3);
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+
+  // Colors — amber (chaos) → teal (convergence) → neon (flow)
+  const cAmber = new THREE.Color(0xE09B40);
+  const cTeal  = new THREE.Color(0x226C6E);
+  const cNeon  = new THREE.Color(0xCCFF00);
+  const tmpCol = new THREE.Color();
+
+  const mat = new THREE.PointsMaterial({
+    size: 0.14,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.95,
+    sizeAttenuation: true,
+    depthWrite: false,
+  });
+  const particles = new THREE.Points(geo, mat);
+  scene.add(particles);
+
+  // Compute particle position along the journey
+  function computePos(ph, off, t) {
+    const x = (ph - 0.5) * 44;
+    const chaos = Math.max(0, 1 - ph * 1.6);
+    const flow  = Math.min(1, Math.max(0, (ph - 0.35) / 0.4));
+
+    const pulse = 1 + Math.sin(t * 0.65 + off * 0.4) * 0.18;
+
+    const ySpread = (chaos * 10 + (1 - flow) * 3 + 1.5) * pulse;
+    const y = Math.sin(ph * 8 + off + t * 1.4) * ySpread * 0.55
+            + Math.cos(ph * 3 + off * 1.7 + t * 0.9) * ySpread * 0.3
+            + Math.sin(ph * 17 + off * 2.3 + t * 2.3) * ySpread * 0.09;
+
+    const zSpread = (chaos * 16 + (1 - flow) * 6 + 2) * pulse;
+    const z = Math.sin(ph * 5 + off * 0.9 + t * 1.1) * zSpread * 0.5
+            + Math.cos(ph * 2 + off * 2.1 + t * 0.7) * zSpread * 0.3
+            + Math.cos(ph * 11 + off * 1.5 + t * 1.9) * zSpread * 0.09;
+
+    const swirl = flow * (1 - flow) * 5;
+    const swirlA = t * 2.8 + off;
+
+    return {
+      x,
+      y: y + Math.sin(swirlA) * swirl,
+      z: z + Math.cos(swirlA) * swirl,
+    };
+  }
+
+  let time = 0;
+  let mx = 0, my = 0;
+  let camX = 0, camY = 0;
+
+  // Mouse parallax
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    time += 0.006;
+    const pos = geo.attributes.position.array;
+    const col = geo.attributes.color.array;
+
+    for (let i = 0; i < COUNT; i++) {
+      const speedMod = 1 + Math.sin(time * 2.0 + offsets[i] * 2) * 0.35;
+      phases[i] += speeds[i] * 0.001 * speedMod;
+      if (phases[i] > 1) phases[i] -= 1;
+
+      const p = computePos(phases[i], offsets[i], time);
+      pos[i*3]   = p.x;
+      pos[i*3+1] = p.y;
+      pos[i*3+2] = p.z;
+
+      // Color interpolation
+      const ph = phases[i];
+      if (ph < 0.45) {
+        tmpCol.copy(cAmber).lerp(cTeal, ph / 0.45);
+      } else {
+        tmpCol.copy(cTeal).lerp(cNeon, (ph - 0.45) / 0.55);
+      }
+
+      // Per-particle depth dimming
+      const depthFactor = Math.max(0.3, 1 - Math.abs(p.z) / 16);
+      col[i*3]   = tmpCol.r * depthFactor;
+      col[i*3+1] = tmpCol.g * depthFactor;
+      col[i*3+2] = tmpCol.b * depthFactor;
+    }
+
+    geo.attributes.position.needsUpdate = true;
+    geo.attributes.color.needsUpdate = true;
+
+    // Global particle size pulse
+    mat.size = 0.14 + Math.sin(time * 0.9) * 0.04;
+
+    // Camera parallax
+    camX += (mx * 4.5 - camX) * 0.05;
+    camY += (-my * 2.5 - camY) * 0.05;
+    camera.position.x = camX;
+    camera.position.y = camY;
+    camera.position.z = 22 + Math.sin(time * 0.22) * 2.5;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth, h = window.innerHeight;
+    if (w && h) {
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

@@ -247,6 +247,25 @@ footer {
   grid-column: 1 / -1;
 }
 
+.card-hero {
+  padding:clamp(40px,4vw,60px);
+  min-height:200px;
+}
+
+.card-hero h2 {
+  font-size:clamp(28px,3.5vw,44px);
+}
+
+.card-mini {
+  padding:clamp(20px,2vw,28px);
+  gap:8px;
+}
+
+.card-mini::after {
+  content: attr(data-num);
+  font-size:10px;
+}
+
 @media (max-width:600px) {
   .deliverables { grid-template-columns:1fr; }
 }
@@ -302,11 +321,26 @@ footer {
     <div class="methods"><span class="pill cowork">Cowork</span></div>
     <span class="arrow">→</span>
   </a>
-  <a href="homepage.html" class="card card-wide">
+  <a href="homepage.html" class="card card-wide card-hero">
     <span class="tag">Must</span>
     <h2>Homepage</h2>
     <p>Die fertige Homepage — 9 Sections, GSAP Scrollytelling, Ask a Maxo!, Fake-Kalender.</p>
     <div class="methods"><span class="pill cowork">Cowork</span><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div>
+    <span class="arrow">→</span>
+  </a>
+</div>
+
+<div class="cards" style="margin-top:24px;">
+  <a href="funnel.html" class="card card-mini" data-num="7a">
+    <span class="tag">Animation</span>
+    <h2>Particle Funnel</h2>
+    <div class="methods"><span class="pill code">Code</span><span class="pill fusion">Fusion</span></div>
+    <span class="arrow">→</span>
+  </a>
+  <a href="ai.html" class="card card-mini" data-num="7b">
+    <span class="tag">Animation</span>
+    <h2>Neural Network</h2>
+    <div class="methods"><span class="pill code">Code</span></div>
     <span class="arrow">→</span>
   </a>
 </div>
