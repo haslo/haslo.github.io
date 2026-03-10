@@ -2,19 +2,20 @@
   LLM CONTEXT — keep this comment current when making changes.
 
   FILE: my_books.html
-  PURPOSE: Personal D&D 5e book collection reference. Single table listing all owned sourcebooks,
-           adventures, and rules supplements with quick overview, content pills, and status notes.
+  PURPOSE: Personal D&D 5e book collection reference. Three tables split by category (Core Rulebooks,
+           Sourcebooks & Lore, Adventures) with quick overview, content pills, and status notes.
   OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct.
 
   STRUCTURE:
     - Title + subtitle
-    - Single table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status (what to use/skip)
-    - Books listed in rough chronological/category order
+    - Three section tables (h2 headings): Core Rulebooks | Sourcebooks & Lore | Adventures
+    - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status (what to use/skip)
+    - Books listed within each section in date descending order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System, Player Pages
     - Tag badges for edition (2014/2024), type (Core/Source/Adventure/Lore), DMs Guild link
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
     - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
-    - Ordered-not-arrived books: Chronicles, ExE, FoE:Q, WBtW, CoS — shown with .ordered badge
+    - Ordered-not-arrived books: Chronicles, ExE, FoE:Q, WBtW, CoS, QftIS, JttRC — shown with .ordered badge
     - No D&D Beyond links unless asked.
 
   CSS CONVENTIONS:
@@ -161,6 +162,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     flex-wrap: wrap;
   }
 
+  h2 { font-size: 14pt; color: var(--accent); margin: 24px 0 8px; }
+  h2:first-of-type { margin-top: 0; }
+
   /* ── Mobile: cards ── */
   @media (max-width: 768px) {
     body { padding: 12px; }
@@ -261,8 +265,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <img src="media/cybergwen_logo.svg" alt="" style="width:32px; height:auto; opacity:0.8; flex-shrink:0;">
   CyberGwen's D&D 5e Book Collection
 </h1>
-<div class="subtitle">Newest first · what to use, what to skip, what's still unique</div>
+<div class="subtitle">What to use, what to skip, what's still unique</div>
 
+<h2>Core Rulebooks</h2>
 <table>
 <thead>
 <tr>
@@ -272,148 +277,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </tr>
 </thead>
 <tbody>
-
-<!-- E:FotA -->
-<tr>
-  <td>
-    <div class="book-title">Eberron: Forge of the Artificer</div>
-    <span class="book-year">Dec 2025</span>
-    <span class="tag tag-2024">2024</span>
-    <span class="tag tag-source">Source</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-sub">5 subclasses</span>
-      <span class="pill pill-spe">5 species</span>
-      <span class="pill pill-mon">20+ monsters</span>
-      <span class="pill pill-sys">Artificer class</span>
-      <span class="pill pill-adv">3 campaigns</span>
-      <span class="pill pill-pp">112pp</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Player options</div>
-      <div class="ov-line">Artificer class · 5 subclasses (incl. new Cartographer) · 5 species · 18 backgrounds · 28 Dragonmark feats (no longer species-locked)</div>
-      <div class="ov-head">DM content</div>
-      <div class="ov-line">Eberron bastions + mobile bastion rules · 3 campaign frameworks (Sharn noir, Dragonmarked intrigue, Morgrave pulp) · airship rules (3 ships, upgrades, crew stations) · 20+ monsters</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> Artificer class, Eberron species, Dragonmarks, airships, Eberron campaigns</div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Artificer — 5 subclasses</div>
-      Alchemist · Armorer · Artillerist · Battle Smith · <b>Cartographer</b> (new)
-    </div>
-    <div class="still">
-      <div class="still-label">5 species (2024 versions)</div>
-      Changeling · Kalashtar · Khoravar (new, replaces half-elf) · Shifter · Warforged
-    </div>
-    <div class="note">Nothing superseded — this is the new Eberron baseline.</div>
-  </td>
-</tr>
-
-<!-- FR: Adventures -->
-<tr>
-  <td>
-    <div class="book-title">FR: Adventures in Faerûn</div>
-    <span class="book-year">Nov 2025</span>
-    <span class="tag tag-2024">2024</span>
-    <span class="tag tag-adventure">Adventure</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-adv">51+ adventures</span>
-      <span class="pill pill-mon">39 monsters</span>
-      <span class="pill pill-sys">Epic Destinies</span>
-      <span class="pill pill-pp">288pp</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Adventures</div>
-      <div class="ov-line">51+ adventures (levels 1–13) across 5 gazetteers: Dalelands · Icewind Dale · Calimshan · Moonshae Isles · Baldur's Gate</div>
-      <div class="ov-head">New systems</div>
-      <div class="ov-line">Epic Destinies (post-level-20 progression with supernatural gifts)</div>
-      <div class="ov-head">Also</div>
-      <div class="ov-line">39 monsters · 7 magic items · 52 maps · starter adventure: The Lost Library</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> Faerûn one-shots, Epic Destinies, regional gazetteers, 52 maps</div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">All content is current</div>
-      Cherry-pick adventures by region. Epic Destinies are the new endgame system.
-    </div>
-  </td>
-</tr>
-
-<!-- FR: Heroes -->
-<tr>
-  <td>
-    <div class="book-title">FR: Heroes of Faerûn</div>
-    <span class="book-year">Nov 2025</span>
-    <span class="tag tag-2024">2024</span>
-    <span class="tag tag-source">Source</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-sub">8 subclasses</span>
-      <span class="pill pill-sys">34 feats</span>
-      <span class="pill pill-sys">19 spells</span>
-      <span class="pill pill-sys">Circle Magic</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Player options</div>
-      <div class="ov-line">8 subclasses (5 new, 3 overhauled) · 17 backgrounds (regional + faction) · 34 feats incl. epic boons for 42 FR gods · 19 spells · Circle Magic (cooperative casting)</div>
-      <div class="ov-head">Setting</div>
-      <div class="ov-line">8 factions · Aurora's Whole Realms Catalog · 10 region primers · full Faerûn map</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> Faerûn subclasses, Bladesinger, god-linked epic boons, faction play, circle magic</div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">8 subclasses (2024-native)</div>
-      <b>Bard:</b> College of the Moon ·
-      <b>Cleric:</b> Knowledge Domain ·
-      <b>Fighter:</b> Banneret ·
-      <b>Paladin:</b> Oath of Noble Genies ·
-      <b>Ranger:</b> Winter Walker ·
-      <b>Rogue:</b> Scion of the Three ·
-      <b>Sorc:</b> Spellfire Sorcery ·
-      <b>Wizard:</b> Bladesinger
-    </div>
-    <div class="note">Bladesinger supersedes Tasha's version. Knowledge Domain returns.</div>
-  </td>
-</tr>
-
-<!-- Dragon Delves -->
-<tr>
-  <td>
-    <div class="book-title">Dragon Delves</div>
-    <span class="book-year">Jul 2025</span>
-    <span class="tag tag-2024">2024</span>
-    <span class="tag tag-adventure">Adventure</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-adv">10 adventures</span>
-      <span class="pill pill-sys">Solo play</span>
-      <span class="pill pill-sys">Low-prep</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Adventures</div>
-      <div class="ov-line">10 dragon-themed adventures (levels 1–12) · each with a different chromatic/metallic dragon + unique lair · 3 campaign frameworks</div>
-      <div class="ov-head">Solo play</div>
-      <div class="ov-line">3 solo-playable adventures with Blessing of the Sole Champion (1 player + DM)</div>
-      <div class="ov-head">Design</div>
-      <div class="ov-line">Low-prep with quick-start guides · unique art style per adventure</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> dragon one-shots, solo play, low-prep sessions</div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">All content is current</div>
-      One-shots or drop-ins. Low-prep design with quick-start summaries.
-    </div>
-  </td>
-</tr>
 
 <!-- 2025 MM -->
 <tr>
@@ -495,6 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">75 feats</span>
       <span class="pill pill-sys">~400 spells</span>
       <span class="pill pill-sys">Weapon mastery</span>
+      <span class="pill pill-pp">384pp</span>
     </div>
     <div class="ov">
       <div class="ov-head">Player options</div>
@@ -528,6 +392,98 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <b>Wizard:</b> Abjurer, Diviner, Evoker, Illusionist
     </div>
     <div class="note">The new baseline — nothing superseded.</div>
+  </td>
+</tr>
+
+</tbody>
+</table>
+
+<h2>Sourcebooks & Lore</h2>
+<table>
+<thead>
+<tr>
+  <th style="width:13%">Book</th>
+  <th style="width:50%">Overview</th>
+  <th style="width:37%">Status</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- E:FotA -->
+<tr>
+  <td>
+    <div class="book-title">Eberron: Forge of the Artificer</div>
+    <span class="book-year">Dec 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">5 subclasses</span>
+      <span class="pill pill-spe">5 species</span>
+      <span class="pill pill-mon">20+ monsters</span>
+      <span class="pill pill-sys">Artificer class</span>
+      <span class="pill pill-adv">3 campaigns</span>
+      <span class="pill pill-pp">112pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">Artificer class · 5 subclasses (incl. new Cartographer) · 5 species · 18 backgrounds · 28 Dragonmark feats (no longer species-locked)</div>
+      <div class="ov-head">DM content</div>
+      <div class="ov-line">Eberron bastions + mobile bastion rules · 3 campaign frameworks (Sharn noir, Dragonmarked intrigue, Morgrave pulp) · airship rules (3 ships, upgrades, crew stations) · 20+ monsters</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Artificer class, Eberron species, Dragonmarks, airships, Eberron campaigns</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Artificer — 5 subclasses</div>
+      Alchemist · Armorer · Artillerist · Battle Smith · <b>Cartographer</b> (new)
+    </div>
+    <div class="still">
+      <div class="still-label">5 species (2024 versions)</div>
+      Changeling · Kalashtar · Khoravar (new, replaces half-elf) · Shifter · Warforged
+    </div>
+    <div class="note">Nothing superseded — this is the new Eberron baseline.</div>
+  </td>
+</tr>
+
+<!-- FR: Heroes -->
+<tr>
+  <td>
+    <div class="book-title">FR: Heroes of Faerûn</div>
+    <span class="book-year">Nov 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-source">Source</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sub">8 subclasses</span>
+      <span class="pill pill-sys">34 feats</span>
+      <span class="pill pill-sys">19 spells</span>
+      <span class="pill pill-sys">Circle Magic</span>
+      <span class="pill pill-pp">192pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">8 subclasses (5 new, 3 overhauled) · 17 backgrounds (regional + faction) · 34 feats incl. epic boons for 42 FR gods · 19 spells · Circle Magic (cooperative casting)</div>
+      <div class="ov-head">Setting</div>
+      <div class="ov-line">8 factions · Aurora's Whole Realms Catalog · 10 region primers · full Faerûn map</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Faerûn subclasses, Bladesinger, god-linked epic boons, faction play, circle magic</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">8 subclasses (2024-native)</div>
+      <b>Bard:</b> College of the Moon ·
+      <b>Cleric:</b> Knowledge Domain ·
+      <b>Fighter:</b> Banneret ·
+      <b>Paladin:</b> Oath of Noble Genies ·
+      <b>Ranger:</b> Winter Walker ·
+      <b>Rogue:</b> Scion of the Three ·
+      <b>Sorc:</b> Spellfire Sorcery ·
+      <b>Wizard:</b> Bladesinger
+    </div>
+    <div class="note">Bladesinger supersedes Tasha's version. Knowledge Domain returns.</div>
   </td>
 </tr>
 
@@ -610,37 +566,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
-<!-- Keys from the Golden Vault -->
-<tr>
-  <td>
-    <div class="book-title">Keys from the Golden Vault</div>
-    <span class="book-year">Feb 2023</span>
-    <span class="tag tag-2014">2014</span>
-    <span class="tag tag-adventure">Adventure</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-adv">13 heists</span>
-      <span class="pill pill-sys">Modular design</span>
-      <span class="pill pill-sys">Levels 1–11</span>
-      <span class="pill pill-pp">~224pp</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Adventures</div>
-      <div class="ov-line">13 standalone heist adventures (levels 1–11) · each with maps, handouts, and heist-specific mechanics</div>
-      <div class="ov-head">Design</div>
-      <div class="ov-line">Modular — drop into any campaign setting · 3 magic items · 8 NPC stat blocks</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> heist one-shots, creative encounter design, non-combat problem solving</div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">All content is current</div>
-      Cherry-pick heists by level. Modular design fits any setting.
-    </div>
-  </td>
-</tr>
-
 <!-- Chronicles of Eberron -->
 <tr>
   <td>
@@ -698,6 +623,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-mon">260 monsters</span>
       <span class="pill pill-sys">Demon lords</span>
       <span class="pill pill-sys">Archdevils</span>
+      <span class="pill pill-pp">288pp</span>
     </div>
     <div class="ov">
       <div class="ov-head">Species</div>
@@ -766,44 +692,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
-<!-- The Wild Beyond the Witchlight -->
-<tr>
-  <td>
-    <div class="book-title">The Wild Beyond the Witchlight</div>
-    <span class="book-year">Sep 2021</span>
-    <span class="tag tag-2014">2014</span>
-    <span class="tag tag-adventure">Adventure</span>
-    <br><span class="ordered">Ordered — not yet arrived</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-adv">1 adventure</span>
-      <span class="pill pill-spe">2 species</span>
-      <span class="pill pill-sys">2 backgrounds</span>
-      <span class="pill pill-mon">~20 monsters</span>
-      <span class="pill pill-pp">~256pp</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Adventure</div>
-      <div class="ov-line">Feywild adventure (levels 1–8) · Witchlight Carnival opening · Hither, Thither, Yon exploration zones · non-combat resolution possible for every encounter</div>
-      <div class="ov-head">Player options</div>
-      <div class="ov-line">2 species: Fairy, Harengon (both superseded by MotM) · 2 backgrounds: Feylost, Witchlight Hand</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> Feywild adventure, non-combat design ideas, Feylost/Witchlight Hand backgrounds</div>
-  </td>
-  <td>
-    <div class="skipped">
-      <div class="skipped-label">Superseded</div>
-      <span class="skip">Fairy, Harengon → MotM</span>
-    </div>
-    <div class="still">
-      <div class="still-label">2 backgrounds (still unique)</div>
-      Feylost · Witchlight Hand
-    </div>
-    <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
-  </td>
-</tr>
-
 <!-- Van Richten's Guide to Ravenloft -->
 <tr>
   <td>
@@ -859,6 +747,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">Puzzles</span>
       <span class="pill pill-sys">Tattoos</span>
       <span class="pill pill-sys">Group Patrons</span>
+      <span class="pill pill-pp">192pp</span>
     </div>
     <div class="ov">
       <div class="ov-head">Player options</div>
@@ -957,6 +846,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">Setting lore</span>
       <span class="pill pill-adv">Sharn</span>
       <span class="pill pill-adv">Khorvaire</span>
+      <span class="pill pill-pp">320pp</span>
     </div>
     <div class="ov">
       <div class="ov-head">Player options (all superseded by E:FotA)</div>
@@ -995,6 +885,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">Traps</span>
       <span class="pill pill-sys">Tool profs</span>
       <span class="pill pill-sys">Names</span>
+      <span class="pill pill-pp">192pp</span>
     </div>
     <div class="ov">
       <div class="ov-head">Player options</div>
@@ -1027,6 +918,221 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <b>Wizard:</b> War Magic
     </div>
     <div class="note">DM tools chapter has no 2024 replacement — downtime, random encounters, tool proficiency rules all still unique. 2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
+  </td>
+</tr>
+
+</tbody>
+</table>
+
+<h2>Adventures</h2>
+<table>
+<thead>
+<tr>
+  <th style="width:13%">Book</th>
+  <th style="width:50%">Overview</th>
+  <th style="width:37%">Status</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- FR: Adventures -->
+<tr>
+  <td>
+    <div class="book-title">FR: Adventures in Faerûn</div>
+    <span class="book-year">Nov 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">51+ adventures</span>
+      <span class="pill pill-mon">39 monsters</span>
+      <span class="pill pill-sys">Epic Destinies</span>
+      <span class="pill pill-pp">288pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures</div>
+      <div class="ov-line">51+ adventures (levels 1–13) across 5 gazetteers: Dalelands · Icewind Dale · Calimshan · Moonshae Isles · Baldur's Gate</div>
+      <div class="ov-head">New systems</div>
+      <div class="ov-line">Epic Destinies (post-level-20 progression with supernatural gifts)</div>
+      <div class="ov-head">Also</div>
+      <div class="ov-line">39 monsters · 7 magic items · 52 maps · starter adventure: The Lost Library</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Faerûn one-shots, Epic Destinies, regional gazetteers, 52 maps</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      Cherry-pick adventures by region. Epic Destinies are the new endgame system.
+    </div>
+  </td>
+</tr>
+
+<!-- Dragon Delves -->
+<tr>
+  <td>
+    <div class="book-title">Dragon Delves</div>
+    <span class="book-year">Jul 2025</span>
+    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">10 adventures</span>
+      <span class="pill pill-sys">Solo play</span>
+      <span class="pill pill-sys">Low-prep</span>
+      <span class="pill pill-pp">192pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures</div>
+      <div class="ov-line">10 dragon-themed adventures (levels 1–12) · each with a different chromatic/metallic dragon + unique lair · 3 campaign frameworks</div>
+      <div class="ov-head">Solo play</div>
+      <div class="ov-line">3 solo-playable adventures with Blessing of the Sole Champion (1 player + DM)</div>
+      <div class="ov-head">Design</div>
+      <div class="ov-line">Low-prep with quick-start guides · unique art style per adventure</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> dragon one-shots, solo play, low-prep sessions</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      One-shots or drop-ins. Low-prep design with quick-start summaries.
+    </div>
+  </td>
+</tr>
+
+<!-- Quests from the Infinite Staircase -->
+<tr>
+  <td>
+    <div class="book-title">Quests from the Infinite Staircase</div>
+    <span class="book-year">Jul 2024</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-adventure">Adventure</span>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">6 adventures</span>
+      <span class="pill pill-mon">~30 monsters</span>
+      <span class="pill pill-sys">1e remasters</span>
+      <span class="pill pill-pp">~224pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures (6 remastered 1e classics, levels 1–13)</div>
+      <div class="ov-line">The Lost City (1–3) · When a Star Falls (4–6) · Beyond the Crystal Cave (4–6) · Pharaoh (6–8) · The Lost Caverns of Tsojcanth (8–10) · Expedition to the Barrier Peaks (10–13)</div>
+      <div class="ov-head">Framework</div>
+      <div class="ov-line">The Infinite Staircase as planar nexus connecting all six adventures · can run standalone or as a 1–13 campaign · Nafas the noble genie as patron NPC</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> classic dungeon design, 1e nostalgia, planar adventure framework, Barrier Peaks sci-fi crossover</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      No player options — pure adventure. 1e adventures updated to 5e stat blocks and encounter design.
+    </div>
+    <div class="note">Can string all 6 into a full 1–13 campaign or cherry-pick individually. Barrier Peaks is the famous sci-fi crossover dungeon.</div>
+  </td>
+</tr>
+
+<!-- Keys from the Golden Vault -->
+<tr>
+  <td>
+    <div class="book-title">Keys from the Golden Vault</div>
+    <span class="book-year">Feb 2023</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">13 heists</span>
+      <span class="pill pill-sys">Modular design</span>
+      <span class="pill pill-sys">Levels 1–11</span>
+      <span class="pill pill-pp">~224pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures</div>
+      <div class="ov-line">13 standalone heist adventures (levels 1–11) · each with maps, handouts, and heist-specific mechanics</div>
+      <div class="ov-head">Design</div>
+      <div class="ov-line">Modular — drop into any campaign setting · 3 magic items · 8 NPC stat blocks</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> heist one-shots, creative encounter design, non-combat problem solving</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      Cherry-pick heists by level. Modular design fits any setting.
+    </div>
+  </td>
+</tr>
+
+<!-- Journeys through the Radiant Citadel -->
+<tr>
+  <td>
+    <div class="book-title">Journeys through the Radiant Citadel</div>
+    <span class="book-year">Jun 2022</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-adventure">Adventure</span>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">13 adventures</span>
+      <span class="pill pill-mon">11 monsters</span>
+      <span class="pill pill-sys">Gazetteers</span>
+      <span class="pill pill-pp">224pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventures (13 standalone, levels 1–14)</div>
+      <div class="ov-line">Salted Legacy (1) · Written in Blood (1) · The Fiend of Hollow Mine (2) · Wages of Vice (3) · Sins of the Elders (4) · Gold for Fools and Princes (4) · Trail of Destruction (5) · In the Mists of Manivarsha (6) · Between Tangled Roots (8) · Shadow of the Sun (11) · The Nightsea's Succor (11) · Buried Dynasty (12) · Orchids of the Invisible Mountain (14)</div>
+      <div class="ov-head">Setting</div>
+      <div class="ov-line">The Radiant Citadel — planar hub connecting culturally diverse lands · each adventure includes a gazetteer with name tables, pronunciation guide, local customs · non-western settings and storytelling traditions</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> culturally diverse one-shots, non-western settings, level 1–14 anthology, Radiant Citadel as planar hub</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">All content is current</div>
+      No player options — pure adventure anthology. Cherry-pick by level and theme.
+    </div>
+    <div class="note">Every adventure by a different author, each drawing on their own cultural background. Strong standalone one-shots.</div>
+  </td>
+</tr>
+
+<!-- The Wild Beyond the Witchlight -->
+<tr>
+  <td>
+    <div class="book-title">The Wild Beyond the Witchlight</div>
+    <span class="book-year">Sep 2021</span>
+    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-adventure">Adventure</span>
+    <br><span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">1 adventure</span>
+      <span class="pill pill-spe">2 species</span>
+      <span class="pill pill-sys">2 backgrounds</span>
+      <span class="pill pill-mon">~20 monsters</span>
+      <span class="pill pill-pp">~256pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventure</div>
+      <div class="ov-line">Feywild adventure (levels 1–8) · Witchlight Carnival opening · Hither, Thither, Yon exploration zones · non-combat resolution possible for every encounter</div>
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">2 species: Fairy, Harengon (both superseded by MotM) · 2 backgrounds: Feylost, Witchlight Hand</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Feywild adventure, non-combat design ideas, Feylost/Witchlight Hand backgrounds</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Fairy, Harengon → MotM</span>
+    </div>
+    <div class="still">
+      <div class="still-label">2 backgrounds (still unique)</div>
+      Feylost · Witchlight Hand
+    </div>
+    <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
   </td>
 </tr>
 
