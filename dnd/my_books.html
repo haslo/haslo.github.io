@@ -17,6 +17,7 @@
     - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
     - Ordered-not-arrived books: Chronicles, ExE, FoE:Q, WBtW, CoS, QftIS, JttRC — shown with .ordered badge
     - No D&D Beyond links unless asked.
+    - Adventures section has a .callout box with 2014→2024 conversion guidance (HP bump, more bodies, drop B/P/S resistances, update spells, new encounter math)
 
   CSS CONVENTIONS:
     Fonts: system-ui (Segoe UI)
@@ -152,6 +153,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .note { font-size: 8.5pt; color: var(--text-dim); margin-top: 4px; }
   .ordered { display: inline-block; font-size: 7.5pt; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: rgba(59,54,120,0.12); color: var(--accent4); margin-top: 4px; }
 
+  .callout {
+    padding: 10px 14px;
+    background: rgba(59,54,120,0.06);
+    border-left: 4px solid var(--accent4);
+    border-radius: 3px;
+    font-size: 9pt;
+    line-height: 1.45;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .callout-label { font-weight: 700; color: var(--accent4); font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .callout ul { margin: 4px 0 0 18px; padding: 0; }
+  .callout li { margin-bottom: 2px; }
+  .callout .sources { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .pill-src { background: rgba(59,54,120,0.12); color: var(--accent4); font-size: 7pt; font-weight: 600; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
+  .pill-src a { color: inherit; text-decoration: none; }
+  .pill-src a:hover { text-decoration: underline; }
 
   .legend {
     margin-top: 12px;
@@ -925,6 +943,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </table>
 
 <h2>Adventures</h2>
+
+<div class="callout">
+  <div class="callout-label">Running 2014 adventures with 2024 characters</div>
+  2024 PCs are significantly stronger than 2014 PCs (weapon mastery, doubled healing dice, bonus-action potions, stronger cantrips &amp; subclasses). All <span class="tag tag-2014">2014</span> adventures below need encounter adjustments:
+  <ul>
+    <li><b>Monster HP:</b> Add +3 HP per Hit Die, or just max HP for boss monsters. A 10 HD creature gets +30 HP.</li>
+    <li><b>More bodies:</b> Add ~50% more monsters to group encounters (3 → 4–5, 6 → 9).</li>
+    <li><b>Drop old resistances:</b> Remove "resistance to B/P/S from nonmagical weapons" — it's gone in 2024 and just frustrates weapon-mastery martials. The HP bump compensates.</li>
+    <li><b>Spellcaster NPCs:</b> Update spells to 2024 versions where they exist (many spells changed).</li>
+    <li><b>Encounter building:</b> Use 2024 DMG encounter math (no XP multiplier). Budget ~50% more XP than the adventure suggests.</li>
+  </ul>
+  <span class="dim">FR: Adventures in Faerûn and Dragon Delves are 2024-native — no adjustment needed.</span>
+  <div class="sources">
+    <span class="pill pill-src"><a href="https://www.dndbeyond.com/posts/1875-updating-your-campaign-to-the-2024-d-d-rules" target="_blank">D&amp;D Beyond: Updating Your Campaign</a></span>
+    <span class="pill pill-src"><a href="https://www.dndbeyond.com/forums/dungeons-dragons-discussion/dungeon-masters-only/208326-2024-characters-with-2014-monsters-how-to-build" target="_blank">Forum: 2024 PCs vs 2014 Monsters</a></span>
+    <span class="pill pill-src"><a href="https://www.dmsguild.com/en/product/413231/monster-manual-expanded-adamantine-bundle-pdfs-bundle" target="_blank">Dragonix: +3 HP/HD rule</a></span>
+    <span class="pill pill-src"><a href="https://tomedunn.github.io/the-finished-book/monsters/monster-manual-2024/" target="_blank">The Finished Book: MM 2024 math</a></span>
+  </div>
+</div>
+
 <table>
 <thead>
 <tr>
@@ -1031,6 +1069,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       No player options — pure adventure. 1e adventures updated to 5e stat blocks and encounter design.
     </div>
     <div class="note">Can string all 6 into a full 1–13 campaign or cherry-pick individually. Barrier Peaks is the famous sci-fi crossover dungeon.</div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
 
@@ -1062,6 +1101,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="still-label">All content is current</div>
       Cherry-pick heists by level. Modular design fits any setting.
     </div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
 
@@ -1095,6 +1135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       No player options — pure adventure anthology. Cherry-pick by level and theme.
     </div>
     <div class="note">Every adventure by a different author, each drawing on their own cultural background. Strong standalone one-shots.</div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
 
@@ -1133,6 +1174,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Feylost · Witchlight Hand
     </div>
     <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
 
@@ -1170,6 +1212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       The campaign itself, maps, NPCs, Tarokka, Death House. VRGtR complements but doesn't replace this.
     </div>
     <div class="note">No subclasses, no species — pure adventure. Pair with VRGtR for expanded Ravenloft lore and player options.</div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
 
