@@ -25,6 +25,7 @@
     Colors: --accent (#8b2500), --gold (#b8860b), --muted (#6b5e50)
     Character-specific accent colors allowed (Twinkle: fey pink/purple)
     Responsive layout, print-friendly
+    Lightbox: GLightbox 3.3.0 (CDN) — click hero portrait to view full-size. Use class="glightbox" + data-gallery per character.
     Floating nav: home button (bottom-left) + back-to-top (bottom-right)
 -->
 <!DOCTYPE html>
@@ -41,6 +42,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
 <!-- End Google Tag Manager -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
 <style>
   :root {
     --ink: #1a1a1a;
@@ -128,6 +130,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     max-height: 520px;
     overflow: hidden;
   }
+
+  .char-hero a { display: block; cursor: zoom-in; }
 
   .char-hero img {
     width: 100%;
@@ -448,7 +452,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="char-card twinkle">
 
   <div class="char-hero">
-    <img src="media/charsheets/twinkle.png" alt="Amanda Twinklespark — Fairy Wild Magic Sorcerer">
+    <a href="media/charsheets/twinkle.png" class="glightbox" data-gallery="twinkle" data-desc="Amanda &quot;Twinkle&quot; Twinklespark — Fairy Wild Magic Sorcerer">
+      <img src="media/charsheets/twinkle.png" alt="Amanda Twinklespark — Fairy Wild Magic Sorcerer">
+    </a>
     <div class="char-hero-overlay">
       <div class="char-hero-text">
         <h2>Amanda Twinklespark</h2>
@@ -528,6 +534,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Floating nav -->
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
 <a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
+<script>GLightbox({ touchNavigation: true, loop: false });</script>
 
 </body>
 </html>
