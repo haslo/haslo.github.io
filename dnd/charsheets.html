@@ -18,7 +18,19 @@
     1. Amanda "Twinkle" Twinklespark — Fairy Wild Magic Sorcerer (level TBD, PHB 2024 + MotM)
        - Appearance: large ears, oversized green eyes, dragonfly wings, glittering mist with sparkle sound
        - Style: pink lover, rainbow colors, leaf-vine armor, star-tipped wand, pointed shoes, never walks
-       - Build: Point Buy, background/origin feat/spells all TBD (pending PHB at table)
+       - Background: Acolyte (devoted student of fey magical tradition, not religious devotion)
+       - Patron archfey: Hyrsam (Prince of Fools) — studied academically, Wild Magic resonance found her
+       - Origin: the Feywild, secluded cave-grotto, left after Wild Magic awakening
+       - Ability scores (Point Buy + Acolyte +2 CHA / +1 WIS):
+           STR 8 (−1), DEX 14 (+2), CON 12 (+1), INT 10 (+0), WIS 14 (+2), CHA 17 (+3)
+       - Sorcerer cantrips: Friends, Minor Illusion, Prestidigitation, Mind Sliver
+       - Sorcerer 1st-level spells: Shield, Sleep
+       - Background spells (Magic Initiate Cleric): Guidance, Thaumaturgy, Healing Word
+       - Equipment (Sorcerer): spear, 2 daggers, arcane focus (star-tipped wand), dungeoneer's pack, 28 gp
+       - Equipment (Acolyte): calligrapher's supplies, book of prayers, holy symbol, 10 parchment, robe, 8 gp
+       - Tool proficiency: Calligrapher's supplies (Acolyte RAW — can craft Spell Scrolls)
+       - Purchased: flute (2 gp)
+       - Starting gold: 34 gp (36 − 2 flute)
 
   CSS CONVENTIONS:
     Follows site parchment theme (Cinzel headings, Crimson Pro body)
@@ -121,6 +133,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .char-card.twinkle {
     --char-accent: #7b4bab;
     --char-glow: rgba(196,75,139,0.25);
+  }
+
+  /* ── WIP Störer ── */
+  .wip-badge {
+    position: absolute;
+    top: 52px;
+    right: -74px;
+    z-index: 10;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 90px;
+    transform: rotate(35deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    pointer-events: none;
   }
 
   /* ── Hero Image ── */
@@ -374,6 +405,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin-left: 4px;
   }
 
+  /* ── TOC ── */
+  .toc {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+  .toc li {
+    display: inline;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    letter-spacing: 1px;
+  }
+
+  .toc li + li::before {
+    content: ' · ';
+    color: var(--divider);
+    margin: 0 6px;
+  }
+
+  .toc a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
   /* ══════════════════════════════════════════════════════════
      RESPONSIVE
      ══════════════════════════════════════════════════════════ */
@@ -399,7 +461,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .char-hero img { -webkit-print-color-adjust: exact; print-color-adjust: exact; height: 300px; }
     .char-hero-overlay { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .ab, .src { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .float-nav { display: none !important; }
+    .toc, .float-nav { display: none !important; }
   }
 
   /* ── Floating nav ── */
@@ -443,13 +505,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </h1>
   <div class="page-subtitle">CyberGwen's D&D Table</div>
   <div class="rule"></div>
+
+  <ul class="toc">
+    <li><a href="#twinkle">Amanda "Twinkle" Twinklespark</a></li>
+  </ul>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
      AMANDA "TWINKLE" TWINKLESPARK
      Fairy · Wild Magic Sorcerer · Level 1
      ══════════════════════════════════════════════════════════════ -->
-<div class="char-card twinkle">
+<div id="twinkle" class="char-card twinkle">
+  <div class="wip-badge">Work in Progress</div>
 
   <div class="char-hero">
     <a href="media/charsheets/twinkle.png" class="glightbox" data-gallery="twinkle" data-desc="Amanda &quot;Twinkle&quot; Twinklespark — Fairy Wild Magic Sorcerer">
@@ -494,20 +561,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div>
       <div class="sec">Ability Scores</div>
       <div class="abilities">
-        <div class="ab ab-tbd"><span class="ab-name">STR</span><span class="ab-val">tbd</span></div>
-        <div class="ab ab-tbd"><span class="ab-name">DEX</span><span class="ab-val">tbd</span></div>
-        <div class="ab ab-tbd"><span class="ab-name">CON</span><span class="ab-val">tbd</span></div>
-        <div class="ab ab-tbd"><span class="ab-name">INT</span><span class="ab-val">tbd</span></div>
-        <div class="ab ab-tbd"><span class="ab-name">WIS</span><span class="ab-val">tbd</span></div>
-        <div class="ab ab-tbd"><span class="ab-name">CHA</span><span class="ab-val">tbd</span></div>
+        <div class="ab"><span class="ab-name">STR</span><span class="ab-val">8</span><span class="ab-mod">−1</span></div>
+        <div class="ab"><span class="ab-name">DEX</span><span class="ab-val">14</span><span class="ab-mod">+2</span></div>
+        <div class="ab"><span class="ab-name">CON</span><span class="ab-val">12</span><span class="ab-mod">+1</span></div>
+        <div class="ab"><span class="ab-name">INT</span><span class="ab-val">10</span><span class="ab-mod">+0</span></div>
+        <div class="ab"><span class="ab-name">WIS</span><span class="ab-val">14</span><span class="ab-mod">+2</span></div>
+        <div class="ab"><span class="ab-name">CHA</span><span class="ab-val">17</span><span class="ab-mod">+3</span></div>
       </div>
 
-      <div class="sec" style="margin-top: 16px;">Build Decisions</div>
+      <div class="sec" style="margin-top: 16px;">Background — Acolyte</div>
       <ul class="traits">
-        <li><span class="t">Background</span> <span class="pending" style="margin-left:4px">pending</span></li>
-        <li><span class="t">Origin Feat</span> — top picks: Magic Initiate, Lucky, Alert, Tough</li>
-        <li><span class="t">Skills</span> <span class="pending" style="margin-left:4px">pending</span></li>
-        <li><span class="t">Spells</span> <span class="pending" style="margin-left:4px">pending</span></li>
+        <li><span class="t">Origin Feat</span> — Magic Initiate (Cleric): Guidance, Thaumaturgy, Healing Word (1/long rest free + spell slots)</li>
+        <li><span class="t">Skills</span> — Arcana (fey scholar), Insight (those big eyes see a lot)</li>
+        <li><span class="t">Tool proficiency</span> — Calligrapher's supplies (can craft Spell Scrolls)</li>
+        <li><span class="t">HP</span> — 7 (d6 + 1 CON)</li>
+        <li><span class="t">AC</span> — 12 (no armor) · 17 (Shield reaction)</li>
+        <li><span class="t">Spell save DC</span> — 13 · <span class="t">Spell attack</span> — +5</li>
+      </ul>
+    </div>
+
+    <!-- Equipment — full width -->
+    <div class="char-body-full">
+      <div class="sec">Equipment</div>
+      <ul class="traits">
+        <li><span class="t">Sorcerer kit</span> — Spear, 2 daggers, arcane focus (crystal — flavoured as star-tipped wand)</li>
+        <li><span class="t">Dungeoneer's pack</span> — Backpack, caltrops, crowbar, 2 flasks of oil, 10 days rations, rope, tinderbox, 10 torches, waterskin</li>
+        <li><span class="t">Acolyte kit</span> — Calligrapher's supplies, book of prayers (her research journal), holy symbol, 10 parchment sheets, robe</li>
+        <li><span class="t">Purchased</span> — Flute (2 gp — picked up studying Hyrsam's domain of revelry)</li>
+        <li><span class="t">Gold</span> — 34 gp (36 starting − 2 flute)</li>
       </ul>
     </div>
 
@@ -521,10 +602,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
+    <!-- Backstory — full width -->
+    <div class="char-body-full">
+      <div class="sec">Backstory</div>
+      <div class="appearance">
+        <p>Twinkle is a fairy from the Feywild. She lived in a secluded cave-grotto deep in an enchanted forest, studying fey magic formally — poring over the Weave's structure, cataloguing how it bends differently in fey spaces, approaching it all with a wizard's rigour. She could already do small fey magic (Druidcraft is innate to all fairies — minor nature cantrips, part of what they are), and she was diligent, curious, analytical. Back then her mist shimmered silver, and she dressed formally — proper fey scholar attire, muted tones, everything in its place.</p>
+        <p>She was particularly drawn to studying the domain of Hyrsam, the Prince of Fools — archfey of revelry, mischief, and chaos. Not as a worshipper, but as a researcher. Chaos magic is the hardest kind to codify, and she found that <em>interesting</em>. She wanted to understand how Hyrsam's influence shapes the Feywild, how chaos and order coexist in the Weave. She even picked up a flute along the way — you can't properly study the Prince of Fools without understanding his music.</p>
+        <p>One day the magic she was poking at poked back. Not a curse, not a tragedy — more like tuning a harp and accidentally opening a door. Her silver mist turned rainbow. Her spells started doing unexpected things. Wild Magic found her, or she found it, or Hyrsam noticed her and thought it would be funny. She woke up sparkling in colors she'd never made before, and she thought it was <em>fantastic</em>. The formal scholar attire didn't last long after that — within days she was wearing pink, then rainbow, then whatever made her sparkle hardest.</p>
+        <p>The structured wizard path suddenly felt like reading about swimming instead of jumping in. So she left the cave.</p>
+        <p><span class="detail">She has the soul of a sorcerer but the mind of a wizard — still curious, still analytical, still fascinated by how magic works. She just channels it through chaos now instead of theory. The Acolyte background reflects her years of devoted study; the Wild Magic reflects what happened when the subject of her research decided to become part of her.</span></p>
+      </div>
+    </div>
+
     <!-- Notes — full width -->
     <div class="char-body-full">
       <div class="build-notes">
-        Character creation in progress — waiting for PHB at the table. Locked in: Fairy (MotM), Wild Magic Sorcerer (PHB 2024), Point Buy, Level 1. Ability scores, background, origin feat, skills, and spells all TBD.
+        <strong>Build summary:</strong> Fairy (MotM) · Wild Magic Sorcerer (PHB 2024) · Level 1 · Point Buy + Acolyte (+2 CHA, +1 WIS). Seven cantrips: Druidcraft (Fairy), Guidance + Thaumaturgy (Magic Initiate — Cleric), Friends + Mind Sliver + Minor Illusion + Prestidigitation (Sorcerer). Three 1st-level spells: Healing Word (Magic Initiate — Cleric, 1/LR free or via Sorcerer slots), Shield + Sleep (Sorcerer). Two Sorcerer spell slots (1st level). Patron archfey: Hyrsam (Prince of Fools). Origin: the Feywild. Level 2 plan: pick up Mage Armor (AC 12 → 15).
       </div>
     </div>
 
