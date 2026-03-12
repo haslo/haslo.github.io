@@ -1,0 +1,533 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: charsheets.html
+  PURPOSE: Character sheet gallery for CyberGwen's D&D campaigns. Visual character cards with
+           portrait, core stats, personality, and flavour. Not a full mechanical sheet — more of a
+           quick-reference + personality snapshot. Designed to look beautiful, not dry.
+  OWNER PREF: No MS Office files. Self-contained HTML. First-person voice (these are my characters).
+              Gentle humour welcome. 2024 PHB rules as baseline. Make it look nice.
+
+  STRUCTURE:
+    - Title + subtitle
+    - Character cards: hero-image portrait with stats overlaid / below
+    - Each card: name, species/class/level, ability scores, traits, quirks, build notes
+    - Cards are expandable as more characters are added
+
+  CHARACTERS:
+    1. Amanda "Twinkle" Twinklespark — Fairy Wild Magic Sorcerer (level TBD, PHB 2024 + MotM)
+       - Appearance: large ears, oversized green eyes, dragonfly wings, glittering mist with sparkle sound
+       - Style: pink lover, rainbow colors, leaf-vine armor, star-tipped wand, pointed shoes, never walks
+       - Build: Point Buy, background/origin feat/spells all TBD (pending PHB at table)
+
+  CSS CONVENTIONS:
+    Follows site parchment theme (Cinzel headings, Crimson Pro body)
+    Colors: --accent (#8b2500), --gold (#b8860b), --muted (#6b5e50)
+    Character-specific accent colors allowed (Twinkle: fey pink/purple)
+    Responsive layout, print-friendly
+    Floating nav: home button (bottom-left) + back-to-top (bottom-right)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Sheets — CyberGwen's D&D Table</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
+<!-- End Google Tag Manager -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--parchment);
+    padding: 30px 20px 60px;
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 22pt;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  h1 img { width: 28px; height: auto; opacity: 0.8; }
+
+  .page-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .rule {
+    width: 160px;
+    height: 1px;
+    margin: 16px auto 0;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     CHARACTER CARD
+     ══════════════════════════════════════════════════════════ */
+  .char-card {
+    --char-accent: #8b2500;
+    --char-glow: rgba(184,134,11,0.3);
+    max-width: 860px;
+    margin: 0 auto 48px;
+    background: #ece5d8;
+    border: 1px solid var(--divider);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Twinkle-specific colors */
+  .char-card.twinkle {
+    --char-accent: #7b4bab;
+    --char-glow: rgba(196,75,139,0.25);
+  }
+
+  /* ── Hero Image ── */
+  .char-hero {
+    position: relative;
+    width: 100%;
+    max-height: 520px;
+    overflow: hidden;
+  }
+
+  .char-hero img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .char-hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 60px 32px 24px;
+    background: linear-gradient(transparent 0%, rgba(16,12,8,0.75) 60%, rgba(16,12,8,0.92) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .char-hero-text h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1.15;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .char-hero-text .char-nickname {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14pt;
+    font-style: italic;
+    color: var(--gold-light);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .char-hero-text .char-tagline {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-top: 6px;
+  }
+
+  .char-hero-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    background: rgba(184,134,11,0.15);
+    border: 1px solid rgba(184,134,11,0.3);
+    padding: 4px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Card Body ── */
+  .char-body {
+    padding: 24px 28px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+  }
+
+  .char-body-full {
+    grid-column: 1 / -1;
+  }
+
+  /* Section labels */
+  .sec {
+    font-family: 'Cinzel', serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--char-accent);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* ── Ability Scores ── */
+  .abilities {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+
+  .ab {
+    text-align: center;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid var(--divider);
+    padding: 8px 4px 6px;
+    position: relative;
+  }
+
+  .ab-name {
+    font-family: 'Cinzel', serif;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .ab-val {
+    font-family: 'Cinzel', serif;
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .ab-mod {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9pt;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .ab-tbd .ab-val {
+    font-size: 10pt;
+    color: var(--muted);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  /* ── Trait List ── */
+  .traits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .traits li {
+    font-size: 11pt;
+    line-height: 1.4;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .traits li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--char-accent);
+    font-size: 7pt;
+    top: 3px;
+  }
+
+  .t { font-weight: 600; color: var(--char-accent); }
+
+  /* ── Appearance block ── */
+  .appearance {
+    font-size: 11pt;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  .appearance p {
+    margin-bottom: 8px;
+    text-indent: 1.5em;
+  }
+
+  .appearance p:first-child { text-indent: 0; }
+  .appearance p:last-child { margin-bottom: 0; }
+
+  .appearance .detail {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 10.5pt;
+  }
+
+  /* ── Source pills ── */
+  .sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .src {
+    font-family: 'Cinzel', serif;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  .src-species { background: rgba(123,75,171,0.1); color: #6b3d9a; }
+  .src-class { background: rgba(196,75,139,0.1); color: #a13d72; }
+  .src-build { background: rgba(184,134,11,0.1); color: var(--gold); }
+  .src-tbd { background: rgba(107,93,79,0.1); color: var(--muted); }
+
+  /* ── Flavour quote ── */
+  .flavour {
+    font-family: 'Crimson Pro', serif;
+    font-size: 12pt;
+    font-style: italic;
+    color: var(--muted);
+    text-align: center;
+    padding: 12px 24px;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    line-height: 1.5;
+  }
+
+  /* ── Build notes ── */
+  .build-notes {
+    font-size: 10pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .build-notes .pending {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(184,134,11,0.12);
+    color: var(--gold);
+    padding: 1px 6px;
+    margin-left: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 700px) {
+    h1 { font-size: 17pt; letter-spacing: 2px; }
+    .char-hero img { height: 380px; }
+    .char-hero-text h2 { font-size: 20pt; }
+    .char-hero-overlay { padding: 40px 20px 18px; }
+    .char-body {
+      grid-template-columns: 1fr;
+      padding: 18px 18px 22px;
+    }
+    .abilities { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     PRINT
+     ══════════════════════════════════════════════════════════ */
+  @media print {
+    body { padding: 0; background: white; font-size: 10pt; }
+    @page { size: A4 portrait; margin: 12mm; }
+    .char-card { break-inside: avoid; border-color: #ccc; }
+    .char-hero img { -webkit-print-color-adjust: exact; print-color-adjust: exact; height: 300px; }
+    .char-hero-overlay { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .ab, .src { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .float-nav { display: none !important; }
+  }
+
+  /* ── Floating nav ── */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home { left: 20px; }
+  .float-nav-home img { width: 40px; height: 40px; }
+  @media print { .float-nav { display: none !important; } }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5SNKTZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="page-header" id="top">
+  <h1>
+    <img src="media/cybergwen_logo.svg" alt="">
+    Character Sheets
+  </h1>
+  <div class="page-subtitle">CyberGwen's D&D Table</div>
+  <div class="rule"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     AMANDA "TWINKLE" TWINKLESPARK
+     Fairy · Wild Magic Sorcerer · Level 1
+     ══════════════════════════════════════════════════════════════ -->
+<div class="char-card twinkle">
+
+  <div class="char-hero">
+    <img src="media/charsheets/twinkle.png" alt="Amanda Twinklespark — Fairy Wild Magic Sorcerer">
+    <div class="char-hero-overlay">
+      <div class="char-hero-text">
+        <h2>Amanda Twinklespark</h2>
+        <span class="char-nickname">"Twinkle"</span>
+        <div class="char-tagline">Fairy · Wild Magic Sorcerer</div>
+      </div>
+      <div class="char-hero-badge">Level 1</div>
+    </div>
+  </div>
+
+  <div class="char-body">
+
+    <!-- Flavour quote — full width -->
+    <div class="char-body-full">
+      <div class="flavour">
+        Glittering mist. Sparkle sound. Impractical shoes. Unshakeable optimism.<br>
+        She has never once walked anywhere on purpose.
+      </div>
+    </div>
+
+    <!-- Left column: Species Traits -->
+    <div>
+      <div class="sec">Species Traits — Fairy</div>
+      <ul class="traits">
+        <li><span class="t">Flight</span> — 30 ft. fly speed, no armor restriction. Prefers not to touch the ground. Ever.</li>
+        <li><span class="t">Fairy Magic</span> — Druidcraft (cantrip) · Faerie Fire (3rd level) · Enlarge/Reduce (5th level). Each innate spell: 1/long rest free, also castable with spell slots.</li>
+        <li><span class="t">Size</span> — Small. Somewhere between "adorable" and "can she even carry that?"</li>
+      </ul>
+      <div class="sources">
+        <span class="src src-species">Monsters of the Multiverse</span>
+        <span class="src src-class">PHB 2024 — Wild Magic</span>
+        <span class="src src-build">Point Buy</span>
+      </div>
+    </div>
+
+    <!-- Right column: Ability Scores -->
+    <div>
+      <div class="sec">Ability Scores</div>
+      <div class="abilities">
+        <div class="ab ab-tbd"><span class="ab-name">STR</span><span class="ab-val">tbd</span></div>
+        <div class="ab ab-tbd"><span class="ab-name">DEX</span><span class="ab-val">tbd</span></div>
+        <div class="ab ab-tbd"><span class="ab-name">CON</span><span class="ab-val">tbd</span></div>
+        <div class="ab ab-tbd"><span class="ab-name">INT</span><span class="ab-val">tbd</span></div>
+        <div class="ab ab-tbd"><span class="ab-name">WIS</span><span class="ab-val">tbd</span></div>
+        <div class="ab ab-tbd"><span class="ab-name">CHA</span><span class="ab-val">tbd</span></div>
+      </div>
+
+      <div class="sec" style="margin-top: 16px;">Build Decisions</div>
+      <ul class="traits">
+        <li><span class="t">Background</span> <span class="pending" style="margin-left:4px">pending</span></li>
+        <li><span class="t">Origin Feat</span> — top picks: Magic Initiate, Lucky, Alert, Tough</li>
+        <li><span class="t">Skills</span> <span class="pending" style="margin-left:4px">pending</span></li>
+        <li><span class="t">Spells</span> <span class="pending" style="margin-left:4px">pending</span></li>
+      </ul>
+    </div>
+
+    <!-- Appearance — full width -->
+    <div class="char-body-full">
+      <div class="sec">Appearance & Quirks</div>
+      <div class="appearance">
+        <p>Exceptionally large pointed ears. Oversized luminous green eyes — larger than an elf's for her size, somewhere between a bush baby and a luna moth. Wild black hair. Fair skin.</p>
+        <p>Iridescent dragonfly wings that shimmer with rainbow refractions. Surrounded by a glittering multicolored mist that emanates from her skin, with tiny sparkling motes of light slowly drifting down. <span class="detail">The mist makes a faint sparkly chiming sound — defaults to on when she wakes up, toggled at will. The magic reasserts itself naturally; she has to consciously suppress it.</span></p>
+        <p>Loves pink — her makeup and clothing make that obvious, but she's a rainbow of colors overall. Dark pink leggings under a shimmering leaf-and-vine upper body armor. A skirt that falls to the knees but is still practical in a fight. Slightly pointed shoes that are absolutely not made for walking, because why would she walk? Carries a wand with a star at the tip.</p>
+      </div>
+    </div>
+
+    <!-- Notes — full width -->
+    <div class="char-body-full">
+      <div class="build-notes">
+        Character creation in progress — waiting for PHB at the table. Locked in: Fairy (MotM), Wild Magic Sorcerer (PHB 2024), Point Buy, Level 1. Ability scores, background, origin feat, skills, and spells all TBD.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Floating nav -->
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
+
+</body>
+</html>
