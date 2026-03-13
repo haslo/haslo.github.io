@@ -1,0 +1,644 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: feywild_primer.html
+  PURPOSE: Feywild reference primer for CyberGwen's D&D table. Summary-style with source
+           references — the actual books are in sources/. Not a full primer like eberron-primer.html,
+           more of a quick-reference + deep-dive on Hyrsam for Twinkle's backstory.
+  OWNER PREF: No MS Office files. Self-contained HTML. First-person voice. Technical and direct.
+              Summary with references, not reproduction — I own the source PDFs.
+
+  STRUCTURE:
+    - Header with WBtW cover image
+    - TOC
+    - 01 What Is the Feywild? (brief overview, storybook logic, time, peril)
+    - 02 Factions of the Fey — Seelie/Unseelie as overarching courts (5e framing), then
+         granular 4e factions (Court of Stars, Summer/Green/Winter/Gloaming, Court of Coral)
+         with explicit 4e-vs-5e contradiction callouts. Unseelie is NOT a separate faction row;
+         it's one of two big courts. The 4e Gloaming Fey ≈ 5e Unseelie, but it's messy.
+    - 03 Key Locations (Senaliesse, Astrazalian, Mithrendain, Shinaelestra, Vale of Long Night,
+         Maze of Fathaghn, Murkendraw, Cendriane, Nachtur, Isle of Dread, Feydark, Fomorian Cities)
+    - 04 The Archfey (overview with Court column showing Seelie/Unseelie alignment per archfey)
+    - 05 Hyrsam, Prince of Fools (deep section — lore, personality, goals, possessions,
+         Grove of Laughing Goats, encounter hooks, revelers, relevance to Twinkle)
+    - Sources (book references)
+
+  MEDIA:
+    media/feywild_primer/wild_witchlight.jpg — header image (WBtW cover art)
+    media/feywild_primer/hyrsam.png — Hyrsam portrait (AI-generated)
+
+  CSS CONVENTIONS:
+    Follows site parchment theme (Cinzel headings, Crimson Pro body)
+    Colors: --accent (#2a6040 forest green for fey theme), --gold (#b8860b), --muted (#6b5e50)
+    Callouts use fey green instead of Eberron red
+    Responsive layout, print-friendly
+    GLightbox for images
+    Floating nav: home button (bottom-left) + back-to-top (bottom-right)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feywild Primer — CyberGwen's D&D Table</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
+<!-- End Google Tag Manager -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #2a6040;
+    --accent-light: #3d8a5a;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --table-stripe: #ece6da;
+    --sidebar-bg: #e8e0d2;
+    --fey-glow: rgba(42,96,64,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13pt;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+
+  .page {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 0 50px 60px;
+  }
+
+  /* ── Header Image ── */
+  .primer-header {
+    position: relative;
+    width: 100%;
+    max-height: 360px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .primer-header img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+
+  .primer-header-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 80px 50px 28px;
+    background: linear-gradient(transparent 0%, rgba(16,12,8,0.7) 50%, rgba(16,12,8,0.92) 100%);
+  }
+
+  .primer-header-overlay h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 28pt;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .primer-header-overlay .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 4px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    margin: 28px 0 36px;
+    padding: 18px 28px;
+    background: var(--sidebar-bg);
+    border-left: 3px solid var(--accent);
+  }
+
+  .toc h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 32px;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    font-size: 11pt;
+    padding: 2px 0;
+  }
+
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) ' ';
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* ── Sections ── */
+  section { margin-bottom: 32px; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 12pt;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 18px 0 8px;
+  }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Callouts ── */
+  .callout {
+    margin: 16px 0;
+    padding: 14px 18px;
+    border-left: 3px solid var(--accent);
+    background: var(--fey-glow);
+    font-size: 12pt;
+  }
+
+  .callout.gold {
+    border-left-color: var(--gold);
+    background: rgba(184,134,11,0.06);
+  }
+
+  .callout .label {
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .callout.gold .label { color: var(--gold); }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+
+  th {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: var(--table-stripe); }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  /* ── Source pills ── */
+  .src-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 1px 2px;
+  }
+
+  .src-hotf { background: rgba(42,96,64,0.1); color: var(--accent); }
+  .src-d422 { background: rgba(184,134,11,0.1); color: var(--gold); }
+  .src-phb { background: rgba(139,37,0,0.1); color: #8b2500; }
+  .src-wbtw { background: rgba(106,90,161,0.1); color: #6a5aa1; }
+  .src-yt { background: rgba(204,0,0,0.08); color: #cc0000; }
+
+  /* ── Hyrsam portrait ── */
+  .hyrsam-portrait {
+    float: right;
+    width: 260px;
+    margin: 0 0 16px 24px;
+    border: 1px solid var(--divider);
+  }
+
+  .hyrsam-portrait img {
+    width: 100%;
+    display: block;
+    cursor: zoom-in;
+  }
+
+  .hyrsam-portrait .caption {
+    font-family: 'Cinzel', serif;
+    font-size: 7pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    padding: 6px 8px;
+    background: var(--sidebar-bg);
+  }
+
+  /* ── Flavour quote ── */
+  .flavour {
+    font-style: italic;
+    color: var(--muted);
+    text-align: center;
+    padding: 14px 32px;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    margin: 20px 0;
+    line-height: 1.5;
+  }
+
+  .flavour .attr {
+    display: block;
+    margin-top: 6px;
+    font-size: 10pt;
+    font-style: normal;
+    color: var(--muted);
+  }
+
+  /* ── Source list ── */
+  .source-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .source-list li {
+    font-size: 11pt;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .source-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 7pt;
+    top: 4px;
+  }
+
+  .source-list .book-title {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .page { padding: 0 20px 40px; }
+    .primer-header img { height: 240px; }
+    .primer-header-overlay h1 { font-size: 20pt; letter-spacing: 3px; }
+    .primer-header-overlay { padding: 60px 20px 18px; }
+    .toc ol { columns: 1; }
+    .hyrsam-portrait { float: none; width: 100%; margin: 0 0 16px 0; }
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; font-size: 10pt; }
+    @page { size: A4 portrait; margin: 12mm; }
+    .primer-header { max-height: 200px; }
+    .primer-header img { height: 200px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .primer-header-overlay { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .toc, .float-nav { display: none !important; }
+    th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .hyrsam-portrait { width: 200px; }
+  }
+
+  /* ── Floating nav ── */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home { left: 20px; }
+  .float-nav-home img { width: 40px; height: 40px; }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5SNKTZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="primer-header" id="top">
+  <img src="media/feywild_primer/wild_witchlight.jpg" alt="The Feywild — enchanted forest">
+  <div class="primer-header-overlay">
+    <h1>Feywild Primer</h1>
+    <div class="subtitle">CyberGwen's D&D Table</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#what-is">What Is the Feywild?</a></li>
+      <li><a href="#factions">Factions of the Fey</a></li>
+      <li><a href="#locations">Key Locations</a></li>
+      <li><a href="#archfey">The Archfey</a></li>
+      <li><a href="#hyrsam">Hyrsam, Prince of Fools</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <div class="callout gold">
+    <span class="label">About This Document</span>
+    This is a summary reference for my Feywild research — not a reproduction. I own the source books and PDFs listed at the bottom. Page numbers are included so I can look things up quickly at the table. The Hyrsam section is the deepest because he's relevant to Twinkle's backstory.
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       01 — WHAT IS THE FEYWILD?
+       ═══════════════════════════════════════════════ -->
+  <section id="what-is">
+    <h2>01 — What Is the Feywild?</h2>
+
+    <p>The Feywild is a parallel plane of wild magic and untamed nature — an echo of the material world turned up to eleven. The laws of science, logic, and reason give way to story, rhyme, and emotion. Enchanted forests stretch endlessly, animals talk, castles perch on mountain spires, and time flows differently depending on where you stand.</p>
+
+    <p>It is simultaneously a land of breathtaking beauty and terrible danger. Capricious fey play careless games with mortal lives. Hags place everlasting curses. Fomorian tyrants rule underground empires of cruelty. The Feywild operates on storybook logic — fanciful rules, impossible quests, and conditions that must be met precisely. Oaths and bargains are magically binding. Breaking a promise to a fey creature has real, often irreversible consequences.</p>
+
+    <div class="callout">
+      <span class="label">Time Distortion</span>
+      Time passes differently in the Feywild. Some areas bask in eternal summer; others are frozen in endless winter. A mortal spending a few days in the Feywild might return home to find that everyone they knew has aged and died. Eladrin and other native creatures are effectively ageless — they experience time as a kind of slow, golden drift.
+      <br><span class="src-ref src-hotf">HotF p. 6</span>
+    </div>
+
+    <div class="callout">
+      <span class="label">Storybook Logic</span>
+      Fey magic bends and breaks the rules that govern arcane study in the material world. The humblest midwife can curse a mortal for a lifetime. Fey establish borders based on conditions rather than geography — and those conditions are as binding as iron walls. Cold iron is the one material boundary that fey universally respect and fear.
+      <br><span class="src-ref src-hotf">HotF pp. 7–8</span>
+    </div>
+
+    <div class="callout gold">
+      <span class="label">Many Worlds, One Feywild</span>
+      Whether your campaign is set in the Forgotten Realms, Eberron, or a homebrew world, the Feywild exists as described in these sources with little or no alteration. Its features mirror every world at once — a mysterious property that makes the material setting-agnostic.
+      <br><span class="src-ref src-hotf">HotF p. 10</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       02 — FACTIONS OF THE FEY
+       ═══════════════════════════════════════════════ -->
+  <section id="factions">
+    <h2>02 — Factions of the Fey</h2>
+
+    <h3>The Two Courts: Seelie &amp; Unseelie</h3>
+
+    <p>The fundamental division in fey society is between the <strong>Seelie</strong> and <strong>Unseelie</strong> — two overarching courts to which most fey owe allegiance. This isn't a faction you join so much as a disposition you're drawn to. A feywild town, a wandering prince, a dryad grove — almost everything in the Feywild flies one banner or the other.</p>
+
+    <table>
+      <tr><th>Court</th><th>Nature</th><th>Ruler</th></tr>
+      <tr><td>Seelie</td><td>The Summer Court. Drawn to laughter, music, merriment, beauty. Joyful. More likely to <em>seem</em> good — but "seeming good" and "being good" are very different things in the Feywild.</td><td>Queen Titania</td></tr>
+      <tr><td>Unseelie</td><td>The Gloaming Court. Dark, melancholy, mysterious, star-touched. More likely to <em>appear</em> evil, but not inherently so. The Queens are sisters — this is a family feud, not a cosmic war of good vs. evil.</td><td>Queen of Air &amp; Darkness</td></tr>
+    </table>
+
+    <p>The words themselves come from old Scots/English — "seelie" means happy or blessed, "unseelie" means unhappy or unblessed. Think joyful vs. melancholy rather than good vs. evil. A seelie fey might charm you into dancing until your feet bleed because it's <em>fun</em>. An unseelie fey might shelter you from a storm out of cold obligation. Neither is safe. <span class="src-ref src-yt">YouTube</span></p>
+
+    <div class="callout gold">
+      <span class="label">Edition Tangle — 4e vs. 5e</span>
+      Here's where it gets wonderfully contradictory. The 5e framing (WBtW, various sourcebooks, community consensus) treats Seelie/Unseelie as <em>the</em> big binary — Summer Court vs. Gloaming Court, Titania vs. Queen of Air and Darkness. Clean. Simple. But the 4e sourcebook (HotF) doesn't use "Seelie" and "Unseelie" as its organising principle at all — it describes six granular factions (below) that don't map neatly onto the two-court model. The Gloaming Fey in 4e are dream-and-twilight creatures, not the "Unseelie court" per se. The Queen of Air and Darkness is mentioned but her relationship to the Gloaming Fey is left ambiguous. This is part of the charm — the Feywild's own politics are as contradictory and mutable as its geography.
+    </div>
+
+    <h3>Fey Factions (4e Detail)</h3>
+
+    <p>Heroes of the Feywild breaks fey allegiances into more granular factions. These exist <em>within</em> the Seelie/Unseelie framework — or across it, or sideways to it, depending on which edition you ask.</p>
+
+    <table>
+      <tr><th>Faction</th><th>Nature</th><th>Key Figures</th><th>Court?</th></tr>
+      <tr><td>Court of Stars</td><td>Grand conclave hosted by the Summer Queen. Part politics, part revelry, part competition. The closest thing the Feywild has to a parliament.</td><td>Tiandra, Oran, Hyrsam</td><td>Seelie</td></tr>
+      <tr><td>Summer Fey</td><td>Embody beauty and power. Largest Sidhe following. Eladrin, nymphs.</td><td>Tiandra, the Summer Queen</td><td>Seelie</td></tr>
+      <tr><td>Green Fey</td><td>Forest-dwelling servants of Oran the Green Lord. Hamadryads, satyrs, elves.</td><td>Oran the Green Lord</td><td>Seelie</td></tr>
+      <tr><td>Winter Fey</td><td>Bound to ice and cold. No true leader — loosely grouped under the Prince of Frost.</td><td>Prince of Frost</td><td>Unseelie-adjacent</td></tr>
+      <tr><td>Gloaming Fey</td><td>Dreams, darkness, stars, twilight, dusk. Owe allegiance to various archfey. In 5e this maps roughly to the Unseelie court; in 4e it's more its own thing.</td><td>Maiden of the Moon</td><td>Unseelie (5e) / ambiguous (4e)</td></tr>
+      <tr><td>Court of Coral</td><td>Aquatic and island-dwelling fey. Rivers and seas. Largely outside the Seelie/Unseelie binary.</td><td>Elias &amp; Siobhan Alastai (Sea Lords)</td><td>Independent</td></tr>
+    </table>
+    <p style="font-size:10pt; color:var(--muted);"><span class="src-ref src-hotf">HotF p. 12</span></p>
+
+    <div class="callout">
+      <span class="label">Where Do the "Evil Fey" Go?</span>
+      It's tempting to treat "Unseelie" as a synonym for "the evil faction," but that flattens the distinction. Hags, redcaps, quicklings, and other nasty fey exist throughout the Feywild — some serve the Queen of Air and Darkness, some serve nobody, some are Seelie-aligned and just happen to be terrible. The Unseelie court is <em>melancholy and dark</em>, not evil by definition. There are plenty of Seelie fey who'll ruin your life with a smile.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       03 — KEY LOCATIONS
+       ═══════════════════════════════════════════════ -->
+  <section id="locations">
+    <h2>03 — Key Locations</h2>
+
+    <h3>Eladrin Cities</h3>
+    <table>
+      <tr><th>City</th><th>Description</th><th>Ref</th></tr>
+      <tr><td>Astrazalian</td><td>City of Starlight. Crystal towers on an island. Crown jewel of the eladrin — appears in the mortal world in spring and summer, retreats to the Feywild in autumn. Besieged by fomorians annually.</td><td><span class="src-ref src-hotf">p. 10</span></td></tr>
+      <tr><td>Mithrendain</td><td>Autumn City. Fortress of towering trees, copper and gold. Time drifts — no clocks, no hurry. Timekeeping devices are considered ill fortune.</td><td><span class="src-ref src-hotf">p. 11</span></td></tr>
+      <tr><td>Shinaelestra</td><td>The Fading City. Appears in the Feywild at night, emerges in the mortal Howling Forest by day. Fights nightly fomorian incursions. Valiant, scrappy people.</td><td><span class="src-ref src-hotf">p. 11</span></td></tr>
+      <tr><td>Cendriane</td><td>Abandoned ruin in a cursed forest. Crystal towers like skeletal fingers. No birdsong, no life — the silence never breaks. Giant spiders and specters haunt the mansions where eladrin once lived.</td><td><span class="src-ref src-hotf">p. 14</span></td></tr>
+    </table>
+
+    <h3>Archfey Demesnes &amp; Wilderness</h3>
+    <table>
+      <tr><th>Location</th><th>Description</th><th>Ref</th></tr>
+      <tr><td>Senaliesse</td><td>Summer Queen's demesne. Palace woven from silver trees. Eternal summer, orchids, roses. Where the Court of Stars gathers.</td><td><span class="src-ref src-hotf">p. 12</span></td></tr>
+      <tr><td>Vale of Long Night</td><td>Prince of Frost's domain. Frozen night, glacial fortress, ever-full moon. His heart turned to ice when his love betrayed him for a mortal hero.</td><td><span class="src-ref src-hotf">p. 13</span></td></tr>
+      <tr><td>Maze of Fathaghn</td><td>Living labyrinth of trees and brambles. Protects the Mother Tree that gave life to the first Green Fey. Ruled by the dryad queen Fathaghn.</td><td><span class="src-ref src-hotf">p. 17</span></td></tr>
+      <tr><td>The Murkendraw</td><td>Sea-sized swamp. Poisonous fog, assassin vines, feymire crocodiles. Hags like Baba Yaga love it here. Cold iron knives under every door.</td><td><span class="src-ref src-hotf">p. 17</span></td></tr>
+      <tr><td>Isle of Dread</td><td>Tropical island with obsidian beaches. Shifts between the Feywild and random mortal time periods. Castaways form tribes. Few leave.</td><td><span class="src-ref src-hotf">p. 15</span></td></tr>
+      <tr><td>Nachtur</td><td>Goblin kingdom ruled by the Great Gark. Gray badlands, fissures, raids. Goblins steal fey creatures and children.</td><td><span class="src-ref src-hotf">p. 18</span></td></tr>
+    </table>
+
+    <h3>The Feydark</h3>
+    <p>The Feywild's Underdark — a vast underground tangle of magic-saturated caverns, far grander in scale than the mortal equivalent. Home to fomorians (the greatest organized threat), myconids, and creatures driven underground by the archfey. Three fomorian city-states: Harrowhame, Mag Tureah, and Vor Thomil, each ruled by a different twisted giant. <span class="src-ref src-hotf">HotF p. 10</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       04 — THE ARCHFEY
+       ═══════════════════════════════════════════════ -->
+  <section id="archfey">
+    <h2>04 — The Archfey</h2>
+
+    <p>Archfey are the most powerful beings in the Feywild — fey creatures who have accumulated enough magic to rival gods. Their personal domains (demesnes) reflect their nature. The PHB lists five as example Warlock patrons. Note how the Seelie/Unseelie alignment cuts across individual archfey rather than defining them — most lean one way, but "lean" is doing heavy lifting.</p>
+
+    <table>
+      <tr><th>Archfey</th><th>Title / Domain</th><th>Court</th><th>Notes</th></tr>
+      <tr><td>Tiandra</td><td>Summer Queen</td><td>Seelie</td><td>Rules Senaliesse. Commands the Court of Stars. Most powerful by political influence. The Seelie court <em>is</em> her court.</td></tr>
+      <tr><td>Oran</td><td>The Green Lord</td><td>Seelie</td><td>Hyrsam's father. Loftiest of nature archfey. Controls the Green Fey.</td></tr>
+      <tr><td>Hyrsam</td><td>Prince of Fools</td><td>Neither (anarchist)</td><td>Oran's eldest son. Wants <em>all</em> courts destroyed. See deep section below.</td></tr>
+      <tr><td>Prince of Frost</td><td>Unseelie-adjacent</td><td>Unseelie-ish</td><td>His heart froze when his love betrayed him. Rules the Vale of Long Night. 4e places him outside the Gloaming Fey; 5e tends to lump him Unseelie. Pick your edition.</td></tr>
+      <tr><td>Queen of Air &amp; Darkness</td><td>Gloaming / Unseelie Queen</td><td>Unseelie</td><td>Titania's sister, corrupted by a mysterious black diamond. The Unseelie court is hers. In 4e the "Gloaming Fey" and her court are ambiguously related; in 5e they're the same thing.</td></tr>
+      <tr><td>Oberon</td><td>The Green Lord (alt)</td><td>Seelie</td><td>Sometimes conflated with Oran depending on setting. Shakespearean import.</td></tr>
+    </table>
+    <p style="font-size:10pt; color:var(--muted);"><span class="src-ref src-phb">PHB 2014 p. 109</span> <span class="src-ref src-hotf">HotF pp. 12–13</span> <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       05 — HYRSAM, PRINCE OF FOOLS
+       ═══════════════════════════════════════════════ -->
+  <section id="hyrsam">
+    <h2>05 — Hyrsam, Prince of Fools</h2>
+
+    <div class="hyrsam-portrait">
+      <a href="media/feywild_primer/hyrsam.png" class="glightbox" data-gallery="hyrsam" data-desc="Hyrsam, Prince of Fools — the Satyr Prince">
+        <img src="media/feywild_primer/hyrsam.png" alt="Hyrsam, Prince of Fools">
+      </a>
+      <div class="caption">Hyrsam — Prince of Satyrs</div>
+    </div>
+
+    <div class="flavour">
+      The Satyr Prince Hyrsam, he sings<br>
+      Of times more than mere story—<br>
+      Before gods or masters or kings,<br>
+      Before death, fate, or glory.
+      <span class="attr">— Traditional Faerie Song <span class="src-ref src-d422">Dragon 422 p. 4</span></span>
+    </div>
+
+    <h3>Who He Is</h3>
+    <p>Hyrsam is one of the most ancient fey creatures in existence — the eldest son of Oran the Green Lord. He remembers the earliest days of the Feywild, before Corellon and the other gods discovered it, before the fomorians held dominion, before elves, eladrin, or drow existed. In those primordial days the Feywild was a brutal but beautiful realm where gnomes, satyrs, dryads, and treants frolicked unfettered by the structures of court or church. <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
+
+    <h3>The Mask</h3>
+    <p>In public, Hyrsam plays the consummate bon vivant — the Court of Stars' resident jester, travelling from court to court with his entourage of musicians and minstrels, entertaining fey nobles. He oscillates between comedy and savagery, and the fool act is entirely deliberate. He is both clever and erudite, with a deep understanding of how to manipulate others. His father Oran actively refutes rumours about Hyrsam's involvement in the fall of various kingdoms — but only because Hyrsam is careful enough to keep his hands clean. <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
+
+    <h3>His True Goal</h3>
+    <p>Hyrsam is a fey anarchist. He seeks the complete collapse of all fey kingdoms so that the Feywild returns to its original pristine state — wild, untamed, and free of the "corruption" of civilisation, Seldarine influence, and fomorian tyranny alike. His songs sow the seeds of rebellion wherever he goes. His revelers offer clandestine assistance to rebels and traitors. Many kingdoms have collapsed in the wake of his visits. <span class="src-ref src-d422">Dragon 422 pp. 4–6</span></p>
+
+    <div class="callout">
+      <span class="label">Twinkle Connection</span>
+      Twinkle studied Hyrsam's domain academically — chaos magic, how his influence shapes the Feywild, how disorder and order coexist in the Weave. She wasn't a worshipper; she was a researcher. Then the chaos she was studying decided to become part of her. Wild Magic found her, or Hyrsam noticed her and thought it would be funny.
+    </div>
+
+    <h3>Appearance</h3>
+    <p>A handsome satyr with curly locks that fall in wild tangles around curved spiral horns. His dark eyes flash with hidden passion and rebellious light. He dresses in ordinary travelling clothes among commoners and in regal finery among nobles — always adapting to his audience. <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
+
+    <h3>Possessions</h3>
+    <p>Hyrsam has invented numerous musical instruments, magical and mundane. His signature items are a magic <strong>fiddle</strong> (woven with mithral strands, playable with any handheld object), a <strong>fiddlestick</strong> (enchanted bow that doubles as a rapier in combat — stronger than steel, sharper than glass), and a <strong>Horn of Revelry</strong> (conjures spectral satyr musicians). He also plays the syrinx (pan flute). <span class="src-ref src-d422">Dragon 422 p. 8</span></p>
+
+    <h3>His Court — The Revelers</h3>
+    <p>Hyrsam's court is a travelling menagerie. Satyrs and their dark cousins (satyrs of the night) form the majority, but his retinue also includes dryads, lamia, eladrin, drow, gnomes, fomorians, and outsiders from distant planes — renegade genasi, githyanki, dwarves, humans, halflings. He welcomes everybody, regardless of race or alignment. The only requirements: a sincere love of the Feywild, a talent for music or storytelling, and a willingness to set aside the prejudices of your former life. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
+
+    <p>Revelers pledge their lives to protect the Satyr Prince. Their hair is tousled, their eyes have a manic gleam, and magical music surrounds them even when they're not playing. They can suppress this effect when stealth is needed. CHA 18+ required — Hyrsam can boost a recruit's Charisma if they fall short. <span class="src-ref src-d422">Dragon 422 p. 6</span></p>
+
+    <h3>The Grove of Laughing Goats</h3>
+    <p>Hyrsam's home base is a gargantuan tree with eight wooden platforms strung between its branches — glowing lanterns, never-ending kegs of wine, and tents for resting between days of partying. The grove moves with him. It is less a court and more a perpetual festival that happens to have a political agenda.</p>
+
+    <h3>Immortality</h3>
+    <p>Legend holds that Hyrsam was born from the very first notes of music. He is effectively immortal — if killed, he reappears elsewhere in the Feywild at the next dawn or dusk. The only way to ensure his permanent death: deafen him at the moment he dies. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
+
+    <h3>Hyrsam, Savage</h3>
+    <p>The jester has a darker side. Hyrsam remembers the Feywild as a place of savage beauty — when legendary beasts roamed freely before the fomorians and gods drove them to the farthest reaches. He knows the songs that can soothe and control these ancient creatures, and occasionally unleashes them on unsuspecting castles and fortifications, reducing them to rubble. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
+
+    <h3>Encounter Hooks</h3>
+    <p>Dragon 422 provides several adventure hooks for incorporating Hyrsam into a campaign: as a revolutionary fomenting rebellion, as a thief who stole Tiandra's crown and fled into the Maze of Fathaghn (forcing the party to broker a deal), or as an unlikely companion against a mutual enemy. The article also includes backstory suggestions for player characters with Hyrsam connections — protégé, displaced heir, believer who heard his songs as a child. <span class="src-ref src-d422">Dragon 422 pp. 5–6</span></p>
+
+    <h3>4e Stat Block (Reference Only)</h3>
+    <p>Dragon 422 provides a full 4e stat block — Level 23 Elite Skirmisher (Leader), CHA 27, with abilities like Hyrsam's Song (aura 5, allies can save, enemies can't act), Irresistible Dance (burst, charm/psychic/thunder, daze), and Music Never Dies (teleport + full heal when dropped to 0 HP). Not directly usable in 5e but gives a sense of his power tier and combat style. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SOURCES
+       ═══════════════════════════════════════════════ -->
+  <section id="sources">
+    <h2>Sources</h2>
+
+    <ul class="source-list">
+      <li><span class="book-title">Player's Option: Heroes of the Feywild</span> (4e, 2011) — Rodney Thompson, Claudio Pozas, Steve Townshend. WotC. 160 pages. The definitive Feywild sourcebook: geography, factions, demesnes, playable races (hamadryad, pixie, satyr), fey-themed classes and themes. <span class="src-ref src-hotf">HotF</span></li>
+      <li><span class="book-title">Dragon Magazine #422</span> — "Hyrsam, Prince of Satyrs" by Mark Monack (April 2013). Pages 4–8. Full lore, stat block, magic items (fiddle, fiddlestick, horn of revelry), reveler monster theme, encounter hooks. The deepest official treatment of Hyrsam. <span class="src-ref src-d422">D422</span></li>
+      <li><span class="book-title">Player's Handbook</span> (5e, 2014 &amp; 2024) — Lists Hyrsam as an example Archfey Warlock patron alongside Titania, Oberon, Queen of Air and Darkness, and Prince of Frost. <span class="src-ref src-phb">PHB</span></li>
+      <li><span class="book-title">The Wild Beyond the Witchlight</span> (5e, 2021) — Feywild adventure module focused on Zybilna and the Domains of Delight. Hyrsam is not a central figure but the Feywild material is relevant context. <span class="src-ref src-wbtw">WBtW</span></li>
+      <li><span class="book-title">Sword Coast Adventurer's Guide</span> (5e, 2015) — Brief mention of Hyrsam, p. 138.</li>
+      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=i7VoNVW5xH8" style="color:var(--accent);text-decoration:none;">How to Run The Feywild in Dungeons and Dragons</a></span> — Tales Arcane (YouTube). 5e-focused overview of Feywild society, Seelie/Unseelie courts, time distortion, practical DM advice. Source for the two-court framing and the joyful-vs-melancholy distinction. <span class="src-ref src-yt">YouTube</span></li>
+    </ul>
+  </section>
+
+</div>
+
+<!-- Floating nav -->
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
+<script>GLightbox({ touchNavigation: true, loop: false });</script>
+
+</body>
+</html>
