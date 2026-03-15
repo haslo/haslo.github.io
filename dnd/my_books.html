@@ -11,14 +11,14 @@
     - Five section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Eberron | Creature Focused | Adventures
     - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status
     - Books listed within each section in date descending order
-    - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System, Player Pages
-    - Tag badges for edition (2014/2024), type (Core/Source/Adventure/Lore/Creature), publisher links (DMs Guild, MCDM)
+    - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System (content keywords like Downtime, Traps, Archfey…), Player Pages
+    - Tag badges for edition (4e/5e/5.5e), type (Core/Source/Adventure/Lore/Creature), publisher links (DMs Guild, MCDM)
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
     - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
     - MCDM books: Flee, Mortals!, Where Evil Lives — links shown as .tag-mcdm inline badges
     - Ordered-not-arrived books: Flee Mortals, Where Evil Lives — shown with .ordered badge
     - No D&D Beyond links unless asked.
-    - Adventures section has a .callout box with 2014→2024 conversion guidance (HP bump, more bodies, drop physical resistances, update spells, new encounter math)
+    - Adventures section has a .callout box with 5e→5.5e conversion guidance (HP bump, more bodies, drop physical resistances, update spells, new encounter math)
     - Eberron section: all Eberron-specific sourcebooks (E:FotA, FoE:Q, Chronicles, ExE, E:RftLW) — split from general Sourcebooks
     - Creature Focused section: bestiaries & monster toolkits (MotM, Fizban's, MCDM books). PCGtD stays in Sourcebooks (pure lore, no stat blocks).
 
@@ -27,7 +27,7 @@
     Colors: --accent (#8b1a1a), --accent2 (#6b4226), --accent3 (#2d5a3d), --accent4 (#3b3678), --accent5 (#8b5e00, MCDM)
     Row alternation: nth-child(even) auto-shading
     Pill classes: .pill-sub, .pill-spe, .pill-mon, .pill-adv, .pill-sys, .pill-pp
-    Tag classes: .tag-2014, .tag-2024, .tag-core, .tag-source, .tag-adventure, .tag-lore, .tag-creature, .tag-dmsg (DMs Guild link), .tag-mcdm (MCDM shop link)
+    Tag classes: .tag-4e, .tag-5e, .tag-55e, .tag-core, .tag-source, .tag-adventure, .tag-lore, .tag-creature, .tag-dmsg (DMs Guild link), .tag-mcdm (MCDM shop link)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -101,8 +101,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     border-radius: 3px;
     margin-right: 2px;
   }
-  .tag-2014 { background: rgba(107,66,38,0.15); color: var(--accent2); }
-  .tag-2024 { background: rgba(139,26,26,0.12); color: var(--accent); }
+  .tag-4e { background: rgba(100,60,140,0.15); color: #5a3078; }
+  .tag-5e { background: rgba(107,66,38,0.15); color: var(--accent2); }
+  .tag-55e { background: rgba(139,26,26,0.12); color: var(--accent); }
   .tag-core { background: rgba(107,66,38,0.1); color: var(--accent2); }
   .tag-source { background: rgba(45,90,61,0.1); color: var(--accent3); }
   .tag-adventure { background: rgba(139,26,26,0.08); color: var(--accent); }
@@ -309,7 +310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Monster Manual</div>
     <span class="book-year">Feb 2025</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-core">Core</span>
   </td>
   <td>
@@ -317,6 +318,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-mon">500+ monsters</span>
       <span class="pill pill-mon">85 brand new</span>
       <span class="pill pill-sys">Static initiative</span>
+      <span class="pill pill-sys">Habitats</span>
+      <span class="pill pill-sys">CR index</span>
       <span class="pill pill-pp">384pp</span>
     </div>
     <div class="ov">
@@ -340,13 +343,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Dungeon Master's Guide</div>
     <span class="book-year">Nov 2024</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-core">Core</span>
   </td>
   <td>
     <div class="pills">
       <span class="pill pill-sys">Bastions</span>
       <span class="pill pill-sys">400+ magic items</span>
+      <span class="pill pill-sys">Crafting</span>
+      <span class="pill pill-sys">Encounter building</span>
       <span class="pill pill-adv">Greyhawk</span>
       <span class="pill pill-sys">Maps</span>
       <span class="pill pill-pp">384pp</span>
@@ -374,7 +379,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Player's Handbook</div>
     <span class="book-year">Sep 2024</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-core">Core</span>
   </td>
   <td>
@@ -384,6 +389,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">75 feats</span>
       <span class="pill pill-sys">~400 spells</span>
       <span class="pill pill-sys">Weapon mastery</span>
+      <span class="pill pill-sys">Crafting</span>
+      <span class="pill pill-sys">Rules glossary</span>
       <span class="pill pill-pp">384pp</span>
     </div>
     <div class="ov">
@@ -441,7 +448,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">FR: Heroes of Faerûn</div>
     <span class="book-year">Nov 2025</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -450,6 +457,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">34 feats</span>
       <span class="pill pill-sys">19 spells</span>
       <span class="pill pill-sys">Circle Magic</span>
+      <span class="pill pill-sys">Factions</span>
+      <span class="pill pill-sys">Bladesinger</span>
+      <span class="pill pill-sys">Epic boons</span>
       <span class="pill pill-pp">192pp</span>
     </div>
     <div class="ov">
@@ -481,11 +491,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">The Practically Complete Guide to Dragons</div>
     <span class="book-year">Aug 2023</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-lore">Lore</span>
   </td>
   <td>
     <div class="pills">
+      <span class="pill pill-sys">Dragon anatomy</span>
+      <span class="pill pill-sys">Hoards</span>
+      <span class="pill pill-sys">Lairs</span>
+      <span class="pill pill-sys">Personalities</span>
       <span class="pill pill-pp">128pp</span>
     </div>
     <div class="ov">
@@ -510,7 +524,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Van Richten's Guide to Ravenloft</div>
     <span class="book-year">May 2021</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -519,6 +533,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">3 lineages</span>
       <span class="pill pill-mon">~40 monsters</span>
       <span class="pill pill-sys">Dark Gifts</span>
+      <span class="pill pill-sys">Horror toolbox</span>
+      <span class="pill pill-sys">Domains of Dread</span>
       <span class="pill pill-pp">~256pp</span>
     </div>
     <div class="ov">
@@ -550,7 +566,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Tasha's Cauldron of Everything</div>
     <span class="book-year">Nov 2020</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -603,7 +619,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Xanathar's Guide to Everything</div>
     <span class="book-year">Nov 2017</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -649,6 +665,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
+<!-- Player's Option: Heroes of the Feywild (4e) -->
+<tr>
+  <td>
+    <div class="book-title">Player's Option: Heroes of the Feywild</div>
+    <span class="book-year">Nov 2011</span>
+    <span class="tag tag-4e">4e</span>
+    <span class="tag tag-lore">Lore</span>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/121710/Players-Option-Heroes-of-the-Feywild-4e">DMs Guild</a></span>
+    <span class="ordered">Ordered (PoD softcover)</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Feywild geography</span>
+      <span class="pill pill-sys">Archfey</span>
+      <span class="pill pill-sys">Fey Courts</span>
+      <span class="pill pill-sys">Feydark</span>
+      <span class="pill pill-sys">Eladrin cities</span>
+      <span class="pill pill-pp">160pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">The definitive Feywild sourcebook</div>
+      <div class="ov-line">Geography, factions (Court of Stars, Summer/Green/Winter/Gloaming Fey, Court of Coral), archfey demesnes, Feydark, fomorian city-states. By far the richest official Feywild lore — nothing in 5e comes close.</div>
+      <div class="ov-head">Contents</div>
+      <div class="ov-line">Feywild overview (storybook logic, time distortion, wild magic) · Fey factions &amp; politics · Eladrin cities (Astrazalian, Mithrendain, Shinaelestra) · Archfey demesnes (Senaliesse, Vale of Long Night, Maze of Fathaghn) · Wilderness (Murkendraw, Isle of Dread, Nachtur) · Feydark &amp; fomorian kingdoms · 4e player options (hamadryad, pixie, satyr races; berserker, protector, witch classes; fey themes)</div>
+      <div class="ov-head">Character options (4e only — not usable in 5e)</div>
+      <div class="ov-line">All player-facing mechanics (races, classes, themes, powers) are 4e-native and mechanically incompatible with 5e. The book's value is entirely in its lore, geography, and faction detail — which remains the gold standard for Feywild worldbuilding regardless of edition.</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Feywild lore, fey factions, archfey backstories, location descriptions, Feydark, campaign worldbuilding. Pairs with <a href="feywild_primer.html" style="color:var(--accent3);">Feywild Primer</a>.</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">All mechanics are 4e</div>
+      Races, classes, themes, powers — none of it is compatible with 5e/5.5e. Don't try to convert; the math doesn't work. Use for lore only.
+    </div>
+    <div class="still">
+      <div class="still-label">All lore is current</div>
+      Feywild geography, factions, archfey, Feydark — nothing in 5e contradicts or replaces this content. WBtW builds on it but doesn't supersede it.
+    </div>
+    <div class="note">Also have the PDF in sources/. The PoD softcover quality is fine — not original print quality but perfectly readable. The lore alone makes it worth having physical.</div>
+  </td>
+</tr>
+
+<!-- Manual of the Planes (4e) -->
+<tr>
+  <td>
+    <div class="book-title">Manual of the Planes</div>
+    <span class="book-year">Dec 2008</span>
+    <span class="tag tag-4e">4e</span>
+    <span class="tag tag-lore">Lore</span>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/58822/manual-of-the-planes-4e">DMs Guild</a></span>
+    <span class="ordered">Ordered (PoD softcover)</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Cosmology</span>
+      <span class="pill pill-sys">Feywild</span>
+      <span class="pill pill-sys">Shadowfell</span>
+      <span class="pill pill-sys">Astral Sea</span>
+      <span class="pill pill-sys">Far Realm</span>
+      <span class="pill pill-pp">224pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Planar cosmology sourcebook</div>
+      <div class="ov-line">The 4e cosmology bible. Covers all major planes: Feywild, Shadowfell, Elemental Chaos, Astral Sea, Far Realm, and the connections between them. The Feywild chapter is where the plane was first formally defined as a named entity.</div>
+      <div class="ov-head">Contents</div>
+      <div class="ov-line">Feywild chapter (geography, Seelie Court structure, archfey, races) · Shadowfell chapter · Elemental Chaos · Astral Sea · Far Realm · planar hazards · planar travel · 4e player options (paragon paths, epic destinies)</div>
+      <div class="ov-head">Character options (4e only — not usable in 5e)</div>
+      <div class="ov-line">Paragon paths, epic destinies, and all mechanical content are 4e-native. Completely incompatible with 5e. The planar lore and cosmology descriptions are the draw.</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> planar cosmology, how planes connect, Feywild &amp; Shadowfell as mirror planes, Far Realm lore, planar travel mechanics (for inspiration, not rules)</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">All mechanics are 4e</div>
+      Paragon paths, epic destinies, encounter design — none of it works in 5e/5.5e. Treat as pure lore reference.
+    </div>
+    <div class="still">
+      <div class="still-label">Cosmology lore mostly holds</div>
+      5e's cosmology is largely inherited from 4e. The Feywild and Shadowfell descriptions here are the foundation that everything since has built on. Some details were retconned or softened (e.g. time distortion severity) but the broad strokes remain canon.
+    </div>
+    <div class="note">The book that officially named the Feywild. Broader than HotF (covers all planes) but shallower on any single one. Good companion piece.</div>
+  </td>
+</tr>
+
 </tbody>
 </table>
 
@@ -669,7 +769,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Eberron: Forge of the Artificer</div>
     <span class="book-year">Dec 2025</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -678,6 +778,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">5 species</span>
       <span class="pill pill-mon">20+ monsters</span>
       <span class="pill pill-sys">Artificer class</span>
+      <span class="pill pill-sys">Dragonmarks</span>
+      <span class="pill pill-sys">Airships</span>
       <span class="pill pill-adv">3 campaigns</span>
       <span class="pill pill-pp">112pp</span>
     </div>
@@ -707,7 +809,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Frontiers of Eberron: Quickstone</div>
     <span class="book-year">Sep 2024</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-source">Source</span>
     <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></span>
   </td>
@@ -717,6 +819,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">5 species</span>
       <span class="pill pill-adv">1 adventure</span>
       <span class="pill pill-sys">Droaam frontier</span>
+      <span class="pill pill-sys">Symbionts</span>
+      <span class="pill pill-sys">Wandslingers</span>
       <span class="pill pill-pp">~255pp</span>
     </div>
     <div class="ov">
@@ -756,7 +860,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Chronicles of Eberron</div>
     <span class="book-year">Nov 2022</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
     <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></span>
   </td>
@@ -766,6 +870,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">3 racial variants</span>
       <span class="pill pill-mon">15+ creatures</span>
       <span class="pill pill-sys">Overlords revealed</span>
+      <span class="pill pill-sys">Tairnadal</span>
+      <span class="pill pill-sys">Karrnath</span>
+      <span class="pill pill-sys">Dark Six</span>
       <span class="pill pill-pp">~208pp</span>
     </div>
     <div class="ov">
@@ -798,7 +905,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Exploring Eberron</div>
     <span class="book-year">Jul 2020</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
     <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a></span>
   </td>
@@ -808,6 +915,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">7 species</span>
       <span class="pill pill-sys">13 planes</span>
       <span class="pill pill-sys">Symbionts</span>
+      <span class="pill pill-sys">Droaam</span>
+      <span class="pill pill-sys">Dhakaani</span>
+      <span class="pill pill-sys">Mror Holds</span>
       <span class="pill pill-pp">~247pp</span>
     </div>
     <div class="ov">
@@ -845,7 +955,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Eberron: Rising from the Last War</div>
     <span class="book-year">Nov 2019</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
   </td>
   <td>
@@ -853,6 +963,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">Setting lore</span>
       <span class="pill pill-adv">Sharn</span>
       <span class="pill pill-adv">Khorvaire</span>
+      <span class="pill pill-sys">Last War</span>
+      <span class="pill pill-sys">Houses</span>
+      <span class="pill pill-sys">Religions</span>
       <span class="pill pill-pp">320pp</span>
     </div>
     <div class="ov">
@@ -885,7 +998,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="callout">
   <div class="callout-label">Using 2014 stat blocks with 2024 rules</div>
-  All <span class="tag tag-2014">2014</span> bestiaries below use the older stat block format. They work fine at the table — the core math didn't break. Key differences to keep in mind:
+  All <span class="tag tag-5e">5e</span> bestiaries below use the older stat block format. They work fine at the table — the core math didn't break. Key differences to keep in mind:
   <ul>
     <li><b>HP is lower:</b> 2024 MM creatures average +3 HP per Hit Die vs. their 2014 versions. A 10 HD boss from MotM or Fizban's has roughly 30 fewer HP than its 2024 equivalent.</li>
     <li><b>Physical resistances:</b> Many 2014 creatures have "resistance to bludgeoning, piercing, and slashing from nonmagical weapons" — this resistance type no longer exists in 2024. Weapon mastery martials need to feel their upgrades.</li>
@@ -913,7 +1026,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Where Evil Lives</div>
     <span class="book-year">May 2024</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
     <span class="tag tag-mcdm"><a href="https://shop.mcdmproductions.com/products/where-evil-lives-the-mcdm-book-of-boss-battles" target="_blank">MCDM</a></span>
     <br><span class="ordered">Ordered — not yet arrived</span>
@@ -948,7 +1061,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Flee, Mortals!</div>
     <span class="book-year">Nov 2023</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
     <span class="tag tag-mcdm"><a href="https://shop.mcdmproductions.com/products/flee-mortals-hardcover-book" target="_blank">MCDM</a></span>
     <br><span class="ordered">Ordered — not yet arrived</span>
@@ -959,6 +1072,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-sys">Action-oriented</span>
       <span class="pill pill-sys">Minions</span>
       <span class="pill pill-sys">Companions</span>
+      <span class="pill pill-sys">Retainers</span>
+      <span class="pill pill-sys">Tactics</span>
       <span class="pill pill-pp">~400pp</span>
     </div>
     <div class="ov">
@@ -989,7 +1104,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Monsters of the Multiverse</div>
     <span class="book-year">May 2022</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
   </td>
   <td>
@@ -998,6 +1113,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-mon">260 monsters</span>
       <span class="pill pill-sys">Demon lords</span>
       <span class="pill pill-sys">Archdevils</span>
+      <span class="pill pill-sys">Mind flayers</span>
+      <span class="pill pill-sys">Star spawn</span>
       <span class="pill pill-pp">288pp</span>
     </div>
     <div class="ov">
@@ -1028,7 +1145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Fizban's Treasury of Dragons</div>
     <span class="book-year">Oct 2021</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
   </td>
   <td>
@@ -1037,6 +1154,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">Gem Dragonborn</span>
       <span class="pill pill-mon">~80 monsters</span>
       <span class="pill pill-sys">Draconic Gifts</span>
+      <span class="pill pill-sys">Greatwyrms</span>
+      <span class="pill pill-sys">Draconomicon</span>
+      <span class="pill pill-sys">Lair maps</span>
       <span class="pill pill-pp">224pp</span>
     </div>
     <div class="ov">
@@ -1075,7 +1195,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="callout">
   <div class="callout-label">Running 2014 adventures with 2024 characters</div>
-  2024 PCs are significantly stronger than 2014 PCs (weapon mastery, doubled healing dice, bonus-action potions, stronger cantrips &amp; subclasses). All <span class="tag tag-2014">2014</span> adventures below need encounter adjustments:
+  2024 PCs are significantly stronger than 2014 PCs (weapon mastery, doubled healing dice, bonus-action potions, stronger cantrips &amp; subclasses). All <span class="tag tag-5e">5e</span> adventures below need encounter adjustments:
   <ul>
     <li><b>Monster HP:</b> 2024 creatures average +3 HP per Hit Die vs. 2014. A 10 HD creature is roughly 30 HP tougher in the new MM.</li>
     <li><b>Action economy:</b> 2024 PCs deal more damage per round (weapon mastery, stronger cantrips, bonus-action potions). Group encounters written for 2014 PCs can feel underpopulated.</li>
@@ -1107,7 +1227,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">FR: Adventures in Faerûn</div>
     <span class="book-year">Nov 2025</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1115,6 +1235,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-adv">51+ adventures</span>
       <span class="pill pill-mon">39 monsters</span>
       <span class="pill pill-sys">Epic Destinies</span>
+      <span class="pill pill-sys">Gazetteers</span>
+      <span class="pill pill-sys">52 maps</span>
       <span class="pill pill-pp">288pp</span>
     </div>
     <div class="ov">
@@ -1140,7 +1262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Dragon Delves</div>
     <span class="book-year">Jul 2025</span>
-    <span class="tag tag-2024">2024</span>
+    <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1173,7 +1295,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Quests from the Infinite Staircase</div>
     <span class="book-year">Jul 2024</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1181,6 +1303,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-adv">6 adventures</span>
       <span class="pill pill-mon">~30 monsters</span>
       <span class="pill pill-sys">1e remasters</span>
+      <span class="pill pill-sys">Planar nexus</span>
+      <span class="pill pill-sys">Barrier Peaks</span>
       <span class="pill pill-pp">~224pp</span>
     </div>
     <div class="ov">
@@ -1206,7 +1330,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Keys from the Golden Vault</div>
     <span class="book-year">Feb 2023</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1214,6 +1338,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-adv">13 heists</span>
       <span class="pill pill-sys">Modular design</span>
       <span class="pill pill-sys">Levels 1–11</span>
+      <span class="pill pill-sys">Non-combat</span>
       <span class="pill pill-pp">~224pp</span>
     </div>
     <div class="ov">
@@ -1238,7 +1363,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Journeys through the Radiant Citadel</div>
     <span class="book-year">Jun 2022</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1246,6 +1371,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-adv">13 adventures</span>
       <span class="pill pill-mon">11 monsters</span>
       <span class="pill pill-sys">Gazetteers</span>
+      <span class="pill pill-sys">Non-western</span>
+      <span class="pill pill-sys">Planar hub</span>
       <span class="pill pill-pp">224pp</span>
     </div>
     <div class="ov">
@@ -1271,7 +1398,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">The Wild Beyond the Witchlight</div>
     <span class="book-year">Sep 2021</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1280,6 +1407,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-spe">2 species</span>
       <span class="pill pill-sys">2 backgrounds</span>
       <span class="pill pill-mon">~20 monsters</span>
+      <span class="pill pill-sys">Feywild</span>
+      <span class="pill pill-sys">Non-combat</span>
       <span class="pill pill-pp">~256pp</span>
     </div>
     <div class="ov">
@@ -1309,7 +1438,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <td>
     <div class="book-title">Curse of Strahd</div>
     <span class="book-year">Mar 2016</span>
-    <span class="tag tag-2014">2014</span>
+    <span class="tag tag-5e">5e</span>
     <span class="tag tag-adventure">Adventure</span>
   </td>
   <td>
@@ -1317,6 +1446,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="pill pill-adv">1 adventure</span>
       <span class="pill pill-sys">1 background</span>
       <span class="pill pill-mon">~30 monsters</span>
+      <span class="pill pill-sys">Gothic horror</span>
+      <span class="pill pill-sys">Sandbox</span>
+      <span class="pill pill-sys">Tarokka</span>
       <span class="pill pill-pp">~256pp</span>
     </div>
     <div class="ov">
@@ -1352,8 +1484,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span><span class="tag tag-lore">Lore</span> pure lore (no mechanics)</span>
   <span><span class="tag tag-dmsg"><a href="#" onclick="return false">DMs Guild</a></span> DMs Guild purchase link</span>
   <span><span class="tag tag-mcdm"><a href="#" onclick="return false">MCDM</a></span> MCDM shop link</span>
-  <span><span class="tag tag-2014">2014</span> original 5e</span>
-  <span><span class="tag tag-2024">2024</span> revised 5e</span>
+  <span><span class="tag tag-5e">5e</span> original 5e</span>
+  <span><span class="tag tag-55e">5.5e</span> revised 5e</span>
   <span class="skip">Red boxes</span> = superseded, skip
   <span style="color:var(--accent3)">Green boxes</span> = still unique, use these
   <span style="color:var(--accent2)">Brown boxes</span> = reach for this when…
