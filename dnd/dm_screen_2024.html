@@ -2,10 +2,10 @@
   LLM CONTEXT — keep this comment current when making changes.
 
   FILE: dm_screen_2024.html
-  PURPOSE: 5-panel printable DM screen for D&D 5e (2024 rules). Landscape, one panel per printed page.
+  PURPOSE: 4-panel printable DM screen for D&D 5e (2024 rules). Landscape, one panel per printed page.
   OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct.
 
-  PANELS (5, each a full landscape page when printed):
+  PANELS (4, each a full landscape page when printed):
     1. Combat — Actions & Economy (red, ⚔)
        - Grid: actions table (1fr) + Turn Flow SVG (230px, hub/pool diagram — NOT sequential) with Heroic Inspiration below
        - Full-width pills: OA, Readied Action, Reaction Spells, Free Interaction
@@ -23,11 +23,6 @@
        - DC benchmarks, advantage/disadvantage rules
        - Spell school reference, concentration rules
        - Damage types table with common sources
-    5. Scene Texture — Improvisation Engine (teal, 🎲)
-       - NPC generator (appearance, quirk, motivation, voice)
-       - Weather, lighting, sensory details
-       - Chase/trap/puzzle scaffolds
-
   CSS CONVENTIONS:
     Colors per panel: --accent (red #8b1a1a), --accent2 (gold #6b4226), --accent3 (green #2d5a3d),
                       --accent4 (purple #3b3678), --accent5 (teal #1a6b6b)
@@ -896,132 +891,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="dim">Length × width</div>
         </div>
       </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ═══════════════════ PANEL 5: IMPROVISATION ENGINE ═══════════════════ -->
-<div class="panel">
-  <div class="panel-title teal"><span class="icon">🎲</span> Scene Texture — Improvisation Engine<img src="media/cybergwen_logo.svg" alt="" class="panel-logo"></div>
-
-  <!-- ROW 1: three columns -->
-  <div class="grid3 section gap-md">
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head teal"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><polygon points="7,1 13,4 13,10 7,13 1,10 1,4" fill="currentColor" opacity="0.25" stroke="currentColor" stroke-width="0.8"/><text x="7" y="9" text-anchor="middle" font-size="6" fill="currentColor" font-weight="700">8</text></svg> Pressure <span class="dim" style="font-weight:400; text-transform:none;">(d8)</span></div>
-        <img src="media/dm_screen/18_pressure_gauge.svg" width="70" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>d8</th><th>What Asserts Itself</th></tr>
-        <tr><td><b>1</b></td><td><b class="highlight">Threat</b> — ambush, hazard, collapse</td></tr>
-        <tr><td><b>2</b></td><td><b class="warn">Tension</b> — hostiles at distance</td></tr>
-        <tr><td><b>3</b></td><td><b style="color:var(--accent5)">Social</b> — someone demands <i>now</i></td></tr>
-        <tr><td><b>4</b></td><td><b class="note">Environment</b> — weather, terrain, planar</td></tr>
-        <tr><td><b>5</b></td><td><b class="warn">Resources</b> — gear breaks, supplies lost</td></tr>
-        <tr><td><b>6</b></td><td><b style="color:var(--accent4)">Moral</b> — no right answer</td></tr>
-        <tr><td><b>7</b></td><td><b class="note">Opportunity</b> — loot, rumor, ally</td></tr>
-        <tr><td><b>8</b></td><td><b style="color:var(--accent5)">Strange</b> — lean into mystery</td></tr>
-      </table>
-    </div>
-
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head teal"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="4" cy="5" r="2" fill="none" stroke="currentColor" stroke-width="0.8"/><line x1="4" y1="7" x2="4" y2="11" stroke="currentColor" stroke-width="0.8"/><circle cx="10" cy="5" r="2" fill="none" stroke="currentColor" stroke-width="0.8"/><line x1="10" y1="7" x2="10" y2="11" stroke="currentColor" stroke-width="0.8"/><text x="7" y="9" text-anchor="middle" font-size="5" fill="currentColor" font-weight="700">?</text></svg> NPC Disposition <span class="dim" style="font-weight:400; text-transform:none;">(2d6)</span></div>
-        <img src="media/dm_screen/19_npc_disposition.svg" width="73" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>2d6</th><th>Starting Stance</th></tr>
-        <tr><td><b>2</b></td><td><span class="cond-name cond-red" style="font-size:9pt;">Hostile</span> — acts against party</td></tr>
-        <tr><td><b>3–5</b></td><td><span class="cond-name cond-amber" style="font-size:9pt;">Suspicious</span> — guarded, watching</td></tr>
-        <tr><td><b>6–8</b></td><td><span class="cond-name cond-grey" style="font-size:9pt;">Neutral</span> — cautious, wait-and-see</td></tr>
-        <tr><td><b>9–11</b></td><td><span class="cond-name cond-blue" style="font-size:9pt;">Friendly</span> — willing to help/trade</td></tr>
-        <tr><td><b>12</b></td><td><span class="cond-name cond-teal" style="font-size:9pt;">Eager ally</span> — offers more</td></tr>
-      </table>
-      <div class="sep" style="margin-top:3px; padding-top:2px; font-size:9pt;">
-        <span class="dc-box" style="font-size:8.5pt;">+2</span> party helped them before ·
-        <span class="dc-box" style="font-size:8.5pt;">−2</span> party is their enemy ·
-        <span class="dc-box" style="font-size:8.5pt;">+1</span> speaker CHA 14+ ·
-        <span class="dc-box" style="font-size:8.5pt;">−1</span> speaker CHA 7− ·
-        <span class="dc-box" style="font-size:8.5pt;">−1</span> party has bad rep locally
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1"/><line x1="7" y1="7" x2="10" y2="4" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg> Escalation <span class="dim" style="font-weight:400; text-transform:none;">(d6)</span></div>
-        <img src="media/dm_screen/20_escalation_gear.svg" width="77" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>d6</th><th>Twist — When Scene Goes Flat</th></tr>
-        <tr><td><b>1</b></td><td><b>Third party</b> — another faction arrives</td></tr>
-        <tr><td><b>2</b></td><td><b>Clock starts</b> — 2–4 rounds until change</td></tr>
-        <tr><td><b>3</b></td><td><b>Ground shifts</b> — terrain/environment</td></tr>
-        <tr><td><b>4</b></td><td><b>Someone lied</b> — info was wrong</td></tr>
-        <tr><td><b>5</b></td><td><b>Hidden stakes</b> — deeper objective</td></tr>
-        <tr><td><b>6</b></td><td><b>Collateral</b> — something at risk</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- ROW 2: three columns -->
-  <div class="grid3 section mb-0 gap-md">
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head pur"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="7" cy="4" r="3" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M2,12 Q2,8 7,8 Q12,8 12,12" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="0.8"/></svg> What Do They Want? <span class="dim" style="font-weight:400; text-transform:none;">(d8)</span></div>
-        <img src="media/dm_screen/21_compass_rose.svg" width="42" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>d8</th><th>Core Drive</th></tr>
-        <tr><td><b>1</b></td><td><b>Power</b> — <span class="dim">control, status, authority</span></td></tr>
-        <tr><td><b>2</b></td><td><b>Safety</b> — <span class="dim">protect self/family/community</span></td></tr>
-        <tr><td><b>3</b></td><td><b>Revenge</b> — <span class="dim">someone wronged them</span></td></tr>
-        <tr><td><b>4</b></td><td><b>Knowledge</b> — <span class="dim">secrets, truth, research</span></td></tr>
-        <tr><td><b>5</b></td><td><b>Wealth</b> — <span class="dim">money, land, trade advantage</span></td></tr>
-        <tr><td><b>6</b></td><td><b>Freedom</b> — <span class="dim">escape obligation or debt</span></td></tr>
-        <tr><td><b>7</b></td><td><b>Loyalty</b> — <span class="dim">serving person/faction/ideal</span></td></tr>
-        <tr><td><b>8</b></td><td><b>Legacy</b> — <span class="dim">be remembered</span></td></tr>
-      </table>
-    </div>
-
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head red"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M3,2 L11,2 L13,7 L7,13 L1,7 Z" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="0.8"/><text x="7" y="8" text-anchor="middle" font-size="6" fill="currentColor" font-weight="700">!</text></svg> What's the Catch? <span class="dim" style="font-weight:400; text-transform:none;">(d8)</span></div>
-        <img src="media/dm_screen/22_curtain_eye.svg" width="78" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>d8</th><th>Hidden Angle</th></tr>
-        <tr><td><b>1</b></td><td><b class="highlight">Trap</b> — <span class="dim">who benefits from the bait?</span></td></tr>
-        <tr><td><b>2</b></td><td><b class="warn">Wrong target</b> — <span class="dim">real threat is elsewhere</span></td></tr>
-        <tr><td><b>3</b></td><td><b class="highlight">Ticking clock</b> — <span class="dim">what if they're too slow?</span></td></tr>
-        <tr><td><b>4</b></td><td><b style="color:var(--accent4)">Divided loyalties</b> — <span class="dim">serving two masters</span></td></tr>
-        <tr><td><b>5</b></td><td><b class="warn">Collateral</b> — <span class="dim">innocents get hurt</span></td></tr>
-        <tr><td><b>6</b></td><td><b class="note">Debt incurred</b> — <span class="dim">help creates obligation</span></td></tr>
-        <tr><td><b>7</b></td><td><b style="color:var(--accent4)">Info is wrong</b> — <span class="dim">what's not true?</span></td></tr>
-        <tr><td><b>8</b></td><td><b class="note">Clean</b> — <span class="dim">this time it's simple</span></td></tr>
-      </table>
-    </div>
-
-    <div class="section">
-      <div class="section-top">
-        <div class="section-head teal"><svg width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M7,1 L10,4 L10,8 L7,11 L4,8 L4,4 Z" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="0.8"/><circle cx="7" cy="6" r="1.5" fill="currentColor" opacity="0.5"/></svg> Eberron Color <span class="dim" style="font-weight:400; text-transform:none;">(d12)</span></div>
-        <img src="media/dm_screen/23_eberron_dragonmark.svg" width="52" height="42" style="display:block;">
-      </div>
-      <table>
-        <tr><th>d12</th><th>What Makes This Eberron</th></tr>
-        <tr><td><b>1</b></td><td><b style="color:var(--accent5)">Manifest zone</b> — <span class="dim">physics go wrong</span></td></tr>
-        <tr><td><b>2</b></td><td><b style="color:var(--accent5)">House agent</b> — <span class="dim">wants, won't say why</span></td></tr>
-        <tr><td><b>3</b></td><td><b style="color:var(--accent5)">Magitech breaks</b> — <span class="dim">rail, stone, lift</span></td></tr>
-        <tr><td><b>4</b></td><td><b style="color:var(--accent5)">Last War scar</b> — <span class="dim">relic wakes up</span></td></tr>
-        <tr><td><b>5</b></td><td><b style="color:var(--accent5)">Aberrant mark</b> — <span class="dim">doing too much</span></td></tr>
-        <tr><td><b>6</b></td><td><b style="color:var(--accent5)">Warforged</b> — <span class="dim">identity, memory</span></td></tr>
-        <tr><td><b>7</b></td><td><b style="color:var(--accent5)">Morgrave find</b> — <span class="dim">Xen'drik, wrong</span></td></tr>
-        <tr><td><b>8</b></td><td><b style="color:var(--accent5)">Dreaming Dark</b> — <span class="dim">stolen dreams</span></td></tr>
-        <tr><td><b>9</b></td><td><b style="color:var(--accent5)">Prophecy</b> — <span class="dim">NPC quotes it blind</span></td></tr>
-        <tr><td><b>10</b></td><td><b style="color:var(--accent5)">Trust no one</b> — <span class="dim">changeling? rakshasa?</span></td></tr>
-        <tr><td><b>11</b></td><td><b style="color:var(--accent5)">House rivalry</b> — <span class="dim">check lore</span></td></tr>
-        <tr><td><b>12</b></td><td><b style="color:var(--accent5)">The newspaper</b> — <span class="dim">Chronicle reports it</span></td></tr>
-      </table>
     </div>
   </div>
 
