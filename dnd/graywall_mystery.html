@@ -53,6 +53,7 @@
     14  Session Zero (4. März, Amir + Kais — intro, Korrath pic, char sheet with stats filled, aktuelle leads)
     15  Session 1 (8. & 10. März, Amir solo — Sera Tain, spells, diamond hustle, oath, lay on hands, breath, crooked coin)
     16  Session 0 Kais (15. März, Kais solo — Wayfarer Rock Gnome Rogue char sheet)
+    16b Charakterbild Amir (17. März — Spark portrait, GLightbox clickable)
     17  Sera Tain's Lessons (dice-rolling vignettes for Amir) [DM]
     18  Phase 1 Prep (Decoys, Labyrinth, castle, Verdemis intro, pacing) [DM]
     19  Web of Truth (investigation flowchart with pink known-leads, full NPC connection map) [DM]
@@ -75,7 +76,8 @@
     night_domain.png, graywall_1.webp, graywall_2.webp, witches.png,
     stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png,
     vines.png, dm_prep.jpg, npcs.png, khorvaire-graywall_map.jpg, droaam_graywall_map.png
-    korrath.png, meditation_narrow.png, amirs_graywall_map_01.png
+    korrath.png, meditation_narrow.png, amirs_graywall_map_01.png,
+    spark.png, spark_header.png
     Session zero report uses vines.png as accordion-preview + inline atmo with figcaption.
     Session zero report also has korrath.png inline after Korrath mention.
     Lore accordion uses meditation_narrow.png as dm-preview header.
@@ -83,6 +85,8 @@
     NPCs accordion uses npcs.png as dm-preview header (half-height).
     .map-container: flex row (2:1 ratio) with khorvaire + droaam maps, .map-caption captions.
     All .atmo images and .map-caption use figcaption/caption style (Cinzel italic, muted).
+
+  LIGHTBOX: GLightbox 3.3.0 (CDN) — click Spark portrait to view full-size.
 
   CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
        Includes DM Graywall reference table and sources table (DM section).
@@ -106,6 +110,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
 <!-- End Google Tag Manager -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
 <style>
   :root {
     --ink: #1a1a1a;
@@ -1194,6 +1199,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-one-prep-intro'); return false;">Sera Tain's Lessons</a></li>
     <li><a href="#" onclick="openAccordion('log-session-one'); return false;">Session 1 — Sera Tain</a></li>
     <li><a href="#" onclick="openAccordion('log-session-zero-kais'); return false;">Session 0 — Kais</a></li>
+    <li><a href="#" onclick="openAccordion('log-char-pic-amir'); return false;">Charakterbild Amir</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-one-prep'); return false;">Phase 1 Prep</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-web-of-truth'); return false;">Web of Truth</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-epilogue'); return false;">Epilogue Prep</a></li>
@@ -2722,6 +2728,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-log-session-zero-kais -->
 
+  <button class="accordion-toggle collapsed" id="log-char-pic-amir" onclick="toggleAccordion(this)">17. März — Charakterbild Amir</button>
+  <img class="accordion-preview" src="media/graywall_mystery/spark_header.png" alt="Spark — White Dragonborn Paladin" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed" id="acc-log-char-pic-amir">
+
+  <div class="atmo"><a href="media/graywall_mystery/spark.png" class="glightbox" data-gallery="spark" data-desc="Spark — White Dragonborn Paladin, Charlatan. Calabas-Nebengasse, Graywall."><img src="media/graywall_mystery/spark.png" alt="Spark — White Dragonborn Paladin, Charlatan, Level 1"></a><figcaption>Spark — White Dragonborn Paladin, Charlatan. Calabas-Nebengasse, Graywall.</figcaption></div>
+
+  </div><!-- end acc-log-char-pic-amir -->
+
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-one-prep" onclick="toggleAccordion(this)">Phase 1 Prep <span class="dm-prelim">DM</span></button>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-one-prep">
@@ -3412,5 +3426,7 @@ function toggleDM() {
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
+<script>GLightbox({ touchNavigation: true, loop: false });</script>
 </body>
 </html>
