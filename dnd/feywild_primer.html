@@ -30,12 +30,17 @@
     media/feywild_primer/hyrsam.png — Hyrsam portrait (AI-generated)
     media/feywild_primer/hag.png — Hag illustration (§05 Hags, GLightbox)
     media/feywild_primer/blink_dog.png — Blink dog illustration (§05 Blink Dogs, GLightbox)
+    media/feywild_primer/eladrin.png — Eladrin portrait (§05 Eladrin, 280px wide, GLightbox, MotM + gen fill)
     media/feywild_primer/fomorian.webp — Fomorian illustration (§06 Feydark, GLightbox)
 
   CSS CONVENTIONS:
     Follows site parchment theme (Cinzel headings, Crimson Pro body)
     Colors: --accent (#2a6040 forest green for fey theme), --gold (#b8860b), --muted (#6b5e50)
     Callouts use fey green instead of Eberron red
+    Source pills: src-hotf, src-d422, src-phb, src-wbtw, src-mtof, src-yt, src-folk
+      PH · Feywild / PH · Fey Problem = differentiated Pointy Hat videos
+      Folk Guide = community folklore/Dresden doc (Google Docs link)
+      MToF = Mordenkainen's Tome of Foes (out of print, superseded by MotM)
     Sys-pills (.sys-pill + color classes) label content origin: 4e, 5e, Folklore, Meta, or Homebrew
       Placed as first element inside callout divs, before .label spans
       More visible than source refs — larger font, rounded, distinct background colors
@@ -284,6 +289,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .src-yt { background: rgba(204,0,0,0.08); color: #cc0000; }
   .src-yt a { color: inherit; text-decoration: none; }
   .src-yt a:hover { text-decoration: underline; }
+  .src-mtof { background: rgba(90,60,140,0.15); color: #5a3c8c; }
   .src-folk { background: rgba(139,105,20,0.1); color: #8b6914; }
   .src-folk a { color: inherit; text-decoration: none; }
   .src-folk a:hover { text-decoration: underline; }
@@ -720,7 +726,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>Eladrin</h3>
 
+    <div class="hyrsam-portrait" style="width:280px;">
+      <a href="media/feywild_primer/eladrin.png" class="glightbox" data-gallery="creatures" data-desc="Eladrin — seasonal elves of the Feywild (MotM, edited)">
+        <img src="media/feywild_primer/eladrin.png" alt="Eladrin — seasonal elf of the Feywild">
+      </a>
+    </div>
+
     <p>The "humans of the Feywild" — technically elves but deeply changed by fey influence. Their biology is tied to emotion: skin tone, hair colour, and markings shift to match a seasonal mood. Spring = happy (green, flowers, can fey step an ally). Summer = angry (golden, fey step does fire damage). Autumn = empathetic (warm tones, charms nearby creatures). Winter = melancholy (pale, frightens a creature). Some eladrin stay in one season forever; others shift daily. A great example of how the Feywild changes its inhabitants. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span></p>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Eladrin — Primal Elves</span>
+      Of all elves, eladrin are closest in form and ability to the first generation of elves created by Corellon. They're proud of it, too — haughty around other elves, though some trade that pride for a tender desire to share the wonders of the Feywild with their cousins. Eladrin culture is the oldest elven civilization and also the most decadent: fickle, impetuous, with a justice system that swings between capriciously harsh and whimsically mild depending on the mood of whoever is passing judgment. Their cities blend towers, arching bridges, streams, gardens, and magic-infused architecture in ways that feel both constructed and completely natural. Prolonged exposure to the Feywild accelerates the onset of Remembrance (the elven past-life memory) in other elves — but eladrin themselves are unaffected. Uniquely among elves, eladrin feel little pull toward Arvandor; they'd rather stay in the Feywild than rejoin Corellon.
+      <br><span class="src-ref src-mtof">MToF pp. 50–51</span>
+    </div>
 
     <h3>Sidhe</h3>
 
@@ -806,8 +825,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="sys-pill sys-4e">4e</span>
       <span class="sys-pill sys-5e">5e / 5.5e</span>
       <span class="label">Fomorian Origin</span>
-      Fomorians were once among the most handsome of races, but their greed drove them to try to acquire all the magic of the Feywild. A united fey front defeated them, and in a stroke of poetic justice their bodies were twisted to reflect the evil in their hearts — hideously disfigured. They can pass this curse to others via the Evil Eye, magically deforming the victim and giving them a glimpse of fomorian malice.
-      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=eRYL_b-1KF4">Jorphdan</a></span>
+      Fomorians were once the most handsome of the giants and allies of the elves — the two civilizations bonded over a shared love of magic. But the fomorians twisted that love into a lust for power, enslaving magic itself and then turning on the elves. A united front of elves and fey drove the fomorians underground into the Feywild's Underdark, and a curse brought about by their own inner foulness twisted their bodies into the grotesque forms they bear today. They can pass this disfigurement to others via the Evil Eye, magically deforming the victim and giving them a glimpse of fomorian malice.
+      <br><span class="src-ref src-mtof">MToF p. 51</span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=eRYL_b-1KF4">Jorphdan</a></span>
     </div>
   </section>
 
@@ -947,6 +966,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><span class="book-title">Player's Option: Heroes of the Feywild</span> (4e, 2011) — Rodney Thompson, Claudio Pozas, Steve Townshend. WotC. 160 pages. The definitive Feywild sourcebook: geography, factions, demesnes, playable races (hamadryad, pixie, satyr), fey-themed classes and themes. <span class="src-ref src-hotf">HotF</span></li>
       <li><span class="book-title">Dragon Magazine #422</span> — "Hyrsam, Prince of Satyrs" by Mark Monack (April 2013). Pages 4–8. Full lore, stat block, magic items (fiddle, fiddlestick, horn of revelry), reveler monster theme, encounter hooks. The deepest official treatment of Hyrsam. <span class="src-ref src-d422">D422</span></li>
       <li><span class="book-title">Player's Handbook</span> (5e, 2014 &amp; 2024) — Lists Hyrsam as an example Archfey Warlock patron alongside Titania, Oberon, Queen of Air and Darkness, and Prince of Frost. <span class="src-ref src-phb">PHB</span></li>
+      <li><span class="book-title">Mordenkainen's Tome of Foes</span> (5e, 2018) — WotC. Out of print (superseded by MotM). Chapter 2 "Elves" pp. 50–51: eladrin as primal elves, their Feywild cities and decadent culture, fomorian origin story (giants allied with elves, corrupted by greed, cursed underground). Official 5e source for the elf/eladrin/Feywild connection. <span class="src-ref src-mtof">MToF</span></li>
       <li><span class="book-title">The Wild Beyond the Witchlight</span> (5e, 2021) — Feywild adventure module focused on Zybilna and the Domains of Delight. Hyrsam is not a central figure but the Feywild material is relevant context. <span class="src-ref src-wbtw">WBtW</span></li>
       <li><span class="book-title">Sword Coast Adventurer's Guide</span> (5e, 2015) — Brief mention of Hyrsam, p. 138.</li>
     </ul>
