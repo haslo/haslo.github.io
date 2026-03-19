@@ -13,17 +13,19 @@
     - TOC
     - 01 What Is the Feywild? (brief overview, storybook logic, time, peril, wild magic, fey crossings)
     - 02 The Fey — Alien Neighbors (creature type overview, folklore, blue-and-orange morality, fey nature constraints, power of three)
-    - 03 Seelie & Unseelie (folklore origins, two courts, edition tangles, Deals & Codes framework, Three Laws, Court Hierarchy)
+    - 03 Seelie & Unseelie (folklore origins, two courts, edition tangles, Deals & Codes framework, Moucheron + Mamshee examples, Three Laws, Court Hierarchy [DRESDEN])
     - 04 Fey Factions (4e detail: Court of Stars, Summer/Green/Winter/Gloaming, Court of Coral)
-    - 04b Fey Weaknesses (iron, running water, thresholds)
-    - 05 Fey Creatures & Species (hags, dryads, blink dogs, eladrin, sidhe, korreds, playable species: satyr/fairy/centaur, summer/winter fey additions)
+    - 04b Fey Weaknesses (iron, running water, thresholds [split: Folklore core + Dresden power mechanics])
+    - 05 Fey Creatures & Species (hags, dryads, blink dogs, eladrin, sidhe, korreds, playable species: satyr/fairy/centaur, summer/winter fey additions [malks removed])
     - 06 Key Locations (Senaliesse, Astrazalian, Mithrendain, Shinaelestra, Vale of Long Night,
          Maze of Fathaghn, Murkendraw, Cendriane, Nachtur, Isle of Dread, Feydark, Fomorian Cities)
-    - 07 The Archfey (overview with Court column showing Seelie/Unseelie alignment per archfey, Knights of the Courts)
-    - 07b The Wild Hunt (Erlking, Vadderung, Vold, Feast of the Moon)
-    - 08 Hyrsam, Prince of Fools (deep section — lore, personality, goals, possessions,
+    - 07 The Archfey (overview with Court column showing Seelie/Unseelie alignment per archfey, Knights of the Courts [DRESDEN])
+    - 07b The Wild Hunt (Erlking [DRESDEN], Vadderung [DRESDEN], Vold [DRESDEN], Feast of the Moon [FOLKLORE])
+    - 08 Hyrsam, Prince of Fools (deep section — lore, personality, goals, possessions as Dragon Magazine-style
+         floating inset cards [Hyrsam Fiddle, Fiddlestick, Horn of Revelry, 4e Stat Reference],
          Grove of Laughing Goats, encounter hooks, revelers, relevance to Twinkle)
-    - Sources (book references + folklore)
+    - 09 Real-World Folklore (Irish/Scottish/Welsh distinctions, primary source pointers)
+    - Sources (Folklore references + Community + Books + YouTube)
 
   MEDIA:
     media/feywild_primer/wild_witchlight.jpg — header image (WBtW cover art)
@@ -41,9 +43,10 @@
       PH · Feywild / PH · Fey Problem = differentiated Pointy Hat videos
       Folk Guide = community folklore/Dresden doc (Google Docs link)
       MToF = Mordenkainen's Tome of Foes (out of print, superseded by MotM)
-    Sys-pills (.sys-pill + color classes) label content origin: 4e, 5e, Folklore, Meta, or Homebrew
+    Sys-pills (.sys-pill + color classes) label content origin: 4e, 5e, Folklore, Dresden, Meta, or Homebrew
       Placed as first element inside callout divs, before .label spans
       More visible than source refs — larger font, rounded, distinct background colors
+      .sys-dresden: #1a1a2e background, #e0d8c8 text (cold dark blue for Dresden Files material)
     Responsive layout, print-friendly
     GLightbox for images
     Floating nav: home button (bottom-left) + back-to-top (bottom-right)
@@ -62,35 +65,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
 <!-- End Google Tag Manager -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/primer-base.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
 <style>
   :root {
-    --ink: #1a1a1a;
-    --parchment: #f5f0e8;
     --accent: #2a6040;
     --accent-light: #3d8a5a;
-    --gold: #b8860b;
-    --gold-light: #d4a843;
-    --muted: #6b5e50;
-    --divider: #c4b8a8;
-    --table-stripe: #ece6da;
-    --sidebar-bg: #e8e0d2;
     --fey-glow: rgba(42,96,64,0.08);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 13pt;
-    line-height: 1.6;
-    color: var(--ink);
-    background: var(--parchment);
-  }
-
   .page {
-    max-width: 750px;
-    margin: 0 auto;
     padding: 0 50px 60px;
   }
 
@@ -140,7 +124,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin-top: 4px;
   }
 
-  /* ── TOC ── */
+  /* ── TOC — moved to Feywild-specific block ── */
+  .toc {
+    margin: 28px 0 36px;
+    padding: 18px 28px;
+    background: var(--sidebar-bg);
+    border-left: 3px solid var(--accent);
+  }
+
   .toc {
     margin: 28px 0 36px;
     padding: 18px 28px;
@@ -188,132 +179,44 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     text-decoration: underline;
   }
 
-  /* ── Sections ── */
-  section { margin-bottom: 32px; }
-
+  /* Feywild h2 override — border bottom style */
   h2 {
-    font-family: 'Cinzel', serif;
     font-size: 16pt;
-    font-weight: 700;
     color: var(--accent);
     letter-spacing: 2px;
-    margin-bottom: 12px;
     padding-bottom: 6px;
     border-bottom: 1px solid var(--divider);
   }
 
+  /* Feywild h3 override */
   h3 {
-    font-family: 'Cinzel', serif;
     font-size: 12pt;
-    font-weight: 600;
     color: var(--ink);
     margin: 18px 0 8px;
   }
 
-  p { margin-bottom: 10px; }
-  p:last-child { margin-bottom: 0; }
-
-  /* ── Callouts ── */
-  .callout {
-    margin: 16px 0;
-    padding: 14px 18px;
-    border-left: 3px solid var(--accent);
-    background: var(--fey-glow);
-    font-size: 12pt;
-  }
-
+  /* Feywild callout overrides — background colors */
+  .callout { background: var(--fey-glow); }
   .callout.gold {
     border-left-color: var(--gold);
     background: rgba(184,134,11,0.06);
   }
-
-  .callout .label {
-    font-family: 'Cinzel', serif;
-    font-size: 7pt;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 6px;
-  }
-
+  .callout .label { color: var(--accent); }
   .callout.gold .label { color: var(--gold); }
 
-  /* ── Tables ── */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 14px 0;
-    font-size: 11pt;
-  }
+  /* Feywild table overrides */
+  th { background: var(--accent); }
 
-  th {
-    font-family: 'Cinzel', serif;
-    font-size: 8pt;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--accent);
-    padding: 8px 12px;
-    text-align: left;
-  }
-
-  td {
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--divider);
-    vertical-align: top;
-  }
-
-  tr:nth-child(even) td { background: var(--table-stripe); }
-  td:first-child { font-weight: 600; white-space: nowrap; }
-
-  /* ── Source pills ── */
-  .src-ref {
-    font-family: 'Cinzel', serif;
-    font-size: 7pt;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 2px 7px;
-    white-space: nowrap;
-    display: inline-block;
-    margin: 1px 2px;
-  }
-
+  /* Feywild source pill color variants */
   .src-hotf { background: rgba(42,96,64,0.1); color: var(--accent); }
   .src-d422 { background: rgba(184,134,11,0.1); color: var(--gold); }
   .src-phb { background: rgba(139,37,0,0.1); color: #8b2500; }
   .src-wbtw { background: rgba(106,90,161,0.1); color: #6a5aa1; }
-  .src-yt { background: rgba(204,0,0,0.08); color: #cc0000; }
-  .src-yt a { color: inherit; text-decoration: none; }
-  .src-yt a:hover { text-decoration: underline; }
   .src-mtof { background: rgba(90,60,140,0.15); color: #5a3c8c; }
-  .src-folk { background: rgba(139,105,20,0.1); color: #8b6914; }
-  .src-folk a { color: inherit; text-decoration: none; }
-  .src-folk a:hover { text-decoration: underline; }
-  .src-link { color: var(--accent); text-decoration: none; }
-  .src-link:hover { text-decoration: underline; }
+  .src-ph { background: rgba(204,0,0,0.08); color: #cc0000; }
+  .src-ph a { color: inherit; text-decoration: none; }
+  .src-ph a:hover { text-decoration: underline; }
 
-  /* System origin pills — placed at top of callouts */
-  .sys-pill {
-    font-family: 'Cinzel', serif;
-    font-size: 7pt;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-bottom: 8px;
-    margin-right: 4px;
-  }
-  .sys-4e { background: #4a6741; color: #fff; }
-  .sys-5e { background: #5b3a8c; color: #fff; }
-  .sys-folk { background: #8b6914; color: #fff; }
-  .sys-meta { background: #6b5e50; color: #fff; }
-  .sys-brew { background: #8b4513; color: #fff; }
 
   /* ── Hyrsam portrait ── */
   .hyrsam-portrait {
@@ -322,6 +225,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin: 0 0 16px 24px;
     border: 1px solid var(--divider);
   }
+  .hyrsam-portrait.sm { width: 200px; }
+  .hyrsam-portrait.lg { width: 280px; }
 
   .hyrsam-portrait img {
     width: 100%;
@@ -339,6 +244,48 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     padding: 6px 8px;
     background: var(--sidebar-bg);
   }
+
+  /* ── Hyrsam item cards — horizontal row ── */
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .hyrsam-card {
+    padding: 14px 16px;
+    border: 2px solid var(--gold);
+    background: rgba(184,134,11,0.06);
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+  .hyrsam-card .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .hyrsam-card .card-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 6.5pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .hyrsam-card p { margin-bottom: 6px; font-size: 10pt; }
+  .hyrsam-card p:last-child { margin-bottom: 0; }
+
+  .clear { clear: both; }
 
   /* ── Flavour quote ── */
   .flavour {
@@ -388,53 +335,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     color: var(--accent);
   }
 
-  /* ── Responsive ── */
-  @media (max-width: 700px) {
+  /* SCREEN — Feywild-specific overrides */
+  @media screen {
+    .primer-header { max-height: 480px; }
+    .primer-header img { height: 480px; }
+    .primer-header-overlay h1 { font-size: 36pt; letter-spacing: 6px; }
+    .primer-header-overlay { padding: 120px 50px 40px; }
+    .toc h2 { font-size: 13pt; }
+    .toc li { font-size: 16pt; }
+    .hyrsam-portrait { width: 320px; }
+  }
+
+  /* MOBILE — Feywild-specific overrides (768px breakpoint) */
+  @media screen and (max-width: 768px) {
     .page { padding: 0 20px 40px; }
     .primer-header img { height: 240px; }
     .primer-header-overlay h1 { font-size: 20pt; letter-spacing: 3px; }
     .primer-header-overlay { padding: 60px 20px 18px; }
     .toc ol { columns: 1; }
     .hyrsam-portrait { float: none; width: 100%; margin: 0 0 16px 0; }
+    .card-row { grid-template-columns: 1fr; }
   }
 
-  /* ── Print ── */
+  /* PRINT — Feywild-specific print adjustments */
   @media print {
-    body { background: white; font-size: 10pt; }
+    body { font-size: 10pt; }
     @page { size: A4 portrait; margin: 12mm; }
     .primer-header { max-height: 200px; }
     .primer-header img { height: 200px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .primer-header-overlay { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .toc, .float-nav { display: none !important; }
+    .toc { display: none !important; }
     th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .hyrsam-portrait { width: 200px; }
+    .hyrsam-card { font-size: 9pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
-
-  /* ── Floating nav ── */
-  .float-nav {
-    position: fixed;
-    bottom: 20px;
-    width: 40px;
-    height: 40px;
-    z-index: 100;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .float-nav:hover { opacity: 1; }
-  .float-nav-up {
-    right: 20px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 1;
-  }
-  .float-nav-home { left: 20px; }
-  .float-nav-home img { width: 40px; height: 40px; }
 </style>
 </head>
 <body>
@@ -465,6 +399,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><a href="#locations">Key Locations</a></li>
       <li><a href="#archfey">The Archfey</a></li>
       <li><a href="#hyrsam">Hyrsam, Prince of Fools</a></li>
+      <li><a href="#folklore-roots">Real-World Folklore</a></li>
       <li><a href="#sources">Sources</a></li>
     </ol>
   </nav>
@@ -480,6 +415,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        ═══════════════════════════════════════════════ -->
   <section id="what-is">
     <h2>01 — What Is the Feywild?</h2>
+
+    <div class="callout gold">
+      <span class="sys-pill sys-meta">Meta</span>
+      <span class="label">Sources &amp; Colour Coding</span>
+      This primer draws from official D&D books (tagged <span class="sys-pill sys-4e" style="margin:0;">4e</span> and <span class="sys-pill sys-5e" style="margin:0;">5e / 5.5e</span>), YouTube deep-dives, and a <a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing" class="src-link">community guide</a> that blends real-world Celtic and European fairy lore with Jim Butcher's <em>Dresden Files</em> novels. Butcher himself drew heavily from that same folklore, so the two are intertwined — but where the guide adds concepts that exist only in the novels (court hierarchy tiers, fey knights, specific Wild Hunt lords), those are tagged <span class="sys-pill sys-dresden" style="margin:0;">Dresden</span> so you know they're not D&amp;D canon. Everything tagged <span class="sys-pill sys-folk" style="margin:0;">Folklore</span> has roots in real-world fairy traditions.
+    </div>
 
     <p>The Feywild is a parallel plane of wild magic and untamed nature — an echo of the material world turned up to eleven. The laws of science, logic, and reason give way to story, rhyme, and emotion. Enchanted forests stretch endlessly, animals talk, castles perch on mountain spires, and time flows differently depending on where you stand.</p>
 
@@ -518,7 +459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="sys-pill sys-5e">5e / 5.5e</span>
       <span class="label">Fey Crossings</span>
       The most common (and most unsettling) way to reach the Feywild is via a fey crossing — a place where the two planes blur together. These aren't obvious portals. You walk through an orchard and find yourself in a fey garden. You swim in a pond and surface on another plane. Some crossings are keyed to specific times (noon, an anniversary, a solstice). The creative part: no two crossings work the same. One might be a circle of white mushrooms that requires crushed moth wings to activate. Another could be a living person whose dreams become a portal during a full moon. The rules are esoteric and arbitrary — deliberately so. This is less a flaw and more a feature of the Feywild's nature. Even fey natives find them capricious.
-      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=xNv3dKIf1Jg">Taking20</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span>
+      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=xNv3dKIf1Jg">Taking20</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span> <span class="src-ref src-ph"><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit">PH · Adventure</a></span>
     </div>
 
     <div class="callout gold">
@@ -542,7 +483,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout">
       <span class="sys-pill sys-5e">5e / 5.5e</span>
       <span class="label">Blue-and-Orange Morality</span>
-      This is the core concept. Fey don't operate on a good/evil axis. They have their own moral framework that's completely alien to mortals. They might have equivalents of "good" and "evil" — but those equivalents serve the same structural purpose without being actual equivalents. <em>Their laws, their values, their morals — all different from ours.</em> This isn't randomness — fey have a moral code, they just follow or break a <strong>different</strong> one. Depicting fey as "lol so random" misses the point entirely. The interesting thing about fey is confronting a completely alien but internally consistent moral framework. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span>
+      This is the core concept. Fey don't operate on a good/evil axis. They have their own moral framework that's completely alien to mortals. They might have equivalents of "good" and "evil" — but those equivalents serve the same structural purpose without being actual equivalents. <em>Their laws, their values, their morals — all different from ours.</em> This isn't randomness — fey have a moral code, they just follow or break a <strong>different</strong> one. Depicting fey as "lol so random" misses the point entirely. The interesting thing about fey is confronting a completely alien but internally consistent moral framework. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span> <span class="src-ref src-ph"><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit">PH · Adventure</a></span>
     </div>
 
     <p>This alien morality is what makes interacting with fey always complicated. They follow rules — just not ones mortals can easily understand. This creates interesting moral dilemmas in play and is the key to making fey feel genuinely fey rather than just "nature elves." <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span></p>
@@ -553,7 +494,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="sys-pill sys-folk">Folklore</span>
       <span class="label">No Free Will</span>
       Fey cannot change their fundamental nature — a predatory fey will always be predatory. Their natures are more fluid than the rigid Laws binding them, but they literally cannot act against their core being. A fey appearing to go against its nature is almost certainly under external influence — compelled by magic, oath, or a power greater than itself. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
-      <p style="margin-top: 8px; font-size: 11pt; font-style: italic;"><em>Content tagged Folklore draws from real-world fey traditions and Jim Butcher's Dresden Files — not official D&D canon.</em></p>
+      <p class="disclaimer"><em>Content tagged <strong>Folklore</strong> draws from real-world fey traditions. Content tagged <strong>Dresden</strong> is from Jim Butcher's Dresden Files novels. Neither is official D&D canon.</em></p>
     </div>
 
     <h3>The Power of Three</h3>
@@ -599,6 +540,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Here's a conceptual framework (homebrew, not canon) that operationalizes fey morality: <strong>Seelie</strong> are bound by <strong>deals</strong>. Honoring a deal is their moral good; breaking your word is their moral evil. The deal doesn't have to be fair or kind — what matters is whether it's honored. <strong>Unseelie</strong> are bound by <strong>codes</strong>. They follow a rigid code of conduct, and their moral good is adherence to that code, their moral evil is breaking it. Even if the code leads to suffering, breaking it is worse. This is blue-and-orange morality made concrete — it lets you create fey that feel genuinely alien rather than just "chaotic neutral." A brownie cleans your house because the <em>deal</em> says so. A code-bound fey protects a sacred grove no matter the cost because the <em>code</em> demands it. Also note: trooping fairies (court-aligned) vs. solitary fairies (Yeats's classification) — courtless fey are seen by both courts as immoral loose cannons. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span>
     </div>
 
+    <div class="callout">
+      <span class="sys-pill sys-brew">Homebrew</span>
+      <span class="label">Deals &amp; Codes in Practice</span>
+      Pointy Hat's video proposes two homebrew fey that demonstrate the framework. The <strong><a href="https://docs.google.com/document/d/e/2PACX-1vTjhx9tN4TLtpuC0pP95VZpkYfguDDwkQx7eXSVBWtUUBG2lCyUN-9Kf9SkMEsVpJd5sYRMSUfctIp1/pub" class="src-link">Moucheron</a></strong> (Seelie) is a martial fay mercenary paid in blood — it will fight for whoever strikes a deal, but demands a person's worth of blood by sundown, no exceptions. If there aren't enough corpses, the moucheron turns on its employers. The <strong>Mamshee</strong> (Unseelie) is a fairy godmother bound by the code of unconditional protection — it guards its ward from all harm, forever, including from the ward's own parents or the ward themselves. Mother knows best, to a terrifying degree. The same video's companion adventure <em><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit" class="src-link">Time for Pleasantries</a></em> puts this moral framework into play — missing children, a fey captor with alien logic, and a final choice with no right answer.
+      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span> <span class="src-ref src-ph"><a href="https://docs.google.com/document/d/e/2PACX-1vTjhx9tN4TLtpuC0pP95VZpkYfguDDwkQx7eXSVBWtUUBG2lCyUN-9Kf9SkMEsVpJd5sYRMSUfctIp1/pub">PH · Moucheron</a></span> <span class="src-ref src-ph"><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit">PH · Adventure</a></span>
+    </div>
+
     <h3>The Three Laws of the Fey</h3>
 
     <p>Folklore describes three ancient Laws binding all fey, regardless of court allegiance. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
@@ -624,7 +572,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>Court Hierarchy</h3>
 
     <div class="callout gold">
-      <span class="sys-pill sys-folk">Folklore</span>
+      <span class="sys-pill sys-dresden">Dresden</span>
       <span class="label">Court Hierarchy</span>
       <p>Fey courts are not simple monarchies. Each court has three female rulers arranged in generational tiers, and the titles themselves may hold more power than the individuals who hold them. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
 
@@ -632,7 +580,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <p><strong>The Queens</strong> (the queen that is) are the active rulers. Titania of Summer is jealous and protective, passionately engaged in court politics. Mab of Winter is coldly logical, calculating, barely visible until she acts — then her will reshapes reality. The Queens answer to the Mothers but hold practical sovereignty. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
 
-      <p><strong>The Ladies</strong> (the queen that will be) are queens-in-training. Aurora of Summer embodies kindness and healing, groomed to eventually replace Titania. Maeve of Winter is cruel and manipulative, learning governance through cruelty. When a tier dies or abdication occurs, everyone moves up and a new Lady is selected. Notably, the titles seem to shape personality over time — suggesting the titles themselves, not the individual holders, are the true rulers of each court. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>This hierarchy is heavily inspired by Jim Butcher's Dresden Files and is not official D&D canon — Aurora and Maeve are Dresden Files characters.</em></p>
+      <p><strong>The Ladies</strong> (the queen that will be) are queens-in-training. Aurora of Summer embodies kindness and healing, groomed to eventually replace Titania. Maeve of Winter is cruel and manipulative, learning governance through cruelty. When a tier dies or abdication occurs, everyone moves up and a new Lady is selected. Notably, the titles seem to shape personality over time — suggesting the titles themselves, not the individual holders, are the true rulers of each court. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>This hierarchy is from Jim Butcher's Dresden Files and is not official D&D canon — Aurora and Maeve are Dresden Files characters.</em></p>
     </div>
 
   </section>
@@ -656,7 +604,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <tr><td>Gloaming Fey</td><td>Dreams, darkness, stars, twilight, dusk. Owe allegiance to various archfey. In 5e this maps roughly to the Unseelie court; in 4e it's more its own thing.</td><td>Maiden of the Moon</td><td>Unseelie (5e) / ambiguous (4e)</td></tr>
       <tr><td>Court of Coral</td><td>Aquatic and island-dwelling fey. Rivers and seas. Largely outside the Seelie/Unseelie binary.</td><td>Elias &amp; Siobhan Alastai (Sea Lords)</td><td>Independent</td></tr>
     </table>
-    <p style="font-size:10pt; color:var(--muted);"><span class="src-ref src-hotf">HotF p. 12</span></p>
+    <p class="src-line"><span class="src-ref src-hotf">HotF p. 12</span></p>
   </section>
 
   <!-- ═══════════════════════════════════════════════
@@ -688,7 +636,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout gold">
       <span class="sys-pill sys-folk">Folklore</span>
       <span class="label">Thresholds</span>
-      The threshold of a home — the symbolic and sometimes physical boundary between inside and outside — is a real barrier to fey. The strength of a threshold depends on the life lived inside: a happy family home has a strong threshold; a lonely or temporary dwelling has a weak one. Churches with devout congregations have powerful thresholds that can repel even archfey. Fey cannot cross a threshold without losing a fraction of their power, which is restored when they leave. If invited across a threshold explicitly, they may enter, but an uninvited crossing automatically triggers the barrier. This is why predatory fey work so hard to lure victims outside or trick them into extending invitations — the home itself becomes an ally against them. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
+      The threshold of a home — the symbolic and sometimes physical boundary between inside and outside — is a real barrier to fey. Fey cannot freely enter a dwelling uninvited; they must be explicitly invited across. This is why predatory fey work so hard to lure victims outside or trick them into extending invitations — the home itself becomes an ally against them. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
+    </div>
+
+    <div class="callout gold">
+      <span class="sys-pill sys-dresden">Dresden</span>
+      <span class="label">Thresholds — Power Mechanics</span>
+      In Dresden Files canon, threshold strength depends on the life lived inside: a happy family home has a strong threshold; a lonely or temporary dwelling has a weak one. Churches with devout congregations have powerful thresholds that can repel even archfey. Fey lose a fraction of their power crossing an uninvited threshold, with that power restored when they leave. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
     </div>
   </section>
 
@@ -702,7 +656,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>Hags</h3>
 
-    <div class="hyrsam-portrait" style="width:200px;">
+    <div class="hyrsam-portrait sm">
       <a href="media/feywild_primer/hag.png" class="glightbox" data-gallery="creatures" data-desc="A hag — immortal, scheming, deal-obsessed">
         <img src="media/feywild_primer/hag.png" alt="A hag">
       </a>
@@ -716,7 +670,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>Blink Dogs</h3>
 
-    <div class="hyrsam-portrait" style="width:200px;">
+    <div class="hyrsam-portrait sm">
       <a href="media/feywild_primer/blink_dog.png" class="glightbox" data-gallery="creatures" data-desc="Blink dog — fey dog that teleports">
         <img src="media/feywild_primer/blink_dog.png" alt="A blink dog">
       </a>
@@ -726,7 +680,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>Eladrin</h3>
 
-    <div class="hyrsam-portrait" style="width:280px;">
+    <div class="hyrsam-portrait lg">
       <a href="media/feywild_primer/eladrin.png" class="glightbox" data-gallery="creatures" data-desc="Eladrin — seasonal elves of the Feywild (MotM, edited)">
         <img src="media/feywild_primer/eladrin.png" alt="Eladrin — seasonal elf of the Feywild">
       </a>
@@ -767,7 +721,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <tr><td>Fairy</td><td>MotM (from WBtW)</td><td>Small, permanent flight, Druidcraft + Faerie Fire (3rd) + Enlarge/Reduce (5th)</td><td>Strongest individual trait of any species (permanent flight). Trades all passive defenses for it — no darkvision, no resistances.</td></tr>
       <tr><td>Centaur</td><td>MotM (from Theros/Ravnica)</td><td>40ft speed, Charge (bonus attack after 30ft move), hooves, nature/survival proficiency</td><td>Pushes heavily toward martial builds. Extremely mobile. Gregarious, herd-mentality.</td></tr>
     </table>
-    <p style="font-size:10pt; color:var(--muted);"><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span></p>
+    <p class="src-line"><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span></p>
 
     <h3>Summer Fey</h3>
 
@@ -782,7 +736,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="sys-pill sys-folk">Folklore</span>
       <span class="label">Winter Fey</span>
 
-      <p>The Unseelie winter court draws fey aligned with shadow, predation, and cold calculation. <strong>Leanansidhe</strong> are beautiful handmaidens with disconcerting cat's eyes, talented in magic and seduction — they are predators who hunt through charm and manipulation. <strong>Malks</strong> are grey, cat-sized pack predators, deadly fast and coordinated, often used as spies or assassins. <strong>Redcaps</strong> are cursed creatures that must soak their hats in blood to survive; their iron boots slowly drain their life force, making their existence short and agonizing — they are born bitter and angry. <strong>Quicklings</strong> are tiny fey, impossibly fast, with attention spans to match — they are often employed as messengers or spies by the Winter Queen. <strong>Yeth hounds</strong> are dog-like creatures with disturbing humanoid faces, the Winter Court's equivalent to Seelie pegasi — they fly and hunt in packs, relentless and howling. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
+      <p>The Unseelie winter court draws fey aligned with shadow, predation, and cold calculation. <strong>Leanansidhe</strong> are beautiful handmaidens with disconcerting cat's eyes, talented in magic and seduction — they are predators who hunt through charm and manipulation. <strong>Redcaps</strong> are cursed creatures that must soak their hats in blood to survive; their iron boots slowly drain their life force, making their existence short and agonizing — they are born bitter and angry. <strong>Quicklings</strong> are tiny fey, impossibly fast, with attention spans to match — they are often employed as messengers or spies by the Winter Queen. <strong>Yeth hounds</strong> are dog-like creatures with disturbing humanoid faces, the Winter Court's equivalent to Seelie pegasi — they fly and hunt in packs, relentless and howling. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
     </div>
   </section>
 
@@ -815,7 +769,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>The Feydark</h3>
     <p>The Feywild's Underdark — a vast underground tangle of magic-saturated caverns, far more colourful than its mortal equivalent, with abundant water and enormous multicoloured mushrooms. Home to fomorians (the greatest organised threat), their cyclops servants, myconids, and creatures driven underground by the archfey. Three fomorian city-states: Harrowhame, Mag Tureah, and Vor Thomil, each ruled by a different twisted giant. The Feydark has its own fey crossings — drow have been known to use them for covert surface raids. <span class="src-ref src-hotf">HotF p. 10</span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=eRYL_b-1KF4">Jorphdan</a></span></p>
 
-    <div class="hyrsam-portrait" style="width:200px;">
+    <div class="hyrsam-portrait sm">
       <a href="media/feywild_primer/fomorian.webp" class="glightbox" data-gallery="creatures" data-desc="Fomorian — twisted by their own greed">
         <img src="media/feywild_primer/fomorian.webp" alt="A fomorian">
       </a>
@@ -847,14 +801,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <tr><td>Queen of Air &amp; Darkness</td><td>Gloaming / Unseelie Queen</td><td>Unseelie</td><td>Titania's sister, corrupted by a mysterious black diamond. The Unseelie court is hers. In 4e the "Gloaming Fey" and her court are ambiguously related; in 5e they're the same thing.</td></tr>
       <tr><td>Oberon</td><td>The Green Lord (alt)</td><td>Seelie</td><td>Sometimes conflated with Oran depending on setting. Shakespearean import.</td></tr>
     </table>
-    <p style="font-size:10pt; color:var(--muted);"><span class="src-ref src-phb">PHB 2014 p. 109</span> <span class="src-ref src-hotf">HotF pp. 12–13</span> <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
+    <p class="src-line"><span class="src-ref src-phb">PHB 2014 p. 109</span> <span class="src-ref src-hotf">HotF pp. 12–13</span> <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
 
     <h3>Knights of the Courts</h3>
 
     <div class="callout gold">
-      <span class="sys-pill sys-folk">Folklore</span>
+      <span class="sys-pill sys-dresden">Dresden</span>
       <span class="label">Knights of the Courts</span>
-      Each Seelie and Unseelie court employs a single mortal Champion — a Knight who takes on a Mantle of Power granting fey abilities and magic beyond mortal ken. The cost is steep: fey weaknesses also apply to the Knight — they burn on contact with iron, cannot cross running water without losing power, and are bound by the Thresholds. There is only one Knight per court at any given time; the only way out is death (whether by battle, age, or suicide to end the suffering). The Summer Knight's sacred duty is to stop the Winter Knight from killing or stealing. The Winter Knight's role is more sinister: to serve as the Queen's assassin for acts of violence the Laws do not permit her to order directly. Both Knights are assigned eladrin squires called Sidhgards to serve as advisors and handlers. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>This concept is directly from Jim Butcher's Dresden Files and is not official D&D canon.</em>
+      Each Seelie and Unseelie court employs a single mortal Champion — a Knight who takes on a Mantle of Power granting fey abilities and magic beyond mortal ken. The cost is steep: fey weaknesses also apply to the Knight — they burn on contact with iron, cannot cross running water without losing power, and are bound by the Thresholds. There is only one Knight per court at any given time; the only way out is death (whether by battle, age, or suicide to end the suffering). The Summer Knight's sacred duty is to stop the Winter Knight from killing or stealing. The Winter Knight's role is more sinister: to serve as the Queen's assassin for acts of violence the Laws do not permit her to order directly. Both Knights are assigned eladrin squires called Sidhgards to serve as advisors and handlers. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>This concept is from Jim Butcher's Dresden Files and is not official D&D canon.</em>
     </div>
   </section>
 
@@ -873,9 +827,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>The Three Lords</h3>
 
     <div class="callout gold">
-      <span class="sys-pill sys-folk">Folklore</span>
+      <span class="sys-pill sys-dresden">Dresden</span>
       <span class="label">The Three Lords</span>
-      <p>Three archfey lead the Hunt, each with terrifying power. <strong>The Erlking</strong> is the true leader — a nine-foot-tall archfey with magnificent antlers, wielding a greatsword, wrapped in the hide of an owlbear. He commands respect through overwhelming magical and martial prowess. <strong>Vadderung</strong> is a mysterious one-eyed figure whose true nature remains unclear — some scholars believe he is an angel or even a god of hunting, transcending fey altogether. <strong>Vold</strong> is an ogre-sized gremlin riding a shadow-wolf, hurling barbed spears with deadly accuracy and laughing at the chaos. The three balance each other's temperament — Erlking leads, Vadderung moderates, Vold drives the frenzy forward. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>Note: The Wild Hunt IS real European folklore, but the specific three lords (Erlking, Vadderung=Odin, Vold) are from Jim Butcher's Dresden Files.</em></p>
+      <p>Three archfey lead the Hunt, each with terrifying power. <strong>The Erlking</strong> is the true leader — a nine-foot-tall archfey with magnificent antlers, wielding a greatsword, wrapped in the hide of an owlbear. He commands respect through overwhelming magical and martial prowess. <strong>Vadderung</strong> is a mysterious one-eyed figure whose true nature remains unclear — some scholars believe he is an angel or even a god of hunting, transcending fey altogether. <strong>Vold</strong> is an ogre-sized gremlin riding a shadow-wolf, hurling barbed spears with deadly accuracy and laughing at the chaos. The three balance each other's temperament — Erlking leads, Vadderung moderates, Vold drives the frenzy forward. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span> <em>The Wild Hunt itself is real European folklore, but these three lords (Erlking, Vadderung=Odin, Vold) are Jim Butcher's characterization in the Dresden Files.</em></p>
     </div>
 
     <h3>Hunting and Joining</h3>
@@ -883,7 +837,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout gold">
       <span class="sys-pill sys-folk">Folklore</span>
       <span class="label">Hunting and Joining</span>
-      Huntsmen in the Wild Hunt wield special weapons forged by the Erlking that inspire bloodlust in their wielders and summon spectral armor that grants protection. Predatory creatures from across the planes can volunteer to join the Hunt. Notably, a powerful mortal or monster can seize leadership of the entire Hunt by defeating the current leader while riding — though such a victory typically comes at the cost of the victor's life or sanity. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
+      The Wild Hunt is an unstoppable force of predatory fey and monsters driven by the urge to hunt. Predatory creatures from across the planes can volunteer to join the Hunt, drawn by the primal compulsion to chase prey. The hunt itself is relentless and predatory by nature. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
+    </div>
+
+    <div class="callout gold">
+      <span class="sys-pill sys-dresden">Dresden</span>
+      <span class="label">Hunting and Joining — Leadership Challenge</span>
+      In Dresden Files canon, a powerful mortal or monster can seize leadership of the entire Hunt by defeating the current leader while riding — though such a victory typically comes at the cost of the victor's life or sanity. Huntsmen wield special weapons forged by the Erlking that inspire bloodlust in their wielders and summon spectral armor that grants protection. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
     </div>
   </section>
 
@@ -920,14 +880,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout">
       <span class="sys-pill sys-brew">Homebrew</span>
       <span class="label">Twinkle Connection</span>
-      Twinkle studied Hyrsam's domain academically — chaos magic, how his influence shapes the Feywild, how disorder and order coexist in the Weave. She wasn't a worshipper; she was a researcher. Then the chaos she was studying decided to become part of her. Wild Magic found her, or Hyrsam noticed her and thought it would be funny.
+      <a href="charsheets.html#twinkle" class="src-link">Twinkle</a> studied Hyrsam's domain academically — chaos magic, how his influence shapes the Feywild, how disorder and order coexist in the Weave. She wasn't a worshipper; she was a researcher. Then the chaos she was studying decided to become part of her. Wild Magic found her, or Hyrsam noticed her and thought it would be funny.
     </div>
 
     <h3>Appearance</h3>
     <p>A handsome satyr with curly locks that fall in wild tangles around curved spiral horns. His dark eyes flash with hidden passion and rebellious light. He dresses in ordinary travelling clothes among commoners and in regal finery among nobles — always adapting to his audience. <span class="src-ref src-d422">Dragon 422 p. 4</span></p>
 
     <h3>Possessions</h3>
-    <p>Hyrsam has invented numerous musical instruments, magical and mundane. His signature items are a magic <strong>fiddle</strong> (woven with mithral strands, playable with any handheld object), a <strong>fiddlestick</strong> (enchanted bow that doubles as a rapier in combat — stronger than steel, sharper than glass), and a <strong>Horn of Revelry</strong> (conjures spectral satyr musicians). He also plays the syrinx (pan flute). <span class="src-ref src-d422">Dragon 422 p. 8</span></p>
+    <div class="card-row">
+      <div class="hyrsam-card">
+        <div class="card-title">Hyrsam Fiddle <span class="card-subtitle">Lvl 3+</span></div>
+        <p>Carved from wood and woven with strands of mithral. Bears a glamer that betrays its fey origin. Can be played using almost any handheld object as a bow, or even plucked by hand.</p>
+        <p><strong>Enhancement:</strong> Attack and damage rolls, +1d6 damage per plus.</p>
+        <p class="src-line"><span class="src-ref src-d422">D422 p. 8</span></p>
+      </div>
+      <div class="hyrsam-card">
+        <div class="card-title">Fiddlestick <span class="card-subtitle">Lvl 3+</span></div>
+        <p>Violin bow that never requires rosin. Enchanted to be stronger than steel, sharper than glass — wieldable as a rapier.</p>
+        <p><strong>Paired:</strong> Fiddle + fiddlestick together grant the highest enhancement bonus to bardic ritual skill checks.</p>
+        <p class="src-line"><span class="src-ref src-d422">D422 p. 8</span></p>
+      </div>
+      <div class="hyrsam-card">
+        <div class="card-title">Horn of Revelry <span class="card-subtitle">Lvl 9</span></div>
+        <p>Five types of polished wood, fitted via complicated grooves. Plays a sound that begs to be joined in harmonies.</p>
+        <p><strong>Daily:</strong> Conjure four spectral satyr musicians. +1 defenses and saves to adjacent allies. One vanishes per missed attack or successful save.</p>
+        <p class="src-line"><span class="src-ref src-d422">D422 p. 8</span></p>
+      </div>
+    </div>
 
     <h3>His Court — The Revelers</h3>
     <p>Hyrsam's court is a travelling menagerie. Satyrs and their dark cousins (satyrs of the night) form the majority, but his retinue also includes dryads, lamia, eladrin, drow, gnomes, fomorians, and outsiders from distant planes — renegade genasi, githyanki, dwarves, humans, halflings. He welcomes everybody, regardless of race or alignment. The only requirements: a sincere love of the Feywild, a talent for music or storytelling, and a willingness to set aside the prejudices of your former life. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
@@ -946,8 +925,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>Encounter Hooks</h3>
     <p>Dragon 422 provides several adventure hooks for incorporating Hyrsam into a campaign: as a revolutionary fomenting rebellion, as a thief who stole Tiandra's crown and fled into the Maze of Fathaghn (forcing the party to broker a deal), or as an unlikely companion against a mutual enemy. The article also includes backstory suggestions for player characters with Hyrsam connections — protégé, displaced heir, believer who heard his songs as a child. <span class="src-ref src-d422">Dragon 422 pp. 5–6</span></p>
 
-    <h3>4e Stat Block (Reference Only)</h3>
-    <p>Dragon 422 provides a full 4e stat block — Level 23 Elite Skirmisher (Leader), CHA 27, with abilities like Hyrsam's Song (aura 5, allies can save, enemies can't act), Irresistible Dance (burst, charm/psychic/thunder, daze), and Music Never Dies (teleport + full heal when dropped to 0 HP). Not directly usable in 5e but gives a sense of his power tier and combat style. <span class="src-ref src-d422">Dragon 422 p. 5</span></p>
+    <div class="clear"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       09 — REAL-WORLD FOLKLORE
+       ═══════════════════════════════════════════════ -->
+  <section id="folklore-roots">
+    <h2>09 — Real-World Folklore</h2>
+
+    <p>D&D's Feywild draws from centuries of Celtic and European fairy traditions — but flattens them into a single setting. Knowing the originals makes the Feywild richer at the table, because the real folklore is weirder, darker, and more specific than anything WotC has published.</p>
+
+    <p>The Seelie/Unseelie courts are <strong>Scottish</strong>, not Irish. In Ireland, the sidhe (pronounced "shee") — the <em>aes sídhe</em>, people of the hollow mounds — don't split into good and bad courts. Yeats divided Irish fairies into <strong>trooping</strong> (social, court-dwelling, fond of music and processions) and <strong>solitary</strong> (loners — the banshee, the leprechaun, the dullahan). The two systems don't map onto each other neatly, and D&D's binary Seelie/Unseelie is a simplification of the Scottish tradition alone.</p>
+
+    <p><strong>Welsh</strong> fairies are a separate taxonomy entirely. Wirt Sikes catalogued the <em>Tylwyth Teg</em> into five types: Ellyllon (elves), Bwbachod (household brownies), Coblynau (mine spirits), Gwragedd Annwn (lake maidens), and Gwyllion (mountain hags). The Mabinogion — the core Welsh mythology text — contains otherworld journeys and fairy encounters that feel nothing like the Irish or Scottish traditions.</p>
+
+    <p>Common threads across all Celtic fairy lore: iron as a ward, the danger of eating fairy food, the binding power of names and promises, time flowing differently in fairy realms, and the absolute seriousness of hospitality obligations. These are the bones that D&D, Dresden Files, and every modern fantasy treatment built on.</p>
+
+    <p>Key primary sources are listed below. Most are free online. Robert Kirk's <em>Secret Commonwealth</em> (1691) reads like a DM's field guide written by someone who believed every word of it.</p>
   </section>
 
   <!-- ═══════════════════════════════════════════════
@@ -956,9 +951,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section id="sources">
     <h2>Sources</h2>
 
+    <h3>Folklore</h3>
+    <ul class="source-list">
+      <li><span class="book-title">The Secret Commonwealth of Elves, Fauns and Fairies</span> — Robert Kirk (1691). Scottish minister documenting Highland fairy beliefs. The closest thing to a primary source on the sidhe. Free on <a href="https://www.gutenberg.org/ebooks/75485" class="src-link">Project Gutenberg</a> and <a href="https://sacred-texts.com/neu/celt/sce/index.htm" class="src-link">Sacred Texts</a>. NYRB Classics edition (Marina Warner intro) is the best print version.</li>
+      <li><span class="book-title">Fairy and Folk Tales of the Irish Peasantry</span> — W.B. Yeats (1888). The trooping/solitary fairy classification. Irish fairy stories collected and introduced by Yeats. Free on <a href="https://www.gutenberg.org/ebooks/33887" class="src-link">Project Gutenberg</a>.</li>
+      <li><span class="book-title">The Fairy-Faith in Celtic Countries</span> — W.Y. Evans-Wentz (1911). 200+ firsthand testimonies from Ireland, Scotland, Wales, Cornwall, Brittany, Isle of Man. The academic gold standard. Free on <a href="https://sacred-texts.com/neu/celt/ffcc/index.htm" class="src-link">Sacred Texts</a>.</li>
+      <li><span class="book-title">A Dictionary of Fairies</span> — Katharine Briggs (1976). THE reference encyclopedia of fairy folklore. Accessible, thorough, cross-references everything.</li>
+      <li><span class="book-title">British Goblins: Welsh Folk-lore, Fairy Mythology, Legends and Traditions</span> — Wirt Sikes (1880). Welsh fairy taxonomy: Tylwyth Teg, Ellyllon, Coblynau, Gwragedd Annwn, Gwyllion. Free on <a href="https://www.gutenberg.org/ebooks/40909" class="src-link">Project Gutenberg</a>.</li>
+      <li><span class="book-title">The Mabinogion</span> — Anonymous (medieval Welsh, various translations). Core Welsh mythology. Otherworld journeys, enchantments, fairy encounters. Many free translations available.</li>
+    </ul>
+
     <h3>Community</h3>
     <ul class="source-list">
-      <li><span class="book-title"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing" class="src-link">A Guide to the Feywild</a></span> — Community document. Draws heavily from real-world folklore traditions (Scottish Seelie/Unseelie origins, Celtic hag covens, European fey mythology) and is influenced by the Dresden Files universe. Not WotC canon but excellent for grounding fey in folklore rather than D&D mechanics. Covers fey nature, the Three Laws, court hierarchy, weaknesses (iron, running water, thresholds), sidhe, korreds, the Knights of the Courts, and the Wild Hunt. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></li>
+      <li><span class="book-title"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing" class="src-link">A Guide to the Feywild</a></span> — Community Google Doc. Draws heavily from real-world folklore traditions (Scottish Seelie/Unseelie origins, Celtic hag covens, European fey mythology) and is influenced by the Dresden Files universe. Not WotC canon but excellent for grounding fey in folklore rather than D&D mechanics. Covers fey nature, the Three Laws, court hierarchy, weaknesses (iron, running water, thresholds), sidhe, korreds, the Knights of the Courts, and the Wild Hunt. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></li>
+      <li><span class="book-title"><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit" class="src-link">Time for Pleasantries — A Pointy Hat Fae Adventure</a></span> (<a href="https://docs.google.com/document/d/e/2PACX-1vR8lSF5Uwa7Td_23TsOsH5wqBEnYwsRYO1R_jdFeX2vYSQlMhk93ZdU_g0wAQVKlmVyYXNAR9lDKTgC/pub" class="src-link">read</a>) — Pointy Hat, Google Doc (free). Level 5 adventure for four players. Missing children, the Plane of Faerie, a swamp dungeon, and a moral choice with no right answer. Companion to the Feywild video. Referenced in §01 (crossings), §02 (morality), §03 (deals &amp; codes).</li>
+      <li><span class="book-title"><a href="https://docs.google.com/document/d/e/2PACX-1vTjhx9tN4TLtpuC0pP95VZpkYfguDDwkQx7eXSVBWtUUBG2lCyUN-9Kf9SkMEsVpJd5sYRMSUfctIp1/pub" class="src-link">The Moucheron — A Pointy Hat Fey</a></span> — Pointy Hat, Google Doc (free, Creative Commons). Small Fey, CR 8. Seelie martial mercenary paid in blood — Sanguivore trait toggles between Satiated (relaxed, no opportunity attacks) and Voracious (+1 to all attacks). Multiattack with Fey Blade and Stinger, Feeding Frenzy bonus action. Demonstrates the Deals framework from the "Problem with the Fey" video.</li>
     </ul>
 
     <h3>Books</h3>
@@ -983,9 +990,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>To Watch</h3>
     <ul class="source-list">
-      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=kdOyDsCqa6A" class="src-link">The Fey Explained | Complete D&amp;D Lore — Feywild, Archfey, Courts &amp; Creatures</a></span> — Bigjuicyhog's Tome of Lore. Not yet integrated. <span class="src-ref src-yt" style="opacity:0.5;">To Watch</span></li>
-      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=wxhXOhsCXW4" class="src-link">6 Tips for a Better Feywild | Preparing for The Wild Beyond The Witchlight and Other Adventures!</a></span> — The Cleric Corner. Not yet integrated. <span class="src-ref src-yt" style="opacity:0.5;">To Watch</span></li>
-      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=u9zFUqKAJqc" class="src-link">Forgotten Realms — The Feywild: Fey Creatures, Baba Yaga and Tasha</a></span> — Lorepedia. Not yet integrated. <span class="src-ref src-yt" style="opacity:0.5;">To Watch</span></li>
+      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=kdOyDsCqa6A" class="src-link">The Fey Explained | Complete D&amp;D Lore — Feywild, Archfey, Courts &amp; Creatures</a></span> — Bigjuicyhog's Tome of Lore. Not yet integrated. <span class="src-ref src-yt src-dimmed">To Watch</span></li>
+      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=wxhXOhsCXW4" class="src-link">6 Tips for a Better Feywild | Preparing for The Wild Beyond The Witchlight and Other Adventures!</a></span> — The Cleric Corner. Not yet integrated. <span class="src-ref src-yt src-dimmed">To Watch</span></li>
+      <li><span class="book-title"><a href="https://www.youtube.com/watch?v=u9zFUqKAJqc" class="src-link">Forgotten Realms — The Feywild: Fey Creatures, Baba Yaga and Tasha</a></span> — Lorepedia. Not yet integrated. <span class="src-ref src-yt src-dimmed">To Watch</span></li>
     </ul>
   </section>
 

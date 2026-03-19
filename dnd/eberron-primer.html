@@ -75,7 +75,7 @@
       last_war.png (battlefield scene)
 
   SCREEN vs PRINT:
-    @media screen: body 19.5pt, tables 16.5pt, callouts 18pt (150% scale for readability)
+    @media screen: body 14.5pt, tables 12.5pt, callouts 13.5pt (~112% scale, via primer-base.css)
     @media print: body 12pt, white bg, .cover height: 100vh + break-after: page, a.xref hidden
     External deps: Google Fonts, media/eberron_primer/ folder for SVGs and images
 
@@ -110,35 +110,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MB5SNKTZ');</script>
 <!-- End Google Tag Manager -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/primer-base.css">
 <style>
   :root {
-    --ink: #1a1a1a;
-    --parchment: #f5f0e8;
     --accent: #8b2500;
     --accent-light: #c4501a;
-    --gold: #b8860b;
-    --gold-light: #d4a843;
-    --muted: #6b5e50;
-    --divider: #c4b8a8;
-    --table-stripe: #ece6da;
-    --sidebar-bg: #e8e0d2;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 13pt;
-    line-height: 1.6;
-    color: var(--ink);
-    background: var(--parchment);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .page {
-    max-width: 750px;
-    margin: 0 auto;
-    padding: 40px 50px;
   }
 
   /* COVER */
@@ -310,20 +286,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin-right: 4px;
   }
 
-  /* SECTIONS */
-  section { margin-bottom: 32px; }
-  section:last-of-type { margin-bottom: 0; }
-
+  /* Eberron h2 override — adds decorative line */
   h2 {
-    font-family: 'Cinzel', serif;
     font-size: 14pt;
-    font-weight: 600;
     color: var(--accent);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border-bottom: none;
-    padding-bottom: 12px;
-    margin-bottom: 14px;
     position: relative;
     display: flex;
     align-items: center;
@@ -337,37 +303,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background: linear-gradient(90deg, var(--divider) 0%, transparent 100%);
   }
 
+  /* Eberron h3 override — gold accent */
   h3 {
-    font-family: 'Cinzel', serif;
     font-size: 11pt;
-    font-weight: 600;
     color: var(--gold);
-    margin-top: 16px;
-    margin-bottom: 6px;
   }
-
-  p { margin-bottom: 10px; }
 
   strong { font-weight: 600; color: var(--accent); }
 
-  /* CALLOUT BOXES */
-  .callout {
-    background: #eaddd8;
-    border-left: 3px solid var(--accent);
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 12pt;
-  }
+  /* Eberron callout overrides — specific backgrounds and variants */
+  .callout { background: #eaddd8; }
   .callout.gold { border-left-color: var(--gold); background: #f0e8d0; }
-  .callout .label {
-    font-family: 'Cinzel', serif;
-    font-size: 8pt;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 4px;
-  }
+  .callout .label { color: var(--accent); }
   .callout.gold .label { color: var(--gold); }
   .callout.player { border-left-color: #2a6e7a; background: #e8eff2; }
   .callout.player .label { color: #2a6e7a; }
@@ -413,30 +360,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin: 0 auto;
   }
 
-  /* TABLES */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 14px 0;
-    font-size: 11pt;
-  }
-  thead th {
-    font-family: 'Cinzel', serif;
-    font-size: 9pt;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--parchment);
-    background: var(--accent);
-    padding: 8px 10px;
-    text-align: left;
-  }
-  tbody td {
-    padding: 7px 10px;
-    border-bottom: 1px solid var(--divider);
-    vertical-align: top;
-  }
-  tbody tr:nth-child(even) { background: var(--table-stripe); }
-  tbody td:first-child { font-weight: 600; white-space: nowrap; }
+  /* Eberron table override — accent color for headers */
+  thead th { background: var(--accent); }
 
   .sigil-cell {
     text-align: center;
@@ -552,50 +477,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     clear: both;
   }
 
-  /* SCREEN — scale everything to ~150% of print sizes */
+  /* SCREEN — Eberron-specific overrides (~112% scale) */
   @media screen {
-    body { font-size: 19.5pt; }
-    .page { max-width: 1100px; padding: 40px 32px; }
     .cover { min-height: 90vh; }
-    .cover::before { inset: 30px; }
-    .cover::after { inset: 34px; }
-    .cover-corner.tl { top: 18px; left: 18px; }
-    .cover-corner.tr { top: 18px; right: 18px; }
-    .cover-corner.bl { bottom: 18px; left: 18px; }
-    .cover-corner.br { bottom: 18px; right: 18px; }
-    table { font-size: 16.5pt; }
-    .callout { font-size: 18pt; }
-    .toc li { font-size: 16pt; }
-    .toc h2 { font-size: 15pt; }
-    /* Scale fixed-size SVGs for ~150% screen zoom */
-    .artwork-full { width: 780px; height: auto; max-width: 100%; }
-    .artwork-emblem { width: 240px; height: 240px; }
-    .artwork-orrery { max-width: 900px; width: 100%; }
-    .artwork-shards { width: 500px; max-width: 100%; }
-    .cover-emblem { width: 260px; height: 260px; }
-    .cover h1 { font-size: 42pt; letter-spacing: 12px; }
-    .cover .subtitle { font-size: 15pt; letter-spacing: 8px; }
-    .cover .tagline { font-size: 16pt; }
-    .cover .toc li { font-size: 14pt; }
-    .cover .toc h2 { font-size: 13pt; }
-    .cover-rule { width: 240px; }
-    .cover-rule.wide { width: 380px; }
-    .cover-corner { width: 44px; height: 44px; }
-    .divider-ornate { margin: 12px 0; }
-    .divider-ornate img { width: 450px; }
-    section { margin-bottom: 16px; }
-    .sharn-float { width: 330px; }
-    .lore-float-r, .lore-float-l { width: 260px; }
-    .sigil-cell { width: 100px; }
-    .sigil-cell img { width: 80px; height: 80px; }
+    .cover::before { inset: 24px; }
+    .cover::after { inset: 28px; }
+    .cover-corner.tl { top: 14px; left: 14px; }
+    .cover-corner.tr { top: 14px; right: 14px; }
+    .cover-corner.bl { bottom: 14px; left: 14px; }
+    .cover-corner.br { bottom: 14px; right: 14px; }
+    .toc li { font-size: 12pt; }
+    .toc h2 { font-size: 11pt; }
+    /* Scale fixed-size SVGs for screen */
+    .artwork-full { width: 580px; height: auto; max-width: 100%; }
+    .artwork-emblem { width: 180px; height: 180px; }
+    .artwork-orrery { max-width: 670px; width: 100%; }
+    .artwork-shards { width: 370px; max-width: 100%; }
+    .cover-emblem { width: 200px; height: 200px; }
+    .cover h1 { font-size: 32pt; letter-spacing: 9px; }
+    .cover .subtitle { font-size: 11pt; letter-spacing: 6px; }
+    .cover .tagline { font-size: 12pt; }
+    .cover .toc li { font-size: 10.5pt; }
+    .cover .toc h2 { font-size: 10pt; }
+    .cover-rule { width: 180px; }
+    .cover-rule.wide { width: 280px; }
+    .cover-corner { width: 34px; height: 34px; }
+    .divider-ornate { margin: 10px 0; }
+    .divider-ornate img { width: 340px; }
+    section { margin-bottom: 14px; }
+    .sharn-float { width: 250px; }
+    .lore-float-r, .lore-float-l { width: 200px; }
+    .sigil-cell { width: 80px; }
+    .sigil-cell img { width: 60px; height: 60px; }
     a.xref { color: var(--accent); text-decoration: underline dotted; text-underline-offset: 2px; }
   }
 
-  /* ── Mobile ── */
+  /* MOBILE — Eberron-specific overrides */
   @media screen and (max-width: 768px) {
-    body { font-size: 14pt; }
-    .page { padding: 16px 14px; max-width: 100%; }
-
     /* Cover */
     .cover { min-height: 80vh; }
     .cover::before, .cover::after { display: none; }
@@ -615,19 +533,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* TOC */
     .toc ol { columns: 1; }
     .toc li { font-size: 13pt; }
-
-    /* Headings */
-    h2 { font-size: 13pt; letter-spacing: 1px; }
-    h3 { font-size: 11pt; }
-
-    /* Callouts */
-    .callout { font-size: 13pt; padding: 12px 14px; }
-
-    /* Tables */
-    table { font-size: 13pt; }
-    thead th { font-size: 8pt; padding: 6px 8px; }
-    tbody td { padding: 5px 8px; }
-    tbody td:first-child { white-space: normal; }
 
     /* Floated images → full width */
     .lore-float-r, .lore-float-l {
@@ -651,15 +556,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Sigil cells in tables */
     .sigil-cell { width: 50px; }
     .sigil-cell img { width: 40px; height: 40px; }
-
-    /* Back-to-top */
-    .back-to-top { bottom: 16px; right: 16px; width: 34px; height: 34px; font-size: 16px; }
   }
 
-  /* PRINT */
+  /* PRINT — Eberron-specific print adjustments */
   @media print {
-    body { background: white; font-size: 12pt; }
-    .page { padding: 0; max-width: none; }
     .cover {
       min-height: 0;
       height: 100vh;
@@ -727,38 +627,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .back-to-top:hover { opacity: 1; }
   @media print { .back-to-top { display: none; } }
-
-  /* Floating nav */
-  .float-nav {
-    position: fixed;
-    bottom: 20px;
-    width: 40px;
-    height: 40px;
-    z-index: 100;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .float-nav:hover { opacity: 1; }
-  .float-nav-up {
-    right: 20px;
-    background: var(--gold, #b8860b);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 1;
-  }
-  .float-nav-home {
-    left: 20px;
-  }
-  .float-nav-home img {
-    width: 40px;
-    height: 40px;
-  }
-  @media print { .float-nav { display: none !important; } }
 </style>
 </head>
 <body>
@@ -927,7 +795,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <p>Eberron has an origin myth older than the Age of Monsters, and it shapes <em>everything</em>. Three Progenitor Dragons created reality, and their bodies <strong>became</strong> reality.</p>
 
-  <div class="artwork" style="margin: 16px 0;">
+  <div class="artwork artwork-block">
     <img class="artwork-emblem" src="media/eberron_primer/progenitors.svg" alt="The Three Progenitor Dragons — Siberys above, Eberron around, Khyber within" style="filter: drop-shadow(0 2px 4px rgba(139,37,0,0.15));"/>
   </div>
 
@@ -951,7 +819,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h3 id="thirteen-planes">The Thirteen Planes</h3>
   <p>The Progenitors created thirteen planes—each an idealised expression of a single concept. These planes orbit the material world, waxing and waning in influence. Where they press close, <strong>manifest zones</strong> form: permanent patches of planar bleed-through that define Eberron's geography. Sharn's impossible towers exist because a Syrania zone makes things lighter there. A village near a Mabar zone has undead crawling from the soil every new moon.</p>
 
-  <div class="artwork" style="margin: 20px 0;">
+  <div class="artwork artwork-block">
     <img class="artwork-orrery" src="media/eberron_primer/cosmology.svg" alt="Eberron's Orrery — thirteen planes orbiting the material world"/>
   </div>
 
@@ -1108,7 +976,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="artwork">
     <img class="artwork-full" src="media/eberron_primer/mournland.svg" alt="The Mournland — desolate landscape"/>
   </div>
-  <div style="clear: both;"></div>
+  <div class="clear"></div>
 </section>
 
 <!-- Divider -->
@@ -1327,7 +1195,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h2 id="dragonshards">07 — Dragonshards</h2>
   <p>The Progenitor Dragons left behind a resource. <strong>Dragonshards</strong> are crystallised fragments of the three dragons' essence, and they fuel Eberron's magical civilisation. Without dragonshards, no bound elementals, no creation forges, no dragonmarks at full strength. They are Eberron's oil.</p>
 
-  <div class="artwork" style="margin: 16px 0;">
+  <div class="artwork artwork-block">
     <img class="artwork-shards" src="media/eberron_primer/dragonshards.svg" alt="Three types of dragonshards — Siberys (golden), Eberron (rose), Khyber (dark)"/>
   </div>
 
@@ -1630,7 +1498,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="label">DM Note — Running Sharn</span>
     Use elevation as tonal shorthand — "you descend three levels" tells players the mood just shifted. Population ~200,000, the largest city on the continent. Every house has an enclave, every conspiracy has a foothold. The key crime conflict: Boromar Clan (halfling mob, old money) vs. Daask (Droaam muscle, pushing in). Your address tells everyone your story — pick a ward at character creation and let it shape who you know.
   </div>
-  <div style="clear: both;"></div>
+  <div class="clear"></div>
 
   <!-- Karrnath -->
   <h3 id="karrnath-the-gothic-nation">Karrnath, the Gothic Nation</h3>
@@ -1742,7 +1610,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="label">DM Note — The Conspiracy Stack</span>
     Eberron's conspiracies nest. Street level: Boromar Clan vs. Daask. Above that: nations spy on each other (Dark Lanterns vs. Royal Eyes). Above <em>that</em>: dragonmark houses play economic chess. Above everything: the Chamber and Lords of Dust manipulate it all for prophetic ends. Your campaign can operate at any layer — or let players slowly discover each layer has a layer above it. The goblin gang war was funded by a house agent, manipulated by a rakshasa, countered by a polymorphed dragon. That realisation is when your campaign becomes unforgettable.
   </div>
-  <div style="clear: both;"></div>
+  <div class="clear"></div>
 
   <!-- Faction relationship diagram — SVG with card nodes -->
   <img src="media/eberron_primer/factions.svg" width="100%" alt="Faction relationships diagram" style="margin: 16px 0;"/>
