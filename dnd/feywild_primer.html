@@ -11,21 +11,33 @@
   STRUCTURE:
     - Header with WBtW cover image
     - TOC
-    - 01 What Is the Feywild? (brief overview, storybook logic, time, peril, wild magic, fey crossings)
-    - 02 The Fey — Alien Neighbors (creature type overview, folklore, blue-and-orange morality, fey nature constraints, power of three)
-    - 03 Seelie & Unseelie (folklore origins, two courts, edition tangles, Deals & Codes framework, Moucheron + Mamshee examples, Three Laws, Court Hierarchy [DRESDEN])
-    - 04 Fey Factions (4e detail: Court of Stars, Summer/Green/Winter/Gloaming, Court of Coral)
+    - 01 What Is the Feywild? (brief overview, storybook logic, time, peril, wild magic, fey crossings
+         [now with DoD examples], weather [DoD], spells cosmetic reinterpretation [DoD], domain borders [DoD])
+    - 02 The Fey — Alien Neighbors (creature type overview, folklore, blue-and-orange morality,
+         fey nature constraints, power of three, Fey Outlook [DoD: reciprocity, hospitality, gifts],
+         Fey Contracts [DoD: accidental, making, price, breaking], Fey Curses [DoD])
+    - 03 Seelie & Unseelie (DoD official framing as main text, folklore origins, edition tangles,
+         purity/exclusivity in Meta callout (source: Constructed Chaos YT, NOT 4e HotF), queen rivalry/squabble from DoD,
+         Deals & Codes framework [HOMEBREW], Moucheron + Mamshee examples, Three Laws [FOLKLORE],
+         Court Hierarchy [DRESDEN])
+    - 04 Fey Factions (4e detail: Court of Stars, Summer/Green/Winter/Gloaming, Court of Coral — now with
+         callout noting these are 4e-specific, DoD focuses on Summer/Gloaming as the most prominent courts)
     - 04b Fey Weaknesses (iron, running water, thresholds [split: Folklore core + Dresden power mechanics])
-    - 05 Fey Creatures & Species (hags, dryads, blink dogs, eladrin, sidhe, korreds, playable species: satyr/fairy/centaur, summer/winter fey additions [malks removed])
+    - 05 Fey Creatures & Species (hags, dryads, blink dogs, eladrin, sidhe, korreds, playable species:
+         satyr/fairy/centaur, summer/winter fey additions [malks removed])
     - 06 Key Locations (Senaliesse, Astrazalian, Mithrendain, Shinaelestra, Vale of Long Night,
          Maze of Fathaghn, Murkendraw, Cendriane, Nachtur, Isle of Dread, Feydark, Fomorian Cities)
-    - 07 The Archfey (overview with Court column showing Seelie/Unseelie alignment per archfey, Knights of the Courts [DRESDEN])
+    - 07 The Archfey & Domains of Delight (expanded with DoD Ch.2-3: archfey creation framework,
+         court allegiances, presentation/personality/obsession tables [ref], signature magic, magical gifts,
+         archfey statistics [Fey Rebirth, Legendary Resistance], Domains of Delight concept,
+         domain features/theme/crossings/travel/weird magic/denizens [all table refs],
+         Yarnspinner & Fablerise example, existing archfey table, Knights of the Courts [DRESDEN])
     - 07b The Wild Hunt (Erlking [DRESDEN], Vadderung [DRESDEN], Vold [DRESDEN], Feast of the Moon [FOLKLORE])
     - 08 Hyrsam, Prince of Fools (deep section — lore, personality, goals, possessions as Dragon Magazine-style
          floating inset cards [Hyrsam Fiddle, Fiddlestick, Horn of Revelry, 4e Stat Reference],
          Grove of Laughing Goats, encounter hooks, revelers, relevance to Twinkle)
     - 09 Real-World Folklore (Irish/Scottish/Welsh distinctions, primary source pointers)
-    - Sources (Folklore references + Community + Books + YouTube)
+    - Sources (Folklore references + Community + Books [now includes DoD] + YouTube)
 
   MEDIA:
     media/feywild_primer/wild_witchlight.jpg — header image (WBtW cover art)
@@ -39,10 +51,11 @@
     Follows site parchment theme (Cinzel headings, Crimson Pro body)
     Colors: --accent (#2a6040 forest green for fey theme), --gold (#b8860b), --muted (#6b5e50)
     Callouts use fey green instead of Eberron red
-    Source pills: src-hotf, src-d422, src-phb, src-wbtw, src-mtof, src-yt, src-folk
+    Source pills: src-hotf, src-d422, src-phb, src-wbtw, src-mtof, src-dod, src-yt, src-folk
       PH · Feywild / PH · Fey Problem = differentiated Pointy Hat videos
       Folk Guide = community folklore/Dresden doc (Google Docs link)
       MToF = Mordenkainen's Tome of Foes (out of print, superseded by MotM)
+      DoD = Domains of Delight (5e, 2021) — THE official 5e Feywild sourcebook
     Sys-pills (.sys-pill + color classes) label content origin: 4e, 5e, Folklore, Dresden, Meta, or Homebrew
       Placed as first element inside callout divs, before .label spans
       More visible than source refs — larger font, rounded, distinct background colors
@@ -213,6 +226,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .src-phb { background: rgba(139,37,0,0.1); color: #8b2500; }
   .src-wbtw { background: rgba(106,90,161,0.1); color: #6a5aa1; }
   .src-mtof { background: rgba(90,60,140,0.15); color: #5a3c8c; }
+  .src-dod { background: rgba(180,80,60,0.12); color: #b4503c; }
   .src-ph { background: rgba(204,0,0,0.08); color: #cc0000; }
   .src-ph a { color: inherit; text-decoration: none; }
   .src-ph a:hover { text-decoration: underline; }
@@ -397,7 +411,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><a href="#fey-weaknesses">Fey Weaknesses</a></li>
       <li><a href="#fey-creatures">Fey Creatures &amp; Species</a></li>
       <li><a href="#locations">Key Locations</a></li>
-      <li><a href="#archfey">The Archfey</a></li>
+      <li><a href="#archfey">The Archfey &amp; Domains of Delight</a></li>
       <li><a href="#hyrsam">Hyrsam, Prince of Fools</a></li>
       <li><a href="#folklore-roots">Real-World Folklore</a></li>
       <li><a href="#sources">Sources</a></li>
@@ -419,7 +433,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout gold">
       <span class="sys-pill sys-meta">Meta</span>
       <span class="label">Sources &amp; Colour Coding</span>
-      This primer draws from official D&D books (tagged <span class="sys-pill sys-4e" style="margin:0;">4e</span> and <span class="sys-pill sys-5e" style="margin:0;">5e / 5.5e</span>), YouTube deep-dives, and a <a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing" class="src-link">community guide</a> that blends real-world Celtic and European fairy lore with Jim Butcher's <em>Dresden Files</em> novels. Butcher himself drew heavily from that same folklore, so the two are intertwined — but where the guide adds concepts that exist only in the novels (court hierarchy tiers, fey knights, specific Wild Hunt lords), those are tagged <span class="sys-pill sys-dresden" style="margin:0;">Dresden</span> so you know they're not D&amp;D canon. Everything tagged <span class="sys-pill sys-folk" style="margin:0;">Folklore</span> has roots in real-world fairy traditions.
+      This primer draws from official D&D books (tagged <span class="sys-pill sys-4e" style="margin:0;">4e</span> and <span class="sys-pill sys-5e" style="margin:0;">5e / 5.5e</span>), YouTube deep-dives, and a <a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing" class="src-link">community guide</a> that blends real-world Celtic and European fairy lore with Jim Butcher's <em>Dresden Files</em> novels. <strong>Domains of Delight</strong> (2021) is treated as the primary 5e Feywild source — where it and older material disagree, DoD's framing is presented as main text and the older version moves to a callout. Butcher drew heavily from the same folklore traditions, so the two are intertwined — but where the guide adds concepts that exist only in the novels (court hierarchy tiers, fey knights, specific Wild Hunt lords), those are tagged <span class="sys-pill sys-dresden" style="margin:0;">Dresden</span> so you know they're not D&amp;D canon. Everything tagged <span class="sys-pill sys-folk" style="margin:0;">Folklore</span> has roots in real-world fairy traditions.
     </div>
 
     <p>The Feywild is a parallel plane of wild magic and untamed nature — an echo of the material world turned up to eleven. The laws of science, logic, and reason give way to story, rhyme, and emotion. Enchanted forests stretch endlessly, animals talk, castles perch on mountain spires, and time flows differently depending on where you stand.</p>
@@ -458,8 +472,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="callout">
       <span class="sys-pill sys-5e">5e / 5.5e</span>
       <span class="label">Fey Crossings</span>
-      The most common (and most unsettling) way to reach the Feywild is via a fey crossing — a place where the two planes blur together. These aren't obvious portals. You walk through an orchard and find yourself in a fey garden. You swim in a pond and surface on another plane. Some crossings are keyed to specific times (noon, an anniversary, a solstice). The creative part: no two crossings work the same. One might be a circle of white mushrooms that requires crushed moth wings to activate. Another could be a living person whose dreams become a portal during a full moon. The rules are esoteric and arbitrary — deliberately so. This is less a flaw and more a feature of the Feywild's nature. Even fey natives find them capricious.
-      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=xNv3dKIf1Jg">Taking20</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span> <span class="src-ref src-ph"><a href="https://docs.google.com/document/d/1VTvPIv3OskVJhCqKDnx3bMdYRq5HahiERiphWYuxwoc/edit">PH · Adventure</a></span>
+      The most common way to reach the Feywild without <em>plane shift</em> is via a fey crossing — a place where the two planes blur together. Geographical features on one side tend to mirror the other. No two crossings work the same; some operate only at certain times or when certain conditions are met. An archfey is usually aware of any crossings into their domain. DoD provides a d8 table of crossing types — mushroom circles, hollow trees, stone altars, crystal caves, ruined towers, and more.
+      <br><span class="src-ref src-dod">DoD pp. 17–18</span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=xNv3dKIf1Jg">Taking20</a></span> <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=7BTxqnFK-4Y">PH · Feywild</a></span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Feywild Weather</span>
+      DoD includes a d8 Feywild Weather table with effects lasting an hour or so — flower-blossom rain, tiny fruit tarts falling from the sky, fog that gives you fog moustaches, or a howling wind that steals trinkets from your pockets.
+      <br><span class="src-ref src-dod">DoD p. 5</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Spells in the Feywild</span>
+      Spells take on cosmetic Feywild flavour here — <em>magic missile</em> might manifest as a giggling sprite firing tiny glowing arrows, <em>phantom steed</em> looks like a giant fuzzy caterpillar. DoD provides a short table of examples.
+      <br><span class="src-ref src-dod">DoD pp. 4–5</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Domain Borders</span>
+      Domains of Delight can grow or shrink with their archfey's power. Overlapping domains cause territorial disputes; borders can be sealed with shimmering mist, magic barriers, or riddles.
+      <br><span class="src-ref src-dod">DoD p. 5</span>
     </div>
 
     <div class="callout gold">
@@ -504,6 +539,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="label">The Power of Three</span>
       Three is a binding number in fey tradition. Three queens per court. Hag covens of three. The Mothers may themselves be the Fates of legend. Spells and rituals throughout the Feywild use threes. Significantly, a question asked thrice forces a truthful answer — and when a fey asks the same question three times, it shows they are being genuine rather than trying to trick you through wordplay or omission. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span>
     </div>
+
+    <h3>Fey Outlook — Reciprocity, Hospitality, Gifts</h3>
+
+    <p>DoD codifies the core social rules of fey society into three pillars — the operating system of fey interaction. <span class="src-ref src-dod">DoD pp. 6–7</span></p>
+
+    <p><strong>Reciprocity.</strong> If something is taken, something of equal value must be given — but fey appraise by sentiment, not gold. <strong>Hospitality.</strong> Courtesy is expected from both host and visitor; rudeness breaks the bond. DoD includes d8 tables for generating Feywild guides (names, identities, quirks). <strong>Gifts.</strong> Fey are avid gift-givers; good gifts have sentimental value, throwaway gifts are an insult. Accepting a gift can indebt you — forming an accidental fey contract.</p>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Fey Contracts</span>
+      A fey contract forms when a creature receives a gift and is expected to give something in return. You can accidentally enter one by accepting a gift, stealing from a fey, or killing a debtor (inheriting the debt). Lesser contracts break with <em>remove curse</em>; greater ones require <em>wish</em>. DoD provides d8 tables for contract gifts, what the fey wants in return, and penalties for breaking contracts.
+      <br><span class="src-ref src-dod">DoD pp. 7–9</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Fey Curses</span>
+      Curses are common punishments among archfey. DoD provides a d8 Fey Curses table and a d12 Ending the Curse table with wonderfully specific rituals (speak the curser's true name three times, get bitten by a faerie dragon of a particular colour, persuade a centaur to carry you for eight miles).
+      <br><span class="src-ref src-dod">DoD p. 10</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Fey Abodes</span>
+      DoD's d20 Fey Abodes table is a great encounter generator — a windmill on giant crow's feet, a gingerbread cottage, a walking stone colossus with a tower for a head, a dragon skull in the sand.
+      <br><span class="src-ref src-dod">DoD p. 11</span>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════
@@ -516,22 +578,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Seelie and unseelie are a Scottish classification of the fey, with "seelie" being a much older Middle English term. The classification dates to at least the late 18th century in transcribed form, though the tales are likely much older. Seelie means happy, blessed, lucky. Unseelie means the opposite. It's not good vs. evil — it's more like "less likely to be evil" vs. "almost certainly dangerous." Even seelie fey are so flighty and dangerous that mortals refer to them with compliments ("the fair folk," "the good neighbors") to avoid angering them. Unseelie in the folklore are pretty unanimously portrayed as evil or at minimum never helpful. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=MNDuOiF1e7w">PH · Fey Problem</a></span></p>
 
-    <h3>The Two Courts: Seelie &amp; Unseelie</h3>
+    <h3>The Two Courts: Summer &amp; Gloaming</h3>
 
-    <p>The fundamental division in fey society is between the <strong>Seelie</strong> and <strong>Unseelie</strong> — two overarching courts to which most fey owe allegiance. This isn't a faction you join so much as a disposition you're drawn to. A feywild town, a wandering prince, a dryad grove — almost everything in the Feywild flies one banner or the other.</p>
+    <p>The fundamental division in fey society is between the <strong>Summer Court</strong> (Seelie) and the <strong>Gloaming Court</strong> (Unseelie). The two are not moral opposites — good and evil fey exist in both. Seelie fey cling to civilisation, protocol, and tradition. Unseelie fey indulge primal instincts, shun conformity, and dabble in mysterious magic. Both courts stretch across the Feywild but are by no means the only fey courts — just the most widespread. <span class="src-ref src-dod">DoD p. 3</span></p>
 
     <table>
       <tr><th>Court</th><th>Nature</th><th>Ruler</th></tr>
-      <tr><td>Seelie</td><td>The Summer Court. Drawn to laughter, music, merriment, beauty. Joyful. More likely to <em>seem</em> good — but "seeming good" and "being good" are very different things in the Feywild. Membership is exclusive: typically limited to pure fey creatures. Courtiers gain status by hosting parties and presenting gifts to the queen. Those with mixed blood are viewed as repellent.</td><td>Queen Titania (+ Oberon as consort in some sources)</td></tr>
-      <tr><td>Unseelie</td><td>The Gloaming Court. Dark, melancholy, mysterious, star-touched. More likely to <em>appear</em> evil, but not inherently so. The Queens are sisters — this is a family feud, not a cosmic war of good vs. evil. Unlike the Seelie, the Unseelie accept anyone with even a drop of fey heritage — those rejected by the Summer Court often find a place to belong here.</td><td>Queen of Air &amp; Darkness</td></tr>
+      <tr><td>Summer Court<br>(Seelie)</td><td>Favours sunshine, butterflies, flowers, music, and singing birds. Values ceremony and refinement — formal etiquette, proper speech, extravagant dinner parties. Favours elaborate, manufactured costuming with immaculate tailoring. Harshly judges those who lack proper etiquette — social blunders earn you the label "buffoon." <span class="src-ref src-dod">DoD p. 4</span></td><td>Queen Titania (+ Oberon as consort in some sources)</td></tr>
+      <tr><td>Gloaming Court<br>(Unseelie)</td><td>Favours gloom, twilight, cobwebs, fireflies, hooting owls, and croaking frogs. Values the intuitive and instinctual — mystical rituals, visionaries, and firelit parties. Wears only unfinished natural materials and sleeps under the stars. Dabbles in mysterious magic and rituals; adventurers who don't follow the Unseelie ways can run afoul of curses. <span class="src-ref src-dod">DoD p. 4</span></td><td>Queen of Air &amp; Darkness</td></tr>
     </table>
+
+    <p>Both courts have spies who dig up dirt and cause mischief; captured spies are humiliated rather than killed. Conflicts are often ritualised — heated debates, dance competitions, bawdy insults. When the queens themselves lock horns, squabbles can turn to bloodshed, but only they can declare all-out war. There is no mutual defence pact — the thought would be jeered at by both sides. <span class="src-ref src-dod">DoD pp. 3–4</span></p>
+
+    <div class="callout gold">
+      <span class="sys-pill sys-meta">Meta</span>
+      <span class="label">Summer Court Exclusivity (Not in 5e)</span>
+      Some community sources describe the Summer Court as exclusive: membership limited to pure fey creatures, with courtiers gaining status by hosting parties and presenting gifts to the queen. Those with mixed blood are viewed as repellent — and those rejected by the Summer Court often find a home in the Unseelie court instead. This framing does not appear in the 4e sourcebook (HotF) nor in Domains of Delight. The 5e version makes the Seelie/Unseelie split about values (civilisation vs. instinct) rather than bloodline.
+      <br><span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=No4JyfVsE7U">Constructed Chaos</a></span>
+    </div>
 
     <p>The words themselves come from old Scots/English — "seelie" means happy or blessed, "unseelie" means unhappy or unblessed. Think joyful vs. melancholy rather than good vs. evil. A seelie fey might charm you into dancing until your feet bleed because it's <em>fun</em>. An unseelie fey might shelter you from a storm out of cold obligation. Neither is safe. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=i7VoNVW5xH8">Tales Arcane</a></span> One further wrinkle: fey creatures don't necessarily use these terms themselves. "Seelie" and "Unseelie" may be material-plane labels — shorthand mortals use to sort trustworthy-seeming fey from untrustworthy-seeming ones, which is a distinction the fey themselves find irrelevant. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=xNv3dKIf1Jg">Taking20</a></span></p>
 
     <div class="callout gold">
       <span class="sys-pill sys-meta">Meta</span>
       <span class="label">Edition Tangle — 4e vs. 5e</span>
-      Here's where it gets wonderfully contradictory. The 5e framing (WBtW, various sourcebooks, community consensus) treats Seelie/Unseelie as <em>the</em> big binary — Summer Court vs. Gloaming Court, Titania vs. Queen of Air and Darkness. Clean. Simple. But the 4e sourcebook (HotF) doesn't use "Seelie" and "Unseelie" as its organising principle at all — it describes six granular factions (below) that don't map neatly onto the two-court model. The Gloaming Fey in 4e are dream-and-twilight creatures, not the "Unseelie court" per se. The Queen of Air and Darkness is mentioned but her relationship to the Gloaming Fey is left ambiguous. This is part of the charm — the Feywild's own politics are as contradictory and mutable as its geography.
+      The 5e framing (DoD, WBtW) focuses on Summer Court vs. Gloaming Court as the most prominent courts — but DoD explicitly notes these are "by no means the only great Fey courts." The two are differentiated by temperament (civilisation vs. instinct), not morality. The 4e sourcebook (HotF) doesn't use "Seelie" and "Unseelie" as its organising principle at all — it describes six granular factions (see §04) that don't map neatly onto the two-court model. The Gloaming Fey in 4e are dream-and-twilight creatures, not "the Unseelie court" per se. Note: the Summer Court exclusivity/bloodline framing sometimes attributed to 4e actually comes from community sources (see callout above), not from HotF itself. The 4e factions are richer in granularity; the 5e model is cleaner for play. Pick what serves your table.
     </div>
 
     <div class="callout gold">
@@ -593,6 +664,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>Fey Factions (4e Detail)</h3>
 
+    <div class="callout gold">
+      <span class="sys-pill sys-4e">4e</span>
+      <span class="label">4e-Specific Factions</span>
+      These six factions come from Heroes of the Feywild (4e, 2011). DoD focuses on Summer and Gloaming as the most prominent courts but notes they are "by no means the only great Fey courts." The 4e factions remain useful for granularity — especially the Court of Stars, the Green Fey, and the Court of Coral, which have no direct 5e equivalent.
+    </div>
+
     <p>Heroes of the Feywild breaks fey allegiances into more granular factions. These exist <em>within</em> the Seelie/Unseelie framework — or across it, or sideways to it, depending on which edition you ask.</p>
 
     <table>
@@ -608,10 +685,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       04b — FEY WEAKNESSES
+       05 — FEY WEAKNESSES
        ═══════════════════════════════════════════════ -->
   <section id="fey-weaknesses">
-    <h2>04b — Fey Weaknesses</h2>
+    <h2>05 — Fey Weaknesses</h2>
 
     <p>Folklore preserves three material weaknesses that affect fey across all courts and factions. These are not merely vulnerabilities — they are primal forces that constrain fey power at the most fundamental level. <span class="src-ref src-folk"><a href="https://docs.google.com/document/d/1N1W_v8kBnukfUxSEkGDAjQ6_rSzlBCtMt1Hs2PlIc6w/edit?usp=sharing">Folk Guide</a></span></p>
 
@@ -647,10 +724,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       05 — FEY CREATURES &amp; SPECIES
+       06 — FEY CREATURES &amp; SPECIES
        ═══════════════════════════════════════════════ -->
   <section id="fey-creatures">
-    <h2>05 — Fey Creatures &amp; Species</h2>
+    <h2>06 — Fey Creatures &amp; Species</h2>
 
     <p>What specific fey can you encounter or play as? The range is vast — from the terrifying hags to the adorable blink dogs, from the seasonal eladrin to the tiny fairies.</p>
 
@@ -741,10 +818,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       06 — KEY LOCATIONS
+       07 — KEY LOCATIONS
        ═══════════════════════════════════════════════ -->
   <section id="locations">
-    <h2>06 — Key Locations</h2>
+    <h2>07 — Key Locations</h2>
 
     <h3>Eladrin Cities</h3>
     <table>
@@ -785,12 +862,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       07 — THE ARCHFEY
+       08 — THE ARCHFEY &amp; DOMAINS OF DELIGHT
        ═══════════════════════════════════════════════ -->
   <section id="archfey">
-    <h2>07 — The Archfey</h2>
+    <h2>08 — The Archfey &amp; Domains of Delight</h2>
 
-    <p>Archfey are the most powerful beings in the Feywild — fey creatures who have accumulated enough magic to rival gods. Their personal domains (demesnes) reflect their nature — literally. The landscape around an archfey shifts to match their mood and personality, like a mood ring the size of a kingdom. Warlocks can make pacts with archfey as patrons. The PHB lists five as examples. Note how the Seelie/Unseelie alignment cuts across individual archfey rather than defining them — most lean one way, but "lean" is doing heavy lifting. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=eRYL_b-1KF4">Jorphdan</a></span></p>
+    <p>Archfey are among the most powerful fey — they transform their Feywild homes into reflections of their personalities. Each archfey's territory is a <strong>Domain of Delight</strong>, the Feywild equivalent of a Domain of Dread. A domain can be a few acres or a country. Swearing allegiance to a queen grants an archfey audiences and protection; staying neutral risks spies overrunning your domain. <span class="src-ref src-dod">DoD pp. 3, 12</span></p>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Creating an Archfey (DoD Ch. 2)</span>
+      DoD provides d8 tables for: Presentation, Personality, Obsessions, Signature Magic, and Magical Gifts — plus stat block guidelines (take CR 5+, change type to Fey, add <strong>Fey Rebirth</strong> and <strong>Legendary Resistance 3/Day</strong>).
+      <br><span class="src-ref src-dod">DoD pp. 12–15</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Creating a Domain of Delight (DoD Ch. 3)</span>
+      d8 tables for: Geographical Features, Domain Theme, Fey Crossings, Shortcut Routines, Domain Drama, Weird Magic Effects, Feywild Creatures by CR, and Domain Visitors.
+      <br><span class="src-ref src-dod">DoD pp. 16–21</span>
+    </div>
+
+    <div class="callout">
+      <span class="sys-pill sys-5e">5e / 5.5e</span>
+      <span class="label">Example: Yarnspinner &amp; Fablerise (DoD Ch. 4)</span>
+      DoD demonstrates the system with <strong>Yarnspinner</strong>, a Huge spider-shaped archfey — monstrous in form, benevolent personality, obsessed with stories. His domain <strong>Fablerise</strong> is a gloomy thicket of roots and creepers (~3 sq. miles). Full stat block included (CR 10).
+      <br><span class="src-ref src-dod">DoD pp. 22–23</span>
+    </div>
+
+    <h3>Known Archfey</h3>
+
+    <p>The archfey table below collects named archfey from across editions. Note how Seelie/Unseelie alignment cuts across individual archfey rather than defining them — most lean one way, but "lean" is doing heavy lifting. <span class="src-ref src-yt"><a href="https://www.youtube.com/watch?v=eRYL_b-1KF4">Jorphdan</a></span></p>
 
     <table>
       <tr><th>Archfey</th><th>Title / Domain</th><th>Court</th><th>Notes</th></tr>
@@ -813,10 +915,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       07b — THE WILD HUNT
+       09 — THE WILD HUNT
        ═══════════════════════════════════════════════ -->
   <section id="wild-hunt">
-    <h2>07b — The Wild Hunt</h2>
+    <h2>09 — The Wild Hunt</h2>
 
     <div class="callout gold">
       <span class="sys-pill sys-folk">Folklore</span>
@@ -848,10 +950,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       08 — HYRSAM, PRINCE OF FOOLS
+       10 — HYRSAM, PRINCE OF FOOLS
        ═══════════════════════════════════════════════ -->
   <section id="hyrsam">
-    <h2>08 — Hyrsam, Prince of Fools</h2>
+    <h2>10 — Hyrsam, Prince of Fools</h2>
 
     <div class="hyrsam-portrait">
       <a href="media/feywild_primer/hyrsam.png" class="glightbox" data-gallery="hyrsam" data-desc="Hyrsam, Prince of Fools — the Satyr Prince">
@@ -929,10 +1031,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       09 — REAL-WORLD FOLKLORE
+       11 — REAL-WORLD FOLKLORE
        ═══════════════════════════════════════════════ -->
   <section id="folklore-roots">
-    <h2>09 — Real-World Folklore</h2>
+    <h2>11 — Real-World Folklore</h2>
 
     <p>D&D's Feywild draws from centuries of Celtic and European fairy traditions — but flattens them into a single setting. Knowing the originals makes the Feywild richer at the table, because the real folklore is weirder, darker, and more specific than anything WotC has published.</p>
 
@@ -974,6 +1076,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><span class="book-title">Dragon Magazine #422</span> — "Hyrsam, Prince of Satyrs" by Mark Monack (April 2013). Pages 4–8. Full lore, stat block, magic items (fiddle, fiddlestick, horn of revelry), reveler monster theme, encounter hooks. The deepest official treatment of Hyrsam. <span class="src-ref src-d422">D422</span></li>
       <li><span class="book-title">Player's Handbook</span> (5e, 2014 &amp; 2024) — Lists Hyrsam as an example Archfey Warlock patron alongside Titania, Oberon, Queen of Air and Darkness, and Prince of Frost. <span class="src-ref src-phb">PHB</span></li>
       <li><span class="book-title">Mordenkainen's Tome of Foes</span> (5e, 2018) — WotC. Out of print (superseded by MotM). Chapter 2 "Elves" pp. 50–51: eladrin as primal elves, their Feywild cities and decadent culture, fomorian origin story (giants allied with elves, corrupted by greed, cursed underground). Official 5e source for the elf/eladrin/Feywild connection. <span class="src-ref src-mtof">MToF</span></li>
+      <li><span class="book-title">Domains of Delight</span> (5e, 2021) — Adam Lee. WotC. 25 pages. The definitive 5e Feywild accessory: Seelie/Unseelie court framing, fey outlook (reciprocity, hospitality, gifts), fey contracts and curses with tables, archfey creation toolkit (presentation, personality, obsessions, signature magic, magical gifts, statistics), Domain of Delight creation (geographical features, themes, fey crossings, travel shortcuts, weird magic, drama, denizens), plus example archfey Yarnspinner with stat block and domain Fablerise. Companion to The Wild Beyond the Witchlight. <span class="src-ref src-dod">DoD</span></li>
       <li><span class="book-title">The Wild Beyond the Witchlight</span> (5e, 2021) — Feywild adventure module focused on Zybilna and the Domains of Delight. Hyrsam is not a central figure but the Feywild material is relevant context. <span class="src-ref src-wbtw">WBtW</span></li>
       <li><span class="book-title">Sword Coast Adventurer's Guide</span> (5e, 2015) — Brief mention of Hyrsam, p. 138.</li>
     </ul>
@@ -995,7 +1098,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><span class="book-title">Tasha's Cauldron of Everything</span> (5e, 2020) — Feywild-themed subclasses (Fey Wanderer Ranger), supernatural regions rules with Feywild-touched area random effects table. <span class="src-ref src-dimmed">To Read</span></li>
       <li><span class="book-title">Fizban's Treasury of Dragons</span> (5e, 2021) — Faerie dragon expanded lore and stat blocks across age categories. <span class="src-ref src-dimmed">To Read</span></li>
       <li><span class="book-title">Monster Manual</span> (5e, 2025) — Updated fey creature entries: eladrin, dryads, hags, blink dogs, displacer beasts, and more. Check for lore changes vs. older editions. <span class="src-ref src-dimmed">To Read</span></li>
-      <li><span class="book-title">Domains of Delight</span> (5e, 2021) — Archfey domain creation toolkit. Rules for building custom Feywild pocket dimensions. Ordered. <span class="src-ref src-dimmed">To Read</span></li>
     </ul>
 
     <h3>To Watch</h3>

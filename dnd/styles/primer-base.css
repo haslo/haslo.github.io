@@ -1,0 +1,223 @@
+/* primer-base.css
+   Shared CSS for D&D primer documents (Eberron, Feywild, etc.)
+   Base print sizes (13pt) with @media screen scaling to 14.5pt.
+*/
+
+:root {
+  --ink: #1a1a1a;
+  --parchment: #f5f0e8;
+  --gold: #b8860b;
+  --gold-light: #d4a843;
+  --muted: #6b5e50;
+  --divider: #c4b8a8;
+  --table-stripe: #ece6da;
+  --sidebar-bg: #e8e0d2;
+}
+
+/* UNIVERSAL RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* BODY — Print base (13pt), screen scales via @media screen */
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 13pt;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--parchment);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PAGE CONTAINER — Print base (750px), screen scales via @media screen */
+.page {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 40px 50px;
+}
+
+/* SECTIONS & PARAGRAPHS */
+section { margin-bottom: 32px; }
+section:last-of-type { margin-bottom: 0; }
+p { margin-bottom: 10px; }
+p:last-child { margin-bottom: 0; }
+
+/* TYPOGRAPHY — HEADINGS */
+h2 {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+}
+
+h3 {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 11pt;
+}
+
+thead th {
+  font-family: 'Cinzel', serif;
+  font-size: 9pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--parchment);
+  background: var(--accent);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+tbody td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) { background: var(--table-stripe); }
+tbody td:first-child { font-weight: 600; white-space: nowrap; }
+
+/* CALLOUT BOXES — Base structure */
+.callout {
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 12pt;
+}
+
+.callout .label {
+  font-family: 'Cinzel', serif;
+  font-size: 8pt;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* SOURCE PILLS — Base structure and shared variants */
+.src-ref {
+  font-family: 'Cinzel', serif;
+  font-size: 7pt;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  white-space: nowrap;
+  display: inline-block;
+  margin: 1px 2px;
+}
+
+/* Source pill color variants (shared across primers) */
+.src-yt { background: rgba(204,0,0,0.08); color: #cc0000; }
+.src-yt a { color: inherit; text-decoration: none; }
+.src-yt a:hover { text-decoration: underline; }
+
+.src-folk { background: rgba(139,105,20,0.1); color: #8b6914; }
+.src-folk a { color: inherit; text-decoration: none; }
+.src-folk a:hover { text-decoration: underline; }
+
+.src-link { color: var(--accent); text-decoration: none; }
+.src-link:hover { text-decoration: underline; }
+
+/* SYSTEM PILLS — All variants (used by Feywild) */
+.sys-pill {
+  font-family: 'Cinzel', serif;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 8px;
+  margin-right: 4px;
+}
+
+.sys-4e { background: #4a6741; color: #fff; }
+.sys-5e { background: #5b3a8c; color: #fff; }
+.sys-folk { background: #8b6914; color: #fff; }
+.sys-meta { background: #6b5e50; color: #fff; }
+.sys-brew { background: #8b4513; color: #fff; }
+.sys-dresden { background: #1a1a2e; color: #e0d8c8; }
+
+/* FLOATING NAVIGATION — shared across primers */
+.float-nav {
+  position: fixed;
+  bottom: 20px;
+  width: 40px;
+  height: 40px;
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.float-nav:hover { opacity: 1; }
+
+.float-nav-up {
+  right: 20px;
+  background: var(--gold);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.float-nav-home { left: 20px; }
+.float-nav-home img { width: 40px; height: 40px; }
+
+/* UTILITY CLASSES — DRY inline styles */
+.text-center { text-align: center; }
+.clear { clear: both; }
+.clear::after { content: ''; display: table; clear: both; }
+.src-line { font-size: 10pt; color: var(--muted); }
+.src-dimmed { opacity: 0.5; }
+.disclaimer { margin-top: 8px; font-size: 11pt; font-style: italic; }
+.artwork-block { margin: 16px 0; }
+.figcaption-muted { text-align: center; font-size: 8pt; color: var(--muted); font-style: italic; margin-top: 4px; }
+
+/* ── SCREEN — ~112% scale of print base ── */
+@media screen {
+  body { font-size: 14.5pt; }
+  .page { max-width: 1100px; padding: 36px 28px; }
+  table { font-size: 12.5pt; }
+  .callout { font-size: 13.5pt; }
+}
+
+/* ── MOBILE — 768px breakpoint ── */
+@media screen and (max-width: 768px) {
+  body { font-size: 12.5pt; }
+  .page { padding: 16px 14px; max-width: 100%; }
+
+  h2 { font-size: 11.5pt; letter-spacing: 1px; }
+  h3 { font-size: 10pt; }
+
+  .callout { font-size: 11.5pt; padding: 12px 14px; }
+
+  table { font-size: 11pt; }
+  thead th { font-size: 7.5pt; padding: 6px 8px; }
+  tbody td { padding: 5px 8px; }
+  tbody td:first-child { white-space: normal; }
+
+  /* Floating nav stays visible */
+  .float-nav { bottom: 16px; right: 16px; width: 34px; height: 34px; font-size: 16px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; font-size: 12pt; }
+  .page { padding: 0; max-width: none; }
+  .float-nav { display: none !important; }
+}
