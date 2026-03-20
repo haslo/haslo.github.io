@@ -183,7 +183,7 @@ tbody td:first-child { font-weight: 600; white-space: nowrap; }
 .clear { clear: both; }
 .clear::after { content: ''; display: table; clear: both; }
 .src-line { font-size: 10pt; color: var(--muted); }
-.src-dimmed { opacity: 0.5; }
+.src-dimmed { background: rgba(200,60,60,0.15); color: #b33; font-weight: 600; opacity: 1; }
 .disclaimer { margin-top: 8px; font-size: 11pt; font-style: italic; }
 .artwork-block { margin: 16px 0; }
 .figcaption-muted { text-align: center; font-size: 8pt; color: var(--muted); font-style: italic; margin-top: 4px; }
