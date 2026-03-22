@@ -568,6 +568,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     padding-top: 8px;
   }
   @media (max-width: 600px) {
+    .char-gallery { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
     .enemy-grid { grid-template-columns: repeat(2, 1fr); }
     .npc-stats { grid-template-columns: repeat(3, 1fr); }
     .npc-statblock { columns: 1; }
@@ -614,6 +615,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     font-style: italic;
     color: var(--muted);
     font-size: 13pt;
+  }
+
+  /* CHARACTER GALLERY */
+  .char-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 0 8px 24px;
+  }
+  .char-gallery-item {
+    text-align: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .char-gallery-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .char-gallery-item.landscape img { object-position: center center; }
+  .char-gallery-item img:hover { transform: scale(1.03); }
+  .char-gallery-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    color: var(--gold);
+    margin-top: 6px;
+    letter-spacing: 1px;
   }
 
   /* SLIDESHOW BUTTON */
@@ -1203,6 +1235,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-one-prep'); return false;">Phase 1 Prep</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-web-of-truth'); return false;">Web of Truth</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-epilogue'); return false;">Epilogue Prep</a></li>
+  </ul>
+  <ul class="toc">
+    <li><a href="#character-gallery-title">Character Gallery</a></li>
   </ul>
 
   <!-- INTRO SLIDESHOW — styled like accordion header but not collapsible -->
@@ -3010,6 +3045,53 @@ graph LR
 
   </div><!-- end acc-dm-epilogue -->
 
+  <!-- CHARACTER GALLERY -->
+  <div class="rule"></div>
+  <h2 id="character-gallery-title" style="font-size: 22pt; text-align: center; margin: 24px 0 8px;">Character Gallery</h2>
+
+  <div style="text-align:center; padding: 8px 0 16px;">
+    <button class="slideshow-btn" onclick="shuffleGallery()">Shuffle</button>
+  </div>
+
+  <div class="char-gallery" id="char-gallery">
+    <div class="char-gallery-item" data-name="Vaelk">
+      <a href="media/graywall_mystery/vaelk.png" class="glightbox" data-gallery="char-gallery" data-desc="Vaelk"><img src="media/graywall_mystery/vaelk.png" alt="Vaelk"></a>
+      <span class="char-gallery-name">Vaelk</span>
+    </div>
+    <div class="char-gallery-item" data-name="Lord Draven">
+      <a href="media/graywall_mystery/lord_draven.png" class="glightbox" data-gallery="char-gallery" data-desc="Lord Draven"><img src="media/graywall_mystery/lord_draven.png" alt="Lord Draven"></a>
+      <span class="char-gallery-name">Lord Draven</span>
+    </div>
+    <div class="char-gallery-item" data-name="Sister Aldrice">
+      <a href="media/graywall_mystery/sister_aldrice.png" class="glightbox" data-gallery="char-gallery" data-desc="Sister Aldrice"><img src="media/graywall_mystery/sister_aldrice.png" alt="Sister Aldrice"></a>
+      <span class="char-gallery-name">Sister Aldrice</span>
+    </div>
+    <div class="char-gallery-item" data-name="Korrga">
+      <a href="media/graywall_mystery/korrga.png" class="glightbox" data-gallery="char-gallery" data-desc="Korrga"><img src="media/graywall_mystery/korrga.png" alt="Korrga"></a>
+      <span class="char-gallery-name">Korrga</span>
+    </div>
+    <div class="char-gallery-item" data-name="Sera Tain">
+      <a href="media/graywall_mystery/sera_tain.png" class="glightbox" data-gallery="char-gallery" data-desc="Sera Tain"><img src="media/graywall_mystery/sera_tain.png" alt="Sera Tain"></a>
+      <span class="char-gallery-name">Sera Tain</span>
+    </div>
+    <div class="char-gallery-item" data-name="Lady Verdemis">
+      <a href="media/graywall_mystery/lady_verdemis_droaam.png" class="glightbox" data-gallery="char-gallery" data-desc="Lady Verdemis"><img src="media/graywall_mystery/lady_verdemis_droaam.png" alt="Lady Verdemis"></a>
+      <span class="char-gallery-name">Lady Verdemis</span>
+    </div>
+    <div class="char-gallery-item" data-name="Korrath">
+      <a href="media/graywall_mystery/korrath.png" class="glightbox" data-gallery="char-gallery" data-desc="Korrath"><img src="media/graywall_mystery/korrath.png" alt="Korrath"></a>
+      <span class="char-gallery-name">Korrath</span>
+    </div>
+    <div class="char-gallery-item" data-name="Thesska Mirren">
+      <a href="media/graywall_mystery/thesska_mirren.png" class="glightbox" data-gallery="char-gallery" data-desc="Thesska Mirren"><img src="media/graywall_mystery/thesska_mirren.png" alt="Thesska Mirren"></a>
+      <span class="char-gallery-name">Thesska Mirren</span>
+    </div>
+    <div class="char-gallery-item" data-name="Rixit">
+      <a href="media/graywall_mystery/rixit.png" class="glightbox" data-gallery="char-gallery" data-desc="Rixit"><img src="media/graywall_mystery/rixit.png" alt="Rixit"></a>
+      <span class="char-gallery-name">Rixit</span>
+    </div>
+  </div>
+
   <div class="rule"></div>
 
   <div class="footer">
@@ -3455,6 +3537,33 @@ function toggleDM() {
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
-<script>GLightbox({ touchNavigation: true, loop: false });</script>
+<script>
+GLightbox({ touchNavigation: true, loop: false });
+
+// Character gallery: shuffle on load + button
+function shuffleGallery() {
+  var gallery = document.getElementById('char-gallery');
+  if (!gallery) return;
+  var items = Array.from(gallery.children);
+  for (var i = items.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+  }
+  items.forEach(function(item) { gallery.appendChild(item); });
+  // Re-init GLightbox so gallery order matches DOM
+  GLightbox({ touchNavigation: true, loop: false });
+}
+shuffleGallery();
+
+// Tag landscape images for centering
+document.querySelectorAll('.char-gallery-item img').forEach(function(img) {
+  function check() {
+    if (img.naturalWidth > img.naturalHeight) {
+      img.closest('.char-gallery-item').classList.add('landscape');
+    }
+  }
+  if (img.complete) check(); else img.addEventListener('load', check);
+});
+</script>
 </body>
 </html>
