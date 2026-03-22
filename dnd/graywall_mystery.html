@@ -3283,6 +3283,7 @@ function activateDM() {
   btn.style.opacity = '1';
   inlines.forEach(function(n) { n.style.display = ''; });
   tocDm.forEach(function(n) { n.style.display = ''; });
+  if (typeof initLightbox === 'function') initLightbox();
 }
 
 function deactivateDM() {
@@ -3296,6 +3297,7 @@ function deactivateDM() {
   btn.style.opacity = '';
   inlines.forEach(function(n) { n.style.display = 'none'; });
   tocDm.forEach(function(n) { n.style.display = 'none'; });
+  if (typeof initLightbox === 'function') initLightbox();
 }
 
 function isDMActive() {
@@ -3539,7 +3541,22 @@ function toggleDM() {
 <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
 <script>
-GLightbox({ touchNavigation: true, loop: false });
+var glightboxInstance;
+function initLightbox() {
+  if (glightboxInstance) glightboxInstance.destroy();
+  // Tag DM-only gallery links so they don't join the player gallery
+  document.querySelectorAll('.char-gallery-item.dm-only').forEach(function(item) {
+    var a = item.querySelector('a.glightbox');
+    if (!a) return;
+    if (item.classList.contains('revealed')) {
+      a.setAttribute('data-gallery', 'char-gallery');
+    } else {
+      a.setAttribute('data-gallery', 'char-gallery-hidden');
+    }
+  });
+  glightboxInstance = GLightbox({ touchNavigation: true, loop: false });
+}
+initLightbox();
 
 // Character gallery: shuffle on load + button
 function shuffleGallery() {
@@ -3551,8 +3568,7 @@ function shuffleGallery() {
     var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
   }
   items.forEach(function(item) { gallery.appendChild(item); });
-  // Re-init GLightbox so gallery order matches DOM
-  GLightbox({ touchNavigation: true, loop: false });
+  initLightbox();
 }
 shuffleGallery();
 
