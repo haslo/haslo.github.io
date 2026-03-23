@@ -2,13 +2,13 @@
   LLM CONTEXT — keep this comment current when making changes.
 
   FILE: my_books.html
-  PURPOSE: Personal D&D 5e book collection reference. Five tables split by category (Core Rulebooks,
-           Sourcebooks & Lore, Eberron, Creature Focused, Adventures) with quick overview, content pills, and status notes.
+  PURPOSE: Personal D&D 5e book collection reference. Six tables split by category (Core Rulebooks,
+           Sourcebooks & Lore, Feywild, Eberron, Creature Focused, Adventures) with quick overview, content pills, and status notes.
   OWNER PREF: No MS Office files. Self-contained HTML. Technical and direct. Gentle self-deprecating humour about book hoarding.
 
   STRUCTURE:
     - Title + subtitle (general, poking fun at collectionism)
-    - Five section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Eberron | Creature Focused | Adventures
+    - Six section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Feywild | Eberron | Creature Focused | Adventures
     - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status
     - Books listed within each section in date descending order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System (content keywords like Downtime, Traps, Archfey…), Player Pages
@@ -16,9 +16,10 @@
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
     - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
     - MCDM books: Flee, Mortals!, Where Evil Lives — links shown as .tag-mcdm inline badges
-    - Ordered-not-arrived books shown with .ordered badge (currently: Underdark, Manual of the Planes — PoD softcovers)
+    - Ordered-not-arrived books shown with .ordered badge (currently: Underdark, Manual of the Planes, Gristlecracker's Hags & Grimoire — PoD)
     - No D&D Beyond links unless asked.
     - Adventures section has a .callout box with 5e→5.5e conversion guidance (HP bump, more bodies, drop physical resistances, update spells, new encounter math)
+    - Feywild section: all Feywild-focused books (HotF, Underdark, MotP, WBtW, Gristlecracker's) — split from Sourcebooks & Adventures
     - Eberron section: all Eberron-specific sourcebooks (E:FotA, FoE:Q, Chronicles, ExE, E:RftLW) — split from general Sourcebooks
     - Creature Focused section: bestiaries & monster toolkits (MotM, Fizban's, MCDM books). PCGtD stays in Sourcebooks (pure lore, no stat blocks).
 
@@ -432,7 +433,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </table>
 
 <h2>Sourcebooks & Lore</h2>
-<div class="subtitle">The non-Eberron shelf. It exists. Barely.</div>
+<div class="subtitle">The non-Eberron, non-Feywild shelf. It exists. Barely.</div>
 <table>
 <thead>
 <tr>
@@ -662,6 +663,100 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <b>Wizard:</b> War Magic
     </div>
     <div class="note">DM tools chapter has no 2024 replacement — downtime, random encounters, tool proficiency rules all still unique. 2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
+  </td>
+</tr>
+
+
+</tbody>
+</table>
+
+<h2>Feywild</h2>
+<div class="subtitle">The "one more fey book won't hurt" spiral</div>
+<table>
+<thead>
+<tr>
+  <th style="width:13%">Book</th>
+  <th>Overview</th>
+  <th style="width:25%">Status</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- Gristlecracker's Hags & Grimoire (5e) -->
+<tr>
+  <td>
+    <div class="book-title">Gristlecracker's Hags &amp; Grimoire</div>
+    <span class="book-year">2024</span>
+    <span class="tag tag-5e">5e</span>
+    <span class="tag tag-source">Source</span>
+    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/460498/Gristlecrackers-Hags--Grimoire">DMs Guild</a></span>
+    <span class="ordered">Ordered (PoD)</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Hag ecology</span>
+      <span class="pill pill-sys">Hag lairs</span>
+      <span class="pill pill-sys">Curses</span>
+      <span class="pill pill-sys">Hag magic</span>
+      <span class="pill pill-mon">~50+ stat blocks</span>
+      <span class="pill pill-sys">Magic items</span>
+      <span class="pill pill-sys">Encounters</span>
+      <span class="pill pill-pp">262pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">The hag bible</div>
+      <div class="ov-line">Comprehensive DMs Guild sourcebook on hags: ecology, alignment, patrons, playable hag characters, young hags, minions, supernatural lairs, curses (including dramatic curses), new spells, magic items, encounters, and a massive bestiary of hag-adjacent creatures.</div>
+      <div class="ov-head">Contents</div>
+      <div class="ov-line">Hags in your world (alignment, gender, NPCs, patrons, names) · Hag ecology · Minions &amp; familiars · Special locations &amp; lairs · Hag weirds · Curses &amp; dramatic curses · Hag magic &amp; new spells · Magic items &amp; mimirs · Encounters · Bestiary (50+ stat blocks incl. hag aunties, covens, minions, swarms) · Hag personalities &amp; example NPCs</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Hag encounters, hag NPCs, coven mechanics, Feywild villains, curse design, hag lair building. Relevant for any campaign with fey antagonists.</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">5e native</div>
+      Written for 5e — stat blocks, spells, and items are directly usable. May need minor 5.5e HP adjustments for higher-CR creatures.
+    </div>
+    <div class="note">PDF in sources/. PoD ordered, not arrived yet. Daniel Chivers &amp; Marco Bertini.</div>
+  </td>
+</tr>
+
+<!-- The Wild Beyond the Witchlight -->
+<tr>
+  <td>
+    <div class="book-title">The Wild Beyond the Witchlight</div>
+    <span class="book-year">Sep 2021</span>
+    <span class="tag tag-5e">5e</span>
+    <span class="tag tag-adventure">Adventure</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">1 adventure</span>
+      <span class="pill pill-spe">2 species</span>
+      <span class="pill pill-sys">2 backgrounds</span>
+      <span class="pill pill-mon">~20 monsters</span>
+      <span class="pill pill-sys">Feywild</span>
+      <span class="pill pill-sys">Non-combat</span>
+      <span class="pill pill-pp">~256pp</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Adventure</div>
+      <div class="ov-line">Feywild adventure (levels 1–8) · Witchlight Carnival opening · Hither, Thither, Yon exploration zones · non-combat resolution possible for every encounter</div>
+      <div class="ov-head">Player options</div>
+      <div class="ov-line">2 species: Fairy, Harengon (both superseded by MotM) · 2 backgrounds: Feylost, Witchlight Hand</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> Feywild adventure, non-combat design ideas, Feylost/Witchlight Hand backgrounds</div>
+  </td>
+  <td>
+    <div class="skipped">
+      <div class="skipped-label">Superseded</div>
+      <span class="skip">Fairy, Harengon → MotM</span>
+    </div>
+    <div class="still">
+      <div class="still-label">2 backgrounds (still unique)</div>
+      Feylost · Witchlight Hand
+    </div>
+    <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
+    <div class="note"><span class="skip">2024 adjustment needed</span> — see Adventures section callout.</div>
   </td>
 </tr>
 
@@ -1428,46 +1523,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       No player options — pure adventure anthology. Cherry-pick by level and theme.
     </div>
     <div class="note">Every adventure by a different author, each drawing on their own cultural background. Strong standalone one-shots.</div>
-    <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
-  </td>
-</tr>
-
-<!-- The Wild Beyond the Witchlight -->
-<tr>
-  <td>
-    <div class="book-title">The Wild Beyond the Witchlight</div>
-    <span class="book-year">Sep 2021</span>
-    <span class="tag tag-5e">5e</span>
-    <span class="tag tag-adventure">Adventure</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-adv">1 adventure</span>
-      <span class="pill pill-spe">2 species</span>
-      <span class="pill pill-sys">2 backgrounds</span>
-      <span class="pill pill-mon">~20 monsters</span>
-      <span class="pill pill-sys">Feywild</span>
-      <span class="pill pill-sys">Non-combat</span>
-      <span class="pill pill-pp">~256pp</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Adventure</div>
-      <div class="ov-line">Feywild adventure (levels 1–8) · Witchlight Carnival opening · Hither, Thither, Yon exploration zones · non-combat resolution possible for every encounter</div>
-      <div class="ov-head">Player options</div>
-      <div class="ov-line">2 species: Fairy, Harengon (both superseded by MotM) · 2 backgrounds: Feylost, Witchlight Hand</div>
-    </div>
-    <div class="reach"><b>Reach for:</b> Feywild adventure, non-combat design ideas, Feylost/Witchlight Hand backgrounds</div>
-  </td>
-  <td>
-    <div class="skipped">
-      <div class="skipped-label">Superseded</div>
-      <span class="skip">Fairy, Harengon → MotM</span>
-    </div>
-    <div class="still">
-      <div class="still-label">2 backgrounds (still unique)</div>
-      Feylost · Witchlight Hand
-    </div>
-    <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
 </tr>
