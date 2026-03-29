@@ -77,7 +77,7 @@
     stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png,
     vines.png, dm_prep.jpg, npcs.png, khorvaire-graywall_map.jpg, droaam_graywall_map.png
     korrath.png, meditation_narrow.png, amirs_graywall_map_01.png,
-    spark.png, spark_header.png
+    spark.png, spark_header.png, twinkle.png, unknown_char.svg
     Session zero report uses vines.png as accordion-preview + inline atmo with figcaption.
     Session zero report also has korrath.png inline after Korrath mention.
     Lore accordion uses meditation_narrow.png as dm-preview header.
@@ -87,6 +87,11 @@
     All .atmo images and .map-caption use figcaption/caption style (Cinzel italic, muted).
 
   LIGHTBOX: GLightbox 3.3.0 (CDN) — click Spark portrait to view full-size.
+
+  CHARACTER GALLERY: Split into Main Characters (fixed order: Spark, Kais ???, Twinkle)
+    and NPCs (shuffled on load). Main chars use id="main-char-gallery", NPCs use id="char-gallery".
+    Twinkle's name links to charsheets.html#twinkle (not lightbox). Kais' placeholder is unknown_char.svg.
+    Shuffle only affects NPCs gallery.
 
   CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
        Includes DM Graywall reference table and sources table (DM section).
@@ -3050,7 +3055,28 @@ graph LR
   <div class="rule"></div>
   <h2 id="character-gallery-title" style="font-size: 22pt; text-align: center; margin: 24px 0 8px;">Character Gallery</h2>
 
-  <div style="text-align:center; padding: 8px 0 16px;">
+  <!-- MAIN CHARACTERS -->
+  <h3 style="font-family: 'Cinzel', serif; font-size: 13pt; text-align: center; color: var(--gold); letter-spacing: 2px; margin: 16px 0 12px;">Main Characters</h3>
+
+  <div class="char-gallery" id="main-char-gallery">
+    <div class="char-gallery-item" data-name="Spark">
+      <a href="media/graywall_mystery/spark.png" class="glightbox" data-gallery="char-gallery" data-desc="Spark — Dragonborn Paladin (Amir)"><img src="media/graywall_mystery/spark.png" alt="Spark"></a>
+      <span class="char-gallery-name">Spark (Amir)</span>
+    </div>
+    <div class="char-gallery-item" data-name="Kais' Rogue">
+      <img src="media/graywall_mystery/unknown_char.svg" alt="?" style="opacity: 0.5;">
+      <span class="char-gallery-name">??? (Kais)</span>
+    </div>
+    <div class="char-gallery-item" data-name="Twinkle">
+      <a href="media/graywall_mystery/twinkle.png" class="glightbox" data-gallery="char-gallery" data-desc="Amanda &quot;Twinkle&quot; Twinklespark — Fairy Wild Magic Sorcerer (Sidekick)"><img src="media/graywall_mystery/twinkle.png" alt="Twinkle"></a>
+      <span class="char-gallery-name"><a href="charsheets.html#twinkle" style="color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold);">Twinkle</a> (Gwen)</span>
+    </div>
+  </div>
+
+  <!-- NPCs -->
+  <h3 style="font-family: 'Cinzel', serif; font-size: 13pt; text-align: center; color: var(--gold); letter-spacing: 2px; margin: 24px 0 12px;">NPCs</h3>
+
+  <div style="text-align:center; padding: 0 0 16px;">
     <button class="slideshow-btn" onclick="shuffleGallery()">Shuffle</button>
   </div>
 
