@@ -126,6 +126,10 @@ tbody td:first-child { font-weight: 600; white-space: nowrap; }
 .src-folk a { color: inherit; text-decoration: none; }
 .src-folk a:hover { text-decoration: underline; }
 
+.src-dmsg { background: rgba(138,43,226,0.1); color: #7b2d8e; border: 1px solid rgba(138,43,226,0.2); border-radius: 3px; }
+.src-dmsg a { color: inherit; text-decoration: none; }
+.src-dmsg a:hover { text-decoration: underline; }
+
 .src-link { color: var(--accent); text-decoration: none; }
 .src-link:hover { text-decoration: underline; }
 
