@@ -54,6 +54,7 @@
     15  Session 1 (8. & 10. März, Amir solo — Sera Tain, spells, diamond hustle, oath, lay on hands, breath, crooked coin)
     16  Session 0 Kais (15. März, Kais solo — Wayfarer Rock Gnome Rogue char sheet)
     16b Charakterbild Amir (17. März — Spark portrait, GLightbox clickable)
+    16c Real Session 1 (6. April — corrected char sheets for Spark + Sirius, sirius_header preview)
     17  Sera Tain's Lessons (dice-rolling vignettes for Amir) [DM]
     18  Phase 1 Prep (Decoys, Labyrinth, castle, Verdemis intro, pacing) [DM]
     19  Web of Truth (investigation flowchart with pink known-leads, full NPC connection map) [DM]
@@ -77,7 +78,7 @@
     stairs.png, ghost.png, vampires.png, castle.webp, xorchylic.png,
     vines.png, dm_prep.jpg, npcs.png, khorvaire-graywall_map.jpg, droaam_graywall_map.png
     korrath.png, meditation_narrow.png, amirs_graywall_map_01.png,
-    spark.png, spark_header.png, twinkle.png, unknown_char.svg
+    spark.png, spark_header.png, twinkle.png, sirius.png, sirius_header.png
     Session zero report uses vines.png as accordion-preview + inline atmo with figcaption.
     Session zero report also has korrath.png inline after Korrath mention.
     Lore accordion uses meditation_narrow.png as dm-preview header.
@@ -88,9 +89,9 @@
 
   LIGHTBOX: GLightbox 3.3.0 (CDN) — click Spark portrait to view full-size.
 
-  CHARACTER GALLERY: Split into Main Characters (fixed order: Spark, Kais ???, Twinkle)
+  CHARACTER GALLERY: Split into Main Characters (fixed order: Spark, Sirius, Twinkle)
     and NPCs (shuffled on load). Main chars use id="main-char-gallery", NPCs use id="char-gallery".
-    Twinkle's name links to charsheets.html#twinkle (not lightbox). Kais' placeholder is unknown_char.svg.
+    Twinkle's name links to charsheets.html#twinkle (not lightbox). Sirius has his own portrait.
     Shuffle only affects NPCs gallery.
 
   CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
@@ -1009,6 +1010,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .accordion-preview.dm-preview { max-height: 70px; }
   }
 
+  /* Session report: text + image/stat side by side */
+  .report-row {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    align-items: flex-start;
+  }
+  .report-row .report-text { flex: 1; min-width: 0; }
+  .report-row .report-aside {
+    flex: 0 0 240px;
+    max-width: 240px;
+  }
+  .report-row .report-aside img {
+    width: 100%;
+    border-radius: 6px;
+  }
+  .report-row .report-aside figcaption {
+    font-size: 9pt;
+    color: var(--gold);
+    opacity: 0.7;
+    text-align: center;
+    margin-top: 4px;
+  }
+  .report-row .report-aside .enemy-card {
+    font-size: 9.5pt;
+  }
+  @media (max-width: 700px) {
+    .report-row {
+      flex-direction: column;
+    }
+    .report-row .report-aside {
+      flex: none;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
   /* Phone */
   @media (max-width: 600px) {
     .page { padding: 20px 14px 36px; }
@@ -1238,6 +1276,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li><a href="#" onclick="openAccordion('log-session-one'); return false;">Session 1 — Sera Tain</a></li>
     <li><a href="#" onclick="openAccordion('log-session-zero-kais'); return false;">Session 0 — Kais</a></li>
     <li><a href="#" onclick="openAccordion('log-char-pic-amir'); return false;">Charakterbild Amir</a></li>
+    <li><a href="#" onclick="openAccordion('log-session-start-april'); return false;">Real Session 1 — 6. April</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-session-one-prep'); return false;">Phase 1 Prep</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-web-of-truth'); return false;">Web of Truth</a></li>
     <li class="toc-dm" style="display:none"><a href="#" onclick="openAccordion('dm-epilogue'); return false;">Epilogue Prep</a></li>
@@ -2799,6 +2838,210 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- end acc-log-char-pic-amir -->
 
+  <button class="accordion-toggle collapsed" id="log-session-start-april" onclick="toggleAccordion(this)">6. April — Real Session 1</button>
+  <img class="accordion-preview" src="media/graywall_mystery/sirius_header.png" alt="Sirius — Rock Gnome Rogue" onclick="toggleAccordion(this.previousElementSibling)">
+  <div class="accordion-body collapsed" id="acc-log-session-start-april">
+
+  <p>Sirius hat jetzt einen Namen, ein Bild, und einen Look. Kais' Rock Gnome Rogue ist bereit. Beide Character Sheets nochmal sauber und mit den Korrekturen von letztem Mal.</p>
+
+  <!-- SPARK — CORRECTED -->
+  <h2>Spark — Character Sheet</h2>
+
+  <table class="graywall-table char-sheet">
+    <thead>
+      <tr><th colspan="4">White Dragonborn Paladin · Level 1</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Name</strong></td><td>Spark</td><td><strong>Class</strong></td><td>Paladin</td></tr>
+      <tr><td><strong>Level</strong></td><td>1</td><td><strong>Species</strong></td><td>White Dragonborn</td></tr>
+      <tr><td><strong>Background</strong></td><td>Charlatan</td><td><strong>Alignment</strong></td><td>Chaotic Neutral</td></tr>
+      <tr><td><strong>STR</strong></td><td>14 (+2)</td><td><strong>INT</strong></td><td>8 (−1)</td></tr>
+      <tr><td><strong>DEX</strong></td><td>10 (+0)</td><td><strong>WIS</strong></td><td>12 (+1)</td></tr>
+      <tr><td><strong>CON</strong></td><td>14 (+2)</td><td><strong>CHA</strong></td><td>17 (+3)</td></tr>
+      <tr><td><strong>HP</strong></td><td>12</td><td><strong>AC</strong></td><td>18 (chainmail + shield)</td></tr>
+      <tr><td><strong>Hit Dice</strong></td><td>1d10</td><td><strong>Initiative</strong></td><td>+0</td></tr>
+      <tr><td><strong>Speed</strong></td><td>30 ft</td><td><strong>Passive Perception</strong></td><td>13</td></tr>
+      <tr><td><strong>Proficiency</strong></td><td>+2</td><td><strong>Languages</strong></td><td>Common, Draconic, Goblin</td></tr>
+      <tr><td><strong>Saving Throws</strong></td><td>WIS +3, CHA +5</td><td><strong>All others</strong></td><td>unproficient</td></tr>
+      <tr><td><strong>Armor</strong></td><td>Light, Medium, Heavy, Shields</td><td><strong>Weapons</strong></td><td>Simple, Martial</td></tr>
+      <tr><td><strong>Skills</strong></td><td colspan="3">Sleight of Hand +2, Deception +5, Intimidation +5, Persuasion +5, Performance +5, Insight +3, Perception +3</td></tr>
+      <tr><td><strong>Species Traits</strong></td><td colspan="3">
+        Draconic Ancestry (White) · Breath Weapon (15 ft cone or 30ft line of cold, DEX save DC 12, 1d10) · Damage Resistance (Cold) · Darkvision 60 ft
+      </td></tr>
+      <tr><td><strong>Feat</strong></td><td colspan="3">
+        Skilled (Performance, Insight, Perception)
+      </td></tr>
+      <tr><td><strong>Class Features</strong></td><td colspan="3">
+        Lay on Hands (5 HP pool, bonus action) <span class="pill-ref">PHB p. 110</span> · Spellcasting · Weapon Mastery (2 weapons)
+      </td></tr>
+      <tr><td><strong>Spell DC</strong></td><td>13 (8 + 2 + 3)</td><td><strong>Spell Attack</strong></td><td>+5</td></tr>
+      <tr><td><strong>Spell Slots</strong></td><td>2 × 1st level</td><td><strong>Prepared</strong></td><td>2 spells</td></tr>
+      <tr><td><strong>Spells</strong></td><td colspan="3">
+        <strong>1. Command</strong> — Action, 60 ft, one word, WIS save, 1 turn <span class="pill-ref">PHB p. 255</span><br>
+        <strong>2. Purify Food and Drink</strong> — Action (ritual), 10 ft, purifies food/drink in 5-ft sphere <span class="pill-ref">PHB p. 308</span>
+      </td></tr>
+      <tr><td><strong>Weapons</strong></td><td colspan="3">
+        Longsword: +4 to hit, 1d8+2 slashing (versatile 1d10+2) · Mastery: <strong>Sap</strong> <span class="pill-ref">PHB p. 215</span><br>
+        Javelin (6): +4 to hit, 1d6+2 piercing, thrown 30/120 · Mastery: <strong>Slow</strong> <span class="pill-ref">PHB p. 215</span>
+      </td></tr>
+      <tr><td><strong>Equipment</strong></td><td colspan="3">Chainmail, shield, longsword, 6 javelins, holy symbol, priest's pack, forgery kit, costume, fine clothes, 29 gp, diamond (50 gp)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SIRIUS — CORRECTED -->
+  <h2>Sirius — Character Sheet</h2>
+
+  <table class="graywall-table char-sheet">
+    <thead>
+      <tr><th colspan="4">Rock Gnome Rogue · Level 1</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Name</strong></td><td>Sirius</td><td><strong>Class</strong></td><td>Rogue</td></tr>
+      <tr><td><strong>Level</strong></td><td>1</td><td><strong>Species</strong></td><td>Rock Gnome</td></tr>
+      <tr><td><strong>Background</strong></td><td>Wayfarer</td><td><strong>Alignment</strong></td><td>Chaotic Neutral</td></tr>
+      <tr><td><strong>STR</strong></td><td>12 (+1)</td><td><strong>INT</strong></td><td>14 (+2)</td></tr>
+      <tr><td><strong>DEX</strong></td><td>17 (+3)</td><td><strong>WIS</strong></td><td>11 (+0)</td></tr>
+      <tr><td><strong>CON</strong></td><td>13 (+1)</td><td><strong>CHA</strong></td><td>8 (−1)</td></tr>
+      <tr><td><strong>HP</strong></td><td>9</td><td><strong>AC</strong></td><td>14 (leather armor)</td></tr>
+      <tr><td><strong>Hit Dice</strong></td><td>1d8</td><td><strong>Initiative</strong></td><td>+3</td></tr>
+      <tr><td><strong>Speed</strong></td><td>30 ft</td><td><strong>Passive Perception</strong></td><td>12</td></tr>
+      <tr><td><strong>Proficiency</strong></td><td>+2</td><td><strong>Languages</strong></td><td>Common, Gnomish, Undercommon, Thieves' Cant, Draconic</td></tr>
+      <tr><td><strong>Saving Throws</strong></td><td>DEX +5, INT +4</td><td><strong>All others</strong></td><td>unproficient</td></tr>
+      <tr><td><strong>Armor</strong></td><td>Light</td><td><strong>Weapons</strong></td><td>Simple, Finesse, Light Martial</td></tr>
+      <tr><td><strong>Skills</strong></td><td colspan="3">Athletics +3, Sleight of Hand +7, Stealth +7, Investigation +4, Insight +2, Perception +2</td></tr>
+      <tr><td><strong>Species Traits</strong></td><td colspan="3">
+        Darkvision · Gnomish Cunning · Gnomish Lineage: Rock
+      </td></tr>
+      <tr><td><strong>Feat</strong></td><td colspan="3">Lucky</td></tr>
+      <tr><td><strong>Class Features</strong></td><td colspan="3">
+        Expertise (Sleight of Hand, Stealth) · Sneak Attack (1d6) · Weapon Mastery (1 weapon)
+      </td></tr>
+      <tr><td><strong>Spellcasting</strong></td><td>INT, DC 12, +4</td><td><strong>Source</strong></td><td>Rock Gnome</td></tr>
+      <tr><td><strong>Cantrips</strong></td><td colspan="3">
+        Mending (1 min, touch, M: 2 lodestones)<br>
+        Prestidigitation (action, 10 ft)<br>
+        Prestidigitation Toy (10 min, 10 ft, lasts 8h)
+      </td></tr>
+      <tr><td><strong>Weapons</strong></td><td colspan="3">
+        Dagger: +5 to hit, 1d4+3 piercing, finesse/light/thrown 20/60 · Mastery: <strong>Nick</strong> <span class="pill-ref">PHB p. 215</span><br>
+        Shortbow: +5 to hit, 1d6+3 piercing, range 80/320, two-handed · Mastery: <strong>Vex</strong> <span class="pill-ref">PHB p. 215</span>
+      </td></tr>
+      <tr><td><strong>Equipment</strong></td><td colspan="3">4 daggers, burglar's pack, thieves' tools ×2, playing cards, bedroll, 2 pouches, traveler's clothes, leather armor, shortsword, shortbow, 20 arrows, quiver, 24 gp</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Session Report</h2>
+
+  <!-- 1: Korrath -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Die beiden Charaktere treffen sich auf dem Markt, nachdem Sirius über die südliche Mauer klettert und dort eine Wache befragt. Die Wache kennt Spark zwar nicht, aber hat häufig einen weissen Dragonborn auf dem nördlichen Markt gesehen. Sirius kommt dort an und sieht Spark auch gleich.
+        <br/><br/>
+        Gemeinsam sehen sie Korrath ausrufen dass die Korruption alles vernichten wird und alle selbst schuld seien. Er zeichnet ein druidisches Zeichen, kurz darauf fängt dieses an zu leuchten und eine blutrote Rose schiesst an genau der Stelle aus dem Boden.
+      </p>
+    </div>
+    <div class="report-aside">
+      <a href="media/graywall_mystery/korrath.png" class="glightbox" data-gallery="session-april" data-desc="Korrath — Warforged Druid, Bloody Market"><img src="media/graywall_mystery/korrath.png" alt="Korrath"></a>
+      <figcaption>Korrath — Bloody Market</figcaption>
+    </div>
+  </div>
+
+  <!-- 2: Sister Aldrice -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Die blutrote Rose trifft mit ihren Stacheln einen scheinbar unschuldigen Bauern auf dem Markt. Er sackt sofort zusammen, ohne Energie, als ob sie ihm entzogen worden wäre. Eine Frau, scheinbar Heilerin, kniet neben ihm nieder und beginnt mit magischen Worten.
+        <br/><br/>
+        Die Charaktere rennen daran vorbei, Korrath nach, der sich in eine Katze verwandelt hat. Mit einem herausragenden Survival-Wurf sieht Spark ganz genau, wo die Katze nicht nur durch ging, sondern durch gehen will. Ein Durchgang, durch den nur Katzen kommen, direkt zum Labyrinth.
+      </p>
+    </div>
+    <div class="report-aside">
+      <a href="media/graywall_mystery/sister_aldrice.png" class="glightbox" data-gallery="session-april" data-desc="Unbekannte Heilerin — Silver Flame Priesterin, Calabas"><img src="media/graywall_mystery/sister_aldrice.png" alt="Unbekannte Heilerin"></a>
+      <figcaption>Unbekannte Heilerin — Calabas</figcaption>
+    </div>
+  </div>
+
+  <!-- 2: Brown Mold -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Im Labyrinth angekommen folgen die zwei Helden den Spuren von offensichtlich Korrath. Eine Katzenspur verwandelt sich beim Eingang der Dhakaani-Ruinen im Berg in Warforged-Spuren, fast ganz sicher vom Druiden.
+        <br/><br/>
+        Schnell treffen die beiden auf eine seltsame braune Substanz, welche auf Feuer reagiert (wächst). Geschickt kombiniert, merken die zwei dass es sich bei Kälte zurückziehen muss. Zum Glück kann Spark seinen Kälte-Atem (zwei Mal pro Tag) und macht damit mit dem braunen Schimmel kurzen Prozess. Wer weiss wie weh das sonst getan hätte.
+        <br/><br/>
+        Spark der Held hat den Tag gerettet.
+      </p>
+    </div>
+    <div class="report-aside">
+      <a href="media/graywall_mystery/brown_mold.webp" class="glightbox" data-gallery="session-april" data-desc="Brown Mold — Frost on the tunnel walls, breath misting."><img src="media/graywall_mystery/brown_mold.webp" alt="Brown Mold"></a>
+      <figcaption>Brown Mold — Frost auf den Tunnelwänden</figcaption>
+    </div>
+  </div>
+
+  <!-- 3: Druid Mark -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Danach ein ähnliches Zeichen wie auf dem Markt, nur viel grösser und auf der Tunnelwand. Es fängt an zu glühen, und Ranken schiessen heraus, an einem Ort wo sonst noch keine sind. Spark findet "super sus, der Druid könnte der Imposter sein," und die zwei folgen den Spuren weiter.
+      </p>
+    </div>
+    <div class="report-aside">
+      <a href="media/graywall_mystery/druid_mark.png" class="glightbox" data-gallery="session-april" data-desc="Druidic mark in living sap — vine tendrils cluster around it, pushing through the rock."><img src="media/graywall_mystery/druid_mark.png" alt="Druidic Mark"></a>
+      <figcaption>Druidisches Zeichen im Fels</figcaption>
+    </div>
+  </div>
+
+  <!-- 4: Giant Rats -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Plötzlich rennen ihnen vier Riesen-Ratten entgegen. Der erste Kampf! Heroisch stellen sich die zwei den Gegnern. Spark hat die höchste Initiative und macht die erste gleich platt. Die zweite folgt sogleich mit der zweithöchsten Initiative von Sirius. Die dritte ist angeschlagen, aber zeigt neben Humpeln keine Ermüdungserscheinungen.
+        <br/><br/>
+        Eine Ratte beisst sich an Sparks Schild die Zähne fast aus, die andere beisst aber bei Sirius mächtig zu und bringt ihn von 7 auf 1 HP!
+        <br/><br/>
+        Ein schnelles Lay on Hands als Bonus-Aktion später ist er aber schon wieder auf den Beinen. Spark schlägt zu und versucht die voll-HP-Ratte zu treffen, aber Funken schlagen als das Schwert nur den Felsboden kratzt.
+        <br/><br/>
+        Sirius hingegen, mit seinen zwei Dolchen, schafft mit einem weiteren Sneak Attack (weil er in der Nähe von Spark bleiben kann hat er die fast jede Runde, so lange er nicht mehr als 5 Fuss weg ist muss er dafür nicht versteckt sein) die 7HP der ersten Ratte und danach auch ohne Schadenswurf die 2HP der verbleibenden.
+        <br/><br/>
+        Spark hat wieder den Tag gerettet. Sirius ist nicht mehr halbtot mit 1HP. Sirius hat schon vom braunen Schleim eingepackt, Spark macht einen rituellen Purify Food and Water cast (10 Minuten, kein Spell Slot) und die Ratten werden auch eingepackt.
+      </p>
+    </div>
+    <div class="report-aside">
+      <div class="enemy-card">
+        <div class="enemy-card-header">Giant Rat <span class="enemy-cr">CR 1/8</span></div>
+        <div class="enemy-card-body">
+          <p>AC 13 · HP 7 · Bite +4, 1d4+2 piercing</p>
+          <p><strong>Pack Tactics</strong> — Advantage on attacks when an ally is within 5 ft of the target.</p>
+          <hr>
+          <div class="enemy-card-refs"><span class="pill-ref">MM 2025 p. 137</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4: Giant Rats -->
+  <div class="report-row">
+    <div class="report-text">
+      <p>
+        Die zwei finden daraufhin einen Höhlenausgang. Einen Wald. Sie haben einen Weg durch das Labyrinth gefunden, durch den Berg, auf der anderen Seite wieder heraus. Schnell finden sie einen Druidenzirkel, zu dem Korrath gegangen sein muss (wieder ein hoher Survival-Wurf von Spark). Session fertig, DM hat diesen Pfad nicht weiter vorbereitet.
+      </p>
+    </div>
+    <div class="report-aside">
+      <a href="media/graywall_mystery/druid_circle.png" class="glightbox" data-gallery="session-april" data-desc="Korraths Druidenzirkel — verlassen, Werkzeuge am Boden, Ranken dringen ein"><img src="media/graywall_mystery/druid_circle.png" alt="Druidenzirkel"></a>
+      <figcaption>Korraths Druidenzirkel</figcaption>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <span class="label">Nächste Session</span>
+    <ul>
+      <li>Druidenzirkel erkunden</li>
+    </ul>
+  </div>
+
+  </div><!-- end acc-log-session-start-april -->
+
   <button class="accordion-toggle collapsed dm-only dm-accordion" id="dm-session-one-prep" onclick="toggleAccordion(this)">Phase 1 Prep <span class="dm-prelim">DM</span></button>
   <img class="accordion-preview dm-preview dm-only dm-accordion" src="media/graywall_mystery/dm_prep.jpg" alt="" onclick="toggleAccordion(this.previousElementSibling)">
   <div class="accordion-body collapsed dm-only dm-accordion" id="acc-dm-session-one-prep">
@@ -3063,9 +3306,9 @@ graph LR
       <a href="media/graywall_mystery/spark.png" class="glightbox" data-gallery="char-gallery" data-desc="Spark — Dragonborn Paladin (Amir)"><img src="media/graywall_mystery/spark.png" alt="Spark"></a>
       <span class="char-gallery-name">Spark (Amir)</span>
     </div>
-    <div class="char-gallery-item" data-name="Kais' Rogue">
-      <img src="media/graywall_mystery/unknown_char.svg" alt="?" style="opacity: 0.5;">
-      <span class="char-gallery-name">??? (Kais)</span>
+    <div class="char-gallery-item" data-name="Sirius">
+      <a href="media/graywall_mystery/sirius.png" class="glightbox" data-gallery="char-gallery" data-desc="Sirius — Rock Gnome Rogue (Kais)"><img src="media/graywall_mystery/sirius.png" alt="Sirius"></a>
+      <span class="char-gallery-name">Sirius (Kais)</span>
     </div>
     <div class="char-gallery-item" data-name="Twinkle">
       <a href="media/graywall_mystery/twinkle.png" class="glightbox" data-gallery="char-gallery" data-desc="Amanda &quot;Twinkle&quot; Twinklespark — Fairy Wild Magic Sorcerer (Sidekick)"><img src="media/graywall_mystery/twinkle.png" alt="Twinkle"></a>
@@ -3089,9 +3332,9 @@ graph LR
       <a href="media/graywall_mystery/lord_draven.png" class="glightbox" data-gallery="char-gallery" data-desc="Lord Draven"><img src="media/graywall_mystery/lord_draven.png" alt="Lord Draven"></a>
       <span class="char-gallery-name">Lord Draven</span>
     </div>
-    <div class="char-gallery-item dm-only dm-accordion" data-name="Sister Aldrice">
-      <a href="media/graywall_mystery/sister_aldrice.png" class="glightbox" data-gallery="char-gallery" data-desc="Sister Aldrice"><img src="media/graywall_mystery/sister_aldrice.png" alt="Sister Aldrice"></a>
-      <span class="char-gallery-name">Sister Aldrice</span>
+    <div class="char-gallery-item" data-name="Unbekannte Heilerin">
+      <a href="media/graywall_mystery/sister_aldrice.png" class="glightbox" data-gallery="char-gallery" data-desc="Unbekannte Heilerin — Silver Flame Priesterin, Calabas"><img src="media/graywall_mystery/sister_aldrice.png" alt="Unbekannte Heilerin"></a>
+      <span class="char-gallery-name">Unbekannte Heilerin</span>
     </div>
     <div class="char-gallery-item dm-only dm-accordion" data-name="Korrga">
       <a href="media/graywall_mystery/korrga.png" class="glightbox" data-gallery="char-gallery" data-desc="Korrga"><img src="media/graywall_mystery/korrga.png" alt="Korrga"></a>

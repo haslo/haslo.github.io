@@ -8,15 +8,14 @@
 
   STRUCTURE:
     - Title + subtitle (general, poking fun at collectionism)
-    - Six section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Feywild | Eberron | Creature Focused | Adventures
+    - Seven section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Feywild | Eberron | Creature Focused | Adventures | Not D&D
     - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status
     - Books listed within each section in date descending order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System (content keywords like Downtime, Traps, Archfey…), Player Pages
     - Tag badges for edition (4e/5e/5.5e), type (Core/Source/Adventure/Lore/Creature), publisher links (DMs Guild, MCDM)
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
-    - DMs Guild books: FoE:Quickstone, Chronicles of Eberron, Exploring Eberron — links shown as .tag-dmsg inline badges
-    - MCDM books: Flee, Mortals!, Where Evil Lives — links shown as .tag-mcdm inline badges
-    - Ordered-not-arrived books shown with .ordered badge (currently: Gristlecracker's Hags & Grimoire — PoD)
+    - Third-party books (DMs Guild, MCDM, Roll & Play Press, etc.) — shop links shown as .tag-3p inline badges
+    - Ordered-not-arrived books shown with .ordered badge (currently: Gristlecracker's Hags & Grimoire — PoD; One-Shot Wonders bundle)
     - No D&D Beyond links unless asked.
     - Adventures section has a .callout box with 5e→5.5e conversion guidance (HP bump, more bodies, drop physical resistances, update spells, new encounter math)
     - Feywild section: all Feywild-focused books (HotF, Underdark, MotP, WBtW, Gristlecracker's) — split from Sourcebooks & Adventures
@@ -28,7 +27,7 @@
     Colors: --accent (#8b1a1a), --accent2 (#6b4226), --accent3 (#2d5a3d), --accent4 (#3b3678), --accent5 (#8b5e00, MCDM)
     Row alternation: nth-child(even) auto-shading
     Pill classes: .pill-sub, .pill-spe, .pill-mon, .pill-adv, .pill-sys, .pill-pp
-    Tag classes: .tag-4e, .tag-5e, .tag-55e, .tag-core, .tag-source, .tag-adventure, .tag-lore, .tag-creature, .tag-dmsg (DMs Guild link), .tag-mcdm (MCDM shop link)
+    Tag classes: .tag-4e, .tag-5e, .tag-55e, .tag-core, .tag-source, .tag-adventure, .tag-lore, .tag-creature, .tag-3p (third-party shop link)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -110,13 +109,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .tag-adventure { background: rgba(139,26,26,0.08); color: var(--accent); }
   .tag-lore { background: rgba(184,134,11,0.15); color: #7a6008; }
   .tag-creature { background: rgba(100,60,140,0.1); color: #5a3078; }
-  .tag-dmsg { background: rgba(59,54,120,0.1); color: var(--accent4); }
-  .tag-dmsg a { color: inherit; text-decoration: none; font-weight: 600; }
-  .tag-dmsg a:hover { text-decoration: underline; }
-  .tag-mcdm { background: rgba(139,94,0,0.12); color: #8b5e00; }
-  .tag-mcdm a { color: inherit; text-decoration: none; font-weight: 600; }
-  .tag-mcdm a:hover { text-decoration: underline; }
-
+  .tag-3p { background: rgba(59,54,120,0.1); color: var(--accent4); }
+  .tag-pdf { background: rgba(0,120,180,0.12); color: #0070a0; font-weight: 600; }
+  .tag-3p a { color: inherit; text-decoration: none; font-weight: 600; }
+  .tag-3p a:hover { text-decoration: underline; }
   .book-title { font-weight: 700; font-size: 10.5pt; }
   .book-year { color: var(--text-dim); }
 
@@ -244,7 +240,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .tag, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 6.5pt; }
     .skipped, .still, .reach { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .ov { font-size: 8pt; }
-    .tag-dmsg, .tag-mcdm { display: none; }
+    .tag-3p { display: none; }
     .legend { font-size: 8pt; }
     .float-nav { display: none !important; }
   }
@@ -689,7 +685,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">2024</span>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/517804/gristlecracker-s-hags-grimoire">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/517804/gristlecracker-s-hags-grimoire">DMs Guild</a></span>
     <span class="ordered">Ordered (PoD)</span>
   </td>
   <td>
@@ -767,7 +763,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2011</span>
     <span class="tag tag-4e">4e</span>
     <span class="tag tag-lore">Lore</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/121710/Players-Option-Heroes-of-the-Feywild-4e">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/121710/Players-Option-Heroes-of-the-Feywild-4e">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -808,7 +804,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Jan 2010</span>
     <span class="tag tag-4e">4e</span>
     <span class="tag tag-lore">Lore</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/164603/underdark-4e">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/164603/underdark-4e">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -849,7 +845,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Dec 2008</span>
     <span class="tag tag-4e">4e</span>
     <span class="tag tag-lore">Lore</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/en/product/58822/manual-of-the-planes-4e">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/58822/manual-of-the-planes-4e">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -945,7 +941,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Sep 2024</span>
     <span class="tag tag-55e">5.5e</span>
     <span class="tag tag-source">Source</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/product/493112/Frontiers-of-Eberron-Quickstone" target="_blank">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -996,7 +992,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2022</span>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -1041,7 +1037,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Jul 2020</span>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
-    <span class="tag tag-dmsg"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a></span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/product/315887/Exploring-Eberron" target="_blank">DMs Guild</a></span>
   </td>
   <td>
     <div class="pills">
@@ -1162,7 +1158,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">May 2024</span>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
-    <span class="tag tag-mcdm"><a href="https://shop.mcdmproductions.com/products/where-evil-lives-the-mcdm-book-of-boss-battles" target="_blank">MCDM</a></span>
+    <span class="tag tag-3p"><a href="https://shop.mcdmproductions.com/products/where-evil-lives-the-mcdm-book-of-boss-battles" target="_blank">MCDM</a></span>
   </td>
   <td>
     <div class="pills">
@@ -1196,7 +1192,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">Nov 2023</span>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-creature">Creature</span>
-    <span class="tag tag-mcdm"><a href="https://shop.mcdmproductions.com/products/flee-mortals-hardcover-book" target="_blank">MCDM</a></span>
+    <span class="tag tag-3p"><a href="https://shop.mcdmproductions.com/products/flee-mortals-hardcover-book" target="_blank">MCDM</a></span>
   </td>
   <td>
     <div class="pills">
@@ -1422,6 +1418,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </td>
 </tr>
 
+<!-- One-Shot Wonders Bundle (Roll & Play Press) -->
+<tr>
+  <td>
+    <div class="book-title">One-Shot Wonders + Map Library + Tabletop Tokens</div>
+    <span class="book-year">2024</span>
+    <span class="tag tag-adventure">Adventure</span>
+    <span class="tag tag-3p"><a href="https://rollandplaypress.com/products/one-shot-wonders" target="_blank">Roll &amp; Play Press</a></span>
+    <span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-adv">100+ one-shots</span>
+      <span class="pill pill-sys">Levels 1–20</span>
+      <span class="pill pill-sys">100 battle maps</span>
+      <span class="pill pill-sys">100+ tokens</span>
+      <span class="pill pill-pp">~200pp + accessories</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">One-Shot Wonders (hardcover A4, ~200pp)</div>
+      <div class="ov-line">100+ ready-to-play D&amp;D one-shot adventures, ~3 hours each, 2 pages per adventure, levels 1–20.</div>
+      <div class="ov-head">The Map Library (box + digital)</div>
+      <div class="ov-line">100 hand-drawn dry-erase reusable battle maps for various adventure locations.</div>
+      <div class="ov-head">Tabletop Tokens: Fantasy Creatures (box + digital)</div>
+      <div class="ov-line">100+ physical tokens in 4 sizes (1″–4″) with 12 designs. Monsters, NPCs, conditions, spell effects, hazards.</div>
+    </div>
+    <div class="reach"><b>Reach for:</b> low-prep one-shots, physical maps for in-person play, tokens for theatre-of-mind-to-grid sessions</div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Physical DM toolkit</div>
+      One-shots pair with the maps and tokens for grab-and-go sessions. Good for the kids — pick a level-appropriate one-shot, lay down a map, drop tokens.
+    </div>
+    <div class="note">Roll &amp; Play Press (indie). Three separate products ordered as a bundle.</div>
+  </td>
+</tr>
+
 <!-- Quests from the Infinite Staircase -->
 <tr>
   <td>
@@ -1574,14 +1606,299 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span><span class="tag tag-adventure">Adventure</span> adventure content</span>
   <span><span class="tag tag-creature">Creature</span> bestiary / monster toolkit</span>
   <span><span class="tag tag-lore">Lore</span> pure lore (no mechanics)</span>
-  <span><span class="tag tag-dmsg"><a href="#" onclick="return false">DMs Guild</a></span> DMs Guild purchase link</span>
-  <span><span class="tag tag-mcdm"><a href="#" onclick="return false">MCDM</a></span> MCDM shop link</span>
+  <span><span class="tag tag-3p"><a href="#" onclick="return false">Shop</a></span> third-party shop link</span>
   <span><span class="tag tag-5e">5e</span> original 5e</span>
   <span><span class="tag tag-55e">5.5e</span> revised 5e</span>
   <span class="skip">Red boxes</span> = superseded, skip
   <span style="color:var(--accent3)">Green boxes</span> = still unique, use these
   <span style="color:var(--accent2)">Brown boxes</span> = reach for this when…
 </div>
+
+<h2>Not D&amp;D</h2>
+<div class="subtitle">Other systems. Shadowrun has its own section (eventually).</div>
+
+<table>
+<thead>
+<tr>
+  <th style="width:13%">Book</th>
+  <th style="width:50%">Overview</th>
+  <th style="width:37%">Status</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- Sunfall -->
+<tr>
+  <td>
+    <div class="book-title">Sunfall</div>
+    <span class="book-year">2026</span>
+    <span class="tag tag-adventure">Adventure</span>
+    <span class="tag tag-3p"><a href="https://www.kickstarter.com/projects/archmagepress/sunfall" target="_blank">Kickstarter</a></span>
+    <span class="ordered">Kickstarted — not yet delivered</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">Solo gamebook</span>
+      <span class="pill pill-sys">Tactical</span>
+      <span class="pill pill-sys">4 parts</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Four-part tactical solo gamebook with resource management (stamina/spirit). By Archmage Press.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Kickstarter backer</div>
+      Awaiting delivery.
+    </div>
+  </td>
+</tr>
+
+<!-- Draw Steel (MCDM) -->
+<tr>
+  <td>
+    <div class="book-title">Draw Steel: Heroes + Monsters</div>
+    <span class="book-year">2025</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://shop.mcdmproductions.com/collections/draw-steel" target="_blank">MCDM</a></span>
+    <span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">Heroes 400pp+</span>
+      <span class="pill pill-pp">Monsters 300pp+</span>
+      <span class="pill pill-sys">Tactical combat</span>
+      <span class="pill pill-sys">Matt Colville</span>
+    </div>
+    <div class="ov">
+      <div class="ov-head">Draw Steel: Heroes</div>
+      <div class="ov-line">Character creation, classes, combat system, exploration, negotiation. MCDM's own tactical fantasy RPG — not D&D, not d20.</div>
+      <div class="ov-head">Draw Steel: Monsters</div>
+      <div class="ov-line">Hundreds of monster stat blocks across dozens of types. Designed around MCDM's action-oriented encounter philosophy.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core rules — two-book set</div>
+      MCDM Productions. Hardcovers estimated Sep 2025.
+    </div>
+  </td>
+</tr>
+
+<!-- Vagabond -->
+<tr>
+  <td>
+    <div class="book-title">Vagabond: Pulp Fantasy RPG</div>
+    <span class="book-year">2025</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/512122/vagabond-pulp-fantasy-rpg-core-rulebook" target="_blank">DMsGuild</a></span>
+    <span class="ordered">Ordered — POD printing</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">212pp</span>
+      <span class="pill pill-sys">d20 roll-over</span>
+      <span class="pill pill-sys">Dungeon crawl</span>
+      <span class="pill pill-sys">Solo / Co-Op / Guided</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Pulp fantasy dungeon crawler by Land of the Blind. Old-school practicality meets modern character expression — d20 roll-over with Favor/Hinder (advantage analog), Mana-based magic, zone combat, Morale system. 7 ancestries, 18 classes, 50+ perks, 60 spells, 200+ monster statblocks with Action Gambits. Supports solo, co-op, and guided play.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core rulebook — Print on Demand</div>
+      POD hardcover ordered, currently printing.
+    </div>
+  </td>
+</tr>
+
+<!-- Daggerheart -->
+<tr>
+  <td>
+    <div class="book-title">Daggerheart</div>
+    <span class="book-year">2025</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://www.daggerheart.com/" target="_blank">Homepage</a></span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">366pp</span>
+      <span class="pill pill-sys">2d12 duality dice</span>
+      <span class="pill pill-sys">Hope &amp; Fear</span>
+      <span class="pill pill-sys">Narrative fantasy</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Narrative fantasy RPG from Critical Role's Darrington Press. Duality dice (Hope/Fear), card-based character building, GM-less turn structure. Built for cinematic, story-driven play.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core set</div>
+      Brand new (2025). Core set includes rulebook + cards.
+    </div>
+  </td>
+</tr>
+
+<!-- Pathfinder 2E Remaster -->
+<tr>
+  <td>
+    <div class="book-title">Pathfinder 2E Remaster</div>
+    <span class="book-year">2023–2024</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://paizo.com/store/pathfinder/rules" target="_blank">Paizo</a></span>
+    <span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">d20 / 3-action</span>
+      <span class="pill pill-sys">Paizo</span>
+      <span class="pill pill-pp">Player Core 464pp</span>
+      <span class="pill pill-pp">Player Core 2 320pp</span>
+      <span class="pill pill-pp">GM Core 336pp</span>
+      <span class="pill pill-pp">Monster Core 376pp</span>
+      <span class="pill pill-sys">ORC license</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Not a new edition — a rewrite of the four PF2E core books under the ORC license after the OGL crisis (Jan 2023). Removes all WotC-traceable content. Includes 2023 errata cycle. Legacy books remain compatible.</div>
+      <div class="ov-head">Player Core (Nov 2023, 464pp)</div>
+      <div class="ov-line">8 classes (Bard, Cleric, Druid, Fighter, Ranger, Rogue, Witch, Wizard), 8 ancestries. Replaces Core Rulebook. Key changes: ability scores → pure modifiers, alignment → edicts/anathemas + holy/unholy, spell levels → spell ranks, spell schools removed, flat-footed → off-guard, spell components replaced by casting traits, focus refocuses to full natively.</div>
+      <div class="ov-head">Player Core 2 (Jul 2024, 320pp)</div>
+      <div class="ov-line">8 classes (Alchemist, Barbarian, Champion, Investigator, Monk, Oracle, Sorcerer, Swashbuckler), 7 ancestries, 40+ archetypes. Replaces Advanced Player's Guide. Champion causes reworked around edicts/anathemas. Alchemist and Oracle getting widest mechanical changes.</div>
+      <div class="ov-head">GM Core (Nov 2023, 336pp)</div>
+      <div class="ov-line">Rules, campaigns, Golarion lore, subsystems, variants, magic items, poisons. Replaces Gamemastery Guide. Apex items reworked, staves improved, talismans buffed.</div>
+      <div class="ov-head">Monster Core (Mar 2024, 376pp)</div>
+      <div class="ov-line">Replaces Bestiary 1. Tradition-based dragons replace chromatic/metallic as centerpiece. Drow retconned out (replaced by Serpentfolk in Darklands). Renamed: Mephits → Elemental Scamps, Svirfneblin → Drathnelar, Duergar → Hryngar.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Complete core system — 4 hardcovers</div>
+      Paizo's post-OGL rewrite. Not a new edition — same engine, same compatibility, reshuffled and cleaned up. Replaces Core Rulebook + APG + GMG + Bestiary 1.
+    </div>
+  </td>
+</tr>
+
+<!-- Cairn -->
+<tr>
+  <td>
+    <div class="book-title">Cairn</div>
+    <span class="book-year">2nd Ed, 2024</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://cairnrpg.com/" target="_blank">Homepage</a></span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-sys">OSR</span>
+      <span class="pill pill-sys">Rules-light</span>
+      <span class="pill pill-sys">Into the Odd</span>
+      <span class="pill pill-sys">Free / CC</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Rules-light OSR adventure game. Based on Into the Odd and Knave. No classes, no levels — inventory-driven character identity. Full rules available free online (CC-BY-SA). By Yochai Gal.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core rules</div>
+      2nd edition (2024) expanded from the original. Entire game fits in a pamphlet if you want it to.
+    </div>
+  </td>
+</tr>
+
+<!-- Blades in the Dark -->
+<tr>
+  <td>
+    <div class="book-title">Blades in the Dark</div>
+    <span class="book-year">2015</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://bladesinthedark.com/" target="_blank">Homepage</a></span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">328pp</span>
+      <span class="pill pill-sys">Forged in the Dark</span>
+      <span class="pill pill-sys">Heists</span>
+      <span class="pill pill-sys">Fiction-first</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Heist RPG set in a haunted industrial-fantasy city. Fiction-first, clock-based mechanics, flashback system, crew playbooks. Published by Evil Hat Productions.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core rulebook</div>
+      Complete game in one book. The Forged in the Dark engine spawned dozens of hacks.
+    </div>
+  </td>
+</tr>
+
+<!-- Thirsty Sword Lesbians -->
+<tr>
+  <td>
+    <div class="book-title">Thirsty Sword Lesbians</div>
+    <span class="book-year">2021–2022</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-3p"><a href="https://evilhat.com/product/thirsty-sword-lesbians/" target="_blank">Evil Hat</a></span>
+    <span class="tag tag-3p"><a href="https://www.youtube.com/watch?v=dvFQCfvf-bM" target="_blank">Review ▶</a></span>
+    <span class="ordered">Ordered — not yet arrived</span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">Core 224pp</span>
+      <span class="pill pill-pp">Advanced 272pp</span>
+      <span class="pill pill-sys">PbtA</span>
+      <span class="pill pill-sys">Queer narrative</span>
+      <span class="pill pill-sys">ENnie 2022 Best Game</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">April Kit Walsh's PbtA RPG about queer characters fighting for justice with swords and feelings. Emotional playbooks, relationship-driven mechanics, found family. Evil Hat Productions.</div>
+      <div class="ov-head">Thirsty Sword Lesbians (2021, 224pp)</div>
+      <div class="ov-line">Core rulebook. 9 playbooks built around emotional archetypes (the Beast, the Chosen, the Infamous, etc.), sword-crossing as social and combat mechanic, setting starters from space opera to fairy tale.</div>
+      <div class="ov-head">Advanced Lovers &amp; Lesbians (2022, 272pp)</div>
+      <div class="ov-line">Supplement. 10 new playbooks (Naga, Investigator, Hologoddess, Matriarch…), 21 new settings (Heian Japan to Saturn's orbit), 4 ready-to-play adventures, random tables for all 19 playbooks.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Core + supplement — two hardcovers</div>
+      Complete PbtA experience in two books. Core is the full game, Advanced is pure extras.
+    </div>
+  </td>
+</tr>
+
+<!-- Ironsworn Family -->
+<tr>
+  <td>
+    <div class="book-title">Ironsworn</div>
+    <span class="book-year">2018</span>
+    <span class="tag tag-core">Core</span>
+    <span class="tag tag-pdf">PDF</span>
+    <span class="tag tag-3p"><a href="https://tomkinpress.com/collections/free-downloads" target="_blank">Free Downloads</a></span>
+    <span class="tag tag-3p"><a href="https://tomkinpress.com/" target="_blank">Tomkin Press</a></span>
+  </td>
+  <td>
+    <div class="pills">
+      <span class="pill pill-pp">270pp</span>
+      <span class="pill pill-sys">PbtA-adjacent</span>
+      <span class="pill pill-sys">Solo-first</span>
+      <span class="pill pill-sys">Oracle tables</span>
+      <span class="pill pill-sys">CC-BY-SA</span>
+    </div>
+    <div class="ov">
+      <div class="ov-line">Shawn Tomkin's solo/co-op/guided RPG. Action dice + challenge dice, iron vows as narrative engine, oracle tables for GM-less play. Low fantasy, Ironlands setting. Complete game — all moves, oracles, worldbuilding, and assets included. Free, CC-BY-SA.</div>
+    </div>
+  </td>
+  <td>
+    <div class="still">
+      <div class="still-label">Full rulebook — free PDF</div>
+      Complete standalone game. Plus free playkit, asset sheets, character sheets, and world workbook.
+    </div>
+  </td>
+</tr>
+
+</tbody>
+</table>
 
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
 <a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
