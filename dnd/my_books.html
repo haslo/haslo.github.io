@@ -8,14 +8,15 @@
 
   STRUCTURE:
     - Title + subtitle (general, poking fun at collectionism)
-    - Seven section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Feywild | Eberron | Creature Focused | Adventures | Not D&D
-    - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status
+    - Six section tables (h2 headings + subtitle each): Core Rulebooks | Sourcebooks & Lore | Feywild | Eberron | Creature Focused | Adventures
+    - Non-D&D systems moved to my_other_rpgs.html
+    - Each table: Book (title + year + purchase links) | Overview (pill tags + content summary) | Status | Community (3 sub-ratings: Lore, Rules, Usability + consensus text + 2 review links)
     - Books listed within each section in date descending order
     - Pill tags for content types: Subclasses, Species, Monsters, Adventures, System (content keywords like Downtime, Traps, Archfey…), Player Pages
     - Tag badges for edition (4e/5e/5.5e), type (Core/Source/Adventure/Lore/Creature), publisher links (DMs Guild, MCDM)
     - Status column uses .ok (green = use) and .skip (red = skip/superseded) highlights
     - Third-party books (DMs Guild, MCDM, Roll & Play Press, etc.) — shop links shown as .tag-3p inline badges
-    - Ordered-not-arrived books shown with .ordered badge (currently: Gristlecracker's Hags & Grimoire — PoD; One-Shot Wonders bundle)
+    - Ordered-not-arrived books shown with .ordered badge (currently: One-Shot Wonders bundle)
     - No D&D Beyond links unless asked.
     - Adventures section has a .callout box with 5e→5.5e conversion guidance (HP bump, more bodies, drop physical resistances, update spells, new encounter math)
     - Feywild section: all Feywild-focused books (HotF, Underdark, MotP, WBtW, Gristlecracker's) — split from Sourcebooks & Adventures
@@ -156,6 +157,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .still-label { font-weight: 700; color: var(--accent3); font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
 
   .note { font-size: 8.5pt; color: var(--text-dim); margin-top: 4px; }
+
+  .rating-grid { font-size: 8.5pt; line-height: 1; padding: 6px 8px; background: rgba(45,90,61,0.04); border: 1px solid rgba(45,90,61,0.1); border-radius: 4px; }
+  .rating-grid .rg-row { display: flex; justify-content: space-between; gap: 4px; padding: 2px 0; border-bottom: 1px solid rgba(107,66,38,0.06); }
+  .rating-grid .rg-row:last-child { border-bottom: none; }
+  .rating-grid .rg-label { color: var(--text-dim); flex: 0 0 auto; white-space: nowrap; font-size: 8pt; }
+  .rating-grid .rg-val { color: var(--gold); text-align: right; flex: 0 0 auto; letter-spacing: -1px; }
+  .rating-grid .rg-focus { font-weight: 700; color: var(--accent2); font-size: 9pt; margin-bottom: 1px; }
+  .rating-grid .rg-setting { color: var(--text-dim); font-style: italic; margin-bottom: 4px; font-size: 8pt; padding-bottom: 4px; border-bottom: 1px solid rgba(107,66,38,0.1); }
+  tr.comparison-row td { background: rgba(107,66,38,0.04); }
   .ordered { display: inline-block; font-size: 7.5pt; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: rgba(59,54,120,0.12); color: var(--accent4); margin-top: 4px; }
 
   .callout {
@@ -223,10 +233,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .pills { margin-bottom: 8px; }
     .reach { margin-top: 8px; }
     /* Status cell */
-    tbody td:last-child {
+    tbody td:nth-child(3) {
       padding-top: 10px;
       border-top: 1px solid var(--border);
     }
+
     .legend { flex-direction: column; gap: 6px; }
   }
 
@@ -276,6 +287,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     height: 40px;
   }
   @media print { .float-nav { display: none !important; } }
+
+
+  /* Community rating box */
+  .rating-box { font-size: 8pt; line-height: 1.3; }
+  .rating-box .rb-row { display: flex; justify-content: space-between; gap: 4px; padding: 1px 0; }
+  .rating-box .rb-label { color: var(--text-dim); white-space: nowrap; }
+  .rating-box .rb-val { color: var(--gold, #b8860b); letter-spacing: -1px; white-space: nowrap; }
+  .rating-box .rb-consensus { font-size: 7.5pt; color: var(--text-dim); font-style: italic; margin-top: 3px; line-height: 1.25; }
+  .rating-box .rb-links { display: flex; gap: 3px; margin-top: 4px; flex-wrap: wrap; }
+  .pill-review { display: inline-block; font-size: 6.5pt; font-weight: 600; padding: 1px 5px; border-radius: 10px; background: rgba(59,54,120,0.1); color: var(--accent4); white-space: nowrap; text-decoration: none; }
+  .pill-review:hover { text-decoration: underline; background: rgba(59,54,120,0.18); }
 </style>
 </head>
 <body>
@@ -295,9 +317,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
+  <th style="width:12%">Book</th>
+  <th style="width:44%">Overview</th>
+  <th style="width:30%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -331,6 +354,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="still">
       <div class="still-label">All 500+ creatures are mine</div>
       Near-zero overlap with MotM — different creature pools by design. MM = 2014 MM lineage (beholders, dragons, liches…), MotM = Volo's/Mordenkainen's lineage (demon lords, archdevils, mind flayer variants…). Combined: ~760 official stat blocks. Plus 339 action-oriented redesigns from Flee, Mortals! and 22 boss lairs from Where Evil Lives — because apparently ~760 wasn't enough.
+    </div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">Best MM ever, less lore but superb stat blocks & organization</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.enworld.org/threads/monsters-more-an-in-depth-review-of-the-2025-d-d-monster-manual.710932/" target="_blank">EN World</a><a class="pill-review" href="https://www.belloflostsouls.net/2025/02/dd-the-2025-monster-manual-first-impressions-review.html" target="_blank">Bell of Lost Souls</a></div>
     </div>
   </td>
 </tr>
@@ -367,6 +400,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="still">
       <div class="still-label">All content is current</div>
       Bastions are the big new system. Greyhawk is a bonus starter setting.
+    </div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">Major upgrade — finally a book that actually guides DMs</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.enworld.org/threads/in-depth-review-of-the-2024-dungeon-masters-guide.707861/" target="_blank">EN World</a><a class="pill-review" href="https://boardsandswords.com/blog/2024/11/a-book-that-actually-guides-people-2024-dungeon-masters-review-dd5e" target="_blank">Boards & Swords</a></div>
     </div>
   </td>
 </tr>
@@ -423,6 +466,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">The new baseline — nothing superseded.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">Solid upgrade, stronger classes, lukewarm community vibe</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.hipstersanddragons.com/5e-players-handbook-2024/" target="_blank">Hipsters & Dragons</a><a class="pill-review" href="https://boardsandswords.com/blog/2024/8/a-shining-beacon-on-an-inferior-version-2024-players-handbook-review-dd5e" target="_blank">Boards & Swords</a></div>
+    </div>
+  </td>
 </tr>
 
 </tbody>
@@ -433,9 +486,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
+  <th style="width:12%">Book</th>
+  <th style="width:44%">Overview</th>
+  <th style="width:30%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -481,6 +535,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">Bladesinger supersedes Tasha's version. Knowledge Domain returns.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Great FR flavor, solid backgrounds, subclasses disappoint</div>
+      <div class="rb-links"><a class="pill-review" href="https://comicon.com/2025/11/06/review-dungeons-dragons-forgotten-realms-heroes-of-faerun-feels-like-a-special-kind-of-alchemy/" target="_blank">Comicon</a><a class="pill-review" href="https://talesandtankards.com/reviews/2025-forgotten-realms-heroes-of-faerun-a-players-perspective/" target="_blank">Tales & Tankards</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- The Practically Complete Guide to Dragons -->
@@ -513,6 +577,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       No mechanics to supersede. Edition-agnostic lore.
     </div>
     <div class="note">The dragon lore book Fizban's should have been. Complements FToD's bestiary &amp; player options with actual worldbuilding.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Beautiful dragon encyclopedia, light on crunch</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.enworld.org/threads/the-practically-complete-guide-to-dragons-review.699385/" target="_blank">EN World</a><a class="pill-review" href="https://www.strangeassembly.com/2023/review-the-practically-complete-guide-to-dragons" target="_blank">Strange Assembly</a></div>
+    </div>
   </td>
 </tr>
 
@@ -555,6 +629,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Dhampir · Hexblood · Reborn — all work in any campaign, not Ravenloft-restricted.
     </div>
     <div class="note">2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Brilliant horror toolbox, creative domains of dread</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.rpg.net/reviews/archive/18/18965.phtml" target="_blank">RPG.net</a><a class="pill-review" href="http://thecampaign20xx.blogspot.com/2021/05/van-richtens-guide-to-ravenloft-review.html" target="_blank">Power Score</a></div>
+    </div>
   </td>
 </tr>
 
@@ -609,6 +693,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Puzzles, magic tattoos, sidekick rules, group patrons, supernatural regions — all still unique.
     </div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">31 subclasses, essential player options despite reprints</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.strangeassembly.com/2020/review-tashas-cauldron-of-everything-dungeons-dragons" target="_blank">Strange Assembly</a><a class="pill-review" href="http://thecampaign20xx.blogspot.com/2020/11/dungeons-dragons-tashas-cauldron-of.html" target="_blank">Power Score</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- XGtE -->
@@ -660,6 +754,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">DM tools chapter has no 2024 replacement — downtime, random encounters, tool proficiency rules all still unique. 2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Origins Award winner, gold standard for player supplements</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.rpg.net/reviews/archive/17/17527.phtml" target="_blank">RPG.net</a><a class="pill-review" href="https://nerdsonearth.com/2017/11/review-xanathars-guide-to-everything/" target="_blank">Nerds on Earth</a></div>
+    </div>
+  </td>
 </tr>
 
 
@@ -671,9 +775,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
+  <th style="width:12%">Book</th>
   <th>Overview</th>
-  <th style="width:25%">Status</th>
+  <th style="width:20%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -686,7 +791,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="tag tag-5e">5e</span>
     <span class="tag tag-source">Source</span>
     <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/517804/gristlecracker-s-hags-grimoire">DMs Guild</a></span>
-    <span class="ordered">Ordered (PoD)</span>
   </td>
   <td>
     <div class="pills">
@@ -712,7 +816,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="still-label">5e native</div>
       Written for 5e — stat blocks, spells, and items are directly usable. May need minor 5.5e HP adjustments for higher-CR creatures.
     </div>
-    <div class="note">PDF in sources/. PoD ordered, not arrived yet. Daniel Chivers &amp; Marco Bertini.</div>
+    <div class="note">PDF in sources/. Print-on-demand copy arrived. Daniel Chivers &amp; Marco Bertini.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">68 encounters, 112 creatures, deeply creative hag content</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.flamesrising.com/terrifying-hags-fly-into-dd/" target="_blank">Flames Rising</a><a class="pill-review" href="https://www.dmsguild.com/en/product/517804/gristlecracker-s-hags-grimoire" target="_blank">DMs Guild</a></div>
+    </div>
   </td>
 </tr>
 
@@ -753,6 +867,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">Every encounter designed to be solvable without combat. Good DM reference for non-combat adventure design.</div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see Adventures section callout.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Gorgeous Feywild adventure, polarizing — very group-dependent</div>
+      <div class="rb-links"><a class="pill-review" href="https://scrollforinitiative.com/2025/03/01/almost-great-the-wild-beyond-the-witchlight-a-review/" target="_blank">Scroll for Initiative</a><a class="pill-review" href="https://www.geeksundergrace.com/tabletop/review-the-wild-beyond-the-witchlight/" target="_blank">Geeks Under Grace</a></div>
+    </div>
   </td>
 </tr>
 
@@ -795,6 +919,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">Also have the PDF in sources/. The PoD softcover quality is fine — not original print quality but perfectly readable. The lore alone makes it worth having physical.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Excellent 4e writing, cohesive Feywild player options</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.goodreads.com/book/show/11270957-player-s-option" target="_blank">Goodreads</a><a class="pill-review" href="https://www.amazon.com/product-reviews/B0073ZFD3Y" target="_blank">Amazon Reviews</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- Underdark (4e) -->
@@ -835,6 +969,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       No 5e book covers the Feydark in this depth. The fomorian society and underground geography descriptions remain the best available — 5e's fomorian entries are brief by comparison.
     </div>
     <div class="note">PoD softcover on sale. The Feydark chapter alone justifies the purchase for Feywild campaigns.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Comprehensive 4e Underdark supplement, strong campaign material</div>
+      <div class="rb-links"><a class="pill-review" href="https://newbiedm.com/2010/01/25/newbiedm-review-underdark/" target="_blank">NewbieDM</a><a class="pill-review" href="https://critical-hits.com/blog/2010/02/17/review-underdark/" target="_blank">Critical Hits</a></div>
+    </div>
   </td>
 </tr>
 
@@ -877,6 +1021,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">The book that officially named the Feywild. Broader than HotF (covers all planes) but shallower on any single one. Good companion piece.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Useful cosmology reference but thin on practical content</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.rpg.net/reviews/archive/14/14378.phtml" target="_blank">RPG.net</a><a class="pill-review" href="https://slyflourish.com/manual_of_the_planes_review.html" target="_blank">Sly Flourish</a></div>
+    </div>
+  </td>
 </tr>
 
 </tbody>
@@ -887,9 +1041,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
+  <th style="width:12%">Book</th>
+  <th style="width:44%">Overview</th>
+  <th style="width:30%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -931,6 +1086,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Changeling · Kalashtar · Khoravar (new, replaces half-elf) · Shifter · Warforged
     </div>
     <div class="note">Nothing superseded — this is the new Eberron baseline.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Solid artificer revision with good art, requires RftLW</div>
+      <div class="rb-links"><a class="pill-review" href="https://dungeonsanddragonsfan.com/eberron-forge-of-the-artificer/" target="_blank">D&D Fan</a><a class="pill-review" href="https://geektogeekmedia.com/geekery/tabletop-gaming/eberron-forge-of-the-artificer-dd-5e-review/" target="_blank">Geek to Geek</a></div>
+    </div>
   </td>
 </tr>
 
@@ -983,6 +1148,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">DMs Guild (Keith Baker &amp; Imogen Gingell). Released Sep 2024 with PHB 2024 — uses 2024 rules natively, no legacy conversion needed.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Outstanding worldbuilding and NPCs, some editing rough spots</div>
+      <div class="rb-links"><a class="pill-review" href="https://totalpartythrillcast.com/2024/09/19/tpt-379-frontiers-of-eberron-quickstone-review/" target="_blank">Total Party Thrill</a><a class="pill-review" href="https://keith-baker.com/frontiers/" target="_blank">Keith Baker</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- Chronicles of Eberron -->
@@ -1027,6 +1202,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       All Overlords named (Ashtakala, Rak Tulkhesh, Sul Khatesh, Bel Shalor…). Boons of the Overlords system. The definitive reference.
     </div>
     <div class="note">DMs Guild (Keith Baker &amp; Imogen Gingell). 2014-era rules — use legacy compatibility notes.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">200+ pages of authentic Eberron lore from the creator</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.belloflostsouls.net/2022/12/dd-chronicles-of-eberron-is-the-eberron-book-youve-been-waiting-for.html" target="_blank">Bell of Lost Souls</a><a class="pill-review" href="https://www.dmsguild.com/en/product/415474/Chronicles-of-Eberron" target="_blank">DMs Guild</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1078,6 +1263,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">DMs Guild (Keith Baker). 2014-era rules — use legacy compatibility notes.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">Masterclass — 240+ pages of deep setting exploration</div>
+      <div class="rb-links"><a class="pill-review" href="https://cannibalhalflinggaming.com/2020/09/23/exploring-eberron-review/" target="_blank">Cannibal Halfling</a><a class="pill-review" href="https://mephitjamesblog.wordpress.com/2020/08/25/exploring-eberron-review-part-2/" target="_blank">Mephit James</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- E:RftLW -->
@@ -1118,6 +1313,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Nations of Khorvaire, Last War history, Dragonmarked Houses, religions, the map. E:FotA is a companion, not a replacement for world info.
     </div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">Adamantine best-seller, the definitive Eberron 5e book</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.strangeassembly.com/2019/review-eberron-rising-from-the-last-war" target="_blank">Strange Assembly</a><a class="pill-review" href="https://www.tribality.com/2019/11/21/eberron-rising-from-the-last-war-review/" target="_blank">Tribality</a></div>
+    </div>
+  </td>
 </tr>
 
 </tbody>
@@ -1144,9 +1349,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
+  <th style="width:12%">Book</th>
+  <th style="width:44%">Overview</th>
+  <th style="width:30%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -1182,6 +1388,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Drop-in or adapt. Each lair is self-contained with maps, hazards, and treasure. Pairs with Flee, Mortals! stat blocks.
     </div>
     <div class="note">3rd party (MCDM). Uses 2014 stat block format but fully compatible with 2024 play. Designed as companion to Flee, Mortals!</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Quality lair design, excellent villain NPCs and stories</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.tribality.com/2024/03/27/where-evil-lives-mcdm-lairs-book-review/" target="_blank">Tribality</a><a class="pill-review" href="https://seedofworlds.blogspot.com/2024/06/review-where-evil-lives.html" target="_blank">Seed of Worlds</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1225,6 +1441,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">3rd party (MCDM). Uses 2014 stat block format but fully compatible with 2024 play.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Brilliant action-oriented monsters, steep learning curve</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.tribality.com/2024/02/13/flee-mortals-review/" target="_blank">Tribality</a><a class="pill-review" href="https://jeffsgamebox.blog/2024/01/29/flee-mortals-the-mcdm-monster-book-review/" target="_blank">Jeff's Game Box</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- MotM -->
@@ -1265,6 +1491,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Aarakocra · Bugbear · Centaur · Deep Gnome · Duergar · Eladrin · Fairy · Firbolg · Genasi (Air, Earth, Fire, Water) · Githyanki · Githzerai · Goblin · Harengon · Hobgoblin · Kenku · Kobold · Lizardfolk · Minotaur · Owlin · Satyr · Sea Elf · Shadar-kai · Tabaxi · Tortle · Triton · Yuan-ti
     </div>
     <div class="note">No 2024 update for these 28 species yet. All 260 stat blocks remain unique — MM and MotM are complementary by design.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Updated reprints — useful if you lack Volo/Mordenkainen</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.tribality.com/2022/02/04/mordenkainen-presents-monsters-of-the-multiverse-breakdown-part-1/" target="_blank">Tribality</a><a class="pill-review" href="https://dndcooperative.com/2022/05/23/review-monsters-of-the-multiverse/" target="_blank">Wart's Dungeon</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1313,6 +1549,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">2014-era subclasses work with 2024 classes but may feel slightly underpowered.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Dragon lore is outstanding, player options are weak</div>
+      <div class="rb-links"><a class="pill-review" href="http://thecampaign20xx.blogspot.com/2021/12/fizbans-treasury-of-dragons-review.html" target="_blank">Power Score</a><a class="pill-review" href="https://geeksofdoom.com/2021/10/27/book-review-dungeons-dragons-fizbans-treasury-of-dragons" target="_blank">Geeks of Doom</a></div>
+    </div>
+  </td>
 </tr>
 
 </tbody>
@@ -1343,9 +1589,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <table>
 <thead>
 <tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
+  <th style="width:12%">Book</th>
+  <th style="width:44%">Overview</th>
+  <th style="width:30%">Status</th>
+  <th style="width:14%">Community</th>
 </tr>
 </thead>
 <tbody>
@@ -1383,6 +1630,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Cherry-pick adventures by region. Epic Destinies are the new endgame system.
     </div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Ambitious scope, uneven execution — quantity over quality</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.wargamer.com/dnd/adventures-in-faerun-review" target="_blank">Wargamer</a><a class="pill-review" href="https://screenrant.com/dnd-forgotten-realms-adventures-in-faerun-review/" target="_blank">Screen Rant</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- Dragon Delves -->
@@ -1416,6 +1673,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       One-shots or drop-ins. Low-prep design with quick-start summaries.
     </div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Gorgeous production, adventure quality varies</div>
+      <div class="rb-links"><a class="pill-review" href="https://nerdist.com/article/dragon-delves-dungeons-and-dragons-anthology-review/" target="_blank">Nerdist</a><a class="pill-review" href="https://www.wargamer.com/dnd/dragon-delves-review" target="_blank">Wargamer</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- One-Shot Wonders Bundle (Roll & Play Press) -->
@@ -1425,7 +1692,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="book-year">2024</span>
     <span class="tag tag-adventure">Adventure</span>
     <span class="tag tag-3p"><a href="https://rollandplaypress.com/products/one-shot-wonders" target="_blank">Roll &amp; Play Press</a></span>
-    <span class="ordered">Ordered — not yet arrived</span>
   </td>
   <td>
     <div class="pills">
@@ -1451,6 +1717,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       One-shots pair with the maps and tokens for grab-and-go sessions. Good for the kids — pick a level-appropriate one-shot, lay down a map, drop tokens.
     </div>
     <div class="note">Roll &amp; Play Press (indie). Three separate products ordered as a bundle.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-consensus">ENNIE Award winner — excellent for new and busy DMs</div>
+      <div class="rb-links"><a class="pill-review" href="https://geekmom.com/2023/11/one-shot-wonders-from-roll-and-play-press-is-perfect-for-new-and-old-dd-dungeon-masters/" target="_blank">GeekMom</a><a class="pill-review" href="https://tasker.land/2024/07/09/review-one-shot-wonders-by-sam-bartlett-and-beth-davies/" target="_blank">Tasker</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1487,6 +1763,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="note">Can string all 6 into a full 1–13 campaign or cherry-pick individually. Barrier Peaks is the famous sci-fi crossover dungeon.</div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Creative framing device, works better as one-shots</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.geeksundergrace.com/tabletop/review-dd-quests-from-the-infinite-staircase/" target="_blank">Geeks Under Grace</a><a class="pill-review" href="https://www.wargamer.com/dnd/quests-from-the-infinite-staircase-review" target="_blank">Wargamer</a></div>
+    </div>
+  </td>
 </tr>
 
 <!-- Keys from the Golden Vault -->
@@ -1519,6 +1805,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Cherry-pick heists by level. Modular design fits any setting.
     </div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9734;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-consensus">Fun heist concepts, 5e mechanics poorly suited</div>
+      <div class="rb-links"><a class="pill-review" href="https://boardsandswords.com/blog/2023/11/keys-from-the-golden-vault-review" target="_blank">Boards & Swords</a><a class="pill-review" href="https://gamingtrend.com/reviews/keys-from-the-golden-vault-review-potions-thirteen/" target="_blank">Gaming Trend</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1554,6 +1850,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="note">Every adventure by a different author, each drawing on their own cultural background. Strong standalone one-shots.</div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
+  </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9734;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">Fresh cultures and settings, short but varied adventures</div>
+      <div class="rb-links"><a class="pill-review" href="https://www.enworld.org/threads/an-in-depth-review-of-journeys-through-the-radiant-citadel.690189/" target="_blank">EN World</a><a class="pill-review" href="https://www.strangeassembly.com/2022/review-journeys-through-the-radiant-citadel" target="_blank">Strange Assembly</a></div>
+    </div>
   </td>
 </tr>
 
@@ -1595,6 +1901,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="note">No subclasses, no species — pure adventure. Pair with VRGtR for expanded Ravenloft lore and player options.</div>
     <div class="note"><span class="skip">2024 adjustment needed</span> — see callout above.</div>
   </td>
+
+  <td>
+    <div class="rating-box">
+      <div class="rb-row"><span class="rb-label">Lore</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="rb-row"><span class="rb-label">Rules</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-row"><span class="rb-label">Usability</span> <span class="rb-val">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
+      <div class="rb-consensus">The gold standard D&D campaign — atmospheric, coherent</div>
+      <div class="rb-links"><a class="pill-review" href="https://akraticwizardry.blogspot.com/2016/03/review-of-curse-of-strahd.html" target="_blank">Akratic Wizardry</a><a class="pill-review" href="http://theotherside.timsbrannan.com/2016/03/review-curse-of-strahd-d-5e.html" target="_blank">The Other Side</a></div>
+    </div>
+  </td>
 </tr>
 
 </tbody>
@@ -1613,292 +1929,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span style="color:var(--accent3)">Green boxes</span> = still unique, use these
   <span style="color:var(--accent2)">Brown boxes</span> = reach for this when…
 </div>
-
-<h2>Not D&amp;D</h2>
-<div class="subtitle">Other systems. Shadowrun has its own section (eventually).</div>
-
-<table>
-<thead>
-<tr>
-  <th style="width:13%">Book</th>
-  <th style="width:50%">Overview</th>
-  <th style="width:37%">Status</th>
-</tr>
-</thead>
-<tbody>
-
-<!-- Sunfall -->
-<tr>
-  <td>
-    <div class="book-title">Sunfall</div>
-    <span class="book-year">2026</span>
-    <span class="tag tag-adventure">Adventure</span>
-    <span class="tag tag-3p"><a href="https://www.kickstarter.com/projects/archmagepress/sunfall" target="_blank">Kickstarter</a></span>
-    <span class="ordered">Kickstarted — not yet delivered</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-sys">Solo gamebook</span>
-      <span class="pill pill-sys">Tactical</span>
-      <span class="pill pill-sys">4 parts</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Four-part tactical solo gamebook with resource management (stamina/spirit). By Archmage Press.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Kickstarter backer</div>
-      Awaiting delivery.
-    </div>
-  </td>
-</tr>
-
-<!-- Draw Steel (MCDM) -->
-<tr>
-  <td>
-    <div class="book-title">Draw Steel: Heroes + Monsters</div>
-    <span class="book-year">2025</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://shop.mcdmproductions.com/collections/draw-steel" target="_blank">MCDM</a></span>
-    <span class="ordered">Ordered — not yet arrived</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">Heroes 400pp+</span>
-      <span class="pill pill-pp">Monsters 300pp+</span>
-      <span class="pill pill-sys">Tactical combat</span>
-      <span class="pill pill-sys">Matt Colville</span>
-    </div>
-    <div class="ov">
-      <div class="ov-head">Draw Steel: Heroes</div>
-      <div class="ov-line">Character creation, classes, combat system, exploration, negotiation. MCDM's own tactical fantasy RPG — not D&D, not d20.</div>
-      <div class="ov-head">Draw Steel: Monsters</div>
-      <div class="ov-line">Hundreds of monster stat blocks across dozens of types. Designed around MCDM's action-oriented encounter philosophy.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core rules — two-book set</div>
-      MCDM Productions. Hardcovers estimated Sep 2025.
-    </div>
-  </td>
-</tr>
-
-<!-- Vagabond -->
-<tr>
-  <td>
-    <div class="book-title">Vagabond: Pulp Fantasy RPG</div>
-    <span class="book-year">2025</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://www.dmsguild.com/en/product/512122/vagabond-pulp-fantasy-rpg-core-rulebook" target="_blank">DMsGuild</a></span>
-    <span class="ordered">Ordered — POD printing</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">212pp</span>
-      <span class="pill pill-sys">d20 roll-over</span>
-      <span class="pill pill-sys">Dungeon crawl</span>
-      <span class="pill pill-sys">Solo / Co-Op / Guided</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Pulp fantasy dungeon crawler by Land of the Blind. Old-school practicality meets modern character expression — d20 roll-over with Favor/Hinder (advantage analog), Mana-based magic, zone combat, Morale system. 7 ancestries, 18 classes, 50+ perks, 60 spells, 200+ monster statblocks with Action Gambits. Supports solo, co-op, and guided play.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core rulebook — Print on Demand</div>
-      POD hardcover ordered, currently printing.
-    </div>
-  </td>
-</tr>
-
-<!-- Daggerheart -->
-<tr>
-  <td>
-    <div class="book-title">Daggerheart</div>
-    <span class="book-year">2025</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://www.daggerheart.com/" target="_blank">Homepage</a></span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">366pp</span>
-      <span class="pill pill-sys">2d12 duality dice</span>
-      <span class="pill pill-sys">Hope &amp; Fear</span>
-      <span class="pill pill-sys">Narrative fantasy</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Narrative fantasy RPG from Critical Role's Darrington Press. Duality dice (Hope/Fear), card-based character building, GM-less turn structure. Built for cinematic, story-driven play.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core set</div>
-      Brand new (2025). Core set includes rulebook + cards.
-    </div>
-  </td>
-</tr>
-
-<!-- Pathfinder 2E Remaster -->
-<tr>
-  <td>
-    <div class="book-title">Pathfinder 2E Remaster</div>
-    <span class="book-year">2023–2024</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://paizo.com/store/pathfinder/rules" target="_blank">Paizo</a></span>
-    <span class="ordered">Ordered — not yet arrived</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-sys">d20 / 3-action</span>
-      <span class="pill pill-sys">Paizo</span>
-      <span class="pill pill-pp">Player Core 464pp</span>
-      <span class="pill pill-pp">Player Core 2 320pp</span>
-      <span class="pill pill-pp">GM Core 336pp</span>
-      <span class="pill pill-pp">Monster Core 376pp</span>
-      <span class="pill pill-sys">ORC license</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Not a new edition — a rewrite of the four PF2E core books under the ORC license after the OGL crisis (Jan 2023). Removes all WotC-traceable content. Includes 2023 errata cycle. Legacy books remain compatible.</div>
-      <div class="ov-head">Player Core (Nov 2023, 464pp)</div>
-      <div class="ov-line">8 classes (Bard, Cleric, Druid, Fighter, Ranger, Rogue, Witch, Wizard), 8 ancestries. Replaces Core Rulebook. Key changes: ability scores → pure modifiers, alignment → edicts/anathemas + holy/unholy, spell levels → spell ranks, spell schools removed, flat-footed → off-guard, spell components replaced by casting traits, focus refocuses to full natively.</div>
-      <div class="ov-head">Player Core 2 (Jul 2024, 320pp)</div>
-      <div class="ov-line">8 classes (Alchemist, Barbarian, Champion, Investigator, Monk, Oracle, Sorcerer, Swashbuckler), 7 ancestries, 40+ archetypes. Replaces Advanced Player's Guide. Champion causes reworked around edicts/anathemas. Alchemist and Oracle getting widest mechanical changes.</div>
-      <div class="ov-head">GM Core (Nov 2023, 336pp)</div>
-      <div class="ov-line">Rules, campaigns, Golarion lore, subsystems, variants, magic items, poisons. Replaces Gamemastery Guide. Apex items reworked, staves improved, talismans buffed.</div>
-      <div class="ov-head">Monster Core (Mar 2024, 376pp)</div>
-      <div class="ov-line">Replaces Bestiary 1. Tradition-based dragons replace chromatic/metallic as centerpiece. Drow retconned out (replaced by Serpentfolk in Darklands). Renamed: Mephits → Elemental Scamps, Svirfneblin → Drathnelar, Duergar → Hryngar.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Complete core system — 4 hardcovers</div>
-      Paizo's post-OGL rewrite. Not a new edition — same engine, same compatibility, reshuffled and cleaned up. Replaces Core Rulebook + APG + GMG + Bestiary 1.
-    </div>
-  </td>
-</tr>
-
-<!-- Cairn -->
-<tr>
-  <td>
-    <div class="book-title">Cairn</div>
-    <span class="book-year">2nd Ed, 2024</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://cairnrpg.com/" target="_blank">Homepage</a></span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-sys">OSR</span>
-      <span class="pill pill-sys">Rules-light</span>
-      <span class="pill pill-sys">Into the Odd</span>
-      <span class="pill pill-sys">Free / CC</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Rules-light OSR adventure game. Based on Into the Odd and Knave. No classes, no levels — inventory-driven character identity. Full rules available free online (CC-BY-SA). By Yochai Gal.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core rules</div>
-      2nd edition (2024) expanded from the original. Entire game fits in a pamphlet if you want it to.
-    </div>
-  </td>
-</tr>
-
-<!-- Blades in the Dark -->
-<tr>
-  <td>
-    <div class="book-title">Blades in the Dark</div>
-    <span class="book-year">2015</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://bladesinthedark.com/" target="_blank">Homepage</a></span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">328pp</span>
-      <span class="pill pill-sys">Forged in the Dark</span>
-      <span class="pill pill-sys">Heists</span>
-      <span class="pill pill-sys">Fiction-first</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Heist RPG set in a haunted industrial-fantasy city. Fiction-first, clock-based mechanics, flashback system, crew playbooks. Published by Evil Hat Productions.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core rulebook</div>
-      Complete game in one book. The Forged in the Dark engine spawned dozens of hacks.
-    </div>
-  </td>
-</tr>
-
-<!-- Thirsty Sword Lesbians -->
-<tr>
-  <td>
-    <div class="book-title">Thirsty Sword Lesbians</div>
-    <span class="book-year">2021–2022</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-3p"><a href="https://evilhat.com/product/thirsty-sword-lesbians/" target="_blank">Evil Hat</a></span>
-    <span class="tag tag-3p"><a href="https://www.youtube.com/watch?v=dvFQCfvf-bM" target="_blank">Review ▶</a></span>
-    <span class="ordered">Ordered — not yet arrived</span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">Core 224pp</span>
-      <span class="pill pill-pp">Advanced 272pp</span>
-      <span class="pill pill-sys">PbtA</span>
-      <span class="pill pill-sys">Queer narrative</span>
-      <span class="pill pill-sys">ENnie 2022 Best Game</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">April Kit Walsh's PbtA RPG about queer characters fighting for justice with swords and feelings. Emotional playbooks, relationship-driven mechanics, found family. Evil Hat Productions.</div>
-      <div class="ov-head">Thirsty Sword Lesbians (2021, 224pp)</div>
-      <div class="ov-line">Core rulebook. 9 playbooks built around emotional archetypes (the Beast, the Chosen, the Infamous, etc.), sword-crossing as social and combat mechanic, setting starters from space opera to fairy tale.</div>
-      <div class="ov-head">Advanced Lovers &amp; Lesbians (2022, 272pp)</div>
-      <div class="ov-line">Supplement. 10 new playbooks (Naga, Investigator, Hologoddess, Matriarch…), 21 new settings (Heian Japan to Saturn's orbit), 4 ready-to-play adventures, random tables for all 19 playbooks.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Core + supplement — two hardcovers</div>
-      Complete PbtA experience in two books. Core is the full game, Advanced is pure extras.
-    </div>
-  </td>
-</tr>
-
-<!-- Ironsworn Family -->
-<tr>
-  <td>
-    <div class="book-title">Ironsworn</div>
-    <span class="book-year">2018</span>
-    <span class="tag tag-core">Core</span>
-    <span class="tag tag-pdf">PDF</span>
-    <span class="tag tag-3p"><a href="https://tomkinpress.com/collections/free-downloads" target="_blank">Free Downloads</a></span>
-    <span class="tag tag-3p"><a href="https://tomkinpress.com/" target="_blank">Tomkin Press</a></span>
-  </td>
-  <td>
-    <div class="pills">
-      <span class="pill pill-pp">270pp</span>
-      <span class="pill pill-sys">PbtA-adjacent</span>
-      <span class="pill pill-sys">Solo-first</span>
-      <span class="pill pill-sys">Oracle tables</span>
-      <span class="pill pill-sys">CC-BY-SA</span>
-    </div>
-    <div class="ov">
-      <div class="ov-line">Shawn Tomkin's solo/co-op/guided RPG. Action dice + challenge dice, iron vows as narrative engine, oracle tables for GM-less play. Low fantasy, Ironlands setting. Complete game — all moves, oracles, worldbuilding, and assets included. Free, CC-BY-SA.</div>
-    </div>
-  </td>
-  <td>
-    <div class="still">
-      <div class="still-label">Full rulebook — free PDF</div>
-      Complete standalone game. Plus free playkit, asset sheets, character sheets, and world workbook.
-    </div>
-  </td>
-</tr>
-
-</tbody>
-</table>
 
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
 <a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
