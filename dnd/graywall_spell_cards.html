@@ -1,0 +1,639 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: graywall_spell_cards.html
+  PURPOSE: Printable spell & ability reference cards for The Graywall Mystery campaign.
+           3×3 grid per A4 page. Page 1 = Spark (Paladin L2), Page 2 = Sirius (Rogue L2).
+  OWNER PREF: No MS Office. Self-contained HTML. Parchment theme. No CDN deps for offline.
+              2024 PHB rules only. NEVER reference 2014 rules or edition differences.
+  CAMPAIGN: The Graywall Mystery (Amir & Kais)
+  CROSS-LINKS: graywall_mystery.html (screen-only link in header)
+  CHARACTERS:
+    Spark — White Dragonborn Paladin L2 (Charlatan). STR 14, CHA 17.
+      Cards: Command, Bless, Purify Food and Drink, Divine Smite, Lay On Hands,
+             Dueling, Sap (Longsword), Slow (Javelin), Breath Weapon
+    Sirius — Rock Gnome Rogue L2 (Wayfarer). DEX 17, INT 14.
+      Cards: Sneak Attack, Cunning Action, Expertise, Nick (Dagger), Vex (Shortbow),
+             Lucky, Gnomish Cunning, Mending, Prestidigitation
+  LAYOUT: Print CSS forces 3×3 grid per page, page-break between characters.
+          Screen shows parchment theme with floating nav.
+  CSS: Cinzel headings, Crimson Pro body, parchment bg, gold/accent borders.
+  NAV: Floating home (index.html) + back-to-top. Screen-only link to graywall_mystery.html.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spell &amp; Ability Cards — The Graywall Mystery</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --parchment-light: #faf7f0;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --card-border: #a0926e;
+    --card-bg: #fdfaf3;
+    --spark-accent: #2a5f8b;
+    --sirius-accent: #5a3d6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 14pt;
+    line-height: 1.45;
+    color: var(--ink);
+    background: var(--parchment);
+    padding: 30px 10px 60px;
+  }
+
+  /* ── Page Header (screen only) ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 28pt;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 14pt;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .campaign-link {
+    font-size: 12pt;
+    color: var(--gold);
+  }
+  .campaign-link a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold-light);
+  }
+  .campaign-link a:hover { color: var(--accent); }
+
+  /* ── Section Headers ── */
+  .section-header {
+    font-family: 'Cinzel', serif;
+    font-size: 22pt;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    margin: 40px 0 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 13pt;
+    margin-bottom: 20px;
+  }
+
+  /* ── Card Grid ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── Individual Card ── */
+  .card {
+    border: 1.5px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    padding: 14px 16px 13px;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    position: relative;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+
+  .card-type {
+    font-size: 10pt;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .card-meta {
+    font-size: 11pt;
+    color: var(--muted);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .card-meta strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .card-divider {
+    border: none;
+    border-top: 1px solid var(--divider);
+    margin: 6px 0;
+  }
+
+  .card-body {
+    font-size: 11pt;
+    line-height: 1.45;
+    flex: 1;
+  }
+
+  .card-body p {
+    margin-bottom: 4px;
+  }
+
+  .card-body .upcast {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 10pt;
+    margin-top: 4px;
+  }
+
+  .card-corner {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    font-size: 9pt;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    opacity: 0.35;
+  }
+
+  /* Character accent stripe */
+  .card.spark { border-top: 3px solid var(--spark-accent); }
+  .card.sirius { border-top: 3px solid var(--sirius-accent); }
+
+  /* Concentration tag */
+  .tag-conc {
+    display: inline-block;
+    font-size: 8.5pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: #e8d5b0;
+    color: #6b5e50;
+    padding: 1px 4px;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+
+  /* ── Floating Nav (screen only) ── */
+  .float-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .float-nav:hover { opacity: 1; }
+  .float-nav-up {
+    right: 20px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .float-nav-home {
+    left: 20px;
+  }
+  .float-nav-home img {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* ── Print Styles ── */
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    body {
+      background: #fff;
+      padding: 0;
+      font-size: 9pt;
+    }
+
+    .page-header, .campaign-link, .float-nav { display: none !important; }
+
+    .section-header {
+      font-size: 12pt;
+      margin: 0 0 6px;
+      page-break-before: auto;
+    }
+
+    .section-subtitle {
+      margin-bottom: 8px;
+      font-size: 8.5pt;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .card-grid {
+      gap: 6px;
+      max-width: 100%;
+    }
+
+    .card {
+      min-height: 75mm;
+      border: 1px solid #999;
+      box-shadow: none;
+      padding: 7px 8px 6px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card.spark { border-top: 2.5px solid var(--spark-accent); }
+    .card.sirius { border-top: 2.5px solid var(--sirius-accent); }
+
+    .card-name { font-size: 9pt; }
+    .card-type { font-size: 7pt; }
+    .card-meta { font-size: 7.5pt; }
+    .card-body { font-size: 7.5pt; }
+    .card-corner { font-size: 6.5pt; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .card { min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header" id="top">
+  <h1>Spell &amp; Ability Cards</h1>
+  <div class="subtitle">The Graywall Mystery — Level 2 Reference</div>
+  <div class="campaign-link"><a href="graywall_mystery.html">&#8592; Back to Campaign Booklet</a></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SPARK — PALADIN LEVEL 2                            -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="section-header">Spark</div>
+<div class="section-subtitle">White Dragonborn Paladin &middot; Level 2 &middot; Spell DC 13 &middot; Spell Attack +5</div>
+
+<div class="card-grid">
+
+  <!-- 1. Command -->
+  <div class="card spark">
+    <div class="card-corner">PHB 255</div>
+    <div class="card-name">Command</div>
+    <div class="card-type">Level 1 Enchantment &middot; Spell</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 60 ft &middot; V &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Speak a one-word command to a creature you can see. Target makes a <strong>WIS save</strong> or follows the command on its next turn.</p>
+      <p><strong>Approach.</strong> Move toward you by the shortest route.<br>
+      <strong>Drop.</strong> Drop whatever it's holding, turn ends.<br>
+      <strong>Flee.</strong> Spend its turn moving away from you.<br>
+      <strong>Grovel.</strong> Fall Prone, turn ends.<br>
+      <strong>Halt.</strong> Doesn't move, takes no actions.</p>
+      <p class="upcast">Higher slot: +1 target per level above 1.</p>
+    </div>
+  </div>
+
+  <!-- 2. Bless -->
+  <div class="card spark">
+    <div class="card-corner">PHB 247</div>
+    <div class="card-name">Bless <span class="tag-conc">Conc</span></div>
+    <div class="card-type">Level 1 Enchantment &middot; Spell</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 30 ft &middot; V, S, M (holy symbol 5+ gp) &middot; Up to 1 min
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Bless up to <strong>3 creatures</strong> within range. Whenever a target makes an <strong>attack roll</strong> or a <strong>saving throw</strong> before the spell ends, the target adds <strong>1d4</strong> to the roll.</p>
+      <p class="upcast">Higher slot: +1 creature per level above 1.</p>
+    </div>
+  </div>
+
+  <!-- 3. Purify Food and Drink -->
+  <div class="card spark">
+    <div class="card-corner">PHB 308</div>
+    <div class="card-name">Purify Food and Drink</div>
+    <div class="card-type">Level 1 Transmutation &middot; Ritual</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 10 ft &middot; V, S &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>All nonmagical food and drink within a <strong>5-foot-radius Sphere</strong> centered on a point within range is purified and rendered free of poison and disease.</p>
+      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Ritual: can cast without spell slot (10 min casting time).</p>
+    </div>
+  </div>
+
+  <!-- 4. Divine Smite -->
+  <div class="card spark">
+    <div class="card-corner">PHB 264</div>
+    <div class="card-name">Divine Smite</div>
+    <div class="card-type">Level 1 Evocation &middot; Always Prepared</div>
+    <div class="card-meta">
+      <strong>Bonus Action</strong> &middot; Self &middot; V &middot; Instantaneous<br>
+      Immediately after hitting with a Melee weapon or Unarmed Strike
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>The target takes an extra <strong>2d8 Radiant</strong> damage from the attack. Damage increases by <strong>1d8</strong> if the target is a <strong>Fiend or Undead</strong>.</p>
+      <p style="margin-top:3px;"><strong>Free cast:</strong> 1/long rest without expending a spell slot.</p>
+      <p class="upcast">Higher slot: +1d8 per level above 1.</p>
+    </div>
+  </div>
+
+  <!-- 5. Lay On Hands -->
+  <div class="card spark">
+    <div class="card-corner">PHB 108</div>
+    <div class="card-name">Lay On Hands</div>
+    <div class="card-type">Class Feature &middot; Paladin</div>
+    <div class="card-meta">
+      <strong>Bonus Action</strong> &middot; Touch &middot; Pool: <strong>10 HP</strong> (5 &times; Paladin level)
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Touch a creature (including yourself) and draw from your pool to restore <strong>any number of HP</strong> up to the amount remaining in the pool.</p>
+      <p>Alternatively, expend <strong>5 HP</strong> from the pool to remove the <strong>Poisoned</strong> condition (doesn't also restore HP).</p>
+      <p style="margin-top:3px; font-style:italic; color: var(--muted);">Pool replenishes when you finish a Long Rest.</p>
+    </div>
+  </div>
+
+  <!-- 6. Dueling -->
+  <div class="card spark">
+    <div class="card-corner">PHB 209</div>
+    <div class="card-name">Dueling</div>
+    <div class="card-type">Fighting Style Feat &middot; Level 2</div>
+    <div class="card-meta">
+      <strong>Passive</strong> &middot; Prereq: Fighting Style class feature
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>When you're holding a <strong>Melee weapon in one hand</strong> and <strong>no other weapons</strong>, you gain a <strong>+2 bonus to damage rolls</strong> with that weapon.</p>
+      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Longsword (1h): 1d8 + 2 (STR) + 2 (Dueling) = 1d8+4 slashing.</p>
+    </div>
+  </div>
+
+  <!-- 7. Sap (Longsword Mastery) -->
+  <div class="card spark">
+    <div class="card-corner">PHB 215</div>
+    <div class="card-name">Sap</div>
+    <div class="card-type">Weapon Mastery &middot; Longsword</div>
+    <div class="card-meta">
+      <strong>On hit</strong> &middot; Longsword: 1d8+4 slashing, versatile (1d10+4)
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>If you hit a creature with this weapon, that creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn.</p>
+      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Automatic on hit — no save, no resource cost. Great for protecting the party.</p>
+    </div>
+  </div>
+
+  <!-- 8. Slow (Javelin Mastery) -->
+  <div class="card spark">
+    <div class="card-corner">PHB 215</div>
+    <div class="card-name">Slow</div>
+    <div class="card-type">Weapon Mastery &middot; Javelin</div>
+    <div class="card-meta">
+      <strong>On hit</strong> &middot; Javelin: 1d6+2 piercing, thrown 30/120
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>If you hit a creature with this weapon, that creature's <strong>Speed is reduced by 10 feet</strong> until the start of your next turn. If the creature is hit more than once with this property, the Speed reduction doesn't exceed 10 feet.</p>
+      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Good for keeping enemies from closing distance or escaping.</p>
+    </div>
+  </div>
+
+  <!-- 9. Breath Weapon -->
+  <div class="card spark">
+    <div class="card-corner">PHB</div>
+    <div class="card-name">Breath Weapon</div>
+    <div class="card-type">Species Trait &middot; White Dragonborn</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; <strong>Uses:</strong> 2/long rest (Prof Bonus)<br>
+      Choose: 15 ft Cone <em>or</em> 30 ft Line &times; 5 ft
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Each creature in the area makes a <strong>DEX save (DC 12)</strong>. On a failed save, <strong>1d10 Cold</strong> damage. Half on a success.</p>
+      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Choose cone or line each time you use it. Damage scales: 2d10 at L5, 3d10 at L11, 4d10 at L17.</p>
+    </div>
+  </div>
+
+</div><!-- /card-grid Spark -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SIRIUS — ROGUE LEVEL 2                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="page-break"></div>
+
+<div class="section-header">Sirius</div>
+<div class="section-subtitle">Rock Gnome Rogue &middot; Level 2 &middot; Spell DC 12 (Rock Gnome cantrips only)</div>
+
+<div class="card-grid">
+
+  <!-- 1. Sneak Attack -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 127</div>
+    <div class="card-name">Sneak Attack</div>
+    <div class="card-type">Class Feature &middot; Rogue</div>
+    <div class="card-meta">
+      <strong>1/turn</strong> &middot; Extra <strong>1d6</strong> damage &middot; Finesse or Ranged weapon
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Once per turn, deal an extra <strong>1d6</strong> damage to one creature you hit with an attack roll if you're using a weapon with the <strong>Finesse</strong> or <strong>Ranged</strong> property and one of these is true:</p>
+      <p><strong>Advantage.</strong> You have Advantage on the attack roll.<br>
+      <strong>Ally adjacent.</strong> An ally is within 5 ft of the target and you don't have Disadvantage.</p>
+      <p class="upcast">Scales: 2d6 at L3, 3d6 at L5, etc.</p>
+    </div>
+  </div>
+
+  <!-- 2. Cunning Action -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 127</div>
+    <div class="card-name">Cunning Action</div>
+    <div class="card-type">Class Feature &middot; Rogue Level 2</div>
+    <div class="card-meta">
+      <strong>Bonus Action</strong> &middot; Every turn &middot; No resource cost
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>On each of your turns, you can take one of the following actions as a <strong>Bonus Action</strong>:</p>
+      <p><strong>Dash.</strong> Double your movement this turn.<br>
+      <strong>Disengage.</strong> Your movement doesn't provoke Opportunity Attacks this turn.<br>
+      <strong>Hide.</strong> Make a Stealth check to become Hidden.</p>
+      <p style="margin-top:3px; font-style:italic; color: var(--muted);">Attack + Hide = Sneak Attack next turn via Advantage.</p>
+    </div>
+  </div>
+
+  <!-- 3. Expertise -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 127</div>
+    <div class="card-name">Expertise</div>
+    <div class="card-type">Class Feature &middot; Rogue</div>
+    <div class="card-meta">
+      <strong>Passive</strong> &middot; Double proficiency bonus on chosen skills
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Your proficiency bonus is <strong>doubled</strong> for ability checks with two skills of your choice that you're proficient in.</p>
+      <p style="margin-top:5px;"><strong>Sirius's picks:</strong><br>
+      Sleight of Hand: +3 (DEX) +4 (2&times;Prof) = <strong>+7</strong><br>
+      Stealth: +3 (DEX) +4 (2&times;Prof) = <strong>+7</strong></p>
+    </div>
+  </div>
+
+  <!-- 4. Nick (Dagger Mastery) -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 215</div>
+    <div class="card-name">Nick</div>
+    <div class="card-type">Weapon Mastery &middot; Dagger</div>
+    <div class="card-meta">
+      <strong>On attack</strong> &middot; Dagger: 1d4+3 piercing, finesse/light/thrown 20/60
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>When you make the extra attack of the <strong>Light</strong> property, you can make it as part of the <strong>Attack action</strong> instead of as a Bonus Action. You can make this extra attack only once per turn.</p>
+      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Frees up your Bonus Action for Cunning Action while still getting two dagger attacks.</p>
+    </div>
+  </div>
+
+  <!-- 5. Vex (Shortbow Mastery) -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 215</div>
+    <div class="card-name">Vex</div>
+    <div class="card-type">Weapon Mastery &middot; Shortbow</div>
+    <div class="card-meta">
+      <strong>On hit</strong> &middot; Shortbow: 1d6+3 piercing, range 80/320, two-handed
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>If you hit a creature with this weapon, you have <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn.</p>
+      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Hit once → Advantage on second shot → easy Sneak Attack trigger.</p>
+    </div>
+  </div>
+
+  <!-- 6. Lucky -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 203</div>
+    <div class="card-name">Lucky</div>
+    <div class="card-type">Origin Feat</div>
+    <div class="card-meta">
+      <strong>Luck Points:</strong> 3/long rest
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p><strong>Luck Points.</strong> You have 3 Luck Points. When you make a d20 Test, you can spend 1 Luck Point to give yourself <strong>Advantage</strong> on the roll.</p>
+      <p><strong>Against you.</strong> When a creature makes an attack roll against you, you can spend 1 Luck Point to impose <strong>Disadvantage</strong> on that roll.</p>
+      <p style="font-style:italic; color:var(--muted);">Points replenish on a Long Rest.</p>
+    </div>
+  </div>
+
+  <!-- 7. Gnomish Cunning -->
+  <div class="card sirius">
+    <div class="card-corner">PHB</div>
+    <div class="card-name">Gnomish Cunning</div>
+    <div class="card-type">Species Trait &middot; Gnome</div>
+    <div class="card-meta">
+      <strong>Passive</strong> &middot; Always active
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>You have <strong>Advantage</strong> on Intelligence, Wisdom, and Charisma <strong>saving throws</strong>.</p>
+      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Protects against most mind-affecting magic: charm, fear, hold person, command, etc. Extremely powerful passive.</p>
+    </div>
+  </div>
+
+  <!-- 8. Mending -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 299</div>
+    <div class="card-name">Mending</div>
+    <div class="card-type">Transmutation Cantrip &middot; Rock Gnome</div>
+    <div class="card-meta">
+      <strong>1 minute</strong> &middot; Touch &middot; V, S, M (2 lodestones) &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>This spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than <strong>1 foot</strong> in any dimension, you mend it, leaving no trace of the former damage.</p>
+      <p style="font-style:italic; color:var(--muted);">Can mend magic items but doesn't restore their magic.</p>
+    </div>
+  </div>
+
+  <!-- 9. Prestidigitation -->
+  <div class="card sirius">
+    <div class="card-corner">PHB 307</div>
+    <div class="card-name">Prestidigitation</div>
+    <div class="card-type">Transmutation Cantrip &middot; Rock Gnome</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 10 ft &middot; V, S &middot; Up to 1 hour
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>A minor magical trick. Choose one effect:</p>
+      <p>&bull; Sensory effect (spark, puff of wind, faint sound, odd odor)<br>
+      &bull; Light or snuff a candle, torch, or small campfire<br>
+      &bull; Clean or soil an object no larger than 1 cubic foot<br>
+      &bull; Chill, warm, or flavor up to 1 cu ft of nonliving material for 1 hour<br>
+      &bull; Color, mark, or symbol on an object/surface for 1 hour<br>
+      &bull; Trinket or illusory image that fits in your hand, lasts until end of next turn</p>
+    </div>
+  </div>
+
+</div><!-- /card-grid Sirius -->
+
+<!-- Floating nav -->
+<a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>
+<a href="index.html" class="float-nav float-nav-home" aria-label="Home"><img src="media/cybergwen_logo.svg" alt="Home"></a>
+
+</body>
+</html>
