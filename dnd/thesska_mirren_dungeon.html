@@ -1,0 +1,679 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: thesska_mirren_dungeon.html
+  PURPOSE: Mini-dungeon crawl in Thesska Mirren's underground plantation.
+           Part of The Graywall Mystery campaign (graywall_mystery.html).
+           Designed for ~3 hour session, level 2 party.
+  PARTY: Spark (L2 Paladin, Dragonborn), Sirius (L2 Rogue, Rock Gnome),
+         Twinkle (L2 Fairy Wild Magic Sorcerer, Gwen's sidekick NPC).
+  PREMISE: Thesska's cellar plantation has been overrun by giant centipedes.
+           She doesn't care because she just petrifies anything she encounters
+           down there — stone statues of beasts litter the corridors.
+           The kids are invited/sent down to clear the infestation.
+  OWNER PREF: No MS Office. Self-contained HTML. Parchment theme matching graywall_mystery.html.
+              Kids are 11 and 16. PHB-only at the table. 2024 D&D (5.5e).
+              NEVER mention older editions or edition differences.
+              SPOILERS: Don't reveal main campaign secrets (Vaelk, smuggling, etc.)
+              Monster stat blocks use MM 2025 with page refs.
+  STRUCTURE:
+    01  Dungeon Crawl (room-by-room layout, pacing, read-aloud text)
+    02  Monster Stat Blocks (encounter cards for all creatures used)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesska Mirren's Plantation — Dungeon Crawl</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --parchment: #f5f0e8;
+    --accent: #8b2500;
+    --gold: #b8860b;
+    --muted: #6b5e50;
+    --divider: #c4b8a8;
+    --teal: #2a6e7a;
+    --stone: #7a7568;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 15pt;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 60px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin: 40px 0 16px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--divider);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    color: var(--stone);
+    margin: 24px 0 8px;
+  }
+
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  /* Room cards */
+  .room {
+    background: rgba(255,255,255,0.4);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .room-header {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .room-tag {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.8rem;
+    background: var(--divider);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .room-tag-combat {
+    background: rgba(139,37,0,0.15);
+    color: var(--accent);
+  }
+
+  .room-tag-puzzle {
+    background: rgba(42,110,122,0.15);
+    color: var(--teal);
+  }
+
+  .room-tag-rp {
+    background: rgba(184,134,11,0.15);
+    color: var(--gold);
+  }
+
+  .read-aloud {
+    background: rgba(184,134,11,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-style: italic;
+    color: #3a3020;
+  }
+
+  /* Stat block grid */
+  .stat-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .stat-blocks { grid-template-columns: 1fr; }
+  }
+
+  /* Stat blocks */
+  .stat-block {
+    background: rgba(255,255,255,0.5);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    break-inside: avoid;
+  }
+
+  .stat-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+
+  .stat-type {
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+
+  .stat-line {
+    margin: 4px 0;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    margin: 12px 0;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    padding: 8px 0;
+  }
+
+  .stat-grid strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .pill-ref {
+    display: inline-block;
+    background: var(--divider);
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-style: italic;
+    padding: 1px 7px;
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+
+  .dm-note {
+    background: rgba(139,37,0,0.06);
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95rem;
+  }
+
+  .dm-note::before {
+    content: "🎲 DM ";
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* Accordion details/summary */
+  details.accordion {
+    margin: 20px 0;
+  }
+
+  details.accordion > summary {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  details.accordion > summary::-webkit-details-marker { display: none; }
+
+  details.accordion > summary::before {
+    content: '▸';
+    display: inline-block;
+    transition: transform 0.2s;
+    font-size: 0.9em;
+  }
+
+  details.accordion[open] > summary::before {
+    transform: rotate(90deg);
+  }
+
+  details.accordion[open] > summary {
+    border-radius: 8px 8px 0 0;
+    border-bottom: none;
+  }
+
+  details.accordion > .room {
+    margin-top: 0;
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+  }
+
+  details.accordion > .stat-block {
+    margin-top: 0;
+    border-radius: 0 0 8px 8px;
+  }
+
+  details.accordion > summary .room-tag {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* Stat block accordion in grid */
+  .stat-blocks details.accordion {
+    margin: 0;
+  }
+
+  .stat-blocks details.accordion > summary {
+    font-size: 1.1rem;
+    border-color: var(--accent);
+    border-width: 2px;
+  }
+
+  .stat-blocks details.accordion[open] > summary {
+    border-bottom: none;
+  }
+
+  @media print {
+    .page { padding: 20px; }
+    .stat-block { break-inside: avoid; }
+    details.accordion { break-inside: avoid; }
+    details.accordion > summary::before { content: ''; }
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 20px 16px; }
+    .stat-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Thesska Mirren's Plantation</h1>
+  <div class="subtitle">Underground Dungeon Crawl · Level 2 · ~3 Hours</div>
+
+  <!-- Map -->
+  <div style="text-align:center; margin-bottom:32px;">
+    <a href="media/graywall_mystery/thesska_mirren_dungeon_map.png" class="glightbox" data-gallery="dungeon-map" data-desc="Thesska Mirren's Plantation — Dungeon Map">
+      <img src="media/graywall_mystery/thesska_mirren_dungeon_map.png" alt="Dungeon Map — Thesska Mirren's Plantation" style="max-width:100%; width:100%; border-radius:8px; border:2px solid var(--divider); cursor:pointer;">
+    </a>
+    <div style="font-family:'Cinzel',serif; font-size:0.85rem; color:var(--muted); margin-top:6px; font-style:italic;">Click to enlarge</div>
+    <div style="margin-top:8px; font-size:0.9rem;">
+      Print (3&times;A3):
+      <a href="media/graywall_mystery/thesska_mirren_dungeon_map_1.png" class="glightbox" data-gallery="map-slices" data-desc="Map slice 1 — Cellar Stairs &amp; Nursery" style="color:var(--accent);">Stairs &amp; Nursery</a> ·
+      <a href="media/graywall_mystery/thesska_mirren_dungeon_map_2.png" class="glightbox" data-gallery="map-slices" data-desc="Map slice 2 — Tunnels &amp; Greenhouse" style="color:var(--accent);">Tunnels &amp; Greenhouse</a> ·
+      <a href="media/graywall_mystery/thesska_mirren_dungeon_map_3.png" class="glightbox" data-gallery="map-slices" data-desc="Map slice 3 — Brood Nest" style="color:var(--accent);">Brood Nest</a>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>I. Dungeon Crawl</h2>
+  <!-- Room-by-room layout, pacing, read-aloud, encounters, loot -->
+
+  <h3>Overview</h3>
+  <p>Five rooms, linear descent. Each room deeper and darker than the last. The kids enter Thesska's cellar, descend through her underground plantation, and reach the brood nest where the infestation originates. Stone statues of petrified creatures appear in every room &mdash; Thesska's casual solution to anything that bothers her down here.</p>
+
+  <div class="dm-note">
+    <strong>Pacing:</strong> Room 1 is pure RP (15 min). Room 2 is an easy warm-up (20 min). Room 3 is the hard puzzle-combat (30 min). Room 4 is a medium fight with numbers (30 min). Room 5 is the boss (45 min). Leave 30 min for wrap-up, loot, and returning to Thesska. Total: ~3 hours.
+  </div>
+
+  <div class="dm-note">
+    <strong>Light:</strong> The plantation has no natural light. Thesska sees in the dark (darkvision 60 ft). She hands the party a hooded lantern and two flasks of oil. Sirius has darkvision (gnome). Spark and Twinkle don't &mdash; the lantern matters. If it goes out in a fight, Spark is blind.
+  </div>
+
+  <div class="dm-note">
+    <strong>Stone statues:</strong> Every room has at least one petrified creature. These are real &mdash; Thesska petrified them with her gaze when they annoyed her. They're flavour, not mechanics, but perceptive kids might realise what they imply about their host. Don't explain it. Let them figure out what a medusa's gaze does.
+  </div>
+
+  <!-- Room 1 -->
+  <details class="accordion">
+    <summary>1. The Cellar Stairs <span class="room-tag room-tag-rp">RP</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">Thesska leads you through a heavy oak door behind her parlour, down a flight of worn stone steps. The air changes immediately &mdash; damp, earthy, and sweet with rot. Cazhaak creepers crawl across the walls, their tendrils faintly luminescent, a pale gold that pulses like a slow heartbeat. On the landing halfway down, a rat sits frozen on its haunches. Not frozen &mdash; stone. Every whisker, every claw, rendered in perfect grey granite.</div>
+
+    <div class="read-aloud">"My little garden has acquired some unwelcome guests," Thesska says, adjusting her veil. She holds out a hooded lantern. "I would deal with them myself, but&hellip; my methods tend to be permanent. And some of those specimens took months to cultivate. Do try not to trample anything important."</div>
+
+    <p><strong>Details:</strong> The stairway is 5 ft wide, 30 ft descent. Three petrified creatures visible: the rat on the landing, a stone spider on the ceiling (Perception DC 10 to notice), and a petrified snake coiled around a wall bracket that looks decorative but isn't.</p>
+
+    <p><strong>Thesska stays upstairs.</strong> She is not coming with them. "I have correspondence." She'll be in the parlour when they return.</p>
+
+    <div class="dm-note">
+      <strong>Thesska's vibe:</strong> She's not worried. This is an errand, not a crisis. She's mildly irritated that vermin are disrupting her work, but she's a medusa &mdash; centipedes are beneath her attention. She hired the party because petrifying the bugs would also petrify her plants. She wants surgical removal, not collateral damage. If the kids ask "why don't you just go down there?" she says: <em>"Because everything I look at turns to stone, dear. Including the Mournland orchids I've been growing for six months."</em>
+    </div>
+  </div>
+  </details>
+
+  <!-- Room 2 -->
+  <details class="accordion">
+    <summary>2. The Nursery <span class="room-tag room-tag-combat">Combat — Easy</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">The stairs open into a long, low chamber. Stone troughs line both walls, filled with dark soil. Pale roots and luminous fungi spill over the edges. The air is thick with spores and the sweet-sick smell of composting vegetation. Shelves along the back wall hold glass jars of seeds, dried cuttings, and labelled vials in Thesska's precise handwriting &mdash; all in Elvish. A petrified cat crouches on the top shelf, caught mid-pounce, stone eyes wide with fury.</div>
+
+    <p><strong>Dimensions:</strong> 30 ft long, 15 ft wide, 8 ft ceiling. Two rows of planting troughs divide the room into three 5-ft-wide aisles.</p>
+
+    <p><strong>Encounter:</strong> Two <strong>Giant Centipedes</strong> are coiled inside the second and fourth troughs, burrowed into the soil. They burst out when a creature walks between the troughs (or when someone investigates the soil). Perception DC 13 to spot the disturbed earth before triggering them.</p>
+
+    <div class="dm-note">
+      <strong>Running it:</strong> The centipedes fight until killed &mdash; they're territorial and dumb. If the kids spotted one, it doesn't get surprise. If they missed both, the centipedes get a surprise round. The Poisoned condition from the bite is the teaching moment &mdash; disadvantage on attacks and ability checks hurts at level 2. Remind them Lay on Hands can cure poisoned (bonus action, 5 HP from pool to end one condition).
+    </div>
+
+    <p><strong>Loot:</strong> Thesska's supply shelf holds a <em>Potion of Healing</em> (labelled in Elvish: "f&uuml;r Notf&auml;lle" &mdash; Sirius can read it if he speaks Elvish, otherwise Investigation DC 10 to identify the red liquid). Also: 15 gp worth of rare seeds in silk pouches (Thesska will want these back &mdash; she doesn't mention them, but she'll notice if they're missing).</p>
+
+    <p><strong>Statue:</strong> The petrified cat. If anyone examines it closely (Investigation DC 12): it's wearing a tiny collar with a bell. This was someone's pet. Thesska petrified someone's cat.</p>
+  </div>
+  </details>
+
+  <!-- Room 3 -->
+  <details class="accordion">
+    <summary>3. The Irrigation Tunnels <span class="room-tag room-tag-puzzle">Puzzle</span> <span class="room-tag room-tag-combat">Combat — Hard</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">The nursery's back wall has a low archway &mdash; you have to duck to get through. Beyond it, the corridor narrows and the floor drops six inches into standing water. It's murky, brownish, ankle-deep on Spark, knee-deep on Sirius. Clay pipes run along the walls, some cracked and dripping. The water smells of iron and old leaves. Ahead, the tunnel splits: left fork and right fork, both flooded. A petrified snake &mdash; thick as your arm &mdash; is coiled around a pipe junction between the forks.</div>
+
+    <p><strong>Dimensions:</strong> T-shaped corridor. Entry tunnel 20 ft long, 5 ft wide. The fork branches left (15 ft, dead end with sluice valve) and right (15 ft, continues to Room 4). Flooded: difficult terrain throughout.</p>
+
+    <p><strong>Encounter:</strong> Two <strong>Swarms of Venomous Snakes</strong> nest in the flooded pipes. The first surges from a cracked pipe in the right fork when the party reaches the junction &mdash; it pours into the water and closes fast (Swim 30 ft, no difficult terrain penalty for it). The second lurks in the left fork near the sluice valve.</p>
+
+    <div class="dm-note">
+      <strong>The second swarm:</strong> Don't deploy both at once by default. The second swarm emerges from the left fork 1&ndash;2 rounds after the first, <em>or</em> when someone approaches the sluice valve &mdash; whichever comes first. If the party is already struggling with swarm #1, delay it further or skip it entirely. If they're breezing through, drop it on round 2. DM dial.
+    </div>
+
+    <div class="dm-note">
+      <strong>The swarm lesson:</strong> Weapon attacks deal half damage (swarm resistance to B/P/S). This is the moment for Spark's breath weapon and Twinkle's spells &mdash; AoE shreds swarms. The snakes hit hard: +6 to hit, 1d8+4 piercing plus 3d6 poison per bite. At 36 HP each, they're not going down fast to swords. If the kids try to poke it to death, it works but they'll take a beating. Let them figure it out. If they're stuck after 2 rounds, have Twinkle suggest "maybe something bigger than a sword?"
+    </div>
+
+    <div class="dm-note">
+      <strong>Swim speed:</strong> The snakes have Swim 30 ft &mdash; the flooded tunnels are their home turf. The party is in difficult terrain, the snakes aren't. This makes the sluice valve puzzle more than clever &mdash; it's tactical. Draining the water nerfs the snakes and buffs the party.
+    </div>
+
+    <p><strong>The Puzzle &mdash; Sluice Gate:</strong> The left fork ends at a rusty iron valve wheel mounted on the wall. Turning it (Athletics DC 12, or two characters working together = automatic success) drains the water from both tunnels over one round. This removes the difficult terrain for the rest of the dungeon, takes away the snakes' swim advantage, and reveals a corroded grate in the floor of the right fork &mdash; the passage down to Room 4. Without draining, the grate is hidden under the water (Perception DC 15 to find by wading, or Investigation DC 12 to reason that the water must drain somewhere).</p>
+
+    <div class="dm-note">
+      <strong>Alternate approach:</strong> If the kids drain the water <em>before</em> triggering combat, the snakes don't emerge (no water in the pipes = no snakes). Reward clever play. They skip the fight entirely and find the grate easily. Don't punish them for being smart.
+    </div>
+
+    <p><strong>Statue:</strong> The petrified snake. If they look closely: its mouth is open mid-strike, fangs bared. It was attacking something when Thesska caught it with her gaze. What was it attacking? Nothing visible. (It was attacking a centipede that scurried away before the gaze hit. The centipede infestation and the snakes are both part of the same ecosystem collapse in Thesska's tunnels.)</p>
+  </div>
+  </details>
+
+  <!-- Room 4 -->
+  <details class="accordion">
+    <summary>4. The Deep Greenhouse <span class="room-tag room-tag-combat">Combat — Medium</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">The grate opens onto a rusted ladder descending ten feet into a much larger space. Your lantern light catches a cavern ceiling covered in bioluminescent moss &mdash; a faint blue-green glow, like an underground sky. This is Thesska's main growing chamber. Raised stone beds stretch across the floor, bursting with dark vines, pale mushrooms, and plants you've never seen before. Some glow. Some move slightly, even without wind. Against the far wall, a large stone dog lies on its side, its legs splayed as if it fell mid-run. The stone has cracked near the belly, and something purple and fleshy is growing from inside the crack.</div>
+
+    <p><strong>Dimensions:</strong> 40 ft &times; 30 ft, 12 ft ceiling. Four large planting beds (5 &times; 10 ft, 3 ft high) provide partial cover. The cracked dog statue is against the south wall.</p>
+
+    <p><strong>Encounter:</strong> Three <strong>Giant Centipedes</strong> (one in each of three planting beds) plus one <strong>Violet Fungus</strong> growing from the cracked dog statue. The centipedes emerge on round 1 when the party enters. The Violet Fungus doesn't move &mdash; it attacks anything that comes within 10 ft of the statue.</p>
+
+    <div class="dm-note">
+      <strong>Action economy:</strong> Four enemies vs three PCs. The centipedes are individually easy but the poison stacks &mdash; a PC with Poisoned has disadvantage, making everything worse. The Violet Fungus's 10 ft reach (Rotting Touch, necrotic damage) punishes anyone who tries to melee it without thinking. Let the rogue use Cunning Action to disengage and reposition. The planting beds provide half cover for ranged attacks &mdash; Twinkle can duck behind one.
+    </div>
+
+    <div class="dm-note">
+      <strong>Difficulty tuning:</strong> If the party is already hurt from Rooms 2&ndash;3, drop one centipede (two instead of three). If they're fresh and confident, all three plus the fungus as written. Read the table.
+    </div>
+
+    <p><strong>Loot:</strong> Among the planting beds: a small locked chest (Thieves' Tools DC 12, or break it open STR DC 15). Contains 25 gp, a vial of <em>Antitoxin</em> (advantage on saves vs poison for 1 hour), and a folded note in Elvish &mdash; a supply order for "six cuttings of Cazhaak root, deep-soil specimens only, deliver after dark." Signed with an initial: <em>D.</em></p>
+
+    <div class="dm-note">
+      <strong>Campaign thread:</strong> The note signed "D." is from "Lord Draven" &mdash; Vaelk's alias. The kids won't know this yet. Don't explain it. Just hand them the note and let them keep it. It's a breadcrumb for later. If they ask Thesska about it, she says <em>"Business correspondence. Not your concern."</em> and changes the subject.
+    </div>
+
+    <p><strong>Statues:</strong> The cracked stone dog (medium, breed indeterminate). Also: a petrified toad on the rim of a planting bed, so small it could be mistaken for a rock. Perception DC 14 to notice.</p>
+
+    <p><strong>Exit:</strong> A ragged tunnel has been chewed through the south wall behind the dog statue. The edges are scored with mandible marks. The tunnel slopes downward, 5 ft wide, 15 ft long, into Room 5.</p>
+  </div>
+  </details>
+
+  <!-- Room 5 -->
+  <details class="accordion">
+    <summary>5. The Brood Nest <span class="room-tag room-tag-combat">Boss</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">The tunnel opens into a rough natural cave. The floor is carpeted with a crunching layer of shed chitin &mdash; moulted exoskeletons, some as long as your forearm, cracking underfoot. The walls glisten with moisture and something else &mdash; translucent, yellowish egg clusters, hundreds of them, stuck to the rock in clumps the size of your fist. In the centre of the cave, coiled around a cracked stalagmite, something much bigger than a centipede raises its head. A mass of writhing tentacles surrounds a clicking beak. It regards you with flat, alien eyes.</div>
+
+    <p><strong>Dimensions:</strong> Roughly circular, 25 ft diameter, 10 ft ceiling. The stalagmite (5 ft tall, provides half cover) is in the centre. Egg clusters cover the north and east walls. A petrified humanoid &mdash; an adventurer in old-fashioned armour &mdash; stands against the west wall, one hand raised as if warding something off, the other clutching a satchel.</p>
+
+    <p><strong>Encounter:</strong> One <strong>Carrion Crawler</strong> plus two <strong>Giant Centipedes</strong> nesting in the egg clusters. The crawler starts on the ceiling (climb speed 30 ft), coiled around the stalagmite from above. The centipedes are burrowed into the chitin debris on the floor &mdash; they emerge on round 2&ndash;4 (DM's call), drawn by the noise of combat. Its tentacle paralysis (DC 13 CON) is the real threat.</p>
+
+    <div class="dm-note">
+      <strong>Staggering the adds:</strong> The two Giant Centipedes are your dial. If the party is fresh and confident, both emerge on round 2. If they're already hurting from Room 4, delay to round 3&ndash;4, or only send one. The centipedes give Twinkle something to blast while Spark and Sirius focus the crawler &mdash; this is Twinkle's moment to shine. Total encounter: 550 XP (CR 2.5).
+    </div>
+
+    <div class="dm-note">
+      <strong>The paralysis moment:</strong> If the paladin gets paralyzed, that's terrifying &mdash; and perfect. The rogue and Twinkle have to carry for 1&ndash;2 rounds. Sirius can use Sneak Attack (he has advantage on a paralyzed target). Twinkle can blast from range. If <em>two</em> PCs get paralyzed, have the crawler focus on the eggs (eating one to heal) for a round to give the third PC time. Don't TPK the kids in the cellar of a side quest NPC.
+    </div>
+
+    <div class="dm-note">
+      <strong>Ceiling tactics:</strong> The crawler starts on the ceiling. It can attack from up there (tentacles reach) or drop down for multiattack. If the kids don't look up, it gets surprise. Perception DC 12 to spot it on the ceiling (it blends with the wet rock). If they do spot it, no surprise &mdash; reward the cautious player.
+    </div>
+
+    <div class="dm-note">
+      <strong>Ending the infestation:</strong> Killing the crawler stops new centipedes, but the eggs need to be destroyed. Fire works (torch, breath weapon, Fire Bolt). Let the kids figure this out. If they leave without burning the eggs, Thesska will send them back down. <em>"You killed the mother. Charming. And the three hundred eggs on the wall?"</em>
+    </div>
+
+    <p><strong>Loot &mdash; The Petrified Adventurer:</strong> This person died long before Thesska moved in &mdash; the armour style is decades old, the stone weathered and cracked. The satchel can be pried from the stone hand (STR DC 10 or careful work with tools). Inside: 40 gp, a <em>Spell Scroll</em> of <em>Detect Magic</em> (Twinkle can use this), and a faded journal with a hand-drawn map of tunnels that don't match anything the kids have seen. The journal is in Common, water-damaged, barely legible. One readable entry: <em>"The caves go deeper than Mirren knows. Something down here predates her estate by centuries."</em></p>
+
+    <div class="dm-note">
+      <strong>The journal:</strong> This is a hook for a future dungeon if you want one. The caves <em>do</em> go deeper. You don't have to use it. But if the kids get excited about exploring further, you have a door to open later.
+    </div>
+
+    <p><strong>Statue:</strong> The petrified adventurer. If examined (History DC 14 or Investigation DC 12): the armour is Brelish military surplus, at least thirty years old. This person was exploring before Thesska's time. The gaze that petrified them wasn't Thesska's &mdash; it was a previous occupant's, or something else entirely. Don't answer this. Let it sit.</p>
+  </div>
+  </details>
+
+  <!-- Wrap-up -->
+  <details class="accordion">
+    <summary>Return to Thesska <span class="room-tag room-tag-rp">RP</span></summary>
+  <div class="room">
+
+    <div class="read-aloud">You climb back through the grate, up the ladder, through the flooded tunnels &mdash; drained now, if you turned the valve &mdash; past the nursery troughs, and up the cellar stairs. Thesska is exactly where you left her, reading a letter with a cup of tea. She doesn't look up immediately. "Ah. You're back. And my orchids?"</div>
+
+    <p><strong>Thesska's reaction:</strong> She cares about her plants first, the centipedes second, the party's wellbeing third. If they saved her specimens (didn't trample the beds or set fire to the greenhouse), she's pleased &mdash; cold courtesy, a nod, and payment. If they destroyed plants in the fighting, she's annoyed but pays anyway. If they burned the egg clusters, she approves: <em>"Thorough. Good."</em></p>
+
+    <p><strong>Payment:</strong> 50 gp total (she offered this upfront). If the kids also return the rare seeds from Room 2 without being asked, she adds a bonus: a single <em>Potion of Greater Healing</em> from her private collection. <em>"Competence and honesty. How unusual."</em></p>
+
+    <p><strong>The note:</strong> If they show her the "D." note from Room 4, her expression doesn't change. <em>"Where did you find that?"</em> She takes it. <em>"Thank you. That's mine."</em> She does not explain. Insight DC 15: she's rattled, not angry. Someone was in her private things.</p>
+
+    <div class="dm-note">
+      <strong>Short rest:</strong> Thesska offers them tea and the parlour. This is a natural short rest point. Let the kids spend Hit Dice. The paladin's Lay on Hands pool is probably depleted &mdash; that doesn't come back until long rest.
+    </div>
+  </div>
+  </details>
+
+
+  <!-- ============================================================ -->
+  <h2>II. Monster Stat Blocks</h2>
+  <!-- Encounter cards for all creatures used in this dungeon -->
+
+  <div class="stat-blocks">
+
+  <!-- Giant Centipede -->
+  <details class="accordion">
+    <summary>Giant Centipede <span class="pill-ref">MM 2025 p. 355</span></summary>
+  <div class="stat-block">
+    <div class="stat-type">Small Beast, Unaligned</div>
+    <div class="stat-line"><strong>AC</strong> 14 (natural armour) &middot; <strong>HP</strong> 9 (2d6+2) &middot; <strong>Speed</strong> 30 ft, climb 30 ft</div>
+    <div class="stat-grid">
+      <div><strong>STR</strong> 5 (&minus;3)</div>
+      <div><strong>DEX</strong> 14 (+2)</div>
+      <div><strong>CON</strong> 12 (+1)</div>
+      <div><strong>INT</strong> 1 (&minus;5)</div>
+      <div><strong>WIS</strong> 7 (&minus;2)</div>
+      <div><strong>CHA</strong> 3 (&minus;4)</div>
+    </div>
+    <div class="stat-line"><strong>Senses</strong> Blindsight 30 ft &middot; <strong>Passive Perception</strong> 8</div>
+    <div class="stat-line"><strong>CR</strong> 1/4 (50 XP)</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="stat-line"><strong>Bite.</strong> <em>Melee Attack:</em> +4 to hit, reach 5 ft, one creature. <em>Hit:</em> 4 (1d4+2) piercing damage. The target has the Poisoned condition until the start of the centipede's next turn.</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="dm-note"><strong>Used in:</strong> Room 2 (&times;2), Room 4 (&times;3), Room 5 (&times;2). HP 9 means one solid hit kills them. The danger is the Poisoned condition stacking across multiple centipedes &mdash; a PC can be poisoned, then attacked with advantage by the next centipede (no, Poisoned doesn't grant advantage to attackers &mdash; it gives the <em>target</em> disadvantage on attacks and ability checks). Remind yourself: Poisoned = disadvantage on attacks and ability checks, not disadvantage on saves.</div>
+  </div>
+  </details>
+
+  <!-- Swarm of Venomous Snakes -->
+  <details class="accordion">
+    <summary>Swarm of Venomous Snakes <span class="pill-ref">MM 2025 p. 371</span></summary>
+  <div class="stat-block">
+    <div class="stat-type">Medium Swarm of Tiny Beasts, Unaligned</div>
+    <div class="stat-line"><strong>AC</strong> 14 &middot; <strong>HP</strong> 36 (8d8) &middot; <strong>Speed</strong> 30 ft, swim 30 ft</div>
+    <div class="stat-grid">
+      <div><strong>STR</strong> 8 (&minus;1)</div>
+      <div><strong>DEX</strong> 18 (+4)</div>
+      <div><strong>CON</strong> 11 (+0)</div>
+      <div><strong>INT</strong> 1 (&minus;5)</div>
+      <div><strong>WIS</strong> 10 (+0)</div>
+      <div><strong>CHA</strong> 3 (&minus;4)</div>
+    </div>
+    <div class="stat-line"><strong>Resistances</strong> Bludgeoning, Piercing, Slashing</div>
+    <div class="stat-line"><strong>Immunities</strong> Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned</div>
+    <div class="stat-line"><strong>Senses</strong> Blindsight 10 ft &middot; <strong>Passive Perception</strong> 10</div>
+    <div class="stat-line"><strong>CR</strong> 2 (450 XP)</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="stat-line"><strong>Swarm.</strong> The swarm can occupy another creature's space and vice versa, and can move through any opening large enough for a Tiny snake. The swarm can't regain HP or gain Temporary HP.</div>
+    <div class="stat-line"><strong>Bites.</strong> <em>Melee Attack:</em> +6 to hit, reach 5 ft, one creature. <em>Hit:</em> 8 (1d8+4) piercing damage &mdash; or 6 (1d4+4) if Bloodied &mdash; plus 10 (3d6) poison damage.</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="dm-note"><strong>Used in:</strong> Room 3 (&times;2, staggered). AC 14, 36 HP each &mdash; these are real threats, not speedbumps. The 3d6 poison damage on top of piercing means a hit deals ~18 damage average. That's most of a level 2 PC's HP in one bite. Weapon attacks deal half damage (B/P/S resistance). Spark's breath weapon and Twinkle's spells deal full. The swim speed means the flooded tunnels are the snakes' home turf &mdash; draining the water via the sluice valve removes their advantage. One swarm is a medium fight. Two at once is hard/deadly. Stagger them.</div>
+  </div>
+  </details>
+
+  <!-- Violet Fungus -->
+  <details class="accordion">
+    <summary>Violet Fungus <span class="pill-ref">MM 2025 p. 126</span></summary>
+  <div class="stat-block">
+    <div class="stat-type">Medium Plant, Unaligned</div>
+    <div class="stat-line"><strong>AC</strong> 5 &middot; <strong>HP</strong> 18 (4d8) &middot; <strong>Speed</strong> 5 ft</div>
+    <div class="stat-grid">
+      <div><strong>STR</strong> 3 (&minus;4)</div>
+      <div><strong>DEX</strong> 1 (&minus;5)</div>
+      <div><strong>CON</strong> 10 (+0)</div>
+      <div><strong>INT</strong> 1 (&minus;5)</div>
+      <div><strong>WIS</strong> 3 (&minus;4)</div>
+      <div><strong>CHA</strong> 1 (&minus;5)</div>
+    </div>
+    <div class="stat-line"><strong>Immunities</strong> Blinded, Deafened, Frightened</div>
+    <div class="stat-line"><strong>Senses</strong> Blindsight 30 ft (blind beyond) &middot; <strong>Passive Perception</strong> 6</div>
+    <div class="stat-line"><strong>CR</strong> 1/4 (50 XP)</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="stat-line"><strong>False Appearance.</strong> While motionless, the fungus is indistinguishable from an ordinary fungus.</div>
+    <div class="stat-line"><strong>Rotting Touch.</strong> <em>Melee Attack:</em> +2 to hit, reach 10 ft, one creature. <em>Hit:</em> 8 (1d8+4) necrotic damage.</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="dm-note"><strong>Used in:</strong> Room 4 (&times;1, growing from the cracked dog statue). AC 5 means everything hits. Speed 5 ft means it barely moves &mdash; the danger is the 10 ft reach. Characters who rush the dog statue without looking get smacked for 1d8+4 necrotic. Teaches positioning: stand 15 ft back and throw things at it (AC 5, easy target). Or the paladin walks into range, tanks one hit, and chops it. 18 HP goes fast.</div>
+  </div>
+  </details>
+
+  <!-- Carrion Crawler -->
+  <details class="accordion">
+    <summary>Carrion Crawler <span class="pill-ref">MM 2025 p. 66</span></summary>
+  <div class="stat-block">
+    <div class="stat-type">Large Monstrosity, Unaligned</div>
+    <div class="stat-line"><strong>AC</strong> 13 (natural armour) &middot; <strong>HP</strong> 51 (6d10+18) &middot; <strong>Speed</strong> 30 ft, climb 30 ft</div>
+    <div class="stat-grid">
+      <div><strong>STR</strong> 14 (+2)</div>
+      <div><strong>DEX</strong> 13 (+1)</div>
+      <div><strong>CON</strong> 16 (+3)</div>
+      <div><strong>INT</strong> 1 (&minus;5)</div>
+      <div><strong>WIS</strong> 12 (+1)</div>
+      <div><strong>CHA</strong> 5 (&minus;3)</div>
+    </div>
+    <div class="stat-line"><strong>Skills</strong> Perception +3</div>
+    <div class="stat-line"><strong>Senses</strong> Darkvision 60 ft &middot; <strong>Passive Perception</strong> 13</div>
+    <div class="stat-line"><strong>CR</strong> 2 (450 XP)</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="stat-line"><strong>Spider Climb.</strong> The crawler can climb difficult surfaces, including upside down on ceilings.</div>
+    <div class="stat-line"><strong>Multiattack.</strong> The crawler makes two attacks: one with its Tentacles and one with its Bite.</div>
+    <div class="stat-line"><strong>Tentacles.</strong> <em>Melee Attack:</em> +8 to hit, reach 10 ft, one creature. <em>Hit:</em> 4 (1d4+2) poison damage. The target must succeed on a <strong>DC 13 Constitution saving throw</strong> or have the Paralyzed condition for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on a success.</div>
+    <div class="stat-line"><strong>Bite.</strong> <em>Melee Attack:</em> +4 to hit, reach 5 ft, one creature. <em>Hit:</em> 7 (2d4+2) piercing damage.</div>
+    <hr style="border:none; border-top:1px solid var(--divider); margin:10px 0;">
+    <div class="dm-note"><strong>The boss.</strong> 51 HP is beefy for level 2. The tentacle paralysis (DC 13 CON) is the fight's drama engine. The paladin has decent CON saves; the rogue and Twinkle don't. Paralyzed = incapacitated, can't move or speak, auto-fail STR/DEX saves, attacks have advantage, melee hits are auto-crits. If two PCs get paralyzed: have the crawler spend a round eating an egg cluster (restoring 5 HP) to buy time. If only one PC is up and it looks like a TPK, the crawler grabs a paralyzed PC and tries to drag them toward the eggs (repositioning, not killing &mdash; it wants to feed its young, not fight to the death). Let the last PC rescue their friend. Heroic moment, not game over.</div>
+    <div class="dm-note"><strong>Divine Smite:</strong> Spark's big gun. 2d8 radiant on top of weapon damage, first-level spell slot. If Spark smites on a crit (auto-crit on paralyzed target at melee range), that's 2d6+3 weapon + 4d8 radiant = potentially 30+ damage in one hit. Let it happen. That's the paladin fantasy. Smite burns a spell slot though &mdash; Spark only has two at level 2.</div>
+  </div>
+  </details>
+
+  </div><!-- .stat-blocks -->
+
+  <!-- Encounter Summary -->
+  <h3>Encounter Summary</h3>
+  <table style="width:100%; border-collapse:collapse; margin:16px 0;">
+    <thead>
+      <tr style="border-bottom:2px solid var(--divider); text-align:left;">
+        <th style="padding:6px 8px; font-family:'Cinzel',serif; color:var(--accent);">Room</th>
+        <th style="padding:6px 8px; font-family:'Cinzel',serif; color:var(--accent);">Enemies</th>
+        <th style="padding:6px 8px; font-family:'Cinzel',serif; color:var(--accent);">CR</th>
+        <th style="padding:6px 8px; font-family:'Cinzel',serif; color:var(--accent);">Difficulty</th>
+        <th style="padding:6px 8px; font-family:'Cinzel',serif; color:var(--accent);">XP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--divider);">
+        <td style="padding:6px 8px;">1. Cellar Stairs</td>
+        <td style="padding:6px 8px;">&mdash;</td>
+        <td style="padding:6px 8px;">&mdash;</td>
+        <td style="padding:6px 8px;">None</td>
+        <td style="padding:6px 8px;">0</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--divider);">
+        <td style="padding:6px 8px;">2. Nursery</td>
+        <td style="padding:6px 8px;">2 Giant Centipedes</td>
+        <td style="padding:6px 8px;">1/2</td>
+        <td style="padding:6px 8px;">Easy</td>
+        <td style="padding:6px 8px;">100</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--divider);">
+        <td style="padding:6px 8px;">3. Irrigation Tunnels</td>
+        <td style="padding:6px 8px;">1 Swarm of Venomous Snakes (+1 optional)</td>
+        <td style="padding:6px 8px;">2</td>
+        <td style="padding:6px 8px;">Hard</td>
+        <td style="padding:6px 8px;">450</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--divider);">
+        <td style="padding:6px 8px;">4. Deep Greenhouse</td>
+        <td style="padding:6px 8px;">3 Giant Centipedes + 1 Violet Fungus</td>
+        <td style="padding:6px 8px;">1</td>
+        <td style="padding:6px 8px;">Medium</td>
+        <td style="padding:6px 8px;">200</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--divider);">
+        <td style="padding:6px 8px;">5. Brood Nest</td>
+        <td style="padding:6px 8px;">1 Carrion Crawler + 2 Giant Centipedes</td>
+        <td style="padding:6px 8px;">2.5</td>
+        <td style="padding:6px 8px;">Hard / Boss</td>
+        <td style="padding:6px 8px;">550</td>
+      </tr>
+      <tr style="border-bottom:2px solid var(--divider); font-weight:600;">
+        <td style="padding:6px 8px;" colspan="4">Total (if all encounters triggered)</td>
+        <td style="padding:6px 8px;">1300</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div><!-- .page -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
+<script>const lightbox = GLightbox({ selector: '.glightbox' });</script>
+</body>
+</html>
