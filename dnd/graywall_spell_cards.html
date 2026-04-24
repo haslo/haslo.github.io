@@ -3,7 +3,8 @@
 
   FILE: graywall_spell_cards.html
   PURPOSE: Printable spell & ability reference cards for The Graywall Mystery campaign.
-           3×3 grid per A4 page. Page 1 = Spark (Paladin L2), Page 2 = Sirius (Rogue L2).
+           3×3 grid per A4 page. Page 1 = Spark (Paladin L2), Page 2 = Sirius (Rogue L2),
+           Pages 3–4 = Twinkle (Sorcerer L2, DM sidekick).
   OWNER PREF: No MS Office. Self-contained HTML. Parchment theme. No CDN deps for offline.
               2024 PHB rules only. NEVER reference 2014 rules or edition differences.
   CAMPAIGN: The Graywall Mystery (Amir & Kais)
@@ -15,6 +16,11 @@
     Sirius — Rock Gnome Rogue L2 (Wayfarer). DEX 17, INT 14.
       Cards: Sneak Attack, Cunning Action, Expertise, Nick (Dagger), Vex (Shortbow),
              Lucky, Gnomish Cunning, Mending, Prestidigitation
+    Twinkle — Fairy Wild Magic Sorcerer L2 (Acolyte). CHA 17, WIS 14. DM sidekick.
+      Cards (p3): Druidcraft, Sorcerous Burst, Toll the Dead, Friends, Guidance,
+                  Mind Sliver, Minor Illusion, Healing Word, Mage Armor
+      Cards (p4): Shield, Sleep, Thunderwave, Innate Sorcery, Font of Magic,
+                  Empowered Spell, Twinned Spell, Flight
   LAYOUT: Print CSS forces 3×3 grid per page, page-break between characters.
           Screen shows parchment theme with floating nav.
   CSS: Cinzel headings, Crimson Pro body, parchment bg, gold/accent borders.
@@ -41,6 +47,7 @@
     --card-bg: #fdfaf3;
     --spark-accent: #2a5f8b;
     --sirius-accent: #5a3d6b;
+    --twinkle-accent: #c44d8e;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -196,6 +203,7 @@
   /* Character accent stripe */
   .card.spark { border-top: 3px solid var(--spark-accent); }
   .card.sirius { border-top: 3px solid var(--sirius-accent); }
+  .card.twinkle { border-top: 3px solid var(--twinkle-accent); }
 
   /* Concentration tag */
   .tag-conc {
@@ -288,6 +296,7 @@
 
     .card.spark { border-top: 2.5px solid var(--spark-accent); }
     .card.sirius { border-top: 2.5px solid var(--sirius-accent); }
+    .card.twinkle { border-top: 2.5px solid var(--twinkle-accent); }
 
     .card-name { font-size: 9pt; }
     .card-type { font-size: 7pt; }
@@ -630,6 +639,310 @@
   </div>
 
 </div><!-- /card-grid Sirius -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TWINKLE — SORCERER LEVEL 2 (DM SIDEKICK)          -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="page-break"></div>
+
+<div class="section-header">Twinkle</div>
+<div class="section-subtitle">Fairy Wild Magic Sorcerer &middot; Level 2 &middot; Spell DC 13 &middot; Spell Attack +5 &middot; DM Sidekick</div>
+
+<div class="card-grid">
+
+  <!-- 1. Druidcraft -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 266</div>
+    <div class="card-name">Druidcraft</div>
+    <div class="card-type">Transmutation Cantrip &middot; Fairy Species</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 30 ft &middot; V, S &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Choose one effect:</p>
+      <p><strong>Weather Sensor.</strong> Predict weather at your location for next 24 hours.<br>
+      <strong>Bloom.</strong> Cause a flower to blossom, seed pod to open, or leaf bud to bloom.<br>
+      <strong>Sensory.</strong> Create a harmless sensory effect (scent, musical notes, etc.) in a 5-ft Cube for 1 min.<br>
+      <strong>Light/Snuff.</strong> Light or snuff a candle, torch, or small campfire.</p>
+    </div>
+  </div>
+
+  <!-- 2. Sorcerous Burst -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 318</div>
+    <div class="card-name">Sorcerous Burst</div>
+    <div class="card-type">Evocation Cantrip &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 120 ft &middot; V, S &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Make a <strong>ranged spell attack</strong> (+5). On a hit, target takes <strong>1d8</strong> damage of a type you choose: Acid, Cold, Fire, Lightning, Poison, Psychic, or Thunder.</p>
+      <p><strong>Exploding dice:</strong> If you roll an 8 on any d8, roll another d8 and add it. Max extra d8s = <strong>3</strong> (CHA mod).</p>
+      <p class="upcast">Cantrip Upgrade: 2d8 at L5, 3d8 at L11, 4d8 at L17.</p>
+      <p style="font-style:italic; color:var(--muted);">Your go-to ranged attack. Choose damage type to exploit vulnerabilities. Innate Sorcery gives Advantage.</p>
+    </div>
+  </div>
+
+  <!-- 3. Toll the Dead -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 334</div>
+    <div class="card-name">Toll the Dead</div>
+    <div class="card-type">Necromancy Cantrip &middot; MI: Cleric</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 60 ft &middot; V, S &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>You point at one creature you can see. The target hears a dolorous bell audible within 10 ft and must succeed on a <strong>WIS save</strong> or take <strong>1d8 Necrotic</strong> damage.</p>
+      <p>If the target is <strong>missing any HP</strong>, it takes <strong>1d12</strong> instead.</p>
+      <p class="upcast">Cantrip Upgrade: damage increases by one die at L5, L11, L17.</p>
+      <p style="font-style:italic; color:var(--muted);">Save-based (no attack roll) — pairs with Mind Sliver's −1d4 to saves. 1d12 on wounded targets is brutal.</p>
+    </div>
+  </div>
+
+  <!-- 4. Friends -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 277</div>
+    <div class="card-name">Friends <span class="tag-conc">Conc</span></div>
+    <div class="card-type">Enchantment Cantrip &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 10 ft &middot; S, M (some makeup) &middot; Up to 1 min
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>One creature you can see makes a <strong>WIS save</strong> or has the <strong>Charmed</strong> condition for the duration. Auto-succeeds if it isn't a Humanoid, if you're fighting it, or if you've cast this on it in the past 24 hours.</p>
+      <p>Ends if the target takes damage or you attack/force a save. <strong>When it ends, the target knows it was Charmed by you.</strong></p>
+    </div>
+  </div>
+
+  <!-- 4. Guidance -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 280</div>
+    <div class="card-name">Guidance <span class="tag-conc">Conc</span></div>
+    <div class="card-type">Divination Cantrip &middot; MI: Cleric</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; Touch &middot; V, S &middot; Up to 1 min
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>You touch a willing creature and <strong>choose a skill</strong>. Until the spell ends, the creature adds <strong>1d4</strong> to any ability check using the chosen skill.</p>
+      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Great for out-of-combat skill checks. Cast before the check, pick the skill. One creature at a time (Concentration).</p>
+    </div>
+  </div>
+
+  <!-- 5. Mind Sliver -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 298</div>
+    <div class="card-name">Mind Sliver</div>
+    <div class="card-type">Enchantment Cantrip &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 60 ft &middot; V &middot; 1 round
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Target must succeed on an <strong>INT save</strong> or take <strong>1d6 Psychic</strong> damage and subtract <strong>1d4</strong> from the next saving throw it makes before the end of your next turn.</p>
+      <p class="upcast">Cantrip Upgrade: 2d6 at L5, 3d6 at L11, 4d6 at L17.</p>
+      <p style="font-style:italic; color:var(--muted);">V-only, no save debuff — perfect setup for Sleep or Thunderwave next turn.</p>
+    </div>
+  </div>
+
+  <!-- 6. Minor Illusion -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 298</div>
+    <div class="card-name">Minor Illusion</div>
+    <div class="card-type">Illusion Cantrip &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 30 ft &middot; S, M (a bit of fleece) &middot; 1 min
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Create a <strong>sound</strong> or an <strong>image of an object</strong> within range. Ends if you cast it again.</p>
+      <p><strong>Sound.</strong> Volume from whisper to scream. Continuous or discrete sounds.<br>
+      <strong>Image.</strong> Object no larger than a 5-ft Cube. No sound, light, smell, or other sensory. Physical interaction reveals it.</p>
+      <p style="font-style:italic; color:var(--muted);">Study action: INT (Investigation) vs. your spell DC to discern.</p>
+    </div>
+  </div>
+
+  <!-- 8. Healing Word -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 284</div>
+    <div class="card-name">Healing Word</div>
+    <div class="card-type">Level 1 Abjuration &middot; MI: Cleric</div>
+    <div class="card-meta">
+      <strong>Bonus Action</strong> &middot; 60 ft &middot; V &middot; Instantaneous<br>
+      <strong>1/long rest free</strong> (Magic Initiate)
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>A creature of your choice within range regains <strong>2d4 + 3</strong> (CHA mod) Hit Points.</p>
+      <p class="upcast">Higher slot: +2d4 per level above 1.</p>
+      <p style="font-style:italic; color:var(--muted);">Bonus Action ranged heal — perfect emergency pickup from the air. 1/day free via MI, or spend a Sorcerer slot.</p>
+    </div>
+  </div>
+
+  <!-- 9. Mage Armor -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 293</div>
+    <div class="card-name">Mage Armor</div>
+    <div class="card-type">Level 1 Abjuration &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; Touch &middot; V, S, M (cured leather) &middot; 8 hours
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Touch a willing creature who isn't wearing armor. Target's base AC becomes <strong>13 + DEX modifier</strong>. Ends if the target dons armor.</p>
+      <p style="margin-top:5px;"><strong>Twinkle's AC:</strong> 13 + 2 (DEX) = <strong>15</strong><br>
+      With Shield reaction: <strong>20</strong></p>
+      <p style="font-style:italic; color:var(--muted);">Cast once in the morning — lasts 8 hours, no Concentration.</p>
+    </div>
+  </div>
+
+</div><!-- /card-grid Twinkle page 1 -->
+
+<!-- Twinkle page 2 -->
+<div class="page-break"></div>
+
+<div class="section-header" style="margin-top:10px;">Twinkle</div>
+<div class="section-subtitle">Spells (continued) &amp; Class Features</div>
+
+<div class="card-grid">
+
+  <!-- 10. Shield -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 316</div>
+    <div class="card-name">Shield</div>
+    <div class="card-type">Level 1 Abjuration &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Reaction</strong> (when hit by attack or targeted by <em>Magic Missile</em>)<br>
+      Self &middot; V, S &middot; 1 round
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>An imperceptible barrier of force protects you. Until the start of your next turn, you have a <strong>+5 bonus to AC</strong>, including against the triggering attack, and you take <strong>no damage from Magic Missile</strong>.</p>
+      <p style="font-style:italic; color:var(--muted);">AC 15 → 20. One slot well spent to survive a big hit.</p>
+    </div>
+  </div>
+
+  <!-- 11. Sleep -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 317</div>
+    <div class="card-name">Sleep <span class="tag-conc">Conc</span></div>
+    <div class="card-type">Level 1 Enchantment &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; 60 ft &middot; V, S, M (sand / rose petals) &middot; Up to 1 min
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Each creature in a <strong>5-ft-radius Sphere</strong> centered on a point within range makes a <strong>WIS save</strong>.</p>
+      <p><strong>Fail:</strong> <strong>Incapacitated</strong> until spell ends. At end of each of its turns, repeat save — on a second failure, it falls <strong>Unconscious</strong> until spell ends or it takes damage or someone shakes it awake.</p>
+      <p style="font-style:italic; color:var(--muted);">Creatures immune to sleep or Exhaustion auto-succeed. Mind Sliver → Sleep = chef's kiss.</p>
+    </div>
+  </div>
+
+  <!-- 12. Thunderwave -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 334</div>
+    <div class="card-name">Thunderwave</div>
+    <div class="card-type">Level 1 Evocation &middot; Sorcerer</div>
+    <div class="card-meta">
+      <strong>Action</strong> &middot; Self &middot; V, S &middot; Instantaneous
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Each creature in a <strong>15-ft Cube</strong> originating from you makes a <strong>CON save</strong>. On a fail, <strong>2d8 Thunder</strong> damage and pushed <strong>10 feet</strong> away. Half damage on success, no push.</p>
+      <p>Unsecured objects entirely in the Cube are also pushed 10 ft. Thunderous boom audible within <strong>300 feet</strong>.</p>
+      <p class="upcast">Higher slot: +1d8 per level above 1.</p>
+    </div>
+  </div>
+
+  <!-- 13. Innate Sorcery -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 140</div>
+    <div class="card-name">Innate Sorcery</div>
+    <div class="card-type">Class Feature &middot; Sorcerer Level 1</div>
+    <div class="card-meta">
+      <strong>Bonus Action</strong> &middot; Self &middot; <strong>Uses:</strong> 2/long rest<br>
+      Duration: 1 minute
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Unleash the simmering magic within. For 1 minute:</p>
+      <p>&bull; Spell save DC of your Sorcerer spells <strong>increases by 1</strong> (DC 13 → <strong>14</strong>)<br>
+      &bull; You have <strong>Advantage</strong> on attack rolls of Sorcerer spells you cast</p>
+      <p style="font-style:italic; color:var(--muted);">Pop this before your biggest spell turn. Stacks with Metamagic.</p>
+    </div>
+  </div>
+
+  <!-- 14. Font of Magic -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 140</div>
+    <div class="card-name">Font of Magic</div>
+    <div class="card-type">Class Feature &middot; Sorcerer Level 2</div>
+    <div class="card-meta">
+      <strong>Sorcery Points:</strong> <strong>2</strong> &middot; Regain all on Long Rest
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>Fuel Metamagic options and create spell slots.</p>
+      <p><strong>Convert Slot → SP:</strong> Expend a spell slot to gain SP equal to the slot's level (no action).<br>
+      <strong>Create Slot:</strong> Bonus Action, spend 2 SP to create one 1st-level spell slot. Slot vanishes on Long Rest.</p>
+      <p style="font-style:italic; color:var(--muted);">2 SP = 1 Empowered + 1 Twinned, or 1 emergency spell slot.</p>
+    </div>
+  </div>
+
+  <!-- 15. Empowered Spell -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 142</div>
+    <div class="card-name">Empowered Spell</div>
+    <div class="card-type">Metamagic Option &middot; Sorcerer Level 2</div>
+    <div class="card-meta">
+      <strong>Cost:</strong> 1 Sorcery Point &middot; When you roll damage
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>When you roll damage for a spell, spend 1 SP to <strong>reroll up to 3 damage dice</strong> (CHA modifier, minimum 1). You must use the new rolls.</p>
+      <p><strong>Stackable:</strong> You can use Empowered Spell even if you've already used a different Metamagic option on the same spell.</p>
+      <p style="font-style:italic; color:var(--muted);">Thunderwave rolled low? Reroll up to 3 of those d8s.</p>
+    </div>
+  </div>
+
+  <!-- 16. Twinned Spell -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 142</div>
+    <div class="card-name">Twinned Spell</div>
+    <div class="card-type">Metamagic Option &middot; Sorcerer Level 2</div>
+    <div class="card-meta">
+      <strong>Cost:</strong> 1 Sorcery Point &middot; When you cast a spell
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>When you cast a spell (such as <em>Charm Person</em>) that can be cast with a higher-level spell slot to target an additional creature, spend 1 SP to <strong>increase the spell's effective level by 1</strong>.</p>
+      <p style="font-style:italic; color:var(--muted);">Sleep at effective level 2 (bigger radius?) or Healing Word on two allies with one slot — big value for 1 SP.</p>
+    </div>
+  </div>
+
+  <!-- 17. Flight -->
+  <div class="card twinkle">
+    <div class="card-corner">MotM</div>
+    <div class="card-name">Flight</div>
+    <div class="card-type">Species Trait &middot; Fairy</div>
+    <div class="card-meta">
+      <strong>Passive</strong> &middot; Fly Speed <strong>30 ft</strong> &middot; Always active
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p>You have a <strong>flying speed equal to your walking speed</strong> (30 ft). You can hover.</p>
+      <p>If you are flying at the end of your turn and nothing is holding you aloft, you fall.</p>
+      <p style="margin-top:5px; font-style:italic; color:var(--muted);">Twinkle never walks. Use flight to stay out of melee, position for Thunderwave without hitting allies, and deliver Healing Word from safety.</p>
+    </div>
+  </div>
+
+</div><!-- /card-grid Twinkle page 2 -->
+
 
 <!-- Floating nav -->
 <a href="#top" class="float-nav float-nav-up" aria-label="Back to top">&#x25B2;</a>

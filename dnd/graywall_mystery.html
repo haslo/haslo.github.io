@@ -94,8 +94,8 @@
     Twinkle's name links to charsheets.html#twinkle (not lightbox). Sirius has his own portrait.
     Shuffle only affects NPCs gallery.
 
-  CHARACTER SHEETS SECTION: After NPC gallery, before footer. Contains current (L1)
-    char sheets for Spark and Sirius (duplicated from session log for easy access).
+  CHARACTER SHEETS SECTION: After NPC gallery, before footer. Contains current (L2)
+    char sheets for Spark, Sirius, and Twinkle (sidekick).
     Screen-only button links to graywall_spell_cards.html (printable L2 reference cards).
 
   CSS: Cinzel + Crimson Pro, parchment theme, 1440px wide.
@@ -416,6 +416,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .char-sheet td:nth-child(2),
   .char-sheet td:nth-child(4) { width: 40%; }
+
+  /* Character sheet with portrait layout */
+  .char-layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .char-layout .char-main { flex: 1; min-width: 0; }
+  .char-layout .char-portrait {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .char-layout .char-portrait img {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid var(--card-border);
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.12);
+    object-fit: cover;
+  }
 
   /* NPC CARDS — reusable template for DM NPC section */
   .npc-card {
@@ -1099,6 +1118,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     .accordion-preview { max-height: 100px; }
     .accordion-preview.dm-preview { max-height: 50px; }
+
+    /* Char portraits: hide on mobile */
+    .char-portrait { display: none !important; }
 
     /* Char sheet: stack to label/value pairs on mobile */
     .char-sheet { min-width: 0 !important; width: 100%; }
@@ -3457,6 +3479,8 @@ graph LR
 
   <!-- SPARK -->
   <h2 style="margin-bottom:8px;">Spark</h2>
+  <div class="char-layout">
+  <div class="char-main">
   <table class="graywall-table char-sheet">
     <thead>
       <tr><th colspan="4">White Dragonborn Paladin · Level 2</th></tr>
@@ -3497,9 +3521,14 @@ graph LR
       <tr><td><strong>Equipment</strong></td><td colspan="3">Chainmail, shield, longsword, 6 javelins, holy symbol, priest's pack, forgery kit, costume, fine clothes, 29 gp, diamond (50 gp)</td></tr>
     </tbody>
   </table>
+  </div>
+  <div class="char-portrait"><img src="media/graywall_mystery/spark.png" alt="Spark portrait"></div>
+  </div>
 
   <!-- SIRIUS -->
   <h2 style="margin-top:24px; margin-bottom:8px;">Sirius</h2>
+  <div class="char-layout">
+  <div class="char-main">
   <table class="graywall-table char-sheet">
     <thead>
       <tr><th colspan="4">Rock Gnome Rogue · Level 2</th></tr>
@@ -3538,6 +3567,60 @@ graph LR
       <tr><td><strong>Equipment</strong></td><td colspan="3">4 daggers, burglar's pack, thieves' tools ×2, component pouch, playing cards, bedroll, 2 pouches, traveler's clothes, leather armor, shortsword, shortbow, 20 arrows, quiver</td></tr>
     </tbody>
   </table>
+  </div>
+  <div class="char-portrait"><img src="media/graywall_mystery/sirius.png" alt="Sirius portrait"></div>
+  </div>
+
+  <!-- TWINKLE -->
+  <h2 style="margin-top:24px; margin-bottom:8px;">Twinkle <span style="font-family:'Crimson Pro',serif; font-size:11pt; font-weight:400; font-style:italic; color:var(--muted);">(Sidekick — DM-controlled)</span></h2>
+  <div class="char-layout">
+  <div class="char-main">
+  <table class="graywall-table char-sheet">
+    <thead>
+      <tr><th colspan="4">Fairy Wild Magic Sorcerer · Level 2</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Name</strong></td><td>Amanda "Twinkle" Twinklespark</td><td><strong>Class</strong></td><td>Sorcerer (Wild Magic)</td></tr>
+      <tr><td><strong>Level</strong></td><td>2</td><td><strong>Species</strong></td><td>Fairy (MotM)</td></tr>
+      <tr><td><strong>Background</strong></td><td>Acolyte</td><td><strong>Alignment</strong></td><td>Chaotic Good</td></tr>
+      <tr><td><strong>STR</strong></td><td>8 (&minus;1)</td><td><strong>INT</strong></td><td>10 (+0)</td></tr>
+      <tr><td><strong>DEX</strong></td><td>14 (+2)</td><td><strong>WIS</strong></td><td>14 (+2)</td></tr>
+      <tr><td><strong>CON</strong></td><td>12 (+1)</td><td><strong>CHA</strong></td><td>17 (+3)</td></tr>
+      <tr><td><strong>HP</strong></td><td>13</td><td><strong>AC</strong></td><td>12 · 15 (Mage Armor) · 20 (MA+Shield)</td></tr>
+      <tr><td><strong>Hit Dice</strong></td><td>2d6</td><td><strong>Initiative</strong></td><td>+2</td></tr>
+      <tr><td><strong>Speed</strong></td><td>30 ft, fly 30 ft</td><td><strong>Passive Perception</strong></td><td>12</td></tr>
+      <tr><td><strong>Proficiency</strong></td><td>+2</td><td><strong>Languages</strong></td><td>Common, Sylvan</td></tr>
+      <tr><td><strong>Saving Throws</strong></td><td>CON +3, CHA +5</td><td><strong>All others</strong></td><td>unproficient</td></tr>
+      <tr><td><strong>Armor</strong></td><td>None</td><td><strong>Weapons</strong></td><td>Simple</td></tr>
+      <tr><td><strong>Skills</strong></td><td colspan="3">Arcana +2, Insight +4</td></tr>
+      <tr><td><strong>Species Traits</strong></td><td colspan="3">
+        Flight (30 ft, no armor restriction) · Fairy Magic: Druidcraft (cantrip), Faerie Fire (3rd level), Enlarge/Reduce (5th level) — each 1/LR free or via spell slots · Size: Small
+      </td></tr>
+      <tr><td><strong>Feat</strong></td><td colspan="3">Magic Initiate — Cleric (Guidance, Toll the Dead, Healing Word 1/LR free)</td></tr>
+      <tr><td><strong>Class Features</strong></td><td colspan="3">
+        Innate Sorcery (BA, 1 min: DC +1, advantage on spell attacks, 2/LR) <span class="pill-ref">PHB p. 140</span> · Font of Magic (2 Sorcery Points, slot &harr; SP) <span class="pill-ref">PHB p. 141</span> · Metamagic: Empowered Spell (1 SP, reroll up to 3 damage dice), Twinned Spell (1 SP, +1 target) <span class="pill-ref">PHB p. 141–142</span>
+      </td></tr>
+      <tr><td><strong>Spell DC</strong></td><td>13 (14 w/ Innate Sorcery)</td><td><strong>Spell Attack</strong></td><td>+5</td></tr>
+      <tr><td><strong>Spell Slots</strong></td><td>3 &times; 1st level</td><td><strong>Sorcery Points</strong></td><td>2</td></tr>
+      <tr><td><strong>Cantrips (7)</strong></td><td colspan="3">
+        Druidcraft (Fairy) · Guidance (MI—Cleric) · Toll the Dead (MI—Cleric) · Friends · Mind Sliver · Minor Illusion · Sorcerous Burst
+      </td></tr>
+      <tr><td><strong>Spells</strong></td><td colspan="3">
+        <strong>1. Mage Armor</strong> — Action, touch, 8 hrs, AC = 13 + DEX mod <span class="pill-ref">PHB p. 293</span><br>
+        <strong>2. Shield</strong> — Reaction, self, +5 AC until start of next turn <span class="pill-ref">PHB p. 316</span><br>
+        <strong>3. Sleep</strong> — Action, 60 ft, conc. 1 min, 5d8 HP of creatures fall asleep <span class="pill-ref">PHB p. 319</span><br>
+        <strong>4. Thunderwave</strong> — Action, self (15 ft cube), CON save, 2d8 thunder + push 10 ft <span class="pill-ref">PHB p. 330</span><br>
+        <strong>Healing Word</strong> — BA, 60 ft, 2d4 + CHA mod HP (Magic Initiate, 1/LR free or via slots) <span class="pill-ref">PHB p. 281</span>
+      </td></tr>
+      <tr><td><strong>Weapons</strong></td><td colspan="3">
+        Spear: +1 to hit, 1d6−1 piercing, thrown 20/60 · Dagger (2): +4 to hit, 1d4+2 piercing, finesse/light/thrown 20/60
+      </td></tr>
+      <tr><td><strong>Equipment</strong></td><td colspan="3">Spear, 2 daggers, arcane focus (star-tipped wand), dungeoneer's pack, calligrapher's supplies, book of prayers (research journal), holy symbol, 10 parchment, robe, flute, 34 gp</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="char-portrait"><img src="media/graywall_mystery/twinkle.png" alt="Twinkle portrait"></div>
+  </div>
 
   <!-- Spell Cards Button -->
   <div style="text-align:center; margin:28px 0 10px;">
