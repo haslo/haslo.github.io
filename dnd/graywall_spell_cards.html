@@ -20,7 +20,7 @@
       Cards (p3): Druidcraft, Sorcerous Burst, Toll the Dead, Friends, Guidance,
                   Mind Sliver, Minor Illusion, Healing Word, Mage Armor
       Cards (p4): Shield, Sleep, Thunderwave, Innate Sorcery, Font of Magic,
-                  Empowered Spell, Twinned Spell, Flight
+                  Empowered Spell, Twinned Spell, Flight, Concentration
   LAYOUT: Print CSS forces 3×3 grid per page, page-break between characters.
           Screen shows parchment theme with floating nav.
   CSS: Cinzel headings, Crimson Pro body, parchment bg, gold/accent borders.
@@ -116,6 +116,10 @@
     margin-bottom: 20px;
   }
 
+  .section-header-cont {
+    margin-top: 10px;
+  }
+
   /* ── Card Grid ── */
   .card-grid {
     display: grid;
@@ -183,11 +187,15 @@
     margin-bottom: 4px;
   }
 
-  .card-body .upcast {
+  .card-body .card-hint {
     font-style: italic;
     color: var(--muted);
     font-size: 10pt;
-    margin-top: 4px;
+    margin-top: 5px;
+  }
+
+  .card-body .card-extra {
+    margin-top: 5px;
   }
 
   .card-corner {
@@ -303,6 +311,9 @@
     .card-meta { font-size: 7.5pt; }
     .card-body { font-size: 7.5pt; }
     .card-corner { font-size: 6.5pt; }
+    .card-body .card-hint { font-size: 6pt; }
+    .card-body .card-extra { font-size: 7pt; }
+    .section-header-cont { margin-top: 4px; }
   }
 
   /* ── Responsive ── */
@@ -334,7 +345,7 @@
 
   <!-- 1. Command -->
   <div class="card spark">
-    <div class="card-corner">PHB 255</div>
+    <div class="card-corner">PHB 251</div>
     <div class="card-name">Command</div>
     <div class="card-type">Level 1 Enchantment &middot; Spell</div>
     <div class="card-meta">
@@ -348,7 +359,7 @@
       <strong>Flee.</strong> Spend its turn moving away from you.<br>
       <strong>Grovel.</strong> Fall Prone, turn ends.<br>
       <strong>Halt.</strong> Doesn't move, takes no actions.</p>
-      <p class="upcast">Higher slot: +1 target per level above 1.</p>
+      <p class="card-hint">Higher slot: +1 target per level above 1.</p>
     </div>
   </div>
 
@@ -363,13 +374,13 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>Bless up to <strong>3 creatures</strong> within range. Whenever a target makes an <strong>attack roll</strong> or a <strong>saving throw</strong> before the spell ends, the target adds <strong>1d4</strong> to the roll.</p>
-      <p class="upcast">Higher slot: +1 creature per level above 1.</p>
+      <p class="card-hint">Higher slot: +1 creature per level above 1.</p>
     </div>
   </div>
 
   <!-- 3. Purify Food and Drink -->
   <div class="card spark">
-    <div class="card-corner">PHB 308</div>
+    <div class="card-corner">PHB 310</div>
     <div class="card-name">Purify Food and Drink</div>
     <div class="card-type">Level 1 Transmutation &middot; Ritual</div>
     <div class="card-meta">
@@ -377,14 +388,14 @@
     </div>
     <hr class="card-divider">
     <div class="card-body">
-      <p>All nonmagical food and drink within a <strong>5-foot-radius Sphere</strong> centered on a point within range is purified and rendered free of poison and disease.</p>
-      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Ritual: can cast without spell slot (10 min casting time).</p>
+      <p>All nonmagical food and drink within a <strong>5-foot-radius Sphere</strong> centered on a point within range is purified and rendered free of poison and rot.</p>
+      <p class="card-hint">Ritual: can cast without spell slot (10 min casting time).</p>
     </div>
   </div>
 
   <!-- 4. Divine Smite -->
   <div class="card spark">
-    <div class="card-corner">PHB 264</div>
+    <div class="card-corner">PHB 265</div>
     <div class="card-name">Divine Smite</div>
     <div class="card-type">Level 1 Evocation &middot; Always Prepared</div>
     <div class="card-meta">
@@ -394,8 +405,8 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>The target takes an extra <strong>2d8 Radiant</strong> damage from the attack. Damage increases by <strong>1d8</strong> if the target is a <strong>Fiend or Undead</strong>.</p>
-      <p style="margin-top:3px;"><strong>Free cast:</strong> 1/long rest without expending a spell slot.</p>
-      <p class="upcast">Higher slot: +1d8 per level above 1.</p>
+      <p class="card-extra"><strong>Free cast:</strong> 1/long rest without expending a spell slot.</p>
+      <p class="card-hint">Higher slot: +1d8 per level above 1.</p>
     </div>
   </div>
 
@@ -411,7 +422,7 @@
     <div class="card-body">
       <p>Touch a creature (including yourself) and draw from your pool to restore <strong>any number of HP</strong> up to the amount remaining in the pool.</p>
       <p>Alternatively, expend <strong>5 HP</strong> from the pool to remove the <strong>Poisoned</strong> condition (doesn't also restore HP).</p>
-      <p style="margin-top:3px; font-style:italic; color: var(--muted);">Pool replenishes when you finish a Long Rest.</p>
+      <p class="card-hint">Pool replenishes when you finish a Long Rest.</p>
     </div>
   </div>
 
@@ -426,13 +437,13 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>When you're holding a <strong>Melee weapon in one hand</strong> and <strong>no other weapons</strong>, you gain a <strong>+2 bonus to damage rolls</strong> with that weapon.</p>
-      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Longsword (1h): 1d8 + 2 (STR) + 2 (Dueling) = 1d8+4 slashing.</p>
+      <p class="card-hint">Longsword (1h): 1d8 + 2 (STR) + 2 (Dueling) = 1d8+4 slashing.</p>
     </div>
   </div>
 
   <!-- 7. Sap (Longsword Mastery) -->
   <div class="card spark">
-    <div class="card-corner">PHB 215</div>
+    <div class="card-corner">PHB 214</div>
     <div class="card-name">Sap</div>
     <div class="card-type">Weapon Mastery &middot; Longsword</div>
     <div class="card-meta">
@@ -441,13 +452,13 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>If you hit a creature with this weapon, that creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn.</p>
-      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Automatic on hit — no save, no resource cost. Great for protecting the party.</p>
+      <p class="card-hint">Automatic on hit — no save, no resource cost. Great for protecting the party.</p>
     </div>
   </div>
 
   <!-- 8. Slow (Javelin Mastery) -->
   <div class="card spark">
-    <div class="card-corner">PHB 215</div>
+    <div class="card-corner">PHB 214</div>
     <div class="card-name">Slow</div>
     <div class="card-type">Weapon Mastery &middot; Javelin</div>
     <div class="card-meta">
@@ -455,8 +466,8 @@
     </div>
     <hr class="card-divider">
     <div class="card-body">
-      <p>If you hit a creature with this weapon, that creature's <strong>Speed is reduced by 10 feet</strong> until the start of your next turn. If the creature is hit more than once with this property, the Speed reduction doesn't exceed 10 feet.</p>
-      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Good for keeping enemies from closing distance or escaping.</p>
+      <p>If you hit a creature with this weapon and deal damage to it, you can reduce its <strong>Speed by 10 feet</strong> until the start of your next turn. If the creature is hit more than once by weapons with this property, the Speed reduction doesn't exceed 10 feet.</p>
+      <p class="card-hint">Good for keeping enemies from closing distance or escaping.</p>
     </div>
   </div>
 
@@ -472,7 +483,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>Each creature in the area makes a <strong>DEX save (DC 12)</strong>. On a failed save, <strong>1d10 Cold</strong> damage. Half on a success.</p>
-      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Choose cone or line each time you use it. Damage scales: 2d10 at L5, 3d10 at L11, 4d10 at L17.</p>
+      <p class="card-hint">Choose cone or line each time you use it. Damage scales: 2d10 at L5, 3d10 at L11, 4d10 at L17.</p>
     </div>
   </div>
 
@@ -503,13 +514,13 @@
       <p>Once per turn, deal an extra <strong>1d6</strong> damage to one creature you hit with an attack roll if you're using a weapon with the <strong>Finesse</strong> or <strong>Ranged</strong> property and one of these is true:</p>
       <p><strong>Advantage.</strong> You have Advantage on the attack roll.<br>
       <strong>Ally adjacent.</strong> An ally is within 5 ft of the target and you don't have Disadvantage.</p>
-      <p class="upcast">Scales: 2d6 at L3, 3d6 at L5, etc.</p>
+      <p class="card-hint">Scales: 2d6 at L3, 3d6 at L5, etc.</p>
     </div>
   </div>
 
   <!-- 2. Cunning Action -->
   <div class="card sirius">
-    <div class="card-corner">PHB 127</div>
+    <div class="card-corner">PHB 128</div>
     <div class="card-name">Cunning Action</div>
     <div class="card-type">Class Feature &middot; Rogue Level 2</div>
     <div class="card-meta">
@@ -521,7 +532,7 @@
       <p><strong>Dash.</strong> Double your movement this turn.<br>
       <strong>Disengage.</strong> Your movement doesn't provoke Opportunity Attacks this turn.<br>
       <strong>Hide.</strong> Make a Stealth check to become Hidden.</p>
-      <p style="margin-top:3px; font-style:italic; color: var(--muted);">Attack + Hide = Sneak Attack next turn via Advantage.</p>
+      <p class="card-hint">Attack + Hide = Sneak Attack next turn via Advantage.</p>
     </div>
   </div>
 
@@ -536,7 +547,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>Your proficiency bonus is <strong>doubled</strong> for ability checks with two skills of your choice that you're proficient in.</p>
-      <p style="margin-top:5px;"><strong>Sirius's picks:</strong><br>
+      <p class="card-extra"><strong>Sirius's picks:</strong><br>
       Sleight of Hand: +3 (DEX) +4 (2&times;Prof) = <strong>+7</strong><br>
       Stealth: +3 (DEX) +4 (2&times;Prof) = <strong>+7</strong></p>
     </div>
@@ -544,7 +555,7 @@
 
   <!-- 4. Nick (Dagger Mastery) -->
   <div class="card sirius">
-    <div class="card-corner">PHB 215</div>
+    <div class="card-corner">PHB 214</div>
     <div class="card-name">Nick</div>
     <div class="card-type">Weapon Mastery &middot; Dagger</div>
     <div class="card-meta">
@@ -553,13 +564,13 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>When you make the extra attack of the <strong>Light</strong> property, you can make it as part of the <strong>Attack action</strong> instead of as a Bonus Action. You can make this extra attack only once per turn.</p>
-      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Frees up your Bonus Action for Cunning Action while still getting two dagger attacks.</p>
+      <p class="card-hint">Frees up your Bonus Action for Cunning Action while still getting two dagger attacks.</p>
     </div>
   </div>
 
   <!-- 5. Vex (Shortbow Mastery) -->
   <div class="card sirius">
-    <div class="card-corner">PHB 215</div>
+    <div class="card-corner">PHB 214</div>
     <div class="card-name">Vex</div>
     <div class="card-type">Weapon Mastery &middot; Shortbow</div>
     <div class="card-meta">
@@ -567,24 +578,24 @@
     </div>
     <hr class="card-divider">
     <div class="card-body">
-      <p>If you hit a creature with this weapon, you have <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn.</p>
-      <p style="margin-top:4px; font-style:italic; color: var(--muted);">Hit once → Advantage on second shot → easy Sneak Attack trigger.</p>
+      <p>If you hit a creature with this weapon and deal damage to it, you have <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn.</p>
+      <p class="card-hint">Hit once → Advantage on second shot → easy Sneak Attack trigger.</p>
     </div>
   </div>
 
   <!-- 6. Lucky -->
   <div class="card sirius">
-    <div class="card-corner">PHB 203</div>
+    <div class="card-corner">PHB 201</div>
     <div class="card-name">Lucky</div>
     <div class="card-type">Origin Feat</div>
     <div class="card-meta">
-      <strong>Luck Points:</strong> 3/long rest
+      <strong>Luck Points:</strong> 2/long rest (Prof Bonus)
     </div>
     <hr class="card-divider">
     <div class="card-body">
-      <p><strong>Luck Points.</strong> You have 3 Luck Points. When you make a d20 Test, you can spend 1 Luck Point to give yourself <strong>Advantage</strong> on the roll.</p>
+      <p><strong>Luck Points.</strong> You have a number of Luck Points equal to your <strong>Proficiency Bonus</strong> (currently <strong>2</strong>). When you make a d20 Test, you can spend 1 Luck Point to give yourself <strong>Advantage</strong> on the roll.</p>
       <p><strong>Against you.</strong> When a creature makes an attack roll against you, you can spend 1 Luck Point to impose <strong>Disadvantage</strong> on that roll.</p>
-      <p style="font-style:italic; color:var(--muted);">Points replenish on a Long Rest.</p>
+      <p class="card-hint">Points replenish on a Long Rest.</p>
     </div>
   </div>
 
@@ -599,13 +610,13 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>You have <strong>Advantage</strong> on Intelligence, Wisdom, and Charisma <strong>saving throws</strong>.</p>
-      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Protects against most mind-affecting magic: charm, fear, hold person, command, etc. Extremely powerful passive.</p>
+      <p class="card-hint">Protects against most mind-affecting magic: charm, fear, hold person, command, etc. Extremely powerful passive.</p>
     </div>
   </div>
 
   <!-- 8. Mending -->
   <div class="card sirius">
-    <div class="card-corner">PHB 299</div>
+    <div class="card-corner">PHB 297</div>
     <div class="card-name">Mending</div>
     <div class="card-type">Transmutation Cantrip &middot; Rock Gnome</div>
     <div class="card-meta">
@@ -614,7 +625,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>This spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than <strong>1 foot</strong> in any dimension, you mend it, leaving no trace of the former damage.</p>
-      <p style="font-style:italic; color:var(--muted);">Can mend magic items but doesn't restore their magic.</p>
+      <p class="card-hint">Can mend magic items but doesn't restore their magic.</p>
     </div>
   </div>
 
@@ -682,8 +693,8 @@
     <div class="card-body">
       <p>Make a <strong>ranged spell attack</strong> (+5). On a hit, target takes <strong>1d8</strong> damage of a type you choose: Acid, Cold, Fire, Lightning, Poison, Psychic, or Thunder.</p>
       <p><strong>Exploding dice:</strong> If you roll an 8 on any d8, roll another d8 and add it. Max extra d8s = <strong>3</strong> (CHA mod).</p>
-      <p class="upcast">Cantrip Upgrade: 2d8 at L5, 3d8 at L11, 4d8 at L17.</p>
-      <p style="font-style:italic; color:var(--muted);">Your go-to ranged attack. Choose damage type to exploit vulnerabilities. Innate Sorcery gives Advantage.</p>
+      <p class="card-hint">Cantrip Upgrade: 2d8 at L5, 3d8 at L11, 4d8 at L17.</p>
+      <p class="card-hint">Your go-to ranged attack. Choose damage type to exploit vulnerabilities. Innate Sorcery gives Advantage.</p>
     </div>
   </div>
 
@@ -699,8 +710,8 @@
     <div class="card-body">
       <p>You point at one creature you can see. The target hears a dolorous bell audible within 10 ft and must succeed on a <strong>WIS save</strong> or take <strong>1d8 Necrotic</strong> damage.</p>
       <p>If the target is <strong>missing any HP</strong>, it takes <strong>1d12</strong> instead.</p>
-      <p class="upcast">Cantrip Upgrade: damage increases by one die at L5, L11, L17.</p>
-      <p style="font-style:italic; color:var(--muted);">Save-based (no attack roll) — pairs with Mind Sliver's −1d4 to saves. 1d12 on wounded targets is brutal.</p>
+      <p class="card-hint">Cantrip Upgrade: damage increases by one die at L5, L11, L17.</p>
+      <p class="card-hint">Save-based (no attack roll) — pairs with Mind Sliver's −1d4 to saves. 1d12 on wounded targets is brutal.</p>
     </div>
   </div>
 
@@ -730,7 +741,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>You touch a willing creature and <strong>choose a skill</strong>. Until the spell ends, the creature adds <strong>1d4</strong> to any ability check using the chosen skill.</p>
-      <p style="margin-top:6px; font-style:italic; color: var(--muted);">Great for out-of-combat skill checks. Cast before the check, pick the skill. One creature at a time (Concentration).</p>
+      <p class="card-hint">Great for out-of-combat skill checks. Cast before the check, pick the skill. One creature at a time (Concentration).</p>
     </div>
   </div>
 
@@ -745,8 +756,8 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>Target must succeed on an <strong>INT save</strong> or take <strong>1d6 Psychic</strong> damage and subtract <strong>1d4</strong> from the next saving throw it makes before the end of your next turn.</p>
-      <p class="upcast">Cantrip Upgrade: 2d6 at L5, 3d6 at L11, 4d6 at L17.</p>
-      <p style="font-style:italic; color:var(--muted);">V-only, no save debuff — perfect setup for Sleep or Thunderwave next turn.</p>
+      <p class="card-hint">Cantrip Upgrade: 2d6 at L5, 3d6 at L11, 4d6 at L17.</p>
+      <p class="card-hint">V-only, no save debuff — perfect setup for Sleep or Thunderwave next turn.</p>
     </div>
   </div>
 
@@ -763,7 +774,7 @@
       <p>Create a <strong>sound</strong> or an <strong>image of an object</strong> within range. Ends if you cast it again.</p>
       <p><strong>Sound.</strong> Volume from whisper to scream. Continuous or discrete sounds.<br>
       <strong>Image.</strong> Object no larger than a 5-ft Cube. No sound, light, smell, or other sensory. Physical interaction reveals it.</p>
-      <p style="font-style:italic; color:var(--muted);">Study action: INT (Investigation) vs. your spell DC to discern.</p>
+      <p class="card-hint">Study action: INT (Investigation) vs. your spell DC to discern.</p>
     </div>
   </div>
 
@@ -779,8 +790,8 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>A creature of your choice within range regains <strong>2d4 + 3</strong> (CHA mod) Hit Points.</p>
-      <p class="upcast">Higher slot: +2d4 per level above 1.</p>
-      <p style="font-style:italic; color:var(--muted);">Bonus Action ranged heal — perfect emergency pickup from the air. 1/day free via MI, or spend a Sorcerer slot.</p>
+      <p class="card-hint">Higher slot: +2d4 per level above 1.</p>
+      <p class="card-hint">Bonus Action ranged heal — perfect emergency pickup from the air. 1/day free via MI, or spend a Sorcerer slot.</p>
     </div>
   </div>
 
@@ -795,9 +806,9 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>Touch a willing creature who isn't wearing armor. Target's base AC becomes <strong>13 + DEX modifier</strong>. Ends if the target dons armor.</p>
-      <p style="margin-top:5px;"><strong>Twinkle's AC:</strong> 13 + 2 (DEX) = <strong>15</strong><br>
+      <p class="card-extra"><strong>Twinkle's AC:</strong> 13 + 2 (DEX) = <strong>15</strong><br>
       With Shield reaction: <strong>20</strong></p>
-      <p style="font-style:italic; color:var(--muted);">Cast once in the morning — lasts 8 hours, no Concentration.</p>
+      <p class="card-hint">Cast once in the morning — lasts 8 hours, no Concentration.</p>
     </div>
   </div>
 
@@ -806,7 +817,7 @@
 <!-- Twinkle page 2 -->
 <div class="page-break"></div>
 
-<div class="section-header" style="margin-top:10px;">Twinkle</div>
+<div class="section-header section-header-cont">Twinkle</div>
 <div class="section-subtitle">Spells (continued) &amp; Class Features</div>
 
 <div class="card-grid">
@@ -823,7 +834,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>An imperceptible barrier of force protects you. Until the start of your next turn, you have a <strong>+5 bonus to AC</strong>, including against the triggering attack, and you take <strong>no damage from Magic Missile</strong>.</p>
-      <p style="font-style:italic; color:var(--muted);">AC 15 → 20. One slot well spent to survive a big hit.</p>
+      <p class="card-hint">AC 15 → 20. One slot well spent to survive a big hit.</p>
     </div>
   </div>
 
@@ -839,7 +850,7 @@
     <div class="card-body">
       <p>Each creature in a <strong>5-ft-radius Sphere</strong> centered on a point within range makes a <strong>WIS save</strong>.</p>
       <p><strong>Fail:</strong> <strong>Incapacitated</strong> until spell ends. At end of each of its turns, repeat save — on a second failure, it falls <strong>Unconscious</strong> until spell ends or it takes damage or someone shakes it awake.</p>
-      <p style="font-style:italic; color:var(--muted);">Creatures immune to sleep or Exhaustion auto-succeed. Mind Sliver → Sleep = chef's kiss.</p>
+      <p class="card-hint">Creatures immune to sleep or Exhaustion auto-succeed. Mind Sliver → Sleep = chef's kiss.</p>
     </div>
   </div>
 
@@ -855,7 +866,7 @@
     <div class="card-body">
       <p>Each creature in a <strong>15-ft Cube</strong> originating from you makes a <strong>CON save</strong>. On a fail, <strong>2d8 Thunder</strong> damage and pushed <strong>10 feet</strong> away. Half damage on success, no push.</p>
       <p>Unsecured objects entirely in the Cube are also pushed 10 ft. Thunderous boom audible within <strong>300 feet</strong>.</p>
-      <p class="upcast">Higher slot: +1d8 per level above 1.</p>
+      <p class="card-hint">Higher slot: +1d8 per level above 1.</p>
     </div>
   </div>
 
@@ -873,7 +884,7 @@
       <p>Unleash the simmering magic within. For 1 minute:</p>
       <p>&bull; Spell save DC of your Sorcerer spells <strong>increases by 1</strong> (DC 13 → <strong>14</strong>)<br>
       &bull; You have <strong>Advantage</strong> on attack rolls of Sorcerer spells you cast</p>
-      <p style="font-style:italic; color:var(--muted);">Pop this before your biggest spell turn. Stacks with Metamagic.</p>
+      <p class="card-hint">Pop this before your biggest spell turn. Stacks with Metamagic.</p>
     </div>
   </div>
 
@@ -890,7 +901,7 @@
       <p>Fuel Metamagic options and create spell slots.</p>
       <p><strong>Convert Slot → SP:</strong> Expend a spell slot to gain SP equal to the slot's level (no action).<br>
       <strong>Create Slot:</strong> Bonus Action, spend 2 SP to create one 1st-level spell slot. Slot vanishes on Long Rest.</p>
-      <p style="font-style:italic; color:var(--muted);">2 SP = 1 Empowered + 1 Twinned, or 1 emergency spell slot.</p>
+      <p class="card-hint">2 SP = 1 Empowered + 1 Twinned, or 1 emergency spell slot.</p>
     </div>
   </div>
 
@@ -906,7 +917,7 @@
     <div class="card-body">
       <p>When you roll damage for a spell, spend 1 SP to <strong>reroll up to 3 damage dice</strong> (CHA modifier, minimum 1). You must use the new rolls.</p>
       <p><strong>Stackable:</strong> You can use Empowered Spell even if you've already used a different Metamagic option on the same spell.</p>
-      <p style="font-style:italic; color:var(--muted);">Thunderwave rolled low? Reroll up to 3 of those d8s.</p>
+      <p class="card-hint">Thunderwave rolled low? Reroll up to 3 of those d8s.</p>
     </div>
   </div>
 
@@ -921,7 +932,7 @@
     <hr class="card-divider">
     <div class="card-body">
       <p>When you cast a spell (such as <em>Charm Person</em>) that can be cast with a higher-level spell slot to target an additional creature, spend 1 SP to <strong>increase the spell's effective level by 1</strong>.</p>
-      <p style="font-style:italic; color:var(--muted);">Sleep at effective level 2 (bigger radius?) or Healing Word on two allies with one slot — big value for 1 SP.</p>
+      <p class="card-hint">Sleep at effective level 2 (bigger radius?) or Healing Word on two allies with one slot — big value for 1 SP.</p>
     </div>
   </div>
 
@@ -935,9 +946,25 @@
     </div>
     <hr class="card-divider">
     <div class="card-body">
-      <p>You have a <strong>flying speed equal to your walking speed</strong> (30 ft). You can hover.</p>
-      <p>If you are flying at the end of your turn and nothing is holding you aloft, you fall.</p>
-      <p style="margin-top:5px; font-style:italic; color:var(--muted);">Twinkle never walks. Use flight to stay out of melee, position for Thunderwave without hitting allies, and deliver Healing Word from safety.</p>
+      <p>Because of your wings, you have a <strong>flying speed equal to your walking speed</strong> (30 ft). You can't use this flying speed if you're wearing <strong>Medium or Heavy armor</strong>.</p>
+      <p class="card-hint">Twinkle never walks. Use flight to stay out of melee, position for Thunderwave without hitting allies, and deliver Healing Word from safety.</p>
+    </div>
+  </div>
+
+  <!-- 18. Concentration -->
+  <div class="card twinkle">
+    <div class="card-corner">PHB 363</div>
+    <div class="card-name">Concentration <span class="tag-conc">Rules</span></div>
+    <div class="card-type">Spellcasting Rule &middot; Reference</div>
+    <div class="card-meta">
+      Spells marked <span class="tag-conc">Conc</span> follow these rules
+    </div>
+    <hr class="card-divider">
+    <div class="card-body">
+      <p><strong>One at a time.</strong> Casting a new Conc spell ends the previous one.</p>
+      <p><strong>Damage breaks it.</strong> When you take damage while concentrating, make a <strong>CON save</strong>. DC = <strong>10</strong> or <strong>half the damage taken</strong>, whichever is higher.</p>
+      <p><strong>Ends automatically</strong> if you are Incapacitated or die.</p>
+      <p><strong>Dismiss:</strong> You can end concentration at any time (no action).</p>
     </div>
   </div>
 
