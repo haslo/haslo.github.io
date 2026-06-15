@@ -1,0 +1,1910 @@
+<!--
+  LLM CONTEXT — keep this comment current when making changes.
+
+  FILE: my_mangas.html
+  PURPOSE: Gwen's manga & graphic-novel collection tracker.
+           Two sections: Owned (in hand, on the way, or actively being monitored) and Considering.
+  PRESENT-FACT CONVENTION (strict): this file is NOT a git history or a change log. Write
+              ONLY present facts about the current state of the collection. Do NOT include
+              temporal narrative such as: "added [date]", "ordered [date]", "arrived [date]",
+              "will arrive", "previously rejected on [date]", "as of [date]", "considered
+              [date]", etc. Status badges and chip states ("ORDERED", "owned", "preorder",
+              "shelved") ARE present facts and stay. Dates that are present facts (a future
+              release date, a pre-order shipping date, a publisher's announced parution date)
+              also stay. But anything that reads like "and then this happened on this date" —
+              kill it. If you catch yourself writing a story about how an entry got to its
+              current state, stop and rewrite as the present state alone.
+
+  OWNER PREF: No MS Office files. Self-contained HTML, no external resources (system fonts only).
+              AESTHETIC: CY_BORG / apocalyptic-punk-cyber. Black + eye-searing yellow + magenta.
+              Brutalist condensed typography. Halftone textures. Hard contrasts, NO glow effects.
+              Distinct from my_other_rpgs.html (parchment/scholarly).
+  LANGUAGE PREFERENCE:
+              Gwen reads DE, FR, EN. Preferred edition is the ORIGINAL LANGUAGE if she can
+              read it. For JP-original works she can't read JP, so DE or EN translations
+              are both fine (pick whichever has the better edition / publisher / continuity).
+              For EN-original works, prefer EN. For FR-original works (BD), prefer FR.
+              When per-volume notes mention a translation edition, flag whether an
+              original-language edition exists as an alternative — even on Considering
+              entries — so future-Gwen can make the call consciously.
+
+              READING-COMFORT NOTE (do not assume): native language (DE) is NOT automatically
+              the most comfortable reading language for Gwen. She reads EN more frequently
+              than DE both at work (digital director at a Swiss agency) and privately. Do
+              not default to "DE is the comfy choice because she's a German speaker" — that's
+              a lazy bias. When tie-breaking between DE and EN translations of a JP/other
+              original, weigh actual translation quality, publisher continuity, edition
+              format, and physical availability. Language-comfort as a tie-breaker only
+              applies if Gwen herself raises it.
+
+              FR IS STRICTLY ORIGINAL-LANGUAGE ONLY: FR is a preferred edition language ONLY
+              when the work is FR-original. Do NOT recommend FR translations of works
+              originally in other languages just because Gwen reads French. FR reading
+              ability is a tool for accessing FR-original work, not a general preference.
+              Rare exception: when FR happens to be the only complete edition of a work, it
+              can win on continuity grounds — but that's a continuity argument, not a
+              language argument.
+
+  MIZUNO FR vs EN — resolved: EN for works that exist in both. Evidence base (verified,
+              not extrapolated):
+                - Mizuno is JP-native; EN is also not her first language. Both EN and FR
+                  are translation/communication contexts for her, neither "more authentic."
+                - Based in San Francisco since 2009 (physical home, US publishers
+                  Last Gasp + Viz are primary partners, extensive EN interview record:
+                  Comics Journal #273, Juxtapoz #60, Hi-Fructose, Paul Gravett, AICN, CCA,
+                  ICA London panel).
+                - Substantial parallel FR engagement: 20+ year IMHO relationship, Angoulême
+                  appearances, FR signing tours, ActuaBD + Journal du Japon interviews,
+                  Ravina commissioned by Soleil specifically for the French market.
+                - Both publisher relationships produce real-and-different objects Mizuno
+                  signs off on. Neither market is "the real one."
+              So the choice between FR and EN editions does not favour either on intent
+              grounds. Cost (FR ~3× EN) + local availability in CH settles EN by default
+              for works that exist in both.
+              EXCEPTION: PEL (Pilou / Little Fluffy Gigolo Pelu) earns the FR continuity
+              exception — FR IMHO has 3 vols complete (T3 ISBN 9782915517903, currently
+              OOS at publisher, secondhand needed for T3), EN Last Gasp stopped at 2 of 3.
+              Do not re-pitch FR Mizuno on aesthetic or intent grounds for works other
+              than PEL.
+
+  EDITION-DESIGN-AS-SIGNAL HEURISTIC:
+              Publishers commission collector / deluxe edition design specifically as a
+              visual compression of the interior aesthetic — the box / HC cover / foil-
+              treatment / endpaper / poster choices are not arbitrary, they're saying
+              "this is what the work inside feels like." Gwen's pattern:
+                - Loved the Utena Deluxe Box design (gold-foil, ornate, roses-and-
+                  flourishes) → confirmed bet on the work, art-axis no longer pure wildcard
+                - Bounced on the Clover HC design (sparse-modernist-minimalist) → that
+                  WAS the warning sign about the interior's sparse-modernist-abstract art
+              For Considering candidates going forward: factor in Gwen's reaction to the
+              publisher's edition design as a real predictive signal of art-axis fit.
+              If she loves the box, she'll probably love the interior. If the box-design
+              feels wrong, the interior likely will too.
+
+  CONTENT ETHICS:
+              "Adult-acceptable" can go pretty far into fetish, kink, body horror, sex,
+              violence, transgressive material. The gate is NOT the intensity of depiction,
+              and NOT whether dark topics appear at all. The gate is the work's RELATIONSHIP
+              to its content:
+
+                1. CRITICAL ENGAGEMENT vs ROMANTICISATION — frank depiction of abuse,
+                   patriarchal violence, incest, rape, grooming, etc. as SUBJECT MATTER
+                   that the work seriously engages with (critique, trauma exploration,
+                   structural analysis) is ACCEPTABLE and often valuable. Same depictions
+                   framed as romance / "she'll come around" / titillation / power-fantasy
+                   for the abuser are NOT acceptable. The distinction is the authorial
+                   stance toward the depicted content.
+
+                2. CONSENT (for sexual content not framed as critique) — enthusiastic and
+                   continued, not just initial. Consensual adult fetish/kink/BDSM/transgression
+                   is fine. Non-consent depicted as desirable is not.
+
+                3. MINORS — sexual content involving minors framed as titillation or
+                   romance is a hard NO. Sexual violence against minors depicted critically
+                   (as the harm it is, to engage with the topic seriously) is acceptable
+                   under the same critical-engagement gate.
+
+              Don't reflexively reject works because they "depict X" — read for whether
+              the depiction is critical or endorsing. Examples: Revolutionary Girl Utena
+              (Saito Chiho manga) frankly depicts incest/abuse/grooming as the patriarchal
+              violence the story is critiquing — Akio is the villain, not the romantic
+              lead → passes. Helter Skelter critically engages with the beauty industry's
+              violence against women's bodies → passes. Nana (Ai Yazawa, josei) frankly
+              depicts a sexual assault and the trapped marriage that follows — Takumi is
+              shown as controlling/damaging, Hachi's resulting life is depicted as cage
+              not romance, Yazawa's stance is interrogating the trajectory women in male-
+              dominated industries get pushed into, not endorsing it → passes. A work
+              that frames a teacher-student romance as cute and aspirational without
+              acknowledging the power dynamic → fails. When uncertain, flag the
+              uncertainty rather than guessing.
+
+              DRAMA IS FINE (Gwen calibration): Gwen is NOT against drama, including
+              drama with adult characters going through hard things — assault aftermath,
+              coercive marriages, addiction, abuse cycles, dehumanising industries — as
+              long as the work passes the critical-engagement gate above. Over-hedging on
+              works that pass the gate (drowning the review in caveats, framing the
+              content as "you'll have to decide if you can handle this," etc.) is a real
+              failure mode to avoid. If the gate passes, say it passes. The reader can
+              evaluate intensity for themselves; the framework's job is to filter
+              romanticisation, not to filter intensity.
+
+              VIOLENCE IS FINE (Gwen calibration): violence intensity is NOT a content
+              gate. Decapitations, dismemberment, gore, body horror, brutality, infants
+              in mortal danger, military-action violence, samurai violence, body-
+              modification violence — all fine on the violence axis itself. The R-rated-
+              and-then-some tolerance is established across the shelf (Akira, BLAME!,
+              Eden, Vagabond, Helter Skelter, Tokyo Ghost, Ronin, Mörk-Borg-engine
+              games). Do NOT frame "violence" as a content gate in reviews — it
+              implicitly suggests concern where there isn't one. The actual gates are
+              critical-engagement-vs-romanticisation, consent, and minors (above).
+              When discussing violent works, do NOT lead with violence-as-gate framing;
+              if there's something to flag, flag it under those actual gates (e.g.
+              "sexual violence depicted as harm not titillation" lives under the
+              critical-engagement gate, NOT under a "violence is heavy" framing).
+
+              TRUSTED SOURCES for content-ethics calls:
+                - Anime Feminist (animefeminist.com) — Gwen is a paying patron at the $1
+                  newsletter tier (since June 2026). Treat their structural critiques as
+                  authoritative when adjudicating gender/sexuality/queer-rep questions on
+                  manga and anime. Already load-bearing for the FranXX rejection and
+                  the Gantz pattern. When AniFem has covered a work, cite them directly.
+  RELATED: dnd/my_other_rpgs.html (RPG collection — separate tracker, different aesthetic).
+
+  DATA MODEL (per series):
+
+    SERIES IDENTITY
+      - Title (uppercase, brutalist heading)
+      - Edition descriptor — "<edition> · <language> · <publisher> · <author>"
+      - First publication YEAR(s) — the original work's publication years (NOT the deluxe-edition years).
+        For multi-work editions (Anthology, Companion), use range of CONTAINED works,
+        sorting by EARLIEST. Years live in a `b-years` badge.
+
+    DEMOGRAPHIC (Japanese publishing classification — historical magazine-marketing buckets,
+                  not present-day reader prescriptions. Modern manga readership is broadly
+                  mixed-gender across all categories.)
+      - 青年 Seinen   = originally adult-male-targeted. Mature themes — violence, sex, psychological depth.
+      - 少年 Shōnen   = originally teen-boy-targeted. Action/adventure/effort tropes.
+      - 少女 Shōjo    = originally teen-girl-targeted. Romance/emotional drama/slice-of-life.
+      - 女性 Josei    = originally adult-woman-targeted. Realistic romance/workplace/slice-of-life.
+      - 子供 Kodomo   = children's manga.
+      - BD            = bande dessinée (French/Belgian album tradition). Cyborgs.
+      - Indie GN      = Western indie graphic novel. Ascender/Descender, Tokyo Ghost, Ronin of Okane,
+                        Me & My Nekomata.
+      GENRE NOTE (Gwen calibration): she does NOT particularly like noir. Detective-noir
+      register (PI-case structure, world-weary-investigator mood — e.g. No Guns Life) is
+      a minus on her axes, not a plus. Don't pitch works on their noir credentials;
+      weigh noir-heavy candidates down accordingly.
+      Pattern: current shelf is uniformly seinen + Western/French adult comics + alt-shōjo (Mizuno).
+      Gwen is actively searching for Shōjo/Josei that fit her vibe (cute-with-teeth, female-creator,
+      power fantasy, adult-acceptable). Note that the demographic axis is NOT actually her
+      filter axis — what she cares about is "female mangaka + cute + dark + tasteful power
+      fantasy," which spans demographics. Mizuno (shōjo) is the existing bullseye.
+
+  TASTE CALIBRATION (Would-Gwen-Like-This review heuristics — distilled from misfires):
+
+    PRIMARY AXIS (register-level — gates entry, no bonus override):
+      - Adult-thematic — the work's problem-set is adult, even if cast includes adolescents
+      - Dark / serious / dramatic — NOT comedy. Comedy is essentially disqualifying. Comic
+        relief inside drama is fine; comedy AS register fails on entry
+      - Dense specific worldbuilding — civilizations, technologies, ecologies, political
+        systems with concrete mechanics. NOT vague SF mood. NOT pure psychological-interior-
+        relationship-drama. Hagio fails here despite female-mangaka + queer-coded; she's
+        too interior-shojo-women's-literature for the dense-worldbuilding register
+      - Visual density — architectural, environmental, technological detail per panel.
+        Otomo / Nihei / Inoue / Kishiro / Endo / Saito / Miyazaki / Otomo are the reference
+      - Transformation themes — bodies (cyborgs, cyborgization, body horror), societies
+        (collapse, reconstruction, engineered ecology), civilizations (post-apocalypse,
+        Neo-Tokyo, the Sea of Corruption, Hole, the Sprawl)
+      - Twin foundational lineage: Akira (1982) + Nausicaä (1982). Most of the cyberpunk-
+        dystopia shelf descends from one or both. Reference "post-Akira/Nausicaä lineage"
+        for placement claims, not "post-Akira" alone
+
+    BONUS AXES (cherry, NOT gate — these earn ADDITIONAL shelf real-estate AFTER primary
+    register passes; they do NOT compensate for primary-axis failure):
+      - Female mangaka — extra weight, especially for the structural female-author-in-
+        Gwen's-niche hole (Mizuno is the bullseye, Hayashida/Yazawa/Saito/Okazaki on the
+        radar)
+      - Queer-coded / trans-NB-affirming representation — extra weight, especially when
+        written from inside (Isaki, Chii, Kamatani) rather than as research piece
+      - Found-family / chosen-family structures
+      - Prestige edition existence (HC, slipcase, Master Edition, Deluxe, Doppelband)
+      - Complete or finite-with-end-in-sight (ongoing-no-end is a flag, not a block —
+        Witch Hat, Cyborgs, Hikaru all considered/owned despite ongoing status)
+
+    CLASSIC FAILURE MODE: pattern-matching on BONUS axes (female mangaka + josei + queer-
+    coded + found-family) without checking PRIMARY register. Princess Jellyfish (comedy +
+    18yo otaku + cross-dressing-romp) and Hagio (interior-psychological-shojo-women's-lit)
+    both failed this way. If a candidate looks great on bonus axes but the register doesn't
+    pass adult-dark-dense-worldbuilding-visual-density, STOP. Don't pitch.
+
+    SCHOOL-AGE PROTAGONIST FILTER (clarification from Wandering Son rejection):
+      - REJECTED only when the work's PROBLEM-SET is school-age-specific (Wandering Son:
+        adolescent gender identity discovery in school context — wrong problem-set for
+        Gwen-at-47)
+      - PASSES when the work is set in adolescence but the problem-set is adult-thematic
+        (Eden's Elijah as teen-in-geopolitical-cyborg-warfare; The Summer Hikaru Died's
+        Yoshiki as teen-in-queer-grief-body-horror-folklore)
+      - Test: is the work ABOUT being a school-age person, or DOES IT HAPPEN TO BE SET in
+        a school-age cohort while exploring adult themes? If the former, reject. If the
+        latter, pass.
+
+    ART-REGISTER FILTER (post-Tezuka cinematic baseline):
+      - Shelf is uniformly post-Tezuka cinematic: cinematic paneling, speed/impact lines,
+        post-Akira layout grammar, large-panel high-detail backgrounds
+      - PRE-Tezuka cartoonist-influenced register (Mizuki Shigeru — clear-line + photo-
+        detail + Hergé/E.C.Segar/Walt-Kelly lineage) does NOT click. Drawn & Quarterly's
+        scholarly framing of Mizuki as graphic-novel-canon is accurate but irrelevant —
+        the art is the work, and if the art doesn't click, the book doesn't click
+      - EXCEPTION: intentional feminist art-positioning where the rough/anti-pretty
+        register is the point (Okazaki's fashion-illustration line in Helter Skelter is
+        deliberate critique-of-beauty-industry styling). The exception is "art register
+        is a deliberate political statement that the work depends on," not "art register
+        is incidentally non-cinematic"
+
+    CLUSTER-CONTEXT OVERRIDE (yokai-prep library precedent):
+      - Some acquisitions function as GAME-PREP-LIBRARY pieces rather than narrative-
+        reading pieces (Tono Monogatari sitting alongside Foster's Book of Yōkai +
+        Densetsu + Book of Yō + :Otherscape Tokyo as a coherent yokai-prep cluster)
+      - In cluster-context lens, individual-axis concerns (Mizuki's "feels Western"
+        art register, episodic non-narrative structure) can EVAPORATE because the use
+        case is reference-and-mine, not read-as-narrative
+      - When pitching a work, consider whether it's a SHELF-NARRATIVE acquisition (must
+        pass register on its own) or a CLUSTER-CONTEXT acquisition (passes by joining
+        an established prep-library function)
+
+    LANGUAGE NEUTRALITY FOR NON-ORIGINAL WORKS:
+      - For JP-original works, neither EN nor DE is original. Translation-prestige
+        argument is functionally neutral, especially when the original creator was
+        hands-off on Western translations (Miyazaki, etc.)
+      - Edition design + shelf-fit becomes the deciding axis between EN and DE for
+        such works. The Nausicaä Carlsen Doppelband call (over VIZ 2-vol mega-HC) was
+        decided on multi-vol-in-slipcase shelf-pattern grounds, not on translation
+        prestige
+
+    EDITION PATTERN (collected-edition prestige hierarchy):
+      - Multi-vol-in-slipcase consistently wins over mega-HC consolidation
+        (Akira / GitS Legacy / Alita Deluxe / Utena Deluxe / Nausicaä Doppelband all
+        chosen on this pattern)
+      - DE-Master-Edition track has its own established shelf neighborhood
+        (Eden / Vagabond / Biomega / Tokyo Ghost / Nausicaä Doppelband — Carlsen,
+        Egmont, Cross-Cult/Manga-Cult publishers cluster here)
+
+    TRUSTED SOURCES for content-ethics and queer-rep calls — see CONTENT ETHICS section.
+
+    THREE INDEPENDENT STATE AXES:
+      - SERIES STATE: complete | ongoing | incomplete
+        complete   = manga finished, ending published.
+        ongoing    = creator actively publishing new volumes (Cyborgs).
+        incomplete = volumes exist, no ending, work on hiatus / abandoned (Vagabond — hiatus since 2015).
+      - YEAR BADGE: "YYYY–YYYY" or "YYYY–" (for ongoing) or "YYYY (hiatus)" qualifier appended.
+      - EDITION STATE: complete | in_progress | announced | native
+        complete    = her preferred edition is fully released.
+        in_progress = edition still being released (Eden ME, Vagabond ME).
+        announced   = publisher has announced the edition, no release date yet
+                      (Appleseed Companion Deluxe, Shirow Anthology Deluxe).
+        native      = no edition tier applies (BD album in original format — Cyborgs).
+
+    VOLUME COUNT
+      - Known total OR "N+" if creator hasn't committed (Cyborgs).
+
+    PER-VOLUME STATE (one of):
+      - owned     → BRIGHT YELLOW filled (signature, #fff200). In-shelf, not yet started.
+      - reading   → MID-YELLOW / GOLD filled (#e6b800). Currently reading this volume.
+      - read      → DARKER YELLOW / MUSTARD filled (#c9a000). Finished reading.
+                    The yellow trio (owned → reading → read) is a brightness gradient:
+                    brightest = fresh in shelf, mid = engaged, darker = settled/completed.
+      - ordered   → MAGENTA filled
+      - preorder  → WHITE filled
+      - announced → YELLOW outline only
+      - planned   → dashed white outline
+      - open      → dotted faint outline
+      - shelved   → dashed dim-grey outline + faint grey fill.
+                    Used for volumes in Considering / Low-probability cards — books that exist
+                    in the world but Gwen hasn't bought and isn't actively pursuing.
+
+    ORDER / TRACKING attached per volume or per batch in details block.
+
+    ALTERNATE EDITION TRACKS (NEW pattern):
+      Some series have multiple parallel edition lines available simultaneously
+      (e.g. Witch Hat Atelier — standard tankobon AND Grimoire 3-in-1 HC). For these,
+      a single series card can hold MULTIPLE .edition-track rows inside .volumes,
+      each with a .track-label ("Tankobon", "Grimoire HC", etc.) and its own chip
+      row. The series-edition descriptor reads "Two alternate edition tracks · ..."
+      so the dual-track structure is visible from the header. The user picks one
+      track when buying — chip states across tracks represent both "what exists in
+      the world" and "what state is each on the buy-decision tree" independently.
+
+  NO DUPLICATION RULE: this comment is for cross-cutting frameworks + rejected-item
+  memory only — do NOT mirror Owned or Considering entries here, the body is canonical.
+
+  STATUS BADGE STATES (for Considering / monitoring):
+    - b-considering (magenta, filled)  = actively evaluating, on the buy-decision radar
+    - b-low-prob    (dim grey, dashed) = "exists and Gwen doesn't want it right now" — aware,
+                                          not actively pursuing, but not a hard pass either
+                                          (re-evaluate-able).
+
+  PREVIOUSLY CONSIDERED, REJECTED (kept here as memory so future-Gwen doesn't re-discover and
+  re-evaluate from scratch):
+    - Clover — Hardcover Collector's Edition (EN, Kodansha — CLAMP). Was considered for the
+        cyberpunk-dystopia × female-creator-collective × art-deco structural fill. Rejected on
+        the art axis: Gwen finds CLAMP's sparse modernist / abstract layout register bouncy.
+        The art IS the point of Clover (deliberately experimental, huge negative space,
+        ornamental panels) — if you don't click with it, no other axis saves the buy. Do not
+        re-pitch unless Gwen's visual-register preferences shift toward abstract-minimalist.
+    - Delicious in Dungeon / Dungeon Meshi (EN/JP/various, Enterbrain — Ryoko Kui). 14-vol
+        seinen, 2014–2023, female mangaka, D&D-party-eats-monsters premise, Manga Taishō 2015,
+        Studio Trigger anime 2024. Rejected on multiple axes: tone too warm/cozy/comedy (cute
+        without teeth), D&D-meta feels redundant since Gwen actively plays D&D, male-led party,
+        food-comedy gimmick doesn't grab. Do not re-pitch.
+    - Gantz (EN Dark Horse Omnibus 12 vols complete; DE Manga Cult / Cross Cult Perfect Edition
+        12 vols Klappenbroschur complete; original 37-vol seinen, Hiroya Oku, Young Jump
+        2000–2013). Sci-fi horror / action — ordinary people revived in a room after death to
+        fight aliens. Rejected on the content-ethics framework's critical-engagement vs
+        romanticisation gate: violence is fine (matches her R-rated tolerance from Ronin), but
+        Oku's authorial stance toward the female cast is patriarchal-male-gaze by default
+        rather than by critique. Tae Kojima as "pure" trophy, female fighters introduced through
+        nude/near-nude fanservice framing, sexual content as titillation not theme, some
+        sexual violence not critically engaged. Fails the framework regardless of edition
+        choice. Art register (photorealistic + heavy 3D-model assist) is also off her
+        gravitational pull. Do not re-pitch.
+    - Wandering Son / Hōrō Musuko (EN Fantagraphics, JP Enterbrain — Takako Shimura). 15-vol
+        seinen, 2002–2013, landmark MtF + FtM trans manga, EN translation incomplete (8 of 15
+        vols). Was considered for the trans-affirming niche. Rejected on two axes:
+        (a) Shimura's art style doesn't click for Gwen, (b) school-age protagonists have a
+        different problem-set from adult trans experience and don't speak to Gwen's
+        position. Do not re-pitch unless either axis shifts.
+    - Darling in the FranXX (EN Seven Seas 8 vols complete; DE Manga Cult / Cross Cult 7 of 8
+        out — Code:000 story / Kentaro Yabuki art). 8-vol seinen / Shōnen Jump+ 2018–2024,
+        manga adaptation of the A-1 Pictures + Trigger anime. Rejected on Gantz-tier
+        content-ethics grounds, but more severe — Gantz's male-gaze is structural-by-default,
+        FranXX's is structural-by-axiom: the mecha cockpit IS the male-gaze premise (female
+        "Pistil" on hands-and-knees, male "Stamen" behind her over the hips, mech "powered
+        by his stamina") and this is the actual control scheme used in every combat
+        sequence, not punctuated fanservice. Additional failure axes: (a) Kentaro Yabuki
+        is the To Love-Ru artist — his entire visual register IS hyper-sexualized waifu
+        cheesecake, killing the manga as a shelf object before the script even speaks; the
+        standard FranXX defense ("the show critiques the system it depicts") collapses
+        when the artwork pornifies the critique target; (b) reproductive-determinism ending
+        explicitly frames women-as-wombs and refusal-to-reproduce as loss of humanity,
+        opposite of the agency-over-modification / constructed-identity-from-fragments
+        thread that anchors Gwen's cyborg-canon picks (Alita / Matrix / GitS); (c) Ikuno's
+        lesbian arc is canonical queer-erasure (attracted to Ichigo, doesn't get her,
+        eventually pseudo-pairs with a male character, dies unfulfilled while hetero pairs
+        get happy ending); (d) finale jumps the rails with unset-up alien invasion deus ex
+        machina — craft-criticism converges with politics-criticism on the same verdict.
+        Do not re-pitch.
+    - The Ravages of Time / 火鳳燎原 (HK manhua, Tong Li Taiwan — Chen Mou / Chan Mou).
+        Three Kingdoms revisionist political-strategy epic, started 2001, 78 vols / chapter 615
+        as of Feb 2025, STILL ONGOING and Chen Mou writes slowly (~1 vol per 12–18 months,
+        likely runs to ~2045). Rejected on four axes: (a) NO edition exists in DE/EN/FR —
+        Tokyopop EN attempt died after ~3 vols in 2002–2004, no relicensing since, only fan
+        scanlations; Gwen is a physical reader. (b) Cultural-context load is heavy — assumes
+        baseline Three Kingdoms familiarity (100+ named historical figures, regional/dynastic
+        geography, Confucian-vs-Legalist political philosophy as ambient context); without
+        that floor it reads as warlord-name-chaos. (c) Panel-flow and reading order are
+        infamously dense — strategic monologues, unmarked flashback/present cuts, identity
+        reveals requiring re-reads; first read = "what just happened," second read = "oh."
+        (d) Open-ended commitment with no edition-consolidation in sight. The Three-Kingdoms
+        political-deconstruction itch — if it exists — is better scratched by John Woo's Red
+        Cliff films (two-evening commitment, DE/FR/EN available). Do not re-pitch unless a
+        deluxe EN/DE edition gets licensed AND Gwen separately develops a Three Kingdoms
+        baseline.
+
+  CSS CONVENTIONS:
+    - All inline. CY_BORG palette on :root.
+    - Halftone background pattern via radial-gradient (currently 0.22 opacity, 1.5px dot, 5px grid —
+      bumped 5× from initial tracker.v0.2 because the original was invisible).
+    - Heavy condensed type (Impact / Arial Narrow stack). Sharp borders only.
+    - Three badge rows per series: Series state · Years · Edition state.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>my_mangas</title>
+<style>
+  :root {
+    --bg:         #000000;
+    --bg-card:    #0a0a0a;
+    --bg-card-alt:#111111;
+
+    --yel:        #fff200;
+    --mag:        #ff007f;
+    --bone:       #f0eee5;
+    --dim:        #707070;
+    --faint:      #2a2a2a;
+
+    --mono:  "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --heavy: Impact, "Haettenschweiler", "Franklin Gothic Bold",
+             "Arial Narrow Bold", "Helvetica Neue Condensed", "Arial Narrow", sans-serif;
+    --body:  -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--bone);
+    font-family: var(--body);
+    line-height: 1.45;
+    padding: 36px 20px 96px;
+    /* CY_BORG halftone — visibly dotted */
+    background-image:
+      radial-gradient(rgba(240,238,229,0.22) 1.5px, transparent 2.2px);
+    background-size: 5px 5px;
+    background-attachment: fixed;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ── MASTHEAD ──────────────────────────────── */
+  .masthead {
+    background: var(--yel);
+    color: #000;
+    padding: 14px 22px 18px;
+    margin-bottom: 4px;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+  }
+  .masthead h1 {
+    font-family: var(--heavy);
+    font-size: clamp(48px, 9vw, 88px);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    margin: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0 var(--mag);
+  }
+  .masthead .sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .masthead-strip {
+    background: #000;
+    color: var(--yel);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 22px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    border-top: 1px solid var(--yel);
+    border-bottom: 1px solid var(--yel);
+  }
+
+  /* ── LEGEND ────────────────────────────────── */
+  .legend {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--bone);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding: 12px 16px;
+    border-top: 2px solid var(--yel);
+    border-bottom: 2px solid var(--yel);
+    background: rgba(255,242,0,0.04);
+  }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 14px 22px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 7px; }
+  .legend-chip { display: inline-block; width: 14px; height: 14px; border: 1.5px solid; }
+
+  /* ── SECTION HEADER ────────────────────────── */
+  h2.section {
+    font-family: var(--heavy);
+    font-size: 36px;
+    font-weight: 900;
+    color: #000;
+    background: var(--yel);
+    margin: 48px 0 18px;
+    padding: 6px 16px 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+  h2.section::before { content: "// "; color: var(--mag); }
+
+  /* ── SERIES CARD ───────────────────────────── */
+  .series {
+    background: var(--bg-card);
+    border: 1.5px solid var(--bone);
+    padding: 16px 18px 18px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .series::before {
+    content: "";
+    position: absolute;
+    top: -1.5px; right: -1.5px;
+    width: 8px; height: 24px;
+    background: var(--yel);
+  }
+  .series-considering { border-color: var(--mag); }
+  .series-considering::before { background: var(--mag); }
+
+  .series-title {
+    font-family: var(--heavy);
+    font-size: 30px;
+    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+    color: var(--bone);
+  }
+  .series-title em {
+    font-style: italic;
+    color: var(--yel);
+    font-weight: 900;
+  }
+  .series-edition {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--mag);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  /* ── STATE BADGES ──────────────────────────── */
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px 4px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+  }
+  .b-complete    { background: var(--yel);  color: #000; }
+  .b-ongoing     { background: var(--mag);  color: #000; }
+  .b-incomplete  { background: #000; color: var(--mag); border: 1.5px solid var(--mag); padding: 1.5px 8.5px 2.5px; }
+  .b-in-progress { background: var(--bone); color: #000; }
+  .b-announced-ed{ background: #000; color: var(--yel); border: 1.5px solid var(--yel); padding: 1.5px 8.5px 2.5px; }
+  .b-native      { background: #000; color: var(--bone); border: 1.5px solid var(--bone); padding: 1.5px 8.5px 2.5px; }
+  .b-considering { background: var(--mag); color: #000; }
+  .b-low-prob    { background: rgba(112,112,112,0.10); color: var(--dim); border: 1.5px dashed var(--dim); padding: 1.5px 8.5px 2.5px; letter-spacing: 1.5px; }
+  .b-years       { background: transparent; color: var(--bone); border: 1.5px solid var(--bone); padding: 1.5px 8.5px 2.5px; letter-spacing: 1px; }
+  .b-demo        { background: rgba(255,242,0,0.10); color: var(--yel); border: 1.5px solid var(--yel); padding: 1.5px 8.5px 2.5px; }
+
+  /* ── DEMOGRAPHICS LEGEND ───────────────────── */
+  .demo-legend {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--bone);
+    letter-spacing: 0.5px;
+    margin-bottom: 32px;
+    padding: 12px 16px 14px;
+    border-top: 2px solid var(--mag);
+    border-bottom: 2px solid var(--mag);
+    background: rgba(255,0,127,0.04);
+  }
+  .demo-legend .row { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-bottom: 8px; }
+  .demo-legend .item {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-transform: uppercase;
+  }
+  .demo-legend .tag {
+    display: inline-block;
+    padding: 2px 8px 3px;
+    background: rgba(255,242,0,0.10);
+    border: 1.5px solid var(--yel);
+    color: var(--yel);
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .demo-legend .note {
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--faint);
+  }
+  .demo-legend .note .kj { color: var(--bone); }
+
+  /* ── VOLUME STRIP ──────────────────────────── */
+  .volumes {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  /* Alternate edition tracks within one series card (e.g. Tankobon vs Grimoire HC). */
+  .edition-track {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+  }
+  .edition-track + .edition-track { margin-top: 4px; }
+  .track-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--mag);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-right: 8px;
+    min-width: 92px;
+  }
+  .vol {
+    width: 32px; height: 32px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0;
+    border: 1.5px solid;
+    cursor: default;
+  }
+  .vol-owned    { background: var(--yel);  border-color: var(--yel);  color: #000; }
+  .vol-reading  { background: #e6b800;     border-color: #e6b800;     color: #000; }
+  .vol-read     { background: #c9a000;     border-color: #c9a000;     color: #000; }
+  .vol-ordered  { background: var(--mag);  border-color: var(--mag);  color: #000; }
+  .vol-preorder { background: var(--bone); border-color: var(--bone); color: #000; }
+  .vol-announced{ background: transparent; border-color: var(--yel);  color: var(--yel); }
+  .vol-planned  { background: transparent; border-color: var(--bone); color: var(--bone); border-style: dashed; }
+  .vol-open     { background: transparent; border-color: var(--dim);  color: var(--dim);  border-style: dotted; }
+  .vol-shelved  { background: rgba(112,112,112,0.10); border-color: var(--dim); color: var(--dim); border-style: dashed; }
+
+  .vol-count {
+    margin-left: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--bone);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── DETAILS BLOCK ─────────────────────────── */
+  details.detail {
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--bone);
+  }
+  details.detail > summary {
+    cursor: pointer;
+    background: #000;
+    color: var(--yel);
+    border: 1px solid var(--yel);
+    padding: 3px 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 800;
+    list-style: none;
+    display: inline-block;
+    font-size: 10px;
+  }
+  details.detail > summary::before { content: "▸ "; }
+  details.detail[open] > summary::before { content: "▾ "; }
+  details.detail > ul {
+    margin: 8px 0 0;
+    padding-left: 16px;
+    line-height: 1.65;
+  }
+  details.detail .label {
+    color: var(--mag);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── EMPTY CONSIDERING ─────────────────────── */
+  .empty-considering {
+    border: 1.5px dashed var(--dim);
+    background: transparent;
+    padding: 22px 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-align: center;
+  }
+
+  /* ── LINKS ─────────────────────────────────── */
+  a {
+    color: var(--yel);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--yel);
+    font-weight: 700;
+  }
+  a:hover { color: var(--mag); border-bottom-color: var(--mag); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="masthead">
+    <h1>my_mangas</h1>
+    <div class="sub">Manga · BD · Graphic Novels // Collection Log</div>
+  </div>
+  <div class="masthead-strip">// tracker.v0.3 // sorted by orig pub year asc // gwen@haslo.ch</div>
+
+  <!-- ───────────────── LEGEND ───────────────── -->
+  <div class="legend">
+    <div class="legend-row">
+      <span class="legend-item"><span class="legend-chip" style="background:var(--yel);border-color:var(--yel);"></span>Owned</span>
+      <span class="legend-item"><span class="legend-chip" style="background:#e6b800;border-color:#e6b800;"></span>Reading</span>
+      <span class="legend-item"><span class="legend-chip" style="background:#c9a000;border-color:#c9a000;"></span>Read</span>
+      <span class="legend-item"><span class="legend-chip" style="background:var(--mag);border-color:var(--mag);"></span>Ordered</span>
+      <span class="legend-item"><span class="legend-chip" style="background:var(--bone);border-color:var(--bone);"></span>Preorder</span>
+      <span class="legend-item"><span class="legend-chip" style="border-color:var(--yel);"></span>Announced</span>
+      <span class="legend-item"><span class="legend-chip" style="border-color:var(--bone);border-style:dashed;"></span>Planned · no date</span>
+      <span class="legend-item"><span class="legend-chip" style="border-color:var(--dim);border-style:dotted;"></span>Open · series may extend</span>
+      <span class="legend-item"><span class="legend-chip" style="background:rgba(112,112,112,0.10);border-color:var(--dim);border-style:dashed;"></span>Aware · exists, not pursuing now</span>
+    </div>
+  </div>
+
+  <!-- ───────────── DEMOGRAPHICS LEGEND ───────────── -->
+  <div class="demo-legend">
+    <div class="row">
+      <span class="item"><span class="tag">青年 Seinen</span>originally adult-male-targeted Japanese manga. Mature themes — violence, sex, psychological depth, complex stories.</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">少年 Shōnen</span>originally teen-boy-targeted Japanese manga. Action, adventure, friendship-effort-victory tropes. (Naruto, One Piece, DBZ, MHA.)</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">少女 Shōjo</span>originally teen-girl-targeted Japanese manga. Romance, emotional drama, often slice-of-life. (Sailor Moon, Fruits Basket, Ouran HSHC.)</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">女性 Josei</span>originally adult-woman-targeted Japanese manga. Realistic romance, workplace drama, slice-of-life with mature register. (Nodame Cantabile, Princess Jellyfish.)</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">子供 Kodomo</span>children's Japanese manga. (Doraemon, etc.)</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">BD</span>Bande dessinée — French/Belgian large-format graphic-album tradition. Album-format, painted colour, ~50pp per volume.</span>
+    </div>
+    <div class="row">
+      <span class="item"><span class="tag">Indie GN</span>Western indie graphic novel. US/UK/etc. publishers — Image, Dark Horse, Cyber Sheep, etc.</span>
+    </div>
+    <div class="note">
+      The "originally targeted" framing is historical (1960s–70s magazine marketing). Modern manga readership is broadly mixed-gender across all categories — Japan trends ~60% female overall, Western markets even more female-skewing. Treat the labels as publishing-venue taxonomy, not reader-identity prescription.
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2 class="section">Owned</h2>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+
+
+  <!-- 1982 ── AKIRA · 35th Anniversary Box Set -->
+  <div class="series">
+    <div class="series-title">Akira</div>
+    <div class="series-edition">35th Anniversary Box Set · EN · Kodansha · Katsuhiro Otomo</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1982–1990</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="vol 1">1</div>
+      <div class="vol vol-owned" title="vol 2">2</div>
+      <div class="vol vol-owned" title="vol 3">3</div>
+      <div class="vol vol-owned" title="vol 4">4</div>
+      <div class="vol vol-owned" title="vol 5">5</div>
+      <div class="vol vol-owned" title="vol 6">6</div>
+      <div class="vol vol-owned" title="Akira Club · hardcover companion art book — concept art + behind-the-scenes by Otomo and collaborators">CLUB</div>
+      <span class="vol-count">7 / 7 owned · 6 manga vols + Akira Club companion</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents &amp; extras</summary>
+      <ul>
+        <li><span class="label">Vols 1–6:</span> revised translation, original right-to-left lettering restored, Otomo's original sound effects preserved.</li>
+        <li><span class="label">Akira Club:</span> hardcover companion artbook — concept art + behind-the-scenes material by Otomo and collaborators. Not previously published in the standard editions.</li>
+        <li><span class="label">Extras:</span> exclusive iron-on patch with the pill design.</li>
+        <li><span class="label">Honours:</span> Eisner Award winner 2018 — Best Archival Collection / Project (Comics) <em>and</em> Best Publication Design.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1982–1994 ── NAUSICAÄ OF THE VALLEY OF THE WIND · Carlsen Doppelband-Edition DE -->
+  <div class="series">
+    <div class="series-title">Nausicaä of the Valley of the Wind</div>
+    <div class="series-edition">Doppelband-Edition im Schuber · DE · Carlsen · Miyazaki Hayao</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (7 vols)</span>
+      <span class="badge b-years">1982–1994</span>
+      <span class="badge b-demo">青年 Seinen · post-apocalyptic ecological SF</span>
+      <span class="badge b-complete">Edition: Complete (4 Doppelband HCs)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Doppelband 1 (= original vols 1–2) · large HC · trans. Jürgen Seebeck · ISBN 9783551805058">1</div>
+      <div class="vol vol-ordered" title="Doppelband 2 (= original vols 3–4) · large HC · ISBN 9783551805065">2</div>
+      <div class="vol vol-ordered" title="Doppelband 3 (= original vols 5–6) · large HC · ISBN 9783551805072">3</div>
+      <div class="vol vol-ordered" title="Doppelband 4 (= original vol 7 + epilogue) · large HC · ISBN 9783551805089">4</div>
+      <span class="vol-count">0 / 4 owned · 4 ordered · set ISBN 9783551805102 (slipcase + poster + art print)</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents &amp; series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> 1000 years after the "Seven Days of Fire" industrial-civilization collapse; a toxic fungal forest (Sea of Corruption) slowly consumes the remnant kingdoms. Nausicaä, princess of the small Valley of the Wind, becomes entangled in the genocidal war between the Torumekian and Dorok empires while gradually discovering the Sea of Corruption's engineered purpose and her people's place in the bio-designed post-apocalyptic ecology.</li>
+        <li><span class="label">Register:</span> grave, ecological, political, post-humanist. Dense specific worldbuilding. Adult-thematic despite young protagonist. Manga is much darker than the 1984 film — diverges severely after the film's ending point and reaches a morally ambiguous post-humanist conclusion the film actively misrepresents. The film covers ~the first quarter of the manga; the back three quarters are the canonical work Miyazaki kept writing for ten more years after the film.</li>
+        <li><span class="label">Shelf placement:</span> the other foundational 1982 adult-SF magnum opus alongside Akira. Direct ancestor of the cyberpunk-dystopia lineage on the shelf (Akira / Eden / BLAME! / Battle Angel / Tokyo Ghost all post-date or descend from one or both).</li>
+        <li><span class="label">Edition format:</span> 7 original vols → 4 Doppelband HCs (Doppelband = 2 originals per book; D4 carries the final original vol + epilogue material). Large hardcover Carlsen format, color pages preserved. Slipcase + poster + art print extra. Set ISBN 9783551805102; individual ISBNs 9783551805058 / 9783551805065 / 9783551805072 / 9783551805089.</li>
+        <li><span class="label">Translation:</span> Jürgen Seebeck (continuous DE Miyazaki/Ghibli translator since the 90s); Junko Iwamoto on additional consult.</li>
+        <li><span class="label">Edition pick rationale:</span> DE Carlsen Doppelband chosen over EN VIZ 2-vol mega-HC box on shelf-register grounds — 4-vol-in-slipcase matches the Akira / GitS Legacy / Alita Deluxe / Utena Deluxe pattern AND sits naturally next to the DE-Master-Edition track (Eden / Vagabond / Biomega / Tokyo Ghost). Translation argument was neutral (neither EN nor DE is original-language; Miyazaki was hands-off on Western translations).</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1983–1996 ── APPLESEED · Dark Horse 3-book Shirow Masamune Deluxe Series -->
+  <div class="series">
+    <div class="series-title">Appleseed</div>
+    <div class="series-edition">Deluxe Edition · 3-book series · EN · Dark Horse Manga · Shirow Masamune</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1983–1996</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-in-progress">Edition: In Progress</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-preorder" title="Appleseed Deluxe · 11 Aug 2026">DLX</div>
+      <div class="vol vol-planned" title="Appleseed Companion Deluxe · no date">COMP</div>
+      <div class="vol vol-planned" title="Shirow Masamune Anthology Deluxe · no date">ANT</div>
+      <span class="vol-count">0 / 3 owned · 1 preorder · 2 planned (no date)</span>
+    </div>
+    <details class="detail">
+      <summary>3-book series contents</summary>
+      <ul>
+        <li><span class="label">Book 1 — Appleseed Deluxe Edition:</span> 848-pp 7×10″ HC. Collects Appleseed Vols 1–4 (Promethean Challenge / Prometheus Unbound / Scales of Prometheus / Promethean Balance, 1985–1989). Release 11 Aug 2026.</li>
+        <li><span class="label">Book 2 — Appleseed Companion Deluxe Edition:</span> collects Appleseed Hypernotes (~1992) + Appleseed ID. Date TBD.</li>
+        <li><span class="label">Book 3 — Shirow Masamune Anthology Deluxe Edition:</span> collects Black Magic (1983), Dominion (1985–86), Orion (1990), Dominion Conflict 1 / No More Noise (1995–96). Date TBD.</li>
+        <li><span class="label">Format:</span> matching deluxe HCs — wraparound 7-colour covers, metallic edge-gilded pages, 4-colour endsheets, sewn bookmarks.</li>
+        <li><span class="label">Status:</span> only Book 1 preordered so far (Amazon). Books 2 + 3 announced but no release dates yet — wait for Dark Horse to share.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1989–1997 ── GHOST IN THE SHELL LEGACY EDITION -->
+  <div class="series">
+    <div class="series-title">Ghost in the Shell</div>
+    <div class="series-edition">Legacy Edition Manga Box Set · EN · Kodansha · Shirow Masamune</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1989–1997</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-reading" title="GitS (uncensored) · currently reading">1</div>
+      <div class="vol vol-owned" title="GitS 1.5: Human Error Processor">1.5</div>
+      <div class="vol vol-owned" title="GitS 2.0: Man-Machine Interface">2</div>
+      <span class="vol-count">3 / 3 owned</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents</summary>
+      <ul>
+        <li><span class="label">Vol 1:</span> Ghost in the Shell (uncensored HC, orig. 1989–90).</li>
+        <li><span class="label">Vol 1.5:</span> Human Error Processor (Deluxe HC, orig. 1991–96).</li>
+        <li><span class="label">Vol 2.0:</span> Man-Machine Interface (Deluxe HC, orig. 1991–97).</li>
+        <li><span class="label">Extras:</span> 11 exclusive posters total (1 new Shirow piece + 10 from the rare 1997 Cyberdelics box set, never before in EN; rolled, in rigid poster-box inside the slipcase, with special print effects including etched metallic paper, vinyl stock, and holographic spot gloss), multicoloured Fuchikoma robot stickers (probably tucked in the poster box or slipcase — easy to miss in unpacking), slipcase with two brand-new Shirow illustrations.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1989–1996 ── KYOKO OKAZAKI · artist umbrella (Pink / Helter Skelter) -->
+  <div class="series">
+    <div class="series-title">Kyoko Okazaki</div>
+    <div class="series-edition">Artist Umbrella · One-Shots · EN · Vertical / Kodansha · Kyoko Okazaki</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shots)</span>
+      <span class="badge b-years">1989–1996</span>
+      <span class="badge b-demo">女性 Josei · alt / fashion-mag</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Pink (1989, NEW Punch Zaurus) · EN Vertical 2013, 256pp · ORDERED, arr. 17 Jun 2026">PNK</div>
+      <div class="vol vol-ordered" title="Helter Skelter: Fashion Unfriendly (1995–96, Feel Young; tankobon 2003 + epilogue) · EN Vertical 2013, 320pp, ISBN 9781935654834 · ORDERED, arr. 17 Jun 2026">HS</div>
+      <span class="vol-count">0 / 2 owned · 2 ordered · arr. 17 Jun 2026</span>
+    </div>
+    <details class="detail">
+      <summary>Per-book notes</summary>
+      <ul>
+        <li><span class="label">Umbrella:</span> Mizuno pattern — one-shots, artist is the grouping key. Okazaki is THE 90s josei pioneer; career ended by a 1996 traffic accident. Sibling umbrella in Considering holds River's Edge. Both books pass the content-ethics gate; HS is the framework's named example, AniFem covers both.</li>
+        <li><span class="label">PNK — Pink (1989):</span> love-and-capitalism satire — office worker Yumi works as a call girl to feed her pet crocodile. Okazaki's breakthrough. EN Vertical edition; DE Schreiber &amp; Leser large-format Klappenbroschur (21×15cm) also exists.</li>
+        <li><span class="label">HS — Helter Skelter (1995–96):</span> beauty-industry psychological horror — supermodel Liliko's full-body-surgery decay. Tezuka Osamu Cultural Prize Grand Prize 2004; Angoulême Official Selection 2008. DE Carlsen 2005 OOP.</li>
+        <li><span class="label">Art register:</span> rough anti-pretty fashion-illustration line — deliberate and load-bearing; the opposite of the shelf's Nihei/Inoue/Kishiro draftsmanship.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1990 ── BATTLE ANGEL ALITA DELUXE COMPLETE SERIES -->
+  <div class="series">
+    <div class="series-title">Battle Angel Alita</div>
+    <div class="series-edition">Deluxe Complete Series Box Set · EN · Kodansha · Yukito Kishiro</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1990–1995</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="Deluxe vol 1">1</div>
+      <div class="vol vol-owned" title="Deluxe vol 2">2</div>
+      <div class="vol vol-owned" title="Deluxe vol 3">3</div>
+      <div class="vol vol-owned" title="Deluxe vol 4">4</div>
+      <div class="vol vol-owned" title="Deluxe vol 5">5</div>
+      <div class="vol vol-owned" title="Holy Night and Other Stories · 272-pp short-story collection — first English translation. Stories: Holy Night, Supersonic Fingers, Homecoming, Barjack Rhapsody">HN</div>
+      <span class="vol-count">6 / 6 owned · 5 deluxe vols + Holy Night short-story collection</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents &amp; extras</summary>
+      <ul>
+        <li><span class="label">Deluxe vols 1–5:</span> ~2,000 pages of the main Alita series in HC.</li>
+        <li><span class="label">Holy Night and Other Stories:</span> 272-pp short-story collection, first English translation. Four stories — <em>Holy Night</em>, <em>Supersonic Fingers</em>, <em>Homecoming</em>, <em>Barjack Rhapsody</em>. Not previously published in English in any form.</li>
+        <li><span class="label">Art cards:</span> three included, two with silver-foil accents — one features brand-new art by Kishiro of early-series Alita, with foil author signature in English + Japanese.</li>
+        <li><span class="label">Extras:</span> multiple interviews with Kishiro, plus an alternate ending to the original series.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1996–1999 ── REVOLUTIONARY GIRL UTENA · Complete Deluxe Box Set -->
+  <div class="series">
+    <div class="series-title">Revolutionary Girl Utena</div>
+    <div class="series-edition">Complete Deluxe Box Set · EN · VIZ Media (Shojo Beat) · Be-Papas (story) / Chiho Saito (art)</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1996–1999</span>
+      <span class="badge b-demo">少女 Shōjo</span>
+      <span class="badge b-complete">Edition: Complete (single 2-HC box set)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Revolutionary Girl Utena · HC · collects original 5-vol arc (1996–1998, serialized in Ciao)">RGU</div>
+      <div class="vol vol-ordered" title="The Adolescence of Utena · HC · film-adaptation manga (1999)">ADO</div>
+      <span class="vol-count">0 / 2 owned · 2 ordered · Complete Deluxe Box Set</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents &amp; series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Utena Tenjou, a girl who adopts princely register (uniform, sword, vow to "become a prince"), arrives at Ohtori Academy and gets pulled into a duel tournament where the prize is Anthy Himemiya, the "Rose Bride" — a girl treated as a possession to be won. The duels and the duelists' motivations gradually reveal a deeper system Utena is fighting to break.</li>
+        <li><span class="label">Register:</span> critical engagement with patriarchal-heterosexual violence — gender coercion, domestic and child abuse, grooming, rape, incest as subject matter the work seriously critiques, not romanticises. Akio (series villain) is the explicit abuser-figure; the story's argument is against him, not for him. Frank but not graphic.</li>
+        <li><span class="label">Team:</span> Be-Papas — story collective led by director Kunihiko Ikuhara, including Yoji Enokido and others. Chiho Saito provides the manga's art (classical late-90s shōjo register — flowing line, ornate, ribbon-and-rose iconography). Saito-Be-Papas collaboration is unusual: she illustrates a story conceived by a collective primarily known for the anime.</li>
+        <li><span class="label">Format:</span> Complete Deluxe Box Set (Viz Media, 2017, ISBN 9781421585871). Two oversized hardcovers — <strong>RGU</strong> (the original 1996–1998 Ciao serialization, 5 tankobon compressed into 1 HC) + <strong>ADO</strong> (The Adolescence of Utena, 1999 film-adaptation manga, 1 HC). 1,131 pp total, exclusive color pages, includes poster. MSRP $49.99 USD.</li>
+        <li><span class="label">Content note:</span> depicts abuse / grooming / incest / rape / patriarchal coercion frankly, as the topics being critiqued. Passes content-ethics framework (critical engagement, not romanticisation). Akio is villain not romantic lead. Themes get more prevalent toward the end of the series.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1997 ── BLAME! -->
+  <div class="series">
+    <div class="series-title">BLAME!</div>
+    <div class="series-edition">English Master Edition incl. NOiSE · EN · Vertical / Kodansha · Tsutomu Nihei</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1997–2003</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-read" title="vol 1 · read">1</div>
+      <div class="vol vol-read" title="vol 2 · read">2</div>
+      <div class="vol vol-read" title="vol 3 · read">3</div>
+      <div class="vol vol-read" title="vol 4 · read">4</div>
+      <div class="vol vol-owned" title="vol 5">5</div>
+      <div class="vol vol-owned" title="vol 6">6</div>
+      <div class="vol vol-owned" title="#0 NOiSE · prequel set 3000 years before BLAME!. Fan-consensus reading order: after vol 6, where it recontextualises the main work.">0</div>
+      <div class="vol vol-ordered" title="Movie Edition: The Electrofishers' Escape (2018, Vertical EN) · NEW manga adaptation of the 2017 Polygon Pictures film, drawn by Koutarou Sekine — NOT a Nihei reprint. Single-volume B6 paperback companion. ISBN 9781947194540 · arr. Wed 17.06.2026">EE</div>
+      <span class="vol-count">7 / 7 owned · 1–4 read · 5, 6, #0 unread · + Movie Edition companion ordered (Sekine-drawn film tie-in)</span>
+    </div>
+    <details class="detail">
+      <summary>Series, NOiSE &amp; Movie Edition companion</summary>
+      <ul>
+        <li><span class="label">Master Edition (vols 1–6 + #0):</span> Vertical / Kodansha English Master Edition — Nihei's original BLAME! complete, plus NOiSE as #0. Larger format than the old Tokyopop run, current shelf-canonical edition.</li>
+        <li><span class="label">NOiSE (#0):</span> 1-vol prequel set ~3000 years before BLAME!. Fan-consensus reading order is after vol 6 — recontextualises the main work rather than setting it up.</li>
+        <li><span class="label">Movie Edition: The Electrofishers' Escape (2018):</span> single-volume B6 paperback companion to the 2017 Polygon Pictures Netflix film. <strong>NEW manga adaptation, NOT a Nihei reprint</strong> — drawn by Koutarou Sekine, with Nihei as creator/director and TOHA Heavy Industries Cinematic Division on concept/story. Same Electrofishers arc as the original manga retold through a different artist's hand, paced to the film. Vertical EN, ISBN 9781947194540. ORDERED Amazon 13.06.2026, arr. Wed 17.06.2026.</li>
+        <li><span class="label">Why the companion:</span> rare case of someone other than Nihei drawing in the Nihei-verse with Nihei's direction — the artist-register comparison (Sekine vs Nihei on identical material) is the interesting object, not the story content.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1997 ── EDEN · Master Edition DE -->
+  <div class="series">
+    <div class="series-title">Eden — It's an Endless World</div>
+    <div class="series-edition">Master Edition · DE · Egmont Manga · Hiroki Endo</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1997–2008</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-in-progress">Edition: In Progress</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-reading" title="vol 1 · currently reading">1</div>
+      <div class="vol vol-owned" title="vol 2">2</div>
+      <div class="vol vol-owned" title="vol 3">3</div>
+      <div class="vol vol-owned" title="vol 4">4</div>
+      <div class="vol vol-owned" title="vol 5">5</div>
+      <div class="vol vol-owned" title="vol 6">6</div>
+      <div class="vol vol-owned" title="vol 7">7</div>
+      <div class="vol vol-preorder" title="vol 8 · 7 Jul 2026 · preordered at Stauffacher for release-day pickup">8</div>
+      <div class="vol vol-preorder" title="vol 9 · Sep 2026 (final) · preordered at Stauffacher for release-day pickup">9</div>
+      <span class="vol-count">7 / 9 owned · 2 preorder (Stauffacher, release-day pickup)</span>
+    </div>
+    <details class="detail">
+      <summary>Order &amp; release schedule</summary>
+      <ul>
+        <li><span class="label">Vol 1:</span> owned. Source: Amazon, order #304-3793646-8418733.</li>
+        <li><span class="label">Vols 2–7:</span> owned.</li>
+        <li><span class="label">Vol 8:</span> 7 Jul 2026. Preorder at Buchhandlung Stauffacher Bern (Neuengasse 25–37, 3011 Bern) for release-day pickup. Source order #1431245010.</li>
+        <li><span class="label">Vol 9:</span> Sep 2026, final volume. Preorder at Stauffacher Bern for release-day pickup (same order #1431245010).</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1998–2014 ── JUNKO MIZUNO · artist umbrella (one-shots, Last Gasp / Titan / IMHO) -->
+  <div class="series">
+    <div class="series-title">Junko Mizuno</div>
+    <div class="series-edition">Kawaii-Noir One-Shots · EN + FR · Last Gasp / Viz / Titan / IMHO · Junko Mizuno</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shots)</span>
+      <span class="badge b-years">1998–2014</span>
+      <span class="badge b-demo">少女 Shōjo · alt / underground</span>
+      <span class="badge b-complete">Edition: Complete (per book)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Pure Trance (1998) · Last Gasp EN · ORDERED">PT</div>
+      <div class="vol vol-ordered" title="Cinderalla (2000) · Viz EN · ORDERED">CIN</div>
+      <div class="vol vol-ordered" title="Princess Mermaid (2002) · Viz EN · ORDERED">MER</div>
+      <div class="vol vol-ordered" title="Hansel et Gretel (2002) · IMHO FR (Amazon, 13.06.2026, same price as EN — gives a FR/EN comparison data point against the otherwise-EN Mizuno shelf) · ORDERED, arr. Wed 17.06.2026">H&amp;G</div>
+      <div class="vol vol-read" title="Ravina the Witch? (2014) · Titan Comics EN · READ">RAV</div>
+      <span class="vol-count">1 / 5 owned (RAV — read) · 4 ordered (PT + CIN + MER + H&amp;G) · 1 more in Considering (PEL)</span>
+    </div>
+    <details class="detail">
+      <summary>Artist + edition notes</summary>
+      <ul>
+        <li><span class="label">Why an umbrella:</span> Mizuno's catalogue is multi-book but each is a self-contained one-shot. Grouping at the artist level (same author, same signature register) instead of per-book. Sibling Considering entry holds the remaining one-shot (Pelu).</li>
+        <li><span class="label">Register:</span> "kawaii-noir" / gothic-kawaii — cute character design + transgressive adult content (sex, violence, body horror) rendered in pastel shoujo aesthetics. Female mangaka, Harajuku-90s-underground origin. Rare bullseye on the female-author + cute-with-teeth + power-fantasy axis.</li>
+        <li><span class="label">Pure Trance (1998):</span> debut. Drug-addicted nurses in an authoritarian underground future; all-female cast, surreal body horror. Originally serialised in Pure Trance techno-compilation CD booklets; collected by East Press 1998. Last Gasp English edition 2005.</li>
+        <li><span class="label">Cinderalla (2000):</span> fairy-tale retelling — Cinderella as chicken-girl chef. Sex + cannibalism transgressive fairy-tale register. Viz English edition.</li>
+        <li><span class="label">Princess Mermaid (2002):</span> mermaid sisters running an underwater brothel where they kill and eat the clientele. The Powerpuff-Girls-weaponised pink-revenge pick, same DNA as Pure Trance. Viz English edition.</li>
+        <li><span class="label">Hansel et Gretel (2002):</span> Mizuno's other Viz fairy-tale retelling, sibling protagonists. IMHO FR edition (same Amazon price as the Viz EN — Gwen took the FR for a deliberate translation-comparison point against the otherwise-EN Mizuno shelf).</li>
+        <li><span class="label">Ravina the Witch? (2014):</span> the gentler Mizuno — young witch on a journey, cute register, less of the "not holding back" transgression. EN Titan Comics edition chosen (over FR Soleil original) on practical grounds.</li>
+        <li><span class="label">Canonical bibliography:</span> <a href="http://www.mizuno-junko.com/04_products/01_bok_e.html" target="_blank">Mizuno's official products page</a> — authoritative source for what exists in which language and edition. Treat this as the truth-of-record over WebSearch synthesis.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1998–1999 ── UZUMAKI · Deluxe Edition (3-in-1 HC) -->
+  <div class="series">
+    <div class="series-title">Uzumaki</div>
+    <div class="series-edition">Deluxe Edition (3-in-1 HC) · EN · VIZ Signature · Junji Ito</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1998–1999</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-complete">Edition: Complete (single vol)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="Uzumaki Deluxe · collects original tankobon 1–3">DLX</div>
+      <span class="vol-count">1 / 1 owned · 3-in-1 omnibus</span>
+    </div>
+    <details class="detail">
+      <summary>Edition notes</summary>
+      <ul>
+        <li><span class="label">Format:</span> single oversized hardcover, ~650 pages. Collects original Uzumaki tankobon vols 1–3.</li>
+        <li><span class="label">Original:</span> serialised in Big Comic Spirits (Shogakukan) 1998–1999.</li>
+        <li><span class="label">Status:</span> read approx. half (early Kurouzu-cho weird-spiral chapters), then paused; in unboxing limbo. The back third is where Ito earns the cosmic-horror reputation.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1998 ── VAGABOND · Master Edition DE  ── INCOMPLETE (HIATUS) -->
+  <div class="series">
+    <div class="series-title">Vagabond</div>
+    <div class="series-edition">Master Edition · DE · Egmont Manga · Takehiko Inoue</div>
+    <div class="badges">
+      <span class="badge b-incomplete">Series: Incomplete (hiatus)</span>
+      <span class="badge b-years">1998–2015 →</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-in-progress">Edition: In Progress</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="vol 1">1</div>
+      <div class="vol vol-owned" title="vol 2">2</div>
+      <div class="vol vol-owned" title="vol 3">3</div>
+      <div class="vol vol-owned" title="vol 4">4</div>
+      <div class="vol vol-owned" title="vol 5">5</div>
+      <div class="vol vol-owned" title="vol 6">6</div>
+      <div class="vol vol-owned" title="vol 7">7</div>
+      <div class="vol vol-owned" title="vol 8">8</div>
+      <div class="vol vol-owned" title="vol 9">9</div>
+      <div class="vol vol-owned" title="vol 10">10</div>
+      <div class="vol vol-owned" title="vol 11">11</div>
+      <div class="vol vol-announced" title="vol 12 · announced, date TBD">12</div>
+      <div class="vol vol-announced" title="vol 13 · announced, date TBD">13</div>
+      <div class="vol vol-announced" title="vol 14 · announced, date TBD">14</div>
+      <div class="vol vol-announced" title="vol 15 · announced, date TBD">15</div>
+      <div class="vol vol-planned" title="vol 16">16</div>
+      <div class="vol vol-planned" title="vol 17">17</div>
+      <div class="vol vol-planned" title="vol 18">18</div>
+      <div class="vol vol-planned" title="vol 19">19</div>
+      <div class="vol vol-planned" title="vol 20">20</div>
+      <div class="vol vol-open" title="series on hiatus · may resume beyond vol 20">+</div>
+      <span class="vol-count">11 / 20+ owned · 4 announced</span>
+    </div>
+    <details class="detail">
+      <summary>Order &amp; series status</summary>
+      <ul>
+        <li><span class="label">Series status:</span> Inoue paused Vagabond in 2015 at original vol 37 — no resumption since, no published ending. Not "complete," not actively "ongoing"; <em>incomplete on hiatus</em>.</li>
+        <li><span class="label">Vols 1–10:</span> ordered.</li>
+        <li><span class="label">Vols 12–15:</span> announced, release dates TBD.</li>
+        <li><span class="label">Vols 16–20:</span> in count (Egmont total = 20 ME vols compressing 37 original tankobon), no announcements.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1999–2003 ── THE MATRIX COMICS · 20th Anniversary Edition HC -->
+  <div class="series">
+    <div class="series-title">The Matrix Comics</div>
+    <div class="series-edition">20th Anniversary Edition · EN · Burlyman Entertainment · Wachowskis + all-star creator slate</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">1999–2003 + 2019 extras</span>
+      <span class="badge b-demo">Indie GN · anthology</span>
+      <span class="badge b-complete">Edition: Complete (single 400pp HC)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="The Matrix Comics 20th Anniversary Edition · 400pp oversized deluxe HC · 28 stories · ISBN 9781932700572">TMC</div>
+      <span class="vol-count">0 / 1 owned · 1 ordered</span>
+    </div>
+    <details class="detail">
+      <summary>Anthology contents &amp; series notes</summary>
+      <ul>
+        <li><span class="label">Origin:</span> webcomics published on whatisthematrix.com 1999–2003, in the lead-up to and during the Matrix film trilogy. Burlyman Entertainment (Wachowski-owned imprint) reissued them as a single oversized deluxe HC in November 2019 for the 20th anniversary.</li>
+        <li><span class="label">Contents:</span> 28 stories set in the Matrix universe + ~100 pages of never-before-published material including 4 new-to-print stories. 400 pages.</li>
+        <li><span class="label">Creator slate:</span> story / writing by <strong>Lana Wachowski, Lilly Wachowski</strong>, Neil Gaiman, Dave Gibbons (Watchmen), Geof Darrow (Hard Boiled — designer of the Matrix sentinels), Bill Sienkiewicz, Ted McKeever, Peter Bagge, David Lapham, Paul Chadwick (Concrete), Poppy Z. Brite, Spencer Lamm + others. Art also includes Tim Sale (Long Halloween), Kilian Plunkett, Dave Dorman, Michael Oeming, Greg Ruth. Industry-defining late-90s/early-2000s comics elite.</li>
+        <li><span class="label">Format:</span> oversized deluxe hardcover, 400pp. Two cover variants existed at launch (Trinity cover, Pod cover). ISBN 9781932700572. Cover price $39.99 USD.</li>
+        <li><span class="label">Personal resonance:</span> The Wachowskis are both trans women (Lana 2008, Lilly 2016) and have publicly affirmed The Matrix as a trans allegory — red pill / blue pill choice as transition metaphor, embodiment-as-simulation, "what is the Matrix" as identity questioning. Owning the 20th Anniversary Edition of Wachowski-helmed Matrix Comics carries trans-canon weight beyond its cyberpunk-classic status.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2004–2009 ── BIOMEGA · Master Edition DE -->
+  <div class="series">
+    <div class="series-title">Biomega</div>
+    <div class="series-edition">Master Edition · DE · Manga Cult (Cross Cult) · Tsutomu Nihei</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">2004–2009</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-in-progress">Edition: In progress</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-preorder" title="Master Edition 1 (= original vols 1–2) · 12.08.2026 · 16×24cm SC · 428 pp · 30 EUR · ISBN 9783757307394">1</div>
+      <div class="vol vol-preorder" title="Master Edition 2 (= original vols 3–4) · 11.11.2026 · 16×24cm SC · 30 EUR · ISBN 9783757307400">2</div>
+      <div class="vol vol-preorder" title="Master Edition 3 (= original vols 5–6) · 10.02.2027 · 16×24cm SC · 390 pp · 30 EUR · ISBN 9783757307417">3</div>
+      <span class="vol-count">0 / 3 owned · ME1+ME2 preordered Stauffacher Bern (Bestellung 1431736352, 11.06.2026)</span>
+    </div>
+    <details class="detail">
+      <summary>Edition details &amp; series notes</summary>
+      <ul>
+        <li><span class="label">Original:</span> 2004–2009 in Ultra Jump (Shueisha), 6 tankōbon. Series COMPLETE. 青年 Seinen by Tsutomu Nihei (same author as BLAME! / NOiSE / Knights of Sidonia / Aposimz). Premise: year 3005 CE, virus N5S strips identity and bends will; synthetic agent Zoichi Kanoe rides a motorcycle through abandoned megastructures hunting Ion Green, the only known resistance-carrier. Nihei's signature architecture-dwarfs-humans cyberpunk + biotech horror register, denser and more action-driven than BLAME!.</li>
+        <li><span class="label">Edition format:</span> 6 → 3 omnibus binding. Softcover (SC, not HC despite "Master Edition" label — same physical format as the BLAME! Master Edition on Gwen's shelf). 16×24 cm. Vol 3 is 390 pp; vols 1–2 page counts not yet listed (likely similar). 30 EUR each.</li>
+        <li><span class="label">Translation:</span> Sascha Mandler — completely new translation, distinct from the older Egmont releases.</li>
+        <li><span class="label">Release schedule (verified Cross Cult product pages 11.06.2026):</span>
+          ME1 12.08.2026 (ISBN 9783757307394),
+          ME2 11.11.2026 (ISBN 9783757307400),
+          ME3 10.02.2027 (ISBN 9783757307417). Stauffacher Bern dates match publisher.
+        </li>
+        <li><span class="label">Order:</span> Stauffacher Bern Bestellung 1431736352 vom 11.06.2026 — ME1 + ME2 preordered ("Abholbereit am Erscheinungsdatum"). ME3 not yet on the order (still 8 months out at preorder time).</li>
+        <li><span class="label">Shelf neighbour:</span> sits next to BLAME! Master Edition (same author, same Vertical/Cross-Cult publisher lineage, same architecture-dwarfs-humans cyberpunk register). Cross Cult Master Edition spine design is consistent across the Nihei range — visual continuity with BLAME!.</li>
+        <li><span class="label">Sources:</span>
+          <a href="https://www.cross-cult.de/produkte/details-mangacult/biomega-master-edition-1-1/" target="_blank">Cross Cult ME1</a> ·
+          <a href="https://www.cross-cult.de/produkte/details-mangacult/biomega-master-edition-2-1/" target="_blank">Cross Cult ME2</a> ·
+          <a href="https://www.cross-cult.de/produkte/details-mangacult/biomega-master-edition-3/" target="_blank">Cross Cult ME3</a> ·
+          <a href="https://www.manga-passion.de/news/12698/lizenz-manga-cult-kuendigt-master-edition-von-biomega-an" target="_blank">Manga Passion Lizenzankündigung</a> ·
+          <a href="https://www.manga2you.de/news/83049/biomega-master-edition/" target="_blank">Manga2You announcement</a>
+        </li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2015–2022 ── ASCENDER / DESCENDER · Deluxe Edition HC set -->
+  <div class="series">
+    <div class="series-title">Ascender / Descender</div>
+    <div class="series-edition">Deluxe Edition HC set · EN · Image · Jeff Lemire / Dustin Nguyen</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">2015–2022</span>
+      <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Descender Deluxe Vol 1 · #1–16">D1</div>
+      <div class="vol vol-ordered" title="Descender Deluxe Vol 2 · #17–32">D2</div>
+      <div class="vol vol-ordered" title="Ascender Deluxe · #1–18 (complete)">A</div>
+      <span class="vol-count">0 / 3 owned · 3 ordered · arr. Jun 18–25</span>
+    </div>
+    <details class="detail">
+      <summary>Order &amp; contents</summary>
+      <ul>
+        <li><span class="label">Source:</span> eBay (rybl2500), $158.24 total, order 24-14688-08330. Arrival Jun 18–25.</li>
+        <li><span class="label">Descender D1:</span> ISBN 1534303464 — Descender #1–16 (orig. 2015–17).</li>
+        <li><span class="label">Descender D2:</span> ISBN 1534314555 — Descender #17–32 (orig. 2017–18). Final Descender Deluxe.</li>
+        <li><span class="label">Ascender Deluxe:</span> ISBN 1534322361 — Ascender #1–18 complete (orig. 2019–22).</li>
+        <li><span class="label">Note:</span> paired work — Ascender is direct sequel. Read Descender first.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2014 ── ALL YOU NEED IS KILL · Single Omnibus -->
+  <div class="series">
+    <div class="series-title">All You Need Is Kill</div>
+    <div class="series-edition">Single Omnibus · EN · VIZ Media (Shonen Jump Advanced) · Ryosuke Takeuchi (story) / Takeshi Obata (art)</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (2 vols → 1 omnibus)</span>
+      <span class="badge b-years">2014</span>
+      <span class="badge b-demo">青年 Seinen · mil-SF / time-loop</span>
+      <span class="badge b-complete">Edition: Complete (single omnibus)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="All You Need Is Kill 2-in-1 Omnibus · collects both tankobon vols + colour inserts · ISBN 9781421576015">OMN</div>
+      <span class="vol-count">1 / 1 owned</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Keiji Kiriya, a Japanese soldier in a future war against alien "Mimics", dies in his first battle and wakes up 30 hours earlier. Time loop. He relives the same day, dying repeatedly, getting more skilled each iteration. Encounters Rita Vrataski, the "Full Metal Bitch" — a famous female soldier with her own time-loop history. They work out how to break the loop.</li>
+        <li><span class="label">Register:</span> military SF + time-loop + mecha-adjacent (powered "Jacket" exoskeletons). NOT cyberpunk.</li>
+        <li><span class="label">Source:</span> manga adaptation of Hiroshi Sakurazaka's 2004 light novel (which also inspired Tom Cruise's 2014 film <em>Edge of Tomorrow</em>).</li>
+        <li><span class="label">Team:</span> story Ryosuke Takeuchi, art <strong>Takeshi Obata</strong> (Death Note, Bakuman, Hikaru no Go, Platinum End). Serialised in Weekly Young Jump Jan–May 2014.</li>
+        <li><span class="label">Format:</span> Viz Omnibus, Nov 2014, ISBN 9781421576015, collects both tankobon + colour inserts. Shonen Jump Advanced imprint. T+ rated.</li>
+        <li><span class="label">Content note:</span> adult protagonists, military violence treated seriously, Rita written as competent respected warrior (not trophy). Minimal sexual content.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2015–2016 ── TOKYO GHOST · Complete Edition DE -->
+  <div class="series">
+    <div class="series-title">Tokyo Ghost</div>
+    <div class="series-edition">Complete Edition · DE · Splitter Verlag · Rick Remender / Sean Murphy</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">2015–2016</span>
+      <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-complete">Edition: Complete (single vol)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="Tokyo Ghost Complete · #1–10">CE</div>
+      <span class="vol-count">1 / 1 owned</span>
+    </div>
+    <details class="detail">
+      <summary>Box contents</summary>
+      <ul>
+        <li><span class="label">Collects:</span> Tokyo Ghost #1–10 — complete Image Comics run. Single-volume HC.</li>
+        <li><span class="label">Original:</span> 2015–16 Image series. Rick Remender (writer) + Sean Murphy (art) + Matt Hollingsworth (colour). 2089 LA — drug-addled constables vs. luddite Tokyo. Cyberpunk love story.</li>
+        <li><span class="label">Translator (DE):</span> Katrin Aust.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2020–2021 ── IS LOVE THE ANSWER? · Uta Isaki -->
+  <div class="series">
+    <div class="series-title">Is Love the Answer?</div>
+    <div class="series-edition">Single Volume · DE · Hayabusa (Carlsen) · Uta Isaki</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (1 vol)</span>
+      <span class="badge b-years">2020–2021</span>
+      <span class="badge b-demo">女性 Josei</span>
+      <span class="badge b-complete">Edition: Complete (single vol)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Is Love the Answer? · Hayabusa (Carlsen) 29.05.2024, ISBN 9783551803658 · ORDERED, arr. Di–Mi 16–17.06.2026">1</div>
+      <span class="vol-count">0 / 1 owned · 1 ordered</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Chika has never had a crush and wonders if she's an alien; at college she meets people like herself and finds the word — aromantic asexual — and a community. Coming-of-age written from inside the questioning, not about it.</li>
+        <li><span class="label">Register:</span> affirming + introspective. Serialized in Hatsu Kiss — same josei magazine as Run Away with Me, Girl. 16+. Sibling work: Mine-kun is Asexual (Isaki's earlier ace one-shot).</li>
+        <li><span class="label">Format:</span> EN Kodansha USA 2023 paperback, 256pp, single complete volume.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2025– ── CYBORGS · Soleil BD  ── ONGOING (FR original, switched from DE Splitter) -->
+  <div class="series">
+    <div class="series-title">Cyborgs</div>
+    <div class="series-edition">BD album · FR · Éditions Soleil · Jean-Luc Istin (scénario)</div>
+    <div class="badges">
+      <span class="badge b-ongoing">Series: Ongoing</span>
+      <span class="badge b-years">2025 →</span>
+      <span class="badge b-demo">BD</span>
+      <span class="badge b-native">Edition: Native</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-owned" title="T1 Ronin (09 Apr 2025) · art Kael Ngu · Yuko, born disabled with plastic prosthetics, flees Tudor's euthanasia law">1</div>
+      <div class="vol vol-owned" title="T2 Steel (25 Jun 2025) · art Valentina Pinti · Sam Macstone, mother assassinated, quad-amputee rebuilt as ultra-powerful cyborg">2</div>
+      <div class="vol vol-owned" title="T3 Tank (12 Nov 2025) · art Oleg Okunev · Ramda, rebel cop in Europa 2145, hunting a killer turning victims into art">3</div>
+      <div class="vol vol-owned" title="T4 Hawk (26 Mar 2026) · art Alina Yerofieieva · Syl, train-derailment survivor, daughter of Russel, lost sight + legs">4</div>
+      <div class="vol vol-announced" title="T5 · conclusion volume, announced for 2026, no specific date">5</div>
+      <span class="vol-count">4 / 5 owned · T5 announced for 2026, no date</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; per-volume contents</summary>
+      <ul>
+        <li><span class="label">Premise:</span> dystopian future where advanced prostheses are reserved for the rich. Russel, a mécanobiotechnologie genius, fits the poor and disabled with free cybernetic enhancements — defying dictator Markus C. Tudor's euthanasia law for "imperfect" people.</li>
+        <li><span class="label">Structure:</span> thematic anthology — one scénariste (Istin), rotating illustrator per volume. Each album = self-contained character story in the shared universe, with T5 as the explicit conclusion. Series planned at 5 tomes total. Original Soleil announcement: "Histoire centrée autour de 4 cyborgs … Le dénouement de l'histoire est prévu pour le cinquième et dernier tome."</li>
+        <li><span class="label">T1 Ronin — Yuko:</span> art Kael Ngu, storyboard Benoît Dellac, colors Florent Daniel. Yuko, born disabled, lives with her uncle Akira (martial-arts master, trainer of Tudor's Trakeur mercenaries). The euthanasia law triggers a pacifist protest that turns deadly — her friend Allan killed, Yuko jailed. Akira drops everything to flee with her, pursued by the Trakeurs, ending at Russel's workshop.</li>
+        <li><span class="label">T2 Steel — Sam:</span> art Valentina Pinti, storyboard Kiko Duarte, colors J. Nanjan. Samantha Macstone, daughter of presidential candidate Heather Macstone (Tudor's electoral threat), survives the attack that kills her mother. Quadruple amputee, presumed dead, recovered by Russel and rebuilt as an ultra-powerful cyborg. Uses her metal body as a weapon to unravel the plot.</li>
+        <li><span class="label">T3 Tank — Ramda:</span> art Oleg Okunev, colors J. Nanjan. Europa, 2145. Rebel cop Ramda descends into a drifting city's toxic alleys to hunt a killer who transforms his victims into macabre art.</li>
+        <li><span class="label">T4 Hawk — Syl:</span> art Alina Yerofieieva, colors J. Nanjan. Syl, 7, survives the Trans-Iceland train derailment; loses her sight and legs. Daughter of Russel. Under Dr. Blaye's care, holds onto the promise of walking and seeing again.</li>
+        <li><span class="label">T5:</span> announced for 2026, no date yet. Series-end / dénouement volume. Announcement quote on the <a href="https://www.bdgest.com/forum/cyborgs-istin-ngu-dim-d-soleil-t108060.html" target="_blank">BDGest preview thread</a> (first post, BDGest admin nexus4, 23 Jan 2025): "Format : Série prévue en 5 tomes / Tomes 1 à 3 : 2025 / Tomes 4 et 5 : 2026 / Le dénouement de l'histoire est prévu pour le cinquième et dernier tome."</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- ~2024 ── RONIN OF OKANE · Cyber Sheep indie hardcover series -->
+  <div class="series">
+    <div class="series-title">Ronin of Okane</div>
+    <div class="series-edition">Hardcover · EN · Cyber Sheep Studios · Michael Pachidamrong et al.</div>
+    <div class="badges">
+      <span class="badge b-ongoing">Series: Ongoing</span>
+      <span class="badge b-years">~2024 →</span>
+      <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-native">Edition: Native</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="vol 1 · hardcover">1</div>
+      <div class="vol vol-ordered" title="vol 2 · hardcover">2</div>
+      <div class="vol vol-ordered" title="vol 3 · hardcover">3</div>
+      <div class="vol vol-ordered" title="vol 4 · hardcover">4</div>
+      <div class="vol vol-ordered" title="vol 5 · hardcover">5</div>
+      <div class="vol vol-open" title="vol 6+ · series ongoing, may extend">+</div>
+      <span class="vol-count">0 / 5+ owned · 5 ordered · series ongoing</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> R-rated dark sci-fi graphic novel — two rōnin turned bounty hunters in Okane City. Cyberpunk × Japanese folklore.</li>
+        <li><span class="label">Status:</span> ongoing — vols 1–5 funded/released via successive Kickstarters, more may follow.</li>
+        <li><span class="label">Edition:</span> hardcover (digital also available). Indie Cyber Sheep Studios.</li>
+        <li><span class="label">Shop:</span> <a href="https://shop.cybersheepstudios.com/" target="_blank">shop.cybersheepstudios.com</a>.</li>
+        <li><span class="label">Cross-ref:</span> Me &amp; My Nekomata is a comedy spinoff set in the same Okane City — see next entry.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- ~2025 ── ME & MY NEKOMATA · Ronin of Okane spinoff -->
+  <div class="series">
+    <div class="series-title">Me &amp; My Nekomata</div>
+    <div class="series-edition">Hardcover · EN · Cyber Sheep Studios · Michael Pachidamrong et al.</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shot)</span>
+      <span class="badge b-years">~2025</span>
+      <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-complete">Edition: Complete</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-preorder" title="Me &amp; My Nekomata · 26pp one-shot · Nov 2026">1</div>
+      <span class="vol-count">0 / 1 owned · 1 preorder · arr. Nov 2026</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes</summary>
+      <ul>
+        <li><span class="label">Premise:</span> cozy comedy spinoff of Ronin of Okane. Nyx (bounty hunter) + Steven (mischievous two-tailed yokai cat roommate) in a cramped Okane City apartment — neon, ghost tech, cheap noodles.</li>
+        <li><span class="label">Format:</span> 26-page graphic novel one-shot.</li>
+        <li><span class="label">Team:</span> Michael Pachidamrong (writer) · Guy W. Dilok / Shin Kawa / Jeng Sriprat (art).</li>
+        <li><span class="label">Links:</span> <a href="https://www.kickstarter.com/projects/cybersheepfilm/me-and-my-nekomata" target="_blank">Kickstarter</a> · <a href="https://shop.cybersheepstudios.com/collections/me-my-nekomata" target="_blank">shop</a>.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2 class="section">Considering</h2>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- 1970–1976 ── LONE WOLF AND CUB · Koike / Kojima · Master Edition DE -->
+  <div class="series series-considering">
+    <div class="series-title">Lone Wolf and Cub / Kozure Ōkami</div>
+    <div class="series-edition">Master Edition · DE · Panini Manga · Kazuo Koike (story) / Goseki Kojima (art)</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (28 vols)</span>
+      <span class="badge b-years">1970–1976</span>
+      <span class="badge b-demo">青年 Seinen · gekiga / Edo samurai</span>
+      <span class="badge b-complete">Edition: Complete (12 HCs, all out)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="ME 1 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30 · ISBN 9783741627965 · 31.01.2023">1</div>
+      <div class="vol vol-shelved" title="ME 2 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">2</div>
+      <div class="vol vol-shelved" title="ME 3 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">3</div>
+      <div class="vol vol-shelved" title="ME 4 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">4</div>
+      <div class="vol vol-shelved" title="ME 5 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">5</div>
+      <div class="vol vol-shelved" title="ME 6 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">6</div>
+      <div class="vol vol-shelved" title="ME 7 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">7</div>
+      <div class="vol vol-shelved" title="ME 8 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">8</div>
+      <div class="vol vol-shelved" title="ME 9 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">9</div>
+      <div class="vol vol-shelved" title="ME 10 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">10</div>
+      <div class="vol vol-shelved" title="ME 11 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30">11</div>
+      <div class="vol vol-shelved" title="ME 12 (final) · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30 · 28.01.2025 (series complete)">12</div>
+      <span class="vol-count">0 / 12 owned · 12 ME HCs (28 originals consolidated) · all in print · full set ~€360 · STATUS: deferred (backlog + budget + space)</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">What &amp; why:</span> disgraced rōnin Itto Ogami walks the vengeance path against the Yagyū with his infant son Daigoro across late-Edo Japan. <strong>Direct foundational ancestor of Vagabond</strong> — Inoue cites Kojima as hand-influence. Kojima's brush-ink cinematic gekiga is post-Tezuka, no Mizuki art-register problem.</li>
+        <li><span class="label">Content note:</span> sexual violence depicted in places, treated as harm not titillation — passes critical-engagement gate. Koike's gender writing restrained here vs his Crying Freeman register; closer to Vagabond's.</li>
+        <li><span class="label">Edition:</span> Panini Master Edition — 12 oversized HCs w/ Schutzumschlag, 18.5×25.5cm, ~710pp/vol, €30/vol, full set ~€360. Vol 1 31.01.2023 (ISBN 9783741627965) → Vol 12 28.01.2025, complete and in print. Deferred for backlog + budget + space; first thing back on active-consider list when those clear.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 1993–1994 ── KYOKO OKAZAKI · further works (sibling to Owned umbrella) -->
+  <div class="series series-considering">
+    <div class="series-title">Kyoko Okazaki</div>
+    <div class="series-edition">Further One-Shots · EN · Kodansha USA · Kyoko Okazaki</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shots)</span>
+      <span class="badge b-years">1993–1994</span>
+      <span class="badge b-demo">女性 Josei · alt / fashion-mag</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="River's Edge (1993–94, CUTiE) · EN Kodansha 2023, 242pp, Becky Cloonan cover + footnotes, 18+, in print · no DE">RIV</div>
+      <span class="vol-count">0 / 1 owned · 1 available</span>
+    </div>
+    <details class="detail">
+      <summary>Per-book notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Umbrella:</span> sibling to the Owned Okazaki entry (Pink + Helter Skelter live there). Holds the remainder of the EN-available catalogue.</li>
+        <li><span class="label">RIV — River's Edge (1993–94):</span> flat-affect adolescent nihilism — six high schoolers, a closeted gay boy, a bulimic model, a corpse in the riverbed as shared secret. 18+. Critical engagement with bullying, queerness, eating disorders — harm as harm, passes the gate. Register flag: adolescent problem-set (cf. Wandering Son axis b). 2018 Isao Yukisada film. EN Kodansha 2023, Becky Cloonan cover; no DE.</li>
+        <li><span class="label">Natural decision point:</span> how Pink + Helter Skelter land once read — the art register (rough anti-pretty fashion-illustration line) is shared across all three.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2003 ── JUNKO MIZUNO · Pelu (sibling to Owned umbrella) -->
+  <div class="series series-considering">
+    <div class="series-title">Junko Mizuno</div>
+    <div class="series-edition">Further One-Shots · FR · IMHO · Junko Mizuno</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shots)</span>
+      <span class="badge b-years">2003</span>
+      <span class="badge b-demo">少女 Shōjo · alt / underground</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="Pilou, l'apprenti gigolo / Little Fluffy Gigolo Pelu · originally ファンシージゴロ ペル (JP Enterbrain, 3 vols 2003–2005). FR IMHO has 3 vols complete (T3 ISBN 9782915517903, currently OOS at IMHO — secondhand needed). EN Last Gasp has 2 of 3 (T3 never published in EN). No DE. Fluffy alien gigolo seduces Earth women; male protagonist.">PEL</div>
+      <span class="vol-count">0 / 1 owned · 1 available</span>
+    </div>
+    <details class="detail">
+      <summary>Per-book notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Umbrella:</span> sibling to the Owned Mizuno entry. Now down to one outstanding one-shot (Pelu) after H&amp;G moved to Owned 13.06.2026.</li>
+        <li><span class="label">PEL — Pilou, l'apprenti gigolo (FR title) / Little Fluffy Gigolo Pelu (EN title):</span> fluffy alien gigolo from the all-female planet Kotobuki travels Earth looking for love. Her one multi-volume series — 3 vols total in JP (Enterbrain 2003–2005). <strong>FR IMHO has the complete 3 vols (T3 ISBN 9782915517903, currently OOS at IMHO — secondhand sourcing needed). EN Last Gasp stopped at 2 of 3 — T3 never published in EN.</strong> No DE edition exists.</li>
+        <li><span class="label">PEL — language pick:</span> FR IMHO is the canonical buy on continuity grounds (only complete non-JP edition). T3 OOS at publisher means secondhand market for that specific volume. Per the language rule's continuity exception (FR earns it here, not as aesthetic argument). Male-POV protagonist remains the only register caveat — completionist-of-Mizuno pick rather than core fit.</li>
+        <li><span class="label">Canonical bibliography:</span> <a href="http://www.mizuno-junko.com/04_products/01_bok_e.html" target="_blank">Mizuno's official products page</a> — authoritative source for what exists in which language and edition. Treat this as the truth-of-record over WebSearch synthesis.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2000–2018 ── DOROHEDORO · Q Hayashida ── LOW-PROBABILITY -->
+  <div class="series series-considering">
+    <div class="series-title">Dorohedoro</div>
+    <div class="series-edition">Two alternate edition tracks · EN / DE · Viz Media / Manga Cult · Q Hayashida</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (23 vols)</span>
+      <span class="badge b-years">2000–2018</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-low-prob">Status: Low probability</span>
+    </div>
+    <div class="volumes">
+      <div class="edition-track">
+        <span class="track-label">EN Viz</span>
+        <div class="vol vol-shelved" title="vol 1">1</div>
+        <div class="vol vol-shelved" title="vol 2">2</div>
+        <div class="vol vol-shelved" title="vol 3">3</div>
+        <div class="vol vol-shelved" title="vol 4">4</div>
+        <div class="vol vol-shelved" title="vol 5">5</div>
+        <div class="vol vol-shelved" title="vol 6">6</div>
+        <div class="vol vol-shelved" title="vol 7">7</div>
+        <div class="vol vol-shelved" title="vol 8">8</div>
+        <div class="vol vol-shelved" title="vol 9">9</div>
+        <div class="vol vol-shelved" title="vol 10">10</div>
+        <div class="vol vol-shelved" title="vol 11">11</div>
+        <div class="vol vol-shelved" title="vol 12">12</div>
+        <div class="vol vol-shelved" title="vol 13">13</div>
+        <div class="vol vol-shelved" title="vol 14">14</div>
+        <div class="vol vol-shelved" title="vol 15">15</div>
+        <div class="vol vol-shelved" title="vol 16">16</div>
+        <div class="vol vol-shelved" title="vol 17">17</div>
+        <div class="vol vol-shelved" title="vol 18">18</div>
+        <div class="vol vol-shelved" title="vol 19">19</div>
+        <div class="vol vol-shelved" title="vol 20">20</div>
+        <div class="vol vol-shelved" title="vol 21">21</div>
+        <div class="vol vol-shelved" title="vol 22">22</div>
+        <div class="vol vol-shelved" title="vol 23">23</div>
+      </div>
+      <div class="edition-track">
+        <span class="track-label">DE Manga Cult PE</span>
+        <div class="vol vol-shelved" title="PE 1 · 3-in-1 (orig. 1–3) · 496pp · 05.08.2021 · ISBN 9783964334657">1</div>
+        <div class="vol vol-shelved" title="PE 2 · 2-in-1 (orig. 4–5)">2</div>
+        <div class="vol vol-shelved" title="PE 3 · 2-in-1 (orig. 6–7)">3</div>
+        <div class="vol vol-shelved" title="PE 4 · 2-in-1 (orig. 8–9)">4</div>
+        <div class="vol vol-shelved" title="PE 5 · 2-in-1 (orig. 10–11)">5</div>
+        <div class="vol vol-shelved" title="PE 6 · 2-in-1 (orig. 12–13)">6</div>
+        <div class="vol vol-shelved" title="PE 7 · 2-in-1 (orig. 14–15)">7</div>
+        <div class="vol vol-shelved" title="PE 8 · 2-in-1 (orig. 16–17)">8</div>
+        <div class="vol vol-shelved" title="PE 9 · 2-in-1 (orig. 18–19)">9</div>
+        <div class="vol vol-shelved" title="PE 10 · 2-in-1 (orig. 20–21)">10</div>
+        <div class="vol vol-shelved" title="PE 11 · 2-in-1 (orig. 22–23) · 04.05.2023 · edition complete">11</div>
+      </div>
+      <span class="vol-count">0 owned · EN 23 paperbacks · DE 11 consolidated Perfect-Edition vols (complete, in print) · low-probability</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> amnesiac reptile-headed Caiman + diner-cook Nikaido hunt sorcerers who manipulate flesh-magic, in the dystopian city "Hole" and the parallel Sorcerer Dimension.</li>
+        <li><span class="label">Register:</span> dark fantasy + body horror, visually maximalist + grime register + female lead.</li>
+        <li><span class="label">Mangaka:</span> Q Hayashida (female, oil-painting background at Tokyo Geidai) — <strong>ex-assistant to Tsutomu Nihei</strong>. The grime lineage descends from BLAME!; shelf-claim is the BLAME!-family branch, NOT the cyberpunk row (it isn't cyberpunk — no corps, no net, no chrome).</li>
+        <li><span class="label">Why on radar:</span> direct bullseye for the female-author-in-your-niche structural hole — Hayashida's the rare creator who hits both the gender-fill and the aesthetic-fit simultaneously. Content-ethics pass (AniFem: violence creepy-not-sexualized, Nikaido treated well; Noi the anti-male-gaze powerhouse).</li>
+        <li><span class="label">DE edition:</span> Manga Cult "Perfect Edition" — 11 consolidated vols, 14×21 SC, complete, in print. Translator Sascha Mandler (same as Biomega ME), same publisher as BLAME! ME (DE). Answers the old 23-paperback commitment objection: Eden-ME scale, not Viz-paperback scale.</li>
+        <li><span class="label">Tone:</span> ultraviolence braided with found-family warmth, food comedy, mystery-box plotting. Warm WITH teeth (unlike Dungeon Meshi's warm-without). Consensus caveat: final volumes rush, though subplots resolve. Anime (MAPPA, Netflix): S1 2020 ≈ vols 1–6, S2 Apr–May 2026, S3 confirmed — the cheap tone-probe.</li>
+        <li><span class="label">Why low-probability:</span> standing decision — very tempted but consciously parked behind the reading backlog (GitS → Eden → BLAME! full reread → Alita → Vagabond → Akira, plus RPG reading); space + time constraints. Re-evaluate after the backlog clears; DE Manga Cult PE is the would-buy edition.</li>
+      </ul>
+    </details>
+  </div>
+
+
+
+  <!-- 2000–2009 ── NANA · Ai Yazawa (25th Anniversary Edition) -->
+  <div class="series series-considering">
+    <div class="series-title">Nana</div>
+    <div class="series-edition">25th Anniversary Edition (2-in-1 omnibus) · EN · VIZ Media · Ai Yazawa</div>
+    <div class="badges">
+      <span class="badge b-incomplete">Series: Incomplete (hiatus since 2009)</span>
+      <span class="badge b-years">2000–2009</span>
+      <span class="badge b-demo">女性 Josei</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="Omnibus 1 (collects original vols 1–2) · available">1</div>
+      <div class="vol vol-shelved" title="Omnibus 2 (collects original vols 3–4) · available">2</div>
+      <div class="vol vol-shelved" title="Omnibus 3 (collects original vols 5–6) · available">3</div>
+      <div class="vol vol-shelved" title="Omnibus 4 (collects original vols 7–8) · available">4</div>
+      <div class="vol vol-announced" title="Omnibus 5 (collects original vols 9–10) · 8 Okt 2026">5</div>
+      <div class="vol vol-announced" title="Omnibus 6 (collects original vols 11–12) · 31 Dez 2026">6</div>
+      <div class="vol vol-planned" title="Omnibus 7 (collects original vols 13–14) · not yet announced">7</div>
+      <div class="vol vol-planned" title="Omnibus 8 (collects original vols 15–16) · not yet announced">8</div>
+      <div class="vol vol-planned" title="Omnibus 9 (collects original vols 17–18) · not yet announced">9</div>
+      <div class="vol vol-planned" title="Omnibus 10 (collects original vols 19–20) · not yet announced">10</div>
+      <div class="vol vol-planned" title="Omnibus 11 (collects original vol 21 — series in hiatus since 2009, no resolution) · not yet announced">11</div>
+      <span class="vol-count">0 / 11 owned · 4 available · 5 (8 Okt 2026) + 6 (31 Dez 2026) announced · 7–11 planned · series incomplete (hiatus since 2009)</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Two women, both named Nana, meet by chance on a train to Tokyo and become roommates. <strong>Nana Komatsu</strong> (Hachi) — sweet, aspiring, prone to falling in love — chasing her boyfriend to Tokyo. <strong>Nana Osaki</strong> — punk-rock vocalist, leather-jacket-and-cigarettes, fronting Blast and trying to break out from the shadow of glamour-rock band Trapnest. Their friendship is the central love story of the work; everything else (romances, band drama, marriages, the music industry's structural violence against women) orbits it.</li>
+        <li><span class="label">Register:</span> contemporary urban character drama, fashion-shōjo line work, late-90s/early-2000s Japanese rock scene aesthetic. Iconic Yazawa style — every panel is intensely styled, character designs are referenced as fashion inspo to this day.</li>
+        <li><span class="label">Mangaka:</span> Ai Yazawa (Paradise Kiss, Gokinjo Monogatari). One of the most iconic josei mangaka of her generation. Yazawa is on indefinite hiatus from manga since 2009 due to chronic illness — see Edition state below.</li>
+        <li><span class="label">Format:</span> Viz Media's 25th Anniversary 2-in-1 paperback omnibus, rollout started Oct 21, 2025. ~11 omnibus volumes when complete. <strong>Vols 1–4 available; vol 5 announced 8 Okt 2026, vol 6 announced 31 Dez 2026; vols 7–11 not yet announced.</strong></li>
+        <li><span class="label">Series state:</span> incomplete on hiatus since 2009 at original vol 21. Same indefinite-hiatus structural state as Vagabond (which Gwen accepted as is). Major threads unresolved: Nana O.'s disappearance, Hachi's future, the Nanas' reconciliation. 21 substantive volumes of un-concluded work.</li>
+        <li><span class="label">Content note:</span> contains a sexual assault storyline (Nana Komatsu / Hachi raped by Takumi while drunk) and the trapped marriage that follows. Yazawa's authorial stance is interrogating the trajectory women in male-dominated industries get pushed into, not endorsing it — Takumi is depicted as controlling/damaging, the marriage as cage not romance. <strong>Passes the critical-engagement gate.</strong> Adult characters throughout.</li>
+        <li><span class="label">Why considering:</span> canonical mainstream josei from a top-tier female mangaka. Iconic art register. Female friendship as central love story. Critical engagement with women's lives. Caveats: contemporary urban drama is off Gwen's established cyberpunk/dark gravitational pull, paperback omnibus is off the premium-HC shelf register, ~11-omnibus commitment is significant.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2008 ── TONO MONOGATARI · Mizuki Shigeru -->
+  <div class="series series-considering">
+    <div class="series-title">Tono Monogatari</div>
+    <div class="series-edition">Single Volume HC · EN · Drawn &amp; Quarterly · Mizuki Shigeru (adapting Yanagita Kunio)</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shot)</span>
+      <span class="badge b-years">2008</span>
+      <span class="badge b-demo">青年 Seinen · folklore / ethnography</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="Tono Monogatari · 200pp HC · D&amp;Q 2021 · trans. Zack Davisson · ISBN 9781770463776">TM</div>
+      <span class="vol-count">0 / 1 owned · 1 available · one-shot</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Mizuki's manga adaptation of Yanagita Kunio's 1910 <em>Tōno Monogatari</em> — the founding text of Japanese folklore studies (民俗学). ~33 of Yanagita's 119 vignettes from rural Tōno, Iwate: zashiki-warashi, regional kappa, yamabito, tengu, ghosts of the 1896 Sanriku tsunami dead. Mizuki self-inserts as a present-day traveler guided through the tales by Yanagita's ghost.</li>
+        <li><span class="label">Edition:</span> D&amp;Q HC 2021, ~200pp, translated by Zack Davisson (Mizuki's regular EN translator) with substantial scholarly intro + endnotes. Eisner-nominated 2022 Best Adaptation from Another Medium.</li>
+        <li><span class="label">Mangaka:</span> Mizuki Shigeru (1922–2015) — pre-Tezuka grandmaster, foundational yokai-manga figure (GeGeGe no Kitarō), trained in kamishibai street-theatre. THE yokai canon reference point in Japanese manga.</li>
+        <li><span class="label">Art-register caveat:</span> Mizuki reads "Western" to a post-Tezuka eye — clear-line simplified cartoon characters + photo-detailed nature backgrounds, structurally closer to Hergé's ligne claire or American mid-century editorial cartooning than to the cinematic post-Akira register that defines Gwen's shelf (Otomo/Nihei/Inoue/Kishiro/Endo/Saito). The art is the entire experience — vignette structure means there's no narrative arc to carry past it if the drawing doesn't click.</li>
+        <li><span class="label">Why considering:</span> yokai-canon primary source in manga form, prestige D&amp;Q HC, single-vol commitment, scholarly translation. Pairs with Foster's <em>Book of Yōkai</em> as the manga companion to the same foundational text.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2015–2018 ── OUR DREAMS AT DUSK · Yuhki Kamatani -->
+  <div class="series series-considering">
+    <div class="series-title">Our Dreams at Dusk: Shimanami Tasogare</div>
+    <div class="series-edition">English Paperback · EN · Seven Seas Entertainment · Yuhki Kamatani</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (4 vols)</span>
+      <span class="badge b-years">2015–2018</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="vol 1">1</div>
+      <div class="vol vol-shelved" title="vol 2">2</div>
+      <div class="vol vol-shelved" title="vol 3">3</div>
+      <div class="vol vol-shelved" title="vol 4">4</div>
+      <span class="vol-count">0 / 4 owned · 4 available · complete series</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Tasuku Kaname, a teenager involuntarily outed at school, wanders into a discussion-lounge run by a mysterious woman called "Anonymous." There he meets an ensemble of LGBTQ+ characters — gay, lesbian, asexual, and a <strong>trans woman (Misora)</strong> — each working through their own relationship to identity, family, and community in coastal Onomichi.</li>
+        <li><span class="label">Register:</span> contemplative-affirming. Beautifully drawn melancholic-lyrical art (Kamatani's lines are spare and dreamlike, very different from typical seinen). Critical engagement with isolation, outing, queer-community-finding, intersectionality.</li>
+        <li><span class="label">Mangaka:</span> Yuhki Kamatani (asexual, non-binary). The trans rep in Misora is written from within the queer community, not as outside observation.</li>
+        <li><span class="label">Format:</span> 4 paperback tankobon, Seven Seas EN release May–Dec 2019. Originally serialized in Shogakukan's Hibana magazine (2015–2017) + Manga One app (2017–2018). Harvey Award nominated (Best Manga, 2019).</li>
+        <li><span class="label">Why considering:</span> hits the affirming + well-drawn + trans-character axes from your shortlist. Misora is a trans woman written substantively, not a side gag. Caveat from the shortlist: ensemble not MtF-centered, not romance-focused, tone is reflective rather than effervescent.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2016 ── THE BRIDE WAS A BOY · Chii -->
+  <div class="series series-considering">
+    <div class="series-title">The Bride Was a Boy</div>
+    <div class="series-edition">Single Volume · EN · Seven Seas Entertainment · Chii</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (one-shot)</span>
+      <span class="badge b-years">2016</span>
+      <span class="badge b-demo">女性 Josei · autobiographical</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="The Bride Was a Boy · single tankobon, autobiographical four-koma">1</div>
+      <span class="vol-count">0 / 1 owned · 1 available · one-shot</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Chii's autobiography of her transition and her relationship with her boyfriend-turned-husband — gender, identity, love, marriage, legal transition in Japan — told in cute four-koma format.</li>
+        <li><span class="label">Register:</span> warm-affirming-cute. Hearts everywhere. Chibi-style four-koma art with explanatory educational panels. Very accessible. Tonally optimistic and joyful.</li>
+        <li><span class="label">Mangaka:</span> Chii — trans woman, autobiographical. Speaking from within.</li>
+        <li><span class="label">Format:</span> Single tankobon, JP Asukashinsha Feb 2016, EN Seven Seas May 2018. Originally web-serialized on her blog before collection.</li>
+        <li><span class="label">Why considering:</span> hits MtF + cute + affirming + hearts axes hardest of any on the shortlist. Single-vol commitment is low. Caveat from the shortlist: NOT lesbian — Chii's partner is a cis man, so misses the "preferably lesbian" axis. Pair with Run Away with Me, Girl for full coverage.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2016–2019 ── ORIGIN · Boichi ── LOW-PROBABILITY -->
+  <div class="series series-considering">
+    <div class="series-title">Origin</div>
+    <div class="series-edition">English Paperback · EN · Vertical Comics / Kodansha USA · Boichi</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (10 vols)</span>
+      <span class="badge b-years">2016–2019</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-low-prob">Status: Low probability</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="vol 1">1</div>
+      <div class="vol vol-shelved" title="vol 2">2</div>
+      <div class="vol vol-shelved" title="vol 3">3</div>
+      <div class="vol vol-shelved" title="vol 4">4</div>
+      <div class="vol vol-shelved" title="vol 5">5</div>
+      <div class="vol vol-shelved" title="vol 6">6</div>
+      <div class="vol vol-shelved" title="vol 7">7</div>
+      <div class="vol vol-shelved" title="vol 8">8</div>
+      <div class="vol vol-shelved" title="vol 9">9</div>
+      <div class="vol vol-shelved" title="vol 10">10</div>
+      <span class="vol-count">0 / 10 owned · 10 available · complete series · low-probability</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Tokyo 2048, Eurasian-Railroad terminus megalopolis gripped by mutilation killings. Origin — a prototype android created by a scientist who's now dead — hides his existence while hunting down his "murderous siblings" (other androids) and learning what it means to be human.</li>
+        <li><span class="label">Register:</span> cyberpunk seinen with android-identity meditation. The GitS-adjacent philosophical axis (what is it to be human when you're not?) done as a 10-vol serial story. Boichi's art is widely praised — cinematic, dense, polished, dynamic. He's the Dr. Stone illustrator + the Sun-Ken Rock author.</li>
+        <li><span class="label">Mangaka:</span> Boichi (Korean-born, working in Japan). Young Magazine seinen 2016–2019. Film adaptation announced 2023 (Majestic / Kodansha).</li>
+        <li><span class="label">Format:</span> Vertical Comics paperback, 10 vols complete in EN as of late 2023. No continuity risk.</li>
+        <li><span class="label">Why on radar:</span> structurally on-axis — cyberpunk + android identity themes + complete + exceptional art + adjacent to her existing GitS / BLAME! / Eden / Akira shelf. The Boichi-cyberpunk slot.</li>
+        <li><span class="label">Why low-probability — content gate caveat:</span> Boichi's signature includes recurring fanservice framing of women — "frequently derailing into awkward fan service and tonal whiplash, shifting from philosophical musings to exaggerated comedy or near-hentai shots" per reviewers; "female characters often reduced to objectifying poses that distract from the atmosphere." Different failure mode from Gantz: <em>punctuated fanservice intrusions</em> rather than structurally embedded male-gaze. The work's central concern is the android's philosophy, the female cast isn't the work's romanticised subject — but the intrusion happens often enough to be a documented pattern, not isolated panels. Personal threshold call between "irritating-but-tolerable" and "disruptive-enough-to-ruin." Sits on the radar for re-evaluation; aware, not actively pursuing.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2016 ── WITCH HAT ATELIER · Kamome Shirahama -->
+  <div class="series series-considering">
+    <div class="series-title">Witch Hat Atelier</div>
+    <div class="series-edition">Two alternate edition tracks · EN · Kodansha USA · Kamome Shirahama</div>
+    <div class="badges">
+      <span class="badge b-ongoing">Series: Ongoing (16 vols JP)</span>
+      <span class="badge b-years">2016 →</span>
+      <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="edition-track">
+        <span class="track-label">Tankobon</span>
+        <div class="vol vol-shelved" title="vol 1">1</div>
+        <div class="vol vol-shelved" title="vol 2">2</div>
+        <div class="vol vol-shelved" title="vol 3">3</div>
+        <div class="vol vol-shelved" title="vol 4">4</div>
+        <div class="vol vol-shelved" title="vol 5">5</div>
+        <div class="vol vol-shelved" title="vol 6">6</div>
+        <div class="vol vol-shelved" title="vol 7">7</div>
+        <div class="vol vol-shelved" title="vol 8">8</div>
+        <div class="vol vol-shelved" title="vol 9">9</div>
+        <div class="vol vol-shelved" title="vol 10">10</div>
+        <div class="vol vol-shelved" title="vol 11">11</div>
+        <div class="vol vol-shelved" title="vol 12">12</div>
+        <div class="vol vol-shelved" title="vol 13">13</div>
+        <div class="vol vol-shelved" title="vol 14">14</div>
+        <div class="vol vol-planned" title="vol 15 · not yet announced in EN">15</div>
+        <div class="vol vol-planned" title="vol 16 · published JP, not yet announced in EN">16</div>
+        <div class="vol vol-open" title="vol 17+ · series ongoing">+</div>
+      </div>
+      <div class="edition-track">
+        <span class="track-label">Grimoire HC</span>
+        <div class="vol vol-shelved" title="Grimoire 1 · collects vols 1–3 · oversized HC, gold-foil-on-blue, sewn binding, +32 bonus pages incl. mini art book, color pages on matte paper">G1</div>
+        <div class="vol vol-announced" title="Grimoire 2 · collects vols 4–6 · announced for 4 Aug 2026">G2</div>
+        <div class="vol vol-planned" title="Grimoire 3 · would collect vols 7–9 · not yet announced">G3</div>
+        <div class="vol vol-planned" title="Grimoire 4 · would collect vols 10–12 · not yet announced">G4</div>
+        <div class="vol vol-planned" title="Grimoire 5 · would collect vols 13–15 · gated on EN tankobon vol 15 release">G5</div>
+        <div class="vol vol-open" title="future Grimoires · gated on remaining JP releases and Kodansha schedule">+</div>
+      </div>
+      <span class="vol-count">0 owned · two alternate tracks (commit to one when buying)</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; edition comparison</summary>
+      <ul>
+        <li><span class="label">Premise:</span> Coco apprentices under the witch Qifrey in a world where magic is hidden and craft-controlled. Magical-school coming-of-age fantasy.</li>
+        <li><span class="label">Register:</span> European-illuminated-manuscript visual register, Vagabond-tier line-detail. Cute is good.</li>
+        <li><span class="label">Mangaka:</span> Kamome Shirahama (female, illustrator / cover-art background).</li>
+        <li><span class="label">Honours:</span> won the Eisner for Best US Edition of International Material (Asia) twice — 2020 + 2025.</li>
+        <li><span class="label">Tankobon track:</span> standard paperback singles, ~5.79 × 8.15″, matte white covers with unique cover art per volume (spines feature individual characters from the cast — assembled spines form one long character lineup). EN at vol 14 latest; vols 15–16 not yet announced for EN despite being out in JP.</li>
+        <li><span class="label">Grimoire HC track:</span> oversized 7 × 10″ hardcovers, three tankobon per Grimoire, gold-foil-on-blue with intricate frame ornament, rounded spines, sewn binding, matte premium paper (color pages explicitly designed for it), 32 extra bonus pages per Grimoire (~mini art book per volume: B&W + color illustrations, character sketches, casting-seal intro, world-and-animals guide, creator/editor interview, commentary). Mirrors the previously-released French Grimoire format. Same translation as singles.</li>
+        <li><span class="label">Edition-design-as-signal read:</span> Grimoire's gold-foil-on-blue ornate-frame design aligns with Gwen's premium-HC shelf register. Tankobon design is also nice but more conventional. Grimoire is the on-axis pick.</li>
+        <li><span class="label">Why considering:</span> female-creator + seinen-demographic + double-Eisner + on-axis art register + premium HC option available = structural standout for the female-author niche.</li>
+        <li><span class="label">Trade-off if committing to Grimoire:</span> gap risk is low — Witch Hat Atelier is a flagship Kodansha USA license (double Eisner, Trigger anime, active JP run, French Grimoire precedent already proven). Publishers don't launch deluxe lines for series they aren't committed to. What IS real is PACING: Grimoires release ~2 per year, so completing the full set would take 4–5+ years. Tankobon is the "available right now in full" pick; Grimoire is the "premium but slow" pick.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2018–2021 ── LOVE ME FOR WHO I AM · Kata Konayama -->
+  <div class="series series-considering">
+    <div class="series-title">Love Me For Who I Am</div>
+    <div class="series-edition">English Paperback · EN · Seven Seas Entertainment · Kata Konayama</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (5 vols)</span>
+      <span class="badge b-years">2018–2021</span>
+      <span class="badge b-demo">青年 Seinen · LGBTQ+ ensemble</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="vol 1">1</div>
+      <div class="vol vol-shelved" title="vol 2">2</div>
+      <div class="vol vol-shelved" title="vol 3">3</div>
+      <div class="vol vol-shelved" title="vol 4">4</div>
+      <div class="vol vol-shelved" title="vol 5 · final volume">5</div>
+      <span class="vol-count">0 / 5 owned · 5 available · complete series</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Original JP title:</span> Fukakai na Boku no Subete o (lit. "All of My Incomprehensible Self").</li>
+        <li><span class="label">Premise:</span> Mogumo, a non-binary high schooler, is invited by classmate Tetsu to work at his family's café "Mr. Ladybug" — which Tetsu introduces as "for cross-dressing boys" before realising Mogumo doesn't identify as a boy or a girl. The café turns out to be staffed by an LGBTQ+ ensemble of gender-diverse and queer characters, each with their own reasons for being there.</li>
+        <li><span class="label">Register:</span> miniskirts ✓, hearts ✓, cute café aesthetic ✓ — hits Gwen's bonus axes hardest. MtF and NB rep through Mogumo + ensemble cast. Affirming tone overall.</li>
+        <li><span class="label">Mangaka:</span> Kata Konayama (LGBTQ+ creator).</li>
+        <li><span class="label">Format:</span> 5-vol seinen, JP Comic Walker / Kadokawa Jun 2018 – Mar 2021. EN Seven Seas Jun 2020 – Jan 2022. Complete series.</li>
+        <li><span class="label">Why considering:</span> the miniskirt-and-hearts maximalist option from the shortlist + gender-diverse ensemble including MtF and NB rep.</li>
+        <li><span class="label">Content caveat (flag, not block):</span> high school setting + some sexualised content has drawn critique even from queer reviewers who otherwise praise the intent. Whether the framing handles the school-age + gender-diverse + sexual themes critically vs uncomfortably is a judgment call. Vet against your content ethics framework before committing — author's intent is affirming, execution has been controversial.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2018–2020 ── RUN AWAY WITH ME, GIRL · Battan -->
+  <div class="series series-considering">
+    <div class="series-title">Run Away with Me, Girl</div>
+    <div class="series-edition">English Paperback · EN · Kodansha USA · Battan</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (3 vols)</span>
+      <span class="badge b-years">2018–2020</span>
+      <span class="badge b-demo">女性 Josei · yuri</span>
+      <span class="badge b-considering">Status: Considering</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-shelved" title="vol 1">1</div>
+      <div class="vol vol-shelved" title="vol 2">2</div>
+      <div class="vol vol-shelved" title="vol 3 · final volume">3</div>
+      <span class="vol-count">0 / 3 owned · 3 available · complete series (JP digital 4 vols → JP print 3 vols → EN 3 vols)</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Original JP title:</span> Kakeochi Girl (かけおちガール).</li>
+        <li><span class="label">Premise:</span> Midori and Maki dated in high school. Midori broke up with Maki at graduation, saying they were "too old" to be "fooling around" dating girls. Years later they reunite — Midori now in a het marriage that's wrong for her, Maki still openly queer. The story is about whether the love that survived can survive being reclaimed as adults.</li>
+        <li><span class="label">Register:</span> adult cis-lesbian melancholic-romantic, beautifully drawn (Battan's line is soft and precise, expressive faces). Affirming-but-honest — the work engages seriously with internalised homophobia, social pressure, and the cost of compromise without romanticising the violence those forces do.</li>
+        <li><span class="label">Mangaka:</span> Battan. Adult yuri specialist.</li>
+        <li><span class="label">Format:</span> 3 paperback tankobon, EN Kodansha USA 2022–2023. Originally serialized in Kodansha's Hatsu Kiss magazine Oct 2018 – Feb 2020 (4 digital vols), recollected into 3 JP print vols 2021, EN follows the 3-vol format. Translated by Rose Padgett (vol 1) + Kevin Steinbach (vols 2–3).</li>
+        <li><span class="label">Why considering:</span> the lesbian + cute + well-drawn axis from the shortlist. NOT trans-focused — this is the complementary pick to The Bride Was a Boy (which is MtF but not lesbian). Pair the two for full axis coverage.</li>
+      </ul>
+    </details>
+  </div>
+
+
+  <!-- 2024 ── HERO ORGANIZATION · Kei Saikawa / Akira Takahashi -->
+  <div class="series series-considering">
+    <div class="series-title">Hero Organization</div>
+    <div class="series-edition">German Paperback · DE · KAZÉ · Kei Saikawa (story) / Akira Takahashi (art)</div>
+    <div class="badges">
+      <span class="badge b-ongoing">Series: Ongoing (5+ vols JP)</span>
+      <span class="badge b-years">2024 →</span>
+      <span class="badge b-demo">少年 Shōnen · mecha-SF</span>
+      <span class="badge b-considering">Status: Considering (evaluation pending)</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-announced" title="DE vol 1 · KAZÉ · announced for Nov 2026">1</div>
+      <div class="vol vol-planned" title="DE vol 2+ · KAZÉ · bimonthly release schedule planned, no specific dates">+</div>
+      <span class="vol-count">0 / 5+ owned · DE vol 1 announced Nov 2026 · JP ongoing, ~5 vols out</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes &amp; pick rationale</summary>
+      <ul>
+        <li><span class="label">Original JP title:</span> 英雄機関 Eiyū Kikan.</li>
+        <li><span class="label">Premise:</span> humanity, on the brink of extinction, takes to the stars and encounters "Star Beasts." Soldiers pilot giant mechs called AIGIS (Armor for Intergalactic Guardian and Interstellar Survival) and are called "Heroes." Lead is <strong>Ryu Tyler</strong>, an ordinary mech-factory worker who dreamed of being a Hero pilot and gave up; his son <strong>Leonidas</strong> is a prodigy. Father-and-son sentimental drama with mecha-action.</li>
+        <li><span class="label">Register:</span> mecha-action / sci-fi / drama, shōnen-coded. Hot new Jump+ series, top-5 popularity in JP early in run.</li>
+        <li><span class="label">Team:</span> story Kei Saikawa, art Akira Takahashi. Shonen Jump+ web manga (Shueisha), serializing since Sept 2024.</li>
+        <li><span class="label">Format (DE):</span> KAZÉ paperback, vol 1 Nov 2026, bimonthly release schedule. Print + e-book.</li>
+        <li><span class="label">Evaluation tool:</span> EN digital is free and region-unrestricted on <a href="https://mangaplus.shueisha.co.jp/titles/100352" target="_blank">Shueisha's Manga Plus</a> — read first 1–3 chapters there before committing to the DE buy. If it clicks, vol 1 lands Nov 2026.</li>
+        <li><span class="label">Why considering:</span> Gwen looked at Akira Takahashi's art and it clicked — that's the actual reason this is on the list, not the externally-recommended hype. Art axis confirmed positive. Sci-fi + mechs are a positive-adjacent axis for her (not her primary cyberpunk/horror/dark zone but cool too). The remaining uncertainty is the STORY axis — shōnen father-son sentimental drama in mecha-vs-aliens framing may or may not click. Manga Plus EN digital read-through is the evaluation tool for the story gate.</li>
+      </ul>
+    </details>
+  </div>
+
+</div>
+</body>
+</html>
