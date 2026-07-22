@@ -595,6 +595,16 @@
                                           not actively pursuing, but not a hard pass either
                                           (re-evaluate-able).
 
+  CONSIDERING ≠ SHADOW-COLLECTION (rule from Jul 2026, Gwen-corrected after Valérian was wrongly
+  ranked as a son-osmosis option even though it's in Considering not Owned):
+    When doing collection-scope analyses (e.g. "what FR items do I have", "what would fit X
+    purpose", "what languages are in my collection"), filter to OWNED + ORDERED + PREORDER
+    states ONLY. Considering entries are NOT part of the collection. Rationale (Gwen's own
+    words): "you know how quickly i order stuff when i want to order it" — Considering is a
+    genuine evaluation state, not a soft-owned tier. If Gwen wants something she orders it
+    promptly (see this session's Bablet / Spider-Verse / What If Dark / Edge of SV / SPV
+    ordering pattern). Do not treat Considering as latent-inventory.
+
   PREVIOUSLY CONSIDERED, REJECTED (kept here as memory so future-Gwen doesn't re-discover and
   re-evaluate from scratch):
     - Clover — Hardcover Collector's Edition (EN, Kodansha — CLAMP). Was considered for the
@@ -1278,6 +1288,7 @@
     grid-row: 2;
   }
 
+
   /* ── STATE BADGES ──────────────────────────── */
   .badges {
     display: flex;
@@ -1314,6 +1325,12 @@
   .b-low-prob    { background: rgba(112,112,112,0.10); color: var(--dim); border: 1.5px dashed var(--dim); padding: 1.5px 8.5px 2.5px; letter-spacing: 1.5px; }
   .b-years       { background: transparent; color: var(--bone); border: 1.5px solid var(--bone); padding: 1.5px 8.5px 2.5px; letter-spacing: 1px; }
   .b-demo        { background: rgba(255,242,0,0.10); color: var(--yel); border: 1.5px solid var(--yel); padding: 1.5px 8.5px 2.5px; }
+  /* Language badge — outlined, per-language color. JS filter ready via .series[data-lang~="EN"] */
+  .b-lang        { background: rgba(0,0,0,0.4); color: var(--bone); border: 1.5px solid var(--bone); padding: 1.5px 8.5px 2.5px; letter-spacing: 1px; }
+  .b-lang[data-lang="EN"]    { color: var(--bone);  border-color: var(--bone); }
+  .b-lang[data-lang="DE"]    { color: #ffe066;      border-color: #ffe066; background: rgba(255,224,102,0.08); }
+  .b-lang[data-lang="FR"]    { color: #a3ceff;      border-color: #a3ceff; background: rgba(163,206,255,0.08); }
+  .b-lang[data-lang="JP"]    { color: #ff9ec7;      border-color: #ff9ec7; background: rgba(255,158,199,0.08); }
 
   /* ── DEMOGRAPHICS LEGEND ───────────────────── */
   .demo-legend {
@@ -1513,6 +1530,89 @@
     font-weight: 700;
   }
   a:hover { color: var(--mag); border-bottom-color: var(--mag); }
+
+  /* ── SPIDER-VERSE READING-ORDER POPUP ─────── */
+  .sv-order-btn {
+    background: transparent;
+    border: 1.5px solid var(--mag);
+    color: var(--mag);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 10px 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .sv-order-btn:hover { background: var(--mag); color: #000; }
+  dialog.sv-order-dialog {
+    background: var(--bg-card);
+    border: 2px solid var(--yel);
+    color: var(--bone);
+    padding: 24px;
+    max-width: 1400px;
+    width: 96vw;
+    max-height: 88vh;
+    overflow: auto;
+    font-family: var(--body, sans-serif);
+  }
+  dialog.sv-order-dialog::backdrop { background: rgba(0,0,0,0.86); }
+  dialog.sv-order-dialog h3 {
+    color: var(--yel);
+    font-family: var(--heavy);
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  dialog.sv-order-dialog .sv-intro {
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+  dialog.sv-order-dialog .sv-close {
+    float: right;
+    background: transparent;
+    border: 1.5px solid var(--bone);
+    color: var(--bone);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    padding: 4px 10px 5px;
+    text-transform: uppercase;
+  }
+  dialog.sv-order-dialog .sv-close:hover { background: var(--bone); color: #000; }
+  dialog.sv-order-dialog table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  dialog.sv-order-dialog th {
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1.5px solid var(--yel);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--yel);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  dialog.sv-order-dialog td, dialog.sv-order-dialog th {
+    white-space: nowrap;
+  }
+  dialog.sv-order-dialog td {
+    padding: 5px 12px;
+    border-bottom: 1px solid rgba(200,200,200,0.15);
+    font-family: var(--mono);
+    font-size: 11px;
+    vertical-align: top;
+  }
+  dialog.sv-order-dialog td.sv-num { color: var(--dim); text-align: right; width: 30px; font-weight: 700; }
+  dialog.sv-order-dialog td.sv-section { color: var(--mag); width: 90px; font-weight: 700; }
+  dialog.sv-order-dialog td.sv-book { color: var(--dim); font-style: italic; }
+  dialog.sv-order-dialog tr.sv-part { background: rgba(255,242,0,0.06); }
+
+  /* ── END READING-ORDER POPUP ─────────────── */
+
 </style>
 </head>
 <body>
@@ -1581,13 +1681,15 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
 
   <!-- 1967–2010 ── VALERIAN UND VERONIQUE · Filmausgabe (Carlsen DE) -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Valérian et Laureline</div>
     <div class="series-edition">Filmausgabe · DE · Carlsen · Pierre Christin (scénario) / Jean-Claude Mézières (dessin)</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1967–2010</span>
       <span class="badge b-demo">BD</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Valerian und Veronique: Filmausgabe (Carlsen DE 2017) · 'Die Vorlage zu Kinofilm Die Stadt der tausend Planeten' · compiles the albums Besson drew from primarily T6 L'Ambassadeur des ombres (1975, Point Central / Alpha) + T2 L'Empire des mille planètes (1971, city-design lift) + tie-ins · reading edition, not canonical 23-album set">FA</div>
@@ -1604,17 +1706,19 @@
 
 
   <!-- 1967–1968 ── DORORO · Osamu Tezuka · Vertical Inc. omnibus -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Dororo</div>
     <div class="series-edition">Omnibus Edition · Single 848pp PB · EN · Vertical Inc. · Osamu Tezuka</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1967–1968</span>
       <span class="badge b-demo">少年 Shōnen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
-      <div class="vol vol-ordered" title="Dororo Omnibus · Vertical Inc. 2012 · 848pp PB · ISBN 9781935654322 · collects the complete serialization (Shonen Sunday 1967–68 + Bōken Ō 1969 continuation) · first copy arrived pre-owned (sold as new), returned — replacement in flight">OMN</div>
-      <span class="vol-count">0 / 1 owned · replacement in flight (first copy was pre-owned, returned)</span>
+      <div class="vol vol-reading" title="Dororo Omnibus · Vertical Inc. 2012 · 848pp PB · ISBN 9781935654322 · collects the complete serialization (Shonen Sunday 1967–68 + Bōken Ō 1969 continuation) · currently reading (replacement copy — first was pre-owned sold as new, returned)">OMN</div>
+      <span class="vol-count">1 / 1 owned · currently reading</span>
     </div>
     <details class="detail">
       <summary>Box contents</summary>
@@ -1629,13 +1733,15 @@
 
 
   <!-- 1975–1977 ── THEY WERE ELEVEN · Moto Hagio · Denpa 2025 Complete Edition -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">They Were Eleven</div>
     <div class="series-edition">Complete Edition (50th Anniversary) · A4 HC · EN · Denpa Books · Moto Hagio</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1975–1977</span>
       <span class="badge b-demo">少女 Shōjo</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-ordered" title="They Were 11! · Denpa Books 2025 · 298pp A4 HC (21.6×30.5cm) · ISBN 9781634428156 · collects original one-shot (Bessatsu Shōjo Comic 1975) + sequel East and West of Space Frontier (1976–77) · some color pages · double-sided foldout poster · from JP 50th Anniversary edition">TWE</div>
@@ -1654,13 +1760,15 @@
 
 
   <!-- 1980–1992 ── LA TRILOGIE NIKOPOL · Enki Bilal · Édition Luxe FR -->
-  <div class="series">
+  <div class="series" data-lang="FR" data-lang-display="FR">
     <div class="series-title">La Trilogie Nikopol</div>
     <div class="series-edition">Édition Luxe · FR · Casterman · Enki Bilal</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1980–1992</span>
       <span class="badge b-demo">BD</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Édition Luxe · prestige oversized HC, all 3 albums (La Foire aux immortels + La Femme piège + Froid Équateur), color preserved · ISBN 9782203312678 · 28.4 × 37.5 cm">LUX</div>
@@ -1678,13 +1786,15 @@
 
 
   <!-- 1982 ── AKIRA · 35th Anniversary Box Set -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Akira</div>
     <div class="series-edition">35th Anniversary Box Set · EN · Kodansha · Katsuhiro Otomo</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1982–1990</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="vol 1">1</div>
@@ -1709,13 +1819,15 @@
 
 
   <!-- 1982–1994 ── NAUSICAÄ OF THE VALLEY OF THE WIND · Carlsen Doppelband-Edition DE -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Nausicaä of the Valley of the Wind</div>
     <div class="series-edition">Doppelband-Edition im Schuber · DE · Carlsen · Miyazaki Hayao</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1982–1994</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Doppelband 1 (= original vols 1–2) · large HC · trans. Jürgen Seebeck · ISBN 9783551805058">1</div>
@@ -1739,13 +1851,15 @@
 
 
   <!-- 1989–1997 ── GHOST IN THE SHELL LEGACY EDITION -->
-  <div class="series">
+  <div class="series" data-lang="EN FR" data-lang-display="EN + FR">
     <div class="series-title">Ghost in the Shell</div>
     <div class="series-edition">Two edition tracks · EN + FR · Kodansha Legacy Edition + Glénat Comic Tribute · Shirow Masamune + 9-mangaka tribute anthology</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1989–2017</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span> <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="edition-track">
@@ -1778,13 +1892,15 @@
 
 
   <!-- 1990 ── BATTLE ANGEL ALITA DELUXE COMPLETE SERIES -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Battle Angel Alita</div>
     <div class="series-edition">Deluxe Complete Series Box Set · EN · Kodansha · Yukito Kishiro</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1990–1995</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Deluxe vol 1">1</div>
@@ -1808,13 +1924,15 @@
 
 
   <!-- 1994–2010 ── KABUKI · David Mack · Complete 30th Anniversary Edition -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Kabuki</div>
     <div class="series-edition">The Complete Kabuki (30th Anniversary Edition) · Single oversized HC · EN · Dark Horse · David Mack</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1994–2010</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="The Complete Kabuki · 30th Anniversary Edition · Dark Horse 2024 · 1,280pp oversized HC (27.08 × 9.3 × 37.08 cm) · ISBN 9781506743363 · collects Circle of Blood / Dreams / Masks of the Noh / Skin Deep / Metamorphosis / Scarab / The Alchemy / Reflections">CE</div>
@@ -1833,13 +1951,15 @@
 
 
   <!-- 1996–2018 ── REVOLUTIONARY GIRL UTENA · Complete Deluxe Box Set + After the Revolution -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Revolutionary Girl Utena</div>
     <div class="series-edition">Complete Deluxe Box Set + After the Revolution · EN · VIZ Media (Shojo Beat) · Be-Papas (story) / Chiho Saito (art)</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1996–2018</span>
       <span class="badge b-demo">少女 Shōjo</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Revolutionary Girl Utena · HC · collects original 5-vol arc (1996–1998, serialized in Ciao)">RGU</div>
@@ -1862,24 +1982,45 @@
 
 
   <!-- 2014–ongoing ── SPIDER-GWEN · three edition tracks -->
-  <div class="series">
-    <div class="series-title">Spider-Gwen</div>
-    <div class="series-edition">Three edition tracks · EN + DE · Latour / Rodriguez / Seeley / Phillips / Marvel Modern Era Epic Collection</div>
+  <div class="series" data-lang="EN DE" data-lang-display="EN + DE">
+    <div class="series-title">Spider-Gwen &amp; Spider-Verse</div>
+    <div class="series-edition">Five edition tracks · EN + DE · Self-contained TPBs (Gwen-starring · Spider-Verse-with-Gwen · Spider-Verse-without-Gwen) · Ongoing series · Collections</div>
     <div class="badges">
       <span class="badge b-ongoing">Series: Ongoing</span>
       <span class="badge b-years">2014 →</span>
       <span class="badge b-demo">US</span>
+      <span class="badge b-lang" data-lang="EN">EN</span> <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="edition-track">
-        <span class="track-label">Self-contained TPBs (miniseries, anthology, event)</span>
+        <span class="track-label">Self-contained TPBs all about Spider-Gwen</span>
         <div class="vol vol-read" title="Spider-Gwen: Gwenverse (2022) · Marvel Comics TPB · ISBN 9781302934651 · 5-issue miniseries · Seeley/Nishijima · Gwen meets alternate-mantle versions of herself across the multiverse">GVW</div>
-        <div class="vol vol-ordered" title="Edge of Spider-Verse (2022) TPB · Marvel · ISBN 9781302947170 · 5-issue anthology · Slott + various · introduces Spider-Rex, Sun-Spider, Night-Spider, Hunter-Spider, Princess Spinstress · Gwen among ensemble">ESV</div>
-        <div class="vol vol-ordered" title="Spider-Man Vol 1: End of the Spider-Verse TPB · Marvel · ISBN 9781302946562 · Slott's Spider-Man 2022 #1–7 · Bagley art · Gwen among Spiders ensnared by Shathra · 2022–2023 event wrapping the Spider-Verse era">EOS</div>
         <div class="vol vol-read" title="Spider-Gwen: Shadow Clones · Marvel Comics TPB · ISBN 9781302951184 · 5-issue miniseries (2023) · Emily Kim (writer) / Kei Zama (art) · Gwen encounters Gwen-clone hybrids of the Sinister Six villains with Reed Richards's help">SC</div>
-        <div class="vol vol-ordered" title="What If...? Dark collected TPB · Marvel · ISBN 9781302953263 · 200pp · includes Spider-Gwen #1 (Conway/Houser/Bachs, Conway inverts his own 1973 Death of Gwen) + 5 bonus one-shots: Loki, Venom, Moon Knight, Carnage, Tomb of Dracula">WID</div>
+        <div class="vol vol-reading" title="What If...? Dark collected TPB · Marvel · ISBN 9781302953263 · 200pp · includes Spider-Gwen #1 (Conway/Houser/Bachs, Conway inverts his own 1973 Death of Gwen) + 5 bonus one-shots: Loki, Venom, Moon Knight, Carnage, Tomb of Dracula · currently reading">WID</div>
         <div class="vol vol-owned" title="Spider-Gwen: Smash + Giant-Size Spider-Gwen · Marvel Comics TPB · ISBN 9781302956554 · Smash #1–4 + Giant-Size Spider-Gwen #1 (Dec 2023–Mar 2024) · Melissa Flores (writer) / Enid Balam + Bryan Hitch + Alba Glez (art) · Gwen faces Carnage symbiote resurgence in Mary Jane + Orlando Octavius villains">SMH</div>
-        <span class="track-count">2 / 6 read · 1 owned · 3 ordered</span>
+        <span class="track-count">2 / 4 read · 1 reading (WID) · 1 owned</span>
+      </div>
+      <div class="edition-track">
+        <span class="track-label">Self-contained TPBs — Spider-Verse with Spider-Gwen (Gwen in roster)</span>
+        <div class="vol vol-ordered" title="Amazing Spider-Man: Edge of Spider-Verse TPB · Marvel 2015 · ISBN 9780785197287 · 112pp · collects Edge of Spider-Verse (2014) #1–5 · Vol 1 anthology · Gwen debut in #2 (20% overlap with E1), plus Spider-Man Noir prequel, Aaron Aikman, Peni Parker/SP//dr debut, Patton Parnel — the 80% is what kicked off the original 2015 Spider-Verse event (SPV)">E14</div>
+        <div class="vol vol-ordered" title="Spider-Verse: Warzones TPB · Marvel · Secret Wars 2015 · 5-issue mini (SW:SV #1–5) · Costa/Araujo · Battleworld Arachnia domain · team of Gwen + Spider-Ham + Noir + India + Spider-UK + Anya Corazon — kicks off the Web Warriors ongoing">SWV</div>
+        <div class="vol vol-ordered" title="Web Warriors of the Spider-Verse Vol 1: Electroverse TPB · Marvel · ISBN 9780785196723 · collects Web Warriors (2015) #1–5 + ASM (2015) #1 material · Costa/Baldeon · continues the SW:SV team story on Earth-001 (Great Web home base)">WW1</div>
+        <div class="vol vol-ordered" title="Web Warriors of the Spider-Verse Vol 2: Spiders Vs. TPB · Marvel · ISBN 9780785196730 · collects Web Warriors (2015) #6–11 · Costa/Baldeon · concludes the Web Warriors era">WW2</div>
+        <div class="vol vol-ordered" title="Spider-Geddon TPB · Marvel · ISBN 9781302914752 · collects Spider-Geddon (2018) #0–5 + Vault of Spiders (2018) #1–2 · Inheritors-return sequel event to the original Spider-Verse (Gage/Slott/various) · Ghost-Spider in Spider-Army roster">SGD</div>
+        <div class="vol vol-owned" title="Edge of Spider-Verse (2022) TPB · Marvel · ISBN 9781302947170 · 5-issue anthology (Vol 2) · Slott + various · introduces Spider-Rex, Sun-Spider, Night-Spider, Hunter-Spider, Princess Spinstress · Gwen among ensemble (minor role) · prelude to EOS">E22</div>
+        <div class="vol vol-owned" title="Spider-Man Vol 1: End of the Spider-Verse TPB · Marvel · ISBN 9781302946562 · Slott's Spider-Man 2022 #1–7 · Bagley art · Gwen among Spiders ensnared by Shathra · 2022–2023 event wrapping the Spider-Verse era">EOS</div>
+        <div class="vol vol-ordered" title="Spider-Society: Enter...the Spider-Versers TPB · Marvel 2025 · ISBN 9781302959272 · collects Spider-Society (2024) #1–4 + Web of Spider-Man (2024) #1 (Spider-Society story) · Segura/Godlewski · Arc-4 main event — team-vs-team with an evil Madame Web + a Gwen-Stacy Green Goblin variant villain · Ghost-Spider on Spider-Society team + evil-Gwen-Goblin villain">SPS</div>
+        <div class="vol vol-ordered" title="Spider-Verse Vs. Venomverse TPB · Marvel 2026 · ISBN 9781302961558 · 176pp · collects Spider-Verse Vs. Venomverse (2025) #1–5 + Web of Spider-Verse: New Blood + Web of Venomverse: Fresh Brains · Higgins/Groom · Vecchio/Towe art · Spider-Verse vs Venomverse multiversal crossover">SVV</div>
+        <span class="track-count">0 / 9 read · 2 owned · 7 ordered</span>
+      </div>
+      <div class="edition-track">
+        <span class="track-label">Self-contained TPBs — Spider-Verse without Spider-Gwen (Gwen not in roster)</span>
+        <div class="vol vol-ordered" title="Edge of Spider-Geddon TPB · Marvel · ISBN 9781302914745 · 4-issue anthology prelude to Spider-Geddon · Spider-Punk (Hobie Brown), Peni Parker, Ben Parker of Earth-91918, Kobold · no Gwen">ESG</div>
+        <div class="vol vol-ordered" title="Spider-Verse: Spider-Zero TPB · Marvel · ISBN 9781302920265 · collects Spider-Verse (2019) #1–6 · Miles-led mini · MacKay + others · Master Weaver Spider-Zero recruits Miles to save the multiverse · Spider-Ma'am (Aunt May), Peni Parker, Spider-Man Noir, Sheriff Stacy · no Gwen">SPZ</div>
+        <div class="vol vol-ordered" title="Edge of Spider-Verse: Bleeding Edge TPB · Marvel 2023 · ISBN 9781302953386 · collects Edge of Spider-Verse (2023) #1–4 · Vol 3 anthology · Slott + Pere Perez · Spider-Rex vs Venomsaurus, Spider-Killer, Spinstress, Billie Morales as Spider-Smasher · post-EOS Edge-brand continuation · no Gwen">E23</div>
+        <div class="vol vol-ordered" title="Edge of Spider-Verse: Spider-Society TPB · Marvel 2024 · ISBN 9781302957506 · collects Edge of Spider-Verse (2024) #1–4 · Vol 4 anthology · introduces Weapon VIII, Spooky-Man, Star-Spider, Spider-Woman variant, Cyborg Spider-Man · Spider-Society branding tied to Across the Spider-Verse film · no Gwen">E24</div>
+        <span class="track-count">0 / 4 read · 4 ordered</span>
       </div>
       <div class="edition-track">
         <span class="track-label">Ongoing series collections</span>
@@ -1893,8 +2034,8 @@
       <div class="edition-track">
         <span class="track-label">Collections (Modern Era Epic + event omnibuses + Panini)</span>
         <div class="vol vol-ordered" title="Spider-Verse (2015) TPB · Marvel · ISBN 9780785190363 · ~650pp · original 2014–2015 Spider-Verse event · collects ASM (2014) #7–15 + Superior Spider-Man #32–33 + Spider-Verse (2015) #1–2 + Spider-Verse Team-Up #1–3 + Scarlet Spiders #1–3 + Spider-Woman (2014) #1–4 + Spider-Man 2099 (2014) #5–8 · Slott + Gage / Coipel · Inheritors event, Gwen among assembled Spiders">SPV</div>
-        <div class="vol vol-owned" title="Spider-Gwen Omnibus Vol. 1 · Panini UK (2023) · ISBN 9781804910467 · Edge of Spider-Verse #2 + Spider-Gwen v1 #1–5 + Spider-Gwen v2 #1–6 · collected from the 2015 ongoing series">OMN</div>
-        <div class="vol vol-owned" title="E1 · Edge of Spider-Verse · ISBN 9781302949983 · origin + v1 + v2 #1–8 + Spider-Women crossover event">E1</div>
+        <div class="vol vol-read" title="Spider-Gwen Omnibus Vol. 1 · Panini UK (2023) · ISBN 9781804910467 · Edge of Spider-Verse #2 + Spider-Gwen v1 #1–5 + Spider-Gwen v2 #1–6 · read (was the carry-around copy, less-pity-if-damaged choice paid off)">OMN</div>
+        <div class="vol vol-reading" title="E1 · Edge of Spider-Verse · ISBN 9781302949983 · origin + v1 + v2 #1–8 + Spider-Women crossover event · currently reading (the better-physical-object Epic edition, now that OMN is done)">E1</div>
         <div class="vol vol-owned" title="E2 · Weapon of Choice · ISBN 9781302956356 · v2 #9–24 &amp; Annual + All-New Wolverine Annual + Spider-Man #12–14">E2</div>
         <div class="vol vol-owned" title="E3 · Gwenom · ISBN 9781302965891 · v2 #25–34 + Spider-Geddon tie-in + Spider-Gwen: Ghost-Spider (2018) #1–10">E3</div>
         <div class="vol vol-planned" title="E4 · Into the Gwenverse · ISBN 9781302969820 · Ghost-Spider (2019) #1–10 + Annual + King in Black: Gwenom vs Carnage + Gwenverse dupe · Sept 2026 release">E4</div>
@@ -1905,7 +2046,9 @@
       <summary>Series notes &amp; edition-track rationale</summary>
       <ul>
         <li><span class="label">What &amp; why:</span> Gwen Stacy as Spider-Woman in an alternate universe (Earth-65). Latour + Rodriguez created her in Edge of Spider-Verse #2 (Sept 2014). Namesake.</li>
-        <li><span class="label">Track 1 — Self-contained TPBs:</span> standalone limited-series adventures, anthology minis, and event collections — each one TPB, none requiring ongoing-series context. Gwen-starring miniseries: Gwenverse (2022, multiverse) + Shadow Clones (2023, clone-Sinister-Six) + Smash + Giant-Size (Dec 2023–Mar 2024, Carnage symbiote). Anthology / event TPBs where Gwen is among the featured Spiders: Edge of Spider-Verse 2022 (5-issue anthology, introduces Spider-Rex etc.) + End of the Spider-Verse (Slott's SM 2022 #1–7, wraps the Spider-Verse era) + What If...? Dark TPB (collects Spider-Gwen one-shot with 5 bonus one-shots — Conway inverting his own 1973 Death of Gwen).</li>
+        <li><span class="label">Track 1a — Self-contained TPBs all about Spider-Gwen:</span> Gwen is starring/headlining the book. Gwenverse (2022, multiverse-siblings) + Shadow Clones (2023, clone-Sinister-Six) + What If...? Dark TPB (contains the Spider-Gwen one-shot as anchor story — Conway inverting his own 1973 Death of Gwen) + Smash + Giant-Size (Dec 2023–Mar 2024, Carnage symbiote).</li>
+        <li><span class="label">Track 1b — Self-contained TPBs, Spider-Verse with Spider-Gwen:</span> Spider-Verse ensemble books where Gwen IS on the roster (starring or supporting). Edge Vol 1 (2014, Gwen origin in #2) + Web Warriors era (SW:SV + WW1 + WW2, Gwen as team member) + Spider-Geddon (Ghost-Spider in Spider-Army) + Edge Vol 2 (2022, Gwen ensemble) + End of the Spider-Verse (Gwen ensnared with other Spiders) + Spider-Society mini (Ghost-Spider on team + evil-Gwen-Goblin villain) + Spider-Verse Vs Venomverse.</li>
+        <li><span class="label">Track 1c — Self-contained TPBs, Spider-Verse without Spider-Gwen:</span> Spider-Verse ensemble books where Gwen is NOT in the roster. Edge of Spider-Geddon (Spider-Punk/Peni/Ben Parker/Kobold) + Spider-Zero (Miles-led) + Bleeding Edge (Spider-Rex/Spinstress/Billie Morales) + Edge Vol 4 (Weapon VIII/Spooky-Man/Star-Spider). Retired the team-book-gate — the entire Spider-Verse concept is inherently team-book, so completing without-Gwen arcs is defensible.</li>
         <li><span class="label">Track 2 — Ongoing series collections (EN + one DE):</span> the 2024 Phillips ongoing (Spider-Gwen: The Ghost-Spider #1–15) collected as HAU / UNR / UNC in EN across three Marvel TPBs. Also holds the single DE Panini volume "Ein neues Leben" (GS1) — same content as HAU, kept as the sole DE-shelf-presence; DE track continuation declined in favour of completing the run in EN. All-New Vol 1 (2025 relaunch) preorder pending — see (Pre)order pending subsection under Considering.</li>
         <li><span class="label">Track 3 — Collections (Modern Era Epic + event omnibuses + Panini):</span> the large multi-issue collections that cover major runs and events. SPV (original 2014–2015 Spider-Verse event by Slott/Coipel, ~650pp) + OMN (Panini UK Spider-Gwen Omnibus, 2015 ongoing series: origin + v1 + v2 #1–6, ~800pp) + Marvel Modern Era Epic Collection 4-vol sequence: E1 Edge of Spider-Verse / E2 Weapon of Choice / E3 Gwenom / E4 Into the Gwenverse. Some overlap accepted for character-anchor completionism (OMN + E1 double the origin material; E4 will double the Gwenverse-mini material). E4 releases Sept 2026 so lands last regardless.</li>
         <li><span class="label">Coverage reference:</span> see the Spider-Gwen coverage reference block at the end of the file for the full appearance-by-appearance table + overlap analysis.</li>
@@ -1914,7 +2057,7 @@
   </div>
 
   <!-- 1983–1996 ── APPLESEED · Dark Horse 3-book Shirow Masamune Deluxe Series -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Appleseed</div>
     <div class="series-edition">Deluxe Edition · 3-book series · EN · Dark Horse Manga · Shirow Masamune</div>
     <div class="badges">
@@ -1922,6 +2065,8 @@
       <span class="badge b-years">1983–1996</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-in-progress">Edition: In Progress</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-preorder" title="Appleseed Deluxe · 11 Aug 2026">DLX</div>
@@ -1943,13 +2088,15 @@
 
 
   <!-- 1986–1987 ── WATCHMEN · Deluxe HC -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Watchmen</div>
     <div class="series-edition">Deluxe Edition HC · EN · DC Comics · Alan Moore / Dave Gibbons / John Higgins</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1986–1987</span>
       <span class="badge b-demo">US</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Watchmen Deluxe Edition HC · DC 2013 · oversized HC, slight wave damage from cellar but paper intact · collects all 12 issues">DLX</div>
@@ -1967,13 +2114,15 @@
 
 
   <!-- 1989–1996 ── KYOKO OKAZAKI · artist umbrella (Pink / Helter Skelter) -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Kyoko Okazaki</div>
     <div class="series-edition">Artist Umbrella · One-Shots · EN · Vertical / Kodansha · Kyoko Okazaki</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1989–1996</span>
       <span class="badge b-demo">女性 Josei</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Pink (1989, NEW Punch Zaurus) · EN Vertical 2013, 256pp">PNK</div>
@@ -1995,7 +2144,7 @@
 
 
   <!-- 1992–forever ── SPAWN · Origins Vol 1-10 -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Spawn</div>
     <div class="series-edition">Origins Edition · EN · Image Comics · Todd McFarlane</div>
     <div class="badges">
@@ -2003,6 +2152,8 @@
       <span class="badge b-years">1992 →</span>
       <span class="badge b-demo">US</span>
       <span class="badge b-in-progress">Edition: In Progress</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Spawn Origins Vol 1 · Spawn #1–6 · ISBN 9781534313897">1</div>
@@ -2035,13 +2186,15 @@
 
 
   <!-- 1997 ── BLAME! -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">BLAME!</div>
     <div class="series-edition">English Master Edition incl. NOiSE · EN · Vertical / Kodansha · Tsutomu Nihei</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1997–2003</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="vol 1 · read">1</div>
@@ -2067,7 +2220,7 @@
 
 
   <!-- 1997 ── EDEN · Master Edition DE -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Eden — It's an Endless World</div>
     <div class="series-edition">Master Edition · DE · Egmont Manga · Hiroki Endo</div>
     <div class="badges">
@@ -2075,6 +2228,8 @@
       <span class="badge b-years">1997–2008</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-in-progress">Edition: In Progress</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="vol 1">1</div>
@@ -2099,13 +2254,15 @@
 
 
   <!-- 1998–2014 ── JUNKO MIZUNO · artist umbrella (one-shots, Last Gasp / Titan / IMHO) -->
-  <div class="series">
+  <div class="series" data-lang="EN FR" data-lang-display="EN + FR">
     <div class="series-title">Junko Mizuno</div>
     <div class="series-edition">Kawaii-Noir One-Shots · EN + FR · Last Gasp / Viz / Titan / IMHO · Junko Mizuno</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1998–2014</span>
       <span class="badge b-demo">少女 Shōjo</span>
+      <span class="badge b-lang" data-lang="EN">EN</span> <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Pure Trance (1998) · Last Gasp EN">PT</div>
@@ -2132,13 +2289,15 @@
 
 
   <!-- 1998–1999 ── UZUMAKI · Deluxe Edition (3-in-1 HC) -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Uzumaki</div>
     <div class="series-edition">Deluxe Edition (3-in-1 HC) · EN · VIZ Signature · Junji Ito</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1998–1999</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Uzumaki Deluxe · collects original tankobon 1–3">DLX</div>
@@ -2156,7 +2315,7 @@
 
 
   <!-- 1998 ── VAGABOND · Master Edition DE  ── INCOMPLETE (HIATUS) -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Vagabond</div>
     <div class="series-edition">Master Edition · DE · Egmont Manga · Takehiko Inoue</div>
     <div class="badges">
@@ -2164,6 +2323,8 @@
       <span class="badge b-years">1998–2015 →</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-in-progress">Edition: In Progress</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="vol 1">1</div>
@@ -2202,13 +2363,15 @@
 
 
   <!-- 1999–2003 ── THE MATRIX COMICS · 20th Anniversary Edition HC -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">The Matrix Comics</div>
     <div class="series-edition">20th Anniversary Edition · EN · Burlyman Entertainment · Wachowskis + all-star creator slate</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">1999–2003 + 2019 extras</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="The Matrix Comics 20th Anniversary Edition · 400pp oversized deluxe HC · 28 stories · ISBN 9781932700572">TMC</div>
@@ -2228,7 +2391,7 @@
 
 
   <!-- 2001–2016 ── DJINN · Intégrale 3-vol · FR Dargaud -->
-  <div class="series">
+  <div class="series" data-lang="FR" data-lang-display="FR">
     <div class="series-title">Djinn</div>
     <div class="series-edition">Intégrale · 3-vol HC · FR · Dargaud · Jean Dufaux / Ana Miralles</div>
     <div class="badges">
@@ -2236,6 +2399,8 @@
       <span class="badge b-years">2001–2016</span>
       <span class="badge b-demo">BD</span>
       <span class="badge b-native">Edition: Native</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Intégrale T1 · Cycle Ottoman · albums 1–4 · ISBN 9782505018049">I1</div>
@@ -2256,13 +2421,15 @@
 
 
   <!-- 2003 ── BLAME! AND SO ON · Glénat FR expanded artbook -->
-  <div class="series">
+  <div class="series" data-lang="FR" data-lang-display="FR">
     <div class="series-title">BLAME! and So On</div>
     <div class="series-edition">Companion artbook · FR Glénat expanded edition · Tsutomu Nihei · 30×21cm SC</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2003 / 2019</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="BLAME! and So On · Glénat FR 2019 EXPANDED edition · 152pp 30×21cm SC with dust jacket · BLAME! + NOiSE color art + Marvel Wolverine + Mignola Hellboy collabs + Megalomania architectural Tokyo project + unpublished 'Dead Heads' story + cross-interviews with Enki Bilal &amp; Guillermo del Toro · ISBN 9782344034682">B&amp;SO</div>
@@ -2281,8 +2448,33 @@
   </div>
 
 
+  <!-- 2003 ── WOLVERINE: SNIKT! · Nihei × Marvel one-shot -->
+  <div class="series" data-lang="EN" data-lang-display="EN">
+    <div class="series-title">Wolverine: Snikt!</div>
+    <div class="series-edition">Marvel Tsunami one-shot · EN · Viz Media (2019 reprint) · Tsutomu Nihei</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete</span>
+      <span class="badge b-years">2003</span>
+      <span class="badge b-demo">US</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Wolverine: Snikt! · Viz Media 2019 reprint TPB · ISBN 9781974738533 · collects Marvel Tsunami 5-issue mini (2003) · Wolverine sent into a post-apocalyptic future to fight machines · full Nihei-density megastructure rendering around a Marvel character · illustrations previewed in BLAME! and So On artbook">SNK</div>
+      <span class="vol-count">0 / 1 owned · 1 ordered</span>
+    </div>
+    <details class="detail">
+      <summary>Series notes</summary>
+      <ul>
+        <li><span class="label">What &amp; why:</span> Nihei × Marvel (Tsunami imprint) 5-issue mini, 2003. Wolverine sent into a post-apocalyptic future — full Nihei megastructure/machine-horror rendering around a Marvel character. Distinctive East-meets-West superhero collab.</li>
+        <li><span class="label">Edition:</span> Viz Media 2019 reprint TPB (ISBN 9781974738533) — modern accessible edition. Original 2003 Marvel Tsunami floppies are collector territory.</li>
+        <li><span class="label">Cluster fit:</span> Nihei row (sits between BLAME! and So On artbook which contains Snikt! preview art, and Biomega). Also part of the Anglophone US cluster.</li>
+      </ul>
+    </details>
+  </div>
+
+
   <!-- 2004–2009 ── BIOMEGA · Master Edition DE -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Biomega</div>
     <div class="series-edition">Master Edition · DE · Manga Cult (Cross Cult) · Tsutomu Nihei</div>
     <div class="badges">
@@ -2290,6 +2482,8 @@
       <span class="badge b-years">2004–2009</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-in-progress">Edition: In Progress</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-preorder" title="Master Edition 1 (= original vols 1–2) · 12.08.2026 · 16×24cm SC · 428 pp · 30 EUR · ISBN 9783757307394">1</div>
@@ -2323,17 +2517,19 @@
 
 
   <!-- 2005–2006 ── ABARA · Tsutomu Nihei · Manga Cult Master Edition DE -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Abara</div>
     <div class="series-edition">Master Edition · DE · Manga Cult · Tsutomu Nihei · trans. Jan-Christoph Müller</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2005–2006</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
-      <div class="vol vol-reading" title="Abara Master Edition · Manga Cult 2022 · 412pp oversized HC · ISBN 9783964337177 · collects JP tankōbon 1–2 (Ultra Jump 2005–06) + Digimortal short-story bonus · color pages preserved · currently reading">ME</div>
-      <span class="vol-count">1 / 1 owned · currently reading</span>
+      <div class="vol vol-read" title="Abara Master Edition · Manga Cult 2022 · 412pp oversized HC · ISBN 9783964337177 · collects JP tankōbon 1–2 (Ultra Jump 2005–06) + Digimortal short-story bonus · color pages preserved · read">ME</div>
+      <span class="vol-count">1 / 1 owned · 1 / 1 read</span>
     </div>
     <details class="detail">
       <summary>Box contents</summary>
@@ -2348,13 +2544,15 @@
 
 
   <!-- 2008 ── TONO MONOGATARI · Mizuki Shigeru · D&Q HC EN -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Tono Monogatari</div>
     <div class="series-edition">Single Volume HC · EN · Drawn &amp; Quarterly · Mizuki Shigeru (adapting Yanagita Kunio) · trans. Zack Davisson</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2008</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-ordered" title="Tono Monogatari · 200pp HC · D&amp;Q 2021 · trans. Zack Davisson · ISBN 9781770463776">TM</div>
@@ -2372,13 +2570,15 @@
 
 
   <!-- 2013–2019 ── ELRIC · Gesamtausgabe DE Splitter (Blondel/Recht adaptation) -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Elric</div>
     <div class="series-edition">Gesamtausgabe · DE · Splitter · Blondel + Cano / Recht + Poli + Bastide + Telo</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2013–2019</span>
       <span class="badge b-demo">BD</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Elric Gesamtausgabe · Splitter DE 2021 · collects Glénat FR albums 1–4 (Le Trône de Rubis / Stormbringer / Le Loup Blanc / La Perle Noire) · 240pp HC 32×23cm oversized · ~30pp making-of · Moorcock foreword · ISBN 9783967922417">GA</div>
@@ -2396,13 +2596,15 @@
 
 
   <!-- 2015–2022 ── DESCENDER / ASCENDER · Deluxe Edition HC set -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Descender / Ascender</div>
     <div class="series-edition">Deluxe Edition HC set · EN · Image · Jeff Lemire / Dustin Nguyen</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2015–2022</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Descender Deluxe Vol 1 · #1–16 · read">D1</div>
@@ -2423,13 +2625,15 @@
 
 
   <!-- 2014 ── ALL YOU NEED IS KILL · Single Omnibus -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">All You Need Is Kill</div>
     <div class="series-edition">Single Omnibus · EN · VIZ Media (Shonen Jump Advanced) · Ryosuke Takeuchi (story) / Takeshi Obata (art)</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2014</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="All You Need Is Kill 2-in-1 Omnibus · collects both tankobon vols + colour inserts · ISBN 9781421576015">OMN</div>
@@ -2450,13 +2654,15 @@
 
 
   <!-- 2015–2016 ── TOKYO GHOST · Complete Edition DE -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Tokyo Ghost</div>
     <div class="series-edition">Complete Edition · DE · Splitter Verlag · Rick Remender / Sean Murphy</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2015–2016</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Tokyo Ghost Complete · #1–10">CE</div>
@@ -2474,13 +2680,15 @@
 
 
   <!-- 2015–2017 ── DARTH VADER · Marvel Omnibus 2-vol -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Darth Vader</div>
     <div class="series-edition">Omnibus · 2-vol HC · EN · Marvel · Kieron Gillen + Charles Soule</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2015–2018</span>
       <span class="badge b-demo">US</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Darth Vader Omnibus Vol 1 · Kieron Gillen (writer) + Salvador Larroca (art) · collects Darth Vader (2015) #1–25 + Vader Down crossover · between A New Hope and Empire">V1</div>
@@ -2498,13 +2706,15 @@
 
 
   <!-- 2015 ── MORTAL KOMBAT X · DC Comics tie-in -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Mortal Kombat X</div>
     <div class="series-edition">Vols 1–3 · EN · DC Comics · Shawn Kittelsen</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2015</span>
       <span class="badge b-demo">US</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read" title="Mortal Kombat X Vol 1">1</div>
@@ -2521,26 +2731,56 @@
   </div>
 
 
+  <!-- 2016–2020 ── MATHIEU BABLET · Ankama Éditions Label 619 auteur SF BD -->
+  <div class="series" data-lang="FR" data-lang-display="FR">
+    <div class="series-title">Mathieu Bablet</div>
+    <div class="series-edition">Auteur BD umbrella · FR · Ankama Éditions Label 619 · Bablet writes/draws/colours</div>
+    <div class="badges">
+      <span class="badge b-complete">Series: Complete (each one-shot)</span>
+      <span class="badge b-years">2016–2020</span>
+      <span class="badge b-demo">BD</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
+    </div>
+    <div class="volumes">
+      <div class="vol vol-ordered" title="Shangri-La · Ankama Label 619 · Sep 2016 · 224pp HC · ISBN 9782359109696 · corporate transhumanism on a colony ship">SL</div>
+      <div class="vol vol-ordered" title="Carbone &amp; Silicium · Ankama Label 619 · Aug 2020 · 267pp HC · ISBN 9791033511960 · 300-year android odyssey through humanity's collapse · 2021 Fnac France Inter BD Prize · post-humanist dialogue with GITS/Blade Runner/Asimov tradition">CS</div>
+      <span class="vol-count">0 / 2 owned · 2 ordered (SL + CS)</span>
+    </div>
+    <details class="detail">
+      <summary>Artist + edition notes</summary>
+      <ul>
+        <li><span class="label">Why an umbrella:</span> Bablet does auteur one-shot BD (writes/draws/colours), same publisher (Ankama Label 619), each book self-contained. Mizuno precedent.</li>
+        <li><span class="label">Shangri-La (2016, 224pp HC):</span> corporate transhumanism on a colony ship. Bablet's SF breakout.</li>
+        <li><span class="label">Carbone &amp; Silicium (2020, 267pp HC):</span> two androids across 300 years — Carbone confronts human failure, Silicium contemplates beauty. GITS/Blade Runner/Asimov tradition with post-humanist refusal. 2021 Fnac France Inter BD Prize.</li>
+        <li><span class="label">Cluster:</span> Franco-Belgian BD row shelf-wise (Bilal, Djinn); Nihei row + GITS-tradition thematically.</li>
+      </ul>
+    </details>
+  </div>
+
+
   <!-- 2017–2022 ── APOSIMZ · Tsutomu Nihei -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">APOSIMZ</div>
     <div class="series-edition">Manga Cult Klappenbroschur · DE · Manga Cult (Cross Cult imprint) · Tsutomu Nihei · trans. Jan-Christoph Müller</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2017–2022</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
-      <div class="vol vol-owned" title="Band 1 · Cross Cult prefix (pre-Manga-Cult-imprint launch) · ISBN 9783959817066">1</div>
-      <div class="vol vol-owned" title="Band 2 · Manga Cult · ISBN 9783964330680">2</div>
-      <div class="vol vol-owned" title="Band 3 · Manga Cult · ISBN 9783964331168">3</div>
-      <div class="vol vol-owned" title="Band 4 · Manga Cult · ISBN 9783964332202">4</div>
-      <div class="vol vol-owned" title="Band 5 · Manga Cult · ISBN 9783964332912">5</div>
-      <div class="vol vol-owned" title="Band 6 · Manga Cult · ISBN 9783964334312">6</div>
-      <div class="vol vol-owned" title="Band 7 · Manga Cult · ISBN 9783964334329">7</div>
-      <div class="vol vol-owned" title="Band 8 · Manga Cult · ISBN 9783964334336">8</div>
-      <div class="vol vol-owned" title="Band 9 · Manga Cult · final · ISBN 9783964334343">9</div>
-      <span class="vol-count">9 / 9 owned · complete · Klappenbroschur 14×21cm</span>
+      <div class="vol vol-reading" title="Band 01 · Cross Cult prefix (pre-Manga-Cult-imprint launch) · ISBN 9783959817066 · currently reading">01</div>
+      <div class="vol vol-owned" title="Band 02 · Manga Cult · ISBN 9783964330680">02</div>
+      <div class="vol vol-owned" title="Band 03 · Manga Cult · ISBN 9783964331168">03</div>
+      <div class="vol vol-owned" title="Band 04 · Manga Cult · ISBN 9783964332202">04</div>
+      <div class="vol vol-owned" title="Band 05 · Manga Cult · ISBN 9783964332912">05</div>
+      <div class="vol vol-owned" title="Band 06 · Manga Cult · ISBN 9783964334312">06</div>
+      <div class="vol vol-owned" title="Band 07 · Manga Cult · ISBN 9783964334329">07</div>
+      <div class="vol vol-owned" title="Band 08 · Manga Cult · ISBN 9783964334336">08</div>
+      <div class="vol vol-owned" title="Band 09 · Manga Cult · final · ISBN 9783964334343">09</div>
+      <span class="vol-count">9 / 9 owned · complete · vol 01 currently reading · Klappenbroschur 14×21cm</span>
     </div>
     <details class="detail">
       <summary>Series notes</summary>
@@ -2557,13 +2797,15 @@
 
 
   <!-- 2018–2021 ── LOVE ME FOR WHO I AM · Kata Konayama -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Love Me For Who I Am</div>
     <div class="series-edition">English Paperback · EN · Seven Seas Entertainment · Kata Konayama</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2018–2021</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="vol 1">1</div>
@@ -2585,13 +2827,15 @@
 
 
   <!-- 2018–2023 ── MY GENDERLESS BOYFRIEND · Tamekou -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">My Androgynous Boyfriend</div>
     <div class="series-edition">German Paperback · DE · Hayabusa (Carlsen) · Tamekou</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2018–2023</span>
       <span class="badge b-demo">女性 Josei</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="My Androgynous Boyfriend 1 · Hayabusa DE">1</div>
@@ -2613,13 +2857,15 @@
 
 
   <!-- 2020–2021 ── IS LOVE THE ANSWER? · Uta Isaki -->
-  <div class="series">
+  <div class="series" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Is Love the Answer?</div>
     <div class="series-edition">Single Volume · DE · Hayabusa (Carlsen) · Uta Isaki</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2020–2021</span>
       <span class="badge b-demo">女性 Josei</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-read vol-borrowed" title="Is Love the Answer? · Hayabusa (Carlsen) 29.05.2024, ISBN 9783551803658 · read and loved · currently lent to Kais">1</div>
@@ -2637,17 +2883,19 @@
 
 
   <!-- 2020 ── DRAGMAN · Steven Appleby · Metropolitan Books EN -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Dragman</div>
     <div class="series-edition">Hardcover · EN · Metropolitan Books (Macmillan) · Steven Appleby</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2020</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
-      <div class="vol vol-ordered" title="Dragman · Metropolitan Books US HC · 336pp · Apr 2020 · ISBN 9781250172648">DM</div>
-      <span class="vol-count">0 / 1 owned · 1 ordered</span>
+      <div class="vol vol-owned" title="Dragman · Metropolitan Books US HC · 336pp · Apr 2020 · ISBN 9781250172648 · novel-trim 17×24cm (not comic-book format) · contains prose text alongside comics — hybrid graphic-novel object">DM</div>
+      <span class="vol-count">1 / 1 owned · novel-trim 17×24cm hybrid (comics + prose text)</span>
     </div>
     <details class="detail">
       <summary>Box contents</summary>
@@ -2662,13 +2910,15 @@
 
 
   <!-- 2023 → ── RAI RAI RAI · Yoshiaki · Shogakukan / Viz EN -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Rai Rai Rai</div>
     <div class="series-edition">EN Viz paperback · Yoshiaki</div>
     <div class="badges">
       <span class="badge b-ongoing">Series: Ongoing</span>
       <span class="badge b-years">2023 →</span>
       <span class="badge b-demo">少年 Shōnen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Vol 1 · EN Viz · Aug 2025 · series debut">1</div>
@@ -2694,13 +2944,15 @@
 
 
   <!-- 2024 ── LA ROUTE · Larcenet adapts McCarthy · borrowed from brother -->
-  <div class="series">
+  <div class="series" data-lang="FR" data-lang-display="FR">
     <div class="series-title">La Route</div>
     <div class="series-edition">Single Volume · FR · Dargaud · Manu Larcenet (adapting Cormac McCarthy)</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">2024</span>
       <span class="badge b-demo">BD</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-borrowed" title="La Route · Manu Larcenet's 2024 BD adaptation of Cormac McCarthy's The Road · single oversized HC · Dargaud · BORROWED FROM BROTHER (book physically with Gwen, ownership with brother)">LR</div>
@@ -2717,7 +2969,7 @@
 
 
   <!-- 2025– ── CYBORGS · Soleil BD  ── ONGOING (FR original, switched from DE Splitter) -->
-  <div class="series">
+  <div class="series" data-lang="FR" data-lang-display="FR">
     <div class="series-title">Cyborgs</div>
     <div class="series-edition">BD album · FR · Éditions Soleil · Jean-Luc Istin (scénario)</div>
     <div class="badges">
@@ -2725,6 +2977,8 @@
       <span class="badge b-years">2025 →</span>
       <span class="badge b-demo">BD</span>
       <span class="badge b-native">Edition: Native</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="T1 Ronin (09 Apr 2025) · art Kael Ngu · Yuko, born disabled with plastic prosthetics, flees Tudor's euthanasia law">1</div>
@@ -2750,13 +3004,15 @@
 
 
   <!-- 2026 ── CYBERPUNK: EDGERUNNERS MADNESS · Dark Horse Manga -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Cyberpunk: Edgerunners MADNESS</div>
     <div class="series-edition">Dark Horse Manga · EN · Bartosz Sztybor (writer) / Asano (art)</div>
     <div class="badges">
       <span class="badge b-ongoing">Series: Ongoing</span>
       <span class="badge b-years">2026 →</span>
       <span class="badge b-demo">青年 Seinen</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-owned" title="Vol 1 · MADNESS · Dark Horse Manga · Feb 2026 · 13×18.5cm paperback · ISBN 9781506752921 · Rebecca and Pilar's story before the anime · CD Projekt Red-official prequel">1</div>
@@ -2777,7 +3033,7 @@
 
 
   <!-- ~2024 ── RONIN OF OKANE · Cyber Sheep indie hardcover series -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Ronin of Okane</div>
     <div class="series-edition">Hardcover · EN · Cyber Sheep Studios · Michael Pachidamrong et al.</div>
     <div class="badges">
@@ -2785,6 +3041,8 @@
       <span class="badge b-years">~2024 →</span>
       <span class="badge b-demo">Indie GN</span>
       <span class="badge b-native">Edition: Native</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-ordered" title="vol 1 · hardcover">1</div>
@@ -2809,13 +3067,15 @@
 
 
   <!-- ~2025 ── ME & MY NEKOMATA · Ronin of Okane spinoff -->
-  <div class="series">
+  <div class="series" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Me &amp; My Nekomata</div>
     <div class="series-edition">Hardcover · EN · Cyber Sheep Studios · Michael Pachidamrong et al.</div>
     <div class="badges">
       <span class="badge b-complete">Series: Complete</span>
       <span class="badge b-years">~2025</span>
       <span class="badge b-demo">Indie GN</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-preorder" title="Me &amp; My Nekomata · 26pp one-shot · Nov 2026">1</div>
@@ -2845,7 +3105,7 @@
        so Gwen doesn't forget release dates. -->
 
   <!-- Sept 2026 ── All-New Spider-Gwen Vol 1 (2025 relaunch EN TPB) -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">All-New Spider-Gwen: The Ghost-Spider Vol 1</div>
     <div class="series-edition">Marvel TPB · EN · Phillips (writer) / Villanelli (art)</div>
     <div class="badges">
@@ -2853,6 +3113,8 @@
       <span class="badge b-years">2025 →</span>
       <span class="badge b-demo">US</span>
       <span class="badge b-considering">Preorder pending</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-planned" title="Marvel TPB · 240pp · ISBN 9781302967291 · releases 8 September 2026 · collects All-New Spider-Gwen: The Ghost-Spider (2025) #1–10 + Spider-Gwen: The Ghost-Spider (2024) #15 B-story · direct continuation of the 2024 series (HAU / UNR / UNC)">V1</div>
@@ -2870,7 +3132,7 @@
   </div>
 
   <!-- Sept 2026 ── Modern Era Epic Collection Vol 4: Into the Gwenverse -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Spider-Gwen: Ghost-Spider Modern Era Epic Collection Vol 4 — Into the Gwenverse</div>
     <div class="series-edition">Marvel oversized paperback · EN · Ghost-Spider (2019) #1–10 + Annual + King in Black: Gwenom vs Carnage + Gwenverse dupe</div>
     <div class="badges">
@@ -2878,6 +3140,8 @@
       <span class="badge b-years">2019–2022 material</span>
       <span class="badge b-demo">US</span>
       <span class="badge b-considering">Preorder pending</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-planned" title="Marvel oversized PB · ISBN 9781302969820 · releases 29 September 2026 · closes out the 4-vol Modern Era Epic Collection covering the 2014–2022 Spider-Gwen material">E4</div>
@@ -2900,7 +3164,7 @@
 
 
   <!-- 2003 ── JUNKO MIZUNO · Pelu (sibling to Owned umbrella) -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Junko Mizuno</div>
     <div class="series-edition">Further One-Shots · EN · Last Gasp · Junko Mizuno</div>
     <div class="badges">
@@ -2908,6 +3172,8 @@
       <span class="badge b-years">2003</span>
       <span class="badge b-demo">少女 Shōjo</span>
       <span class="badge b-considering">Status: Considering</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Pilou, l'apprenti gigolo T1 / Little Fluffy Gigolo Pelu Vol 1 · originally ファンシージゴロ ペル T1 (JP Enterbrain, 2003). Fluffy alien gigolo from the all-female planet Kotobuki seduces Earth women; male protagonist.">P1</div>
@@ -2929,7 +3195,7 @@
 
 
   <!-- 2016 ── THE BRIDE WAS A BOY · Chii -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">The Bride Was a Boy</div>
     <div class="series-edition">Single Volume · EN · Seven Seas Entertainment · Chii</div>
     <div class="badges">
@@ -2937,6 +3203,8 @@
       <span class="badge b-years">2016</span>
       <span class="badge b-demo">女性 Josei</span>
       <span class="badge b-considering">Status: Considering</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="The Bride Was a Boy · single tankobon, autobiographical four-koma">1</div>
@@ -2958,7 +3226,7 @@
 
 
   <!-- 2018–2020 ── RUN AWAY WITH ME, GIRL · Battan -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Run Away with Me, Girl</div>
     <div class="series-edition">English Paperback · EN · Kodansha USA · Battan</div>
     <div class="badges">
@@ -2966,6 +3234,8 @@
       <span class="badge b-years">2018–2020</span>
       <span class="badge b-demo">女性 Josei</span>
       <span class="badge b-considering">Status: Considering</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="vol 1">1</div>
@@ -2991,7 +3261,7 @@
 
 
   <!-- 1967–2010 ── VALÉRIAN ET LAURELINE · Intégrale (Dargaud FR) -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="FR" data-lang-display="FR">
     <div class="series-title">Valérian et Laureline</div>
     <div class="series-edition">Intégrale · 7-vol HC · FR · Dargaud (Hors Collection) · Pierre Christin (scénario) / Jean-Claude Mézières (dessin)</div>
     <div class="badges">
@@ -2999,6 +3269,8 @@
       <span class="badge b-years">1967–2010</span>
       <span class="badge b-demo">BD</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="FR">FR</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Intégrale T1 · Les Mauvais Rêves + La Cité des eaux mouvantes + L'Empire des mille planètes · Sept 2016">1</div>
@@ -3023,7 +3295,7 @@
 
 
   <!-- 1970–1976 ── LONE WOLF AND CUB · Koike / Kojima · Master Edition DE -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Lone Wolf and Cub / Kozure Ōkami</div>
     <div class="series-edition">Master Edition · DE · Panini Manga · Kazuo Koike (story) / Goseki Kojima (art)</div>
     <div class="badges">
@@ -3031,6 +3303,8 @@
       <span class="badge b-years">1970–1976</span>
       <span class="badge b-demo">青年 Seinen</span>
           <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="ME 1 · 18.5×25.5cm HC w/ Schutzumschlag · ~710pp · €30 · ISBN 9783741627965 · 31.01.2023">1</div>
@@ -3059,7 +3333,7 @@
 
 
   <!-- 2000–2009 ── NANA · Ai Yazawa (25th Anniversary Edition) -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Nana</div>
     <div class="series-edition">25th Anniversary Edition (2-in-1 omnibus) · EN · VIZ Media · Ai Yazawa</div>
     <div class="badges">
@@ -3067,6 +3341,8 @@
       <span class="badge b-years">2000–2009</span>
       <span class="badge b-demo">女性 Josei</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Omnibus 1 (collects original vols 1–2) · available">1</div>
@@ -3098,7 +3374,7 @@
 
 
   <!-- 2006–2012 ── 42 · INTERGALAKTISCHE AGENTEN · Splitter Ferienpaket DE -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="DE" data-lang-display="DE">
     <div class="series-title">42 – Intergalaktische Agenten</div>
     <div class="series-edition">Ferienpaket (Bd. 1-5) · DE · Splitter-Verlag · Stéphane Louis (scénario) + rotating artists per album</div>
     <div class="badges">
@@ -3106,6 +3382,8 @@
       <span class="badge b-years">2006–2012</span>
       <span class="badge b-demo">BD</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Bd. 1 — Nitaar (Soleil 2006) · art: Sébastien Lamirand">1</div>
@@ -3128,7 +3406,7 @@
 
 
   <!-- 2003–2009 ── PLUTO · Naoki Urasawa (with Tezuka Productions) -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="DE" data-lang-display="DE">
     <div class="series-title">Pluto</div>
     <div class="series-edition">Carlsen 8-vol Klappenbroschur set · DE · Carlsen Manga · Naoki Urasawa + Takashi Nagasaki (co-writer) · supervised by Macoto Tezuka / Tezuka Productions</div>
     <div class="badges">
@@ -3136,6 +3414,8 @@
       <span class="badge b-years">2003–2009</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="DE">DE</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Pluto Band 1 · Carlsen DE Klappenbroschur · 14.5×21cm · Jürgen Seebeck translation">P1</div>
@@ -3162,7 +3442,7 @@
 
 
   <!-- 2012–2014 ── PROPHET · Brandon Graham revival · Image -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Prophet</div>
     <div class="series-edition">Brandon Graham revival run · EN · Image Comics · Brandon Graham (writer/artist) + Simon Roy / Farel Dalrymple / Giannis Milonogiannis (rotating artists)</div>
     <div class="badges">
@@ -3170,6 +3450,8 @@
       <span class="badge b-years">2012–2014</span>
       <span class="badge b-demo">US</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Remission · trade vol 1 · collects Prophet #21–26 · ISBN 9781607066118">1</div>
@@ -3190,7 +3472,7 @@
 
 
   <!-- 2015–ongoing ── MONSTRESS · Marjorie Liu / Sana Takeda · Image -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Monstress</div>
     <div class="series-edition">English Trade · EN · Image Comics · Marjorie Liu (writer) / Sana Takeda (art)</div>
     <div class="badges">
@@ -3198,6 +3480,8 @@
       <span class="badge b-years">2015 →</span>
       <span class="badge b-demo">US</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="Awakening · trade vol 1 · collects Monstress #1–6">1</div>
@@ -3223,7 +3507,7 @@
 
 
   <!-- 2016–2019 ── ORIGIN · Boichi ── LOW-PROBABILITY -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Origin</div>
     <div class="series-edition">English Paperback · EN · Vertical Comics / Kodansha USA · Boichi</div>
     <div class="badges">
@@ -3231,6 +3515,8 @@
       <span class="badge b-years">2016–2019</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="vol vol-shelved" title="vol 1">1</div>
@@ -3260,7 +3546,7 @@
 
 
   <!-- 2016 ── WITCH HAT ATELIER · Kamome Shirahama -->
-  <div class="series series-considering">
+  <div class="series series-considering" data-lang="EN" data-lang-display="EN">
     <div class="series-title">Witch Hat Atelier</div>
     <div class="series-edition">Two alternate edition tracks · EN · Kodansha USA · Kamome Shirahama</div>
     <div class="badges">
@@ -3268,6 +3554,8 @@
       <span class="badge b-years">2016 →</span>
       <span class="badge b-demo">青年 Seinen</span>
       <span class="badge b-low-prob">Status: Low probability</span>
+      <span class="badge b-lang" data-lang="EN">EN</span>
+    
     </div>
     <div class="volumes">
       <div class="edition-track">
@@ -3347,12 +3635,12 @@
           <td class="sg-issues">1 one-shot</td>
           <td class="sg-team">Latour / Rodriguez</td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
-          <td class="sg-cov"><span class="sg-chip owned">OMN</span> <span class="sg-chip owned">E1</span></td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov"><span class="sg-chip owned">OMN</span> <span class="sg-chip owned">E1</span> <span class="sg-chip ordered" title="Amazing Spider-Man: Edge of Spider-Verse TPB · ISBN 9780785197287 · Vol 1 anthology · collects Edge (2014) #1–5">E14</span></td>
+          <td class="sg-cov">✅</td>
         </tr>
         <tr>
           <td class="sg-num">2</td>
-          <td class="sg-series">Spider-Verse <span style="color:var(--dim);font-weight:400">(Slott ASM #7–15 + tie-ins · original Inheritors event)</span></td>
+          <td class="sg-series">Spider-Verse <span style="color:var(--dim);font-weight:400">(Slott ASM #7–15 + tie-ins · original Inheritors event · <button class="sv-order-btn" onclick="document.getElementById('svReadingOrder').showModal()">reading order</button>)</span></td>
           <td class="sg-year">Nov 2014–Apr 2015</td>
           <td class="sg-issues">ASM #7–15 + tie-ins</td>
           <td class="sg-team">Slott + Gage / Coipel</td>
@@ -3368,35 +3656,35 @@
           <td class="sg-team">Latour / Rodriguez</td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
           <td class="sg-cov"><span class="sg-chip owned">OMN</span> <span class="sg-chip owned">E1</span></td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov">✅</td>
         </tr>
-        <tr>
+<tr>
           <td class="sg-num">4</td>
-          <td class="sg-series">Secret Wars: Spider-Verse</td>
-          <td class="sg-year">2015</td>
-          <td class="sg-issues">5</td>
-          <td class="sg-team">Bunn / Failla</td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
-        </tr>
-        <tr>
-          <td class="sg-num">5</td>
           <td class="sg-series">Spider-Gwen v2</td>
           <td class="sg-year">Oct 2015–Jun 2018</td>
           <td class="sg-issues">34 + Annual #1</td>
           <td class="sg-team">Latour + others</td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
           <td class="sg-cov"><span class="sg-chip owned">OMN</span> <span style="color:var(--dim);font-size:9px">#1–6</span> <span class="sg-chip owned">E1</span> <span class="sg-chip owned">E2</span> <span class="sg-chip owned">E3</span></td>
+          <td class="sg-cov">✅</td>
+        </tr>
+        <tr>
+          <td class="sg-num">5</td>
+          <td class="sg-series">Secret Wars: Spider-Verse <span style="color:var(--dim);font-weight:400">(Battleworld Arachnia mini · kicks off the Web Warriors team)</span></td>
+          <td class="sg-year">2015</td>
+          <td class="sg-issues">5</td>
+          <td class="sg-team">Costa / Araujo</td>
+          <td class="sg-cov"><span class="sg-chip ordered">SWV</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
         </tr>
         <tr>
           <td class="sg-num">6</td>
-          <td class="sg-series">Web Warriors (team book)</td>
+          <td class="sg-series">Web Warriors <span style="color:var(--dim);font-weight:400">(ongoing team book on Earth-001 · Costa continues from SW:SV)</span></td>
           <td class="sg-year">2015–2016</td>
           <td class="sg-issues">11</td>
-          <td class="sg-team">Costa / Failla</td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-team">Costa / Baldeon</td>
+          <td class="sg-cov"><span class="sg-chip ordered">WW1</span> <span class="sg-chip ordered">WW2</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
         </tr>
@@ -3506,7 +3794,7 @@
           <td class="sg-year">2022</td>
           <td class="sg-issues">5 mini</td>
           <td class="sg-team">Slott + others</td>
-          <td class="sg-cov"><span class="sg-chip ordered" title="Edge of Spider-Verse (2022) TPB · ISBN 9781302947170 · collects #1–5 · introduces Spider-Rex, Sun-Spider, Night-Spider, Hunter-Spider, Princess Spinstress">ESV</span></td>
+          <td class="sg-cov"><span class="sg-chip owned" title="Edge of Spider-Verse (2022) TPB · ISBN 9781302947170 · Vol 2 anthology · collects #1–5 · introduces Spider-Rex, Sun-Spider, Night-Spider, Hunter-Spider, Princess Spinstress">E22</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
         </tr>
@@ -3552,13 +3840,13 @@
         </tr>
         <tr>
           <td class="sg-num">22</td>
-          <td class="sg-series">What If...? Dark: Spider-Gwen #1 <span style="color:var(--dim);font-weight:400">(one-shot · Conway inverts his own Death of Gwen · in WID TPB)</span></td>
+          <td class="sg-series">What If...? Dark: Spider-Gwen #1 <span style="color:var(--dim);font-weight:400">(one-shot · Conway inverts his own Death of Gwen)</span></td>
           <td class="sg-year">Jul 2023</td>
           <td class="sg-issues">1 one-shot</td>
           <td class="sg-team">Conway + Houser / Bachs</td>
           <td class="sg-cov"><span class="sg-chip ordered" title="What If...? Dark collected TPB · ISBN 9781302953263 · 200pp · +5 bonus one-shots: Loki, Venom, Moon Knight, Carnage, Tomb of Dracula">WID</span></td>
           <td class="sg-cov"><span class="sg-chip none">—</span></td>
-          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov">✅</td>
         </tr>
         <tr>
           <td class="sg-num">23</td>
@@ -3610,8 +3898,19 @@
         <span class="sg-chip planned">E4</span> = Vol 4 (29 Sept 2026 release — preorder pending)
         <br>
         <span class="sg-chip ordered">SPV</span> = Marvel Spider-Verse (2015) TPB — original 2014–2015 event, ~650pp (Slott/Coipel) · &nbsp;
-        <span class="sg-chip ordered">ESV</span> = Marvel Edge of Spider-Verse (2022) TPB (5-issue anthology) · &nbsp;
+        <span class="sg-chip ordered">E14</span> = Amazing Spider-Man: Edge of Spider-Verse TPB — Vol 1 anthology (2014, 5 issues) · &nbsp;
+        <span class="sg-chip owned">E22</span> = Marvel Edge of Spider-Verse (2022) TPB — Vol 2 anthology (5 issues) · &nbsp;
+        <span class="sg-chip ordered">E23</span> = Edge of Spider-Verse: Bleeding Edge TPB — Vol 3 anthology (2023, 4 issues) · &nbsp;
+        <span class="sg-chip ordered">E24</span> = Edge of Spider-Verse: Spider-Society TPB — Vol 4 anthology (2024, 4 issues) · &nbsp;
         <span class="sg-chip ordered">EOS</span> = Marvel Spider-Man Vol 1: End of the Spider-Verse TPB (Slott 2022 #1–7) · &nbsp;
+        <span class="sg-chip ordered">SGD</span> = Marvel Spider-Geddon TPB — 2018 sequel event (#0–5 + Vault of Spiders #1–2) · &nbsp;
+        <span class="sg-chip ordered">SPS</span> = Marvel Spider-Society: Enter...the Spider-Versers TPB — 2024 Arc-4 main mini (Segura/Godlewski) · &nbsp;
+        <span class="sg-chip ordered">SWV</span> = Marvel Spider-Verse: Warzones TPB — SW:SV 2015 5-issue mini (Costa/Araujo) · &nbsp;
+        <span class="sg-chip ordered">WW1</span> = Web Warriors of the Spider-Verse Vol 1: Electroverse TPB — WW #1–5 + ASM (2015) #1 material · &nbsp;
+        <span class="sg-chip ordered">WW2</span> = Web Warriors of the Spider-Verse Vol 2: Spiders Vs. TPB — WW #6–11 · &nbsp;
+        <span class="sg-chip ordered">ESG</span> = Marvel Edge of Spider-Geddon TPB — 2018 prelude anthology · &nbsp;
+        <span class="sg-chip ordered">SPZ</span> = Marvel Spider-Verse: Spider-Zero TPB — 2019-2020 Miles-led 6-issue mini · &nbsp;
+        <span class="sg-chip ordered">SVV</span> = Marvel Spider-Verse Vs. Venomverse TPB — 2025-2026 multiversal crossover (Higgins/Groom) · &nbsp;
         <span class="sg-chip ordered">WID</span> = Marvel What If...? Dark collected TPB (Spider-Gwen one-shot + 5 bonus stories)
       </p>
     </div>
@@ -3623,6 +3922,159 @@
       <p><strong>2018–2020:</strong> she spends significant time on Earth-616 — this is why she "guest stars" in Amazing Spider-Man. She's essentially a co-star of the main Spider-Man books for a while.</p>
       <p><strong>2022+:</strong> Marvel oscillates between "Spider-Gwen" and "Ghost-Spider" in titles depending on marketing. Same character, different marketing decisions per book. The confusion is real, not just mine.</p>
     </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2 class="section">Spider-Verse arcs · coverage reference</h2>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="sg-reference">
+    <div class="sg-intro">
+      Marvel's multiverse-of-Spiders concept, from the 2014-2015 launch through the 2024 Spider-Society mini. Anthology preludes marked <em>Prelude</em>; matched main events marked <em>Main event</em>; standalone anthologies (no matched main) marked <em>Anthology</em>. Chip labels resolve in the main Spider-Gwen entry legend.
+    </div>
+
+    <table class="sg-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Arc / Event</th>
+          <th>Year</th>
+          <th>Type</th>
+          <th style="text-align:center">Owned</th>
+          <th style="text-align:center">Read</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sg-num">1</td>
+          <td class="sg-series">Edge of Spider-Verse Vol 1 <span style="color:var(--dim);font-weight:400">(anthology prelude to Arc 1)</span></td>
+          <td class="sg-year">Sept–Dec 2014</td>
+          <td class="sg-year">Prelude</td>
+          <td class="sg-cov"><span class="sg-chip ordered">E14</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">2</td>
+          <td class="sg-series">Spider-Verse <span style="color:var(--dim);font-weight:400">(Arc 1 main event · Slott's ASM #7–15 + tie-ins · original Inheritors event)</span></td>
+          <td class="sg-year">Nov 2014–Apr 2015</td>
+          <td class="sg-year">Main event</td>
+          <td class="sg-cov"><span class="sg-chip ordered">SPV</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">3</td>
+          <td class="sg-series">Secret Wars: Spider-Verse <span style="color:var(--dim);font-weight:400">(Battleworld Arachnia mini · Costa/Araujo)</span></td>
+          <td class="sg-year">2015</td>
+          <td class="sg-year">Team-book prelude</td>
+          <td class="sg-cov"><span class="sg-chip ordered">SWV</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">4</td>
+          <td class="sg-series">Web Warriors <span style="color:var(--dim);font-weight:400">(ongoing team book · Costa/Baldeon)</span></td>
+          <td class="sg-year">2015–2016</td>
+          <td class="sg-year">Team-book ongoing</td>
+          <td class="sg-cov"><span class="sg-chip ordered">WW1</span> <span class="sg-chip ordered">WW2</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">5</td>
+          <td class="sg-series">Edge of Spider-Geddon <span style="color:var(--dim);font-weight:400">(anthology prelude to Spider-Geddon · 4 issues · Spider-Punk, Peni Parker, Ben Parker of Earth-91918, Kobold)</span></td>
+          <td class="sg-year">2018</td>
+          <td class="sg-year">Prelude</td>
+          <td class="sg-cov"><span class="sg-chip ordered" title="Edge of Spider-Geddon TPB · ISBN 9781302914745">ESG</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">6</td>
+          <td class="sg-series">Spider-Geddon <span style="color:var(--dim);font-weight:400">(sequel event · Inheritors return)</span></td>
+          <td class="sg-year">Sept–Dec 2018</td>
+          <td class="sg-year">Main event</td>
+          <td class="sg-cov"><span class="sg-chip ordered">SGD</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">7</td>
+          <td class="sg-series">Spider-Geddon tie-ins <span style="color:var(--dim);font-weight:400">(Spider-Force + Spider-Girls + Superior Octopus · not in SGD TPB)</span></td>
+          <td class="sg-year">2018</td>
+          <td class="sg-year">Tie-in bundle</td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">8</td>
+          <td class="sg-series">Spider-Verse: Spider-Zero <span style="color:var(--dim);font-weight:400">(6-issue Miles-led mini · MacKay + others · Master Weaver Spider-Zero recruits Miles to save multiverse · Spider-Ma'am, Peni Parker, Spider-Man Noir, Sheriff Stacy)</span></td>
+          <td class="sg-year">2019–2020</td>
+          <td class="sg-year">Main event (mini)</td>
+          <td class="sg-cov"><span class="sg-chip ordered" title="Spider-Verse: Spider-Zero TPB · ISBN 9781302920265">SPZ</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">9</td>
+          <td class="sg-series">Marvel's Voices: Spider-Verse <span style="color:var(--dim);font-weight:400">(one-shot anthology · Ghost-Spider story by Saint Bodhi / ChrisCross · also in Gwen table as skip)</span></td>
+          <td class="sg-year">2021</td>
+          <td class="sg-year">Anthology</td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">10</td>
+          <td class="sg-series">Edge of Spider-Verse Vol 2 <span style="color:var(--dim);font-weight:400">(anthology prelude to Arc 2)</span></td>
+          <td class="sg-year">Aug–Dec 2022</td>
+          <td class="sg-year">Prelude</td>
+          <td class="sg-cov"><span class="sg-chip owned">E22</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">11</td>
+          <td class="sg-series">End of the Spider-Verse <span style="color:var(--dim);font-weight:400">(Arc 2 main event · Slott's Spider-Man 2022 #1–7)</span></td>
+          <td class="sg-year">Oct 2022–Mar 2023</td>
+          <td class="sg-year">Main event</td>
+          <td class="sg-cov"><span class="sg-chip ordered">EOS</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">12</td>
+          <td class="sg-series">Spider-Verse Unlimited Infinity Comic <span style="color:var(--dim);font-weight:400">(Marvel Unlimited digital-only · 50+ issues · runs parallel to EOS era · Peni, Ghost-Spider, Silk, Madame Web, Noir + Daredevil Noir · never print-collected)</span></td>
+          <td class="sg-year">2022–2023</td>
+          <td class="sg-year">Digital anthology</td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">13</td>
+          <td class="sg-series">Edge of Spider-Verse Vol 3 — Bleeding Edge <span style="color:var(--dim);font-weight:400">(post-EOS annual anthology, no matched main)</span></td>
+          <td class="sg-year">2023</td>
+          <td class="sg-year">Anthology</td>
+          <td class="sg-cov"><span class="sg-chip ordered">E23</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">14</td>
+          <td class="sg-series">Edge of Spider-Verse Vol 4 — Spider-Society <span style="color:var(--dim);font-weight:400">(anthology prelude to Arc 4 · film-brand-tied)</span></td>
+          <td class="sg-year">2024</td>
+          <td class="sg-year">Prelude</td>
+          <td class="sg-cov"><span class="sg-chip ordered">E24</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">15</td>
+          <td class="sg-series">Spider-Society <span style="color:var(--dim);font-weight:400">(Arc 4 main mini · Segura/Godlewski · evil Madame Web + Gwen-Stacy Green Goblin villain team)</span></td>
+          <td class="sg-year">2024</td>
+          <td class="sg-year">Main event (mini)</td>
+          <td class="sg-cov"><span class="sg-chip ordered">SPS</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sg-num">16</td>
+          <td class="sg-series">Spider-Verse Vs. Venomverse <span style="color:var(--dim);font-weight:400">(5-issue multiversal crossover · Higgins/Groom · Vecchio/Towe · TPB includes Web of Spider-Verse: New Blood + Web of Venomverse: Fresh Brains tie-ins)</span></td>
+          <td class="sg-year">2025–2026</td>
+          <td class="sg-year">Main event (mini)</td>
+          <td class="sg-cov"><span class="sg-chip ordered" title="Spider-Verse Vs. Venomverse TPB · ISBN 9781302961558 · 176pp">SVV</span></td>
+          <td class="sg-cov"><span class="sg-chip none">—</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
 
@@ -3791,9 +4243,27 @@
   });
   html += '</div>';
 
-  // Card 2: Read progress + key ratios
+  // Tally languages across owned series (multi-lang counted in each)
+  var langCount = {};
+  ownedSeries.forEach(function (s) {
+    var lang = s.getAttribute('data-lang') || '';
+    lang.split(/\s+/).filter(Boolean).forEach(function (code) {
+      langCount[code] = (langCount[code] || 0) + 1;
+    });
+  });
+  var langRows = Object.keys(langCount).map(function (k) {
+    return { label: k, n: langCount[k] };
+  }).sort(function (a, b) { return b.n - a.n; });
+  var langMax = Math.max.apply(null, langRows.map(function (r) { return r.n; }).concat([1]));
+
+  // Card 2: Language breakdown + read progress + key ratio
   html += '<div class="stats-card">';
   html += '<div class="ctitle">Progress</div>';
+  html += '<div class="stats-subhead">By language</div>';
+  langRows.forEach(function (r) {
+    html += renderRow(r.label, r.n, langMax, '', pct(r.n, ownedSeries.length) + '% / series');
+  });
+  html += '<div class="stats-subhead">Reading progress</div>';
   html += renderRow('In shelf', inShelf, totalCommitted, '', pctShelfOfTotal + '%');
   html += renderRow('Pending',  pending, totalCommitted, 'b-mag', pct(pending, totalCommitted) + '%');
   html += renderRow('Read',     states.read, inShelf, 'b-bone', pctReadOfShelf + '% / shelf');
@@ -3815,6 +4285,56 @@
 })();
 </script>
 
+
+
+<dialog id="svReadingOrder" class="sv-order-dialog">
+  <button class="sv-close" onclick="this.closest('dialog').close()">&#10005; close</button>
+  <h3>Spider-Verse (2014–2015) reading order</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Section</th>
+        <th>Issue</th>
+        <th>Where within the book</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="sv-num">1</td><td class="sv-section">Prelude</td><td>Amazing Spider-Man (2014) #7</td><td class="sv-book">Prelude section (front of mega TPB)</td></tr>
+      <tr><td class="sv-num">2</td><td class="sv-section">Prelude</td><td>Amazing Spider-Man (2014) #8</td><td class="sv-book">Prelude section (front of mega TPB)</td></tr>
+      <tr><td class="sv-num">3</td><td class="sv-section">Prelude</td><td>Superior Spider-Man #32</td><td class="sv-book">Prelude section (front of mega TPB)</td></tr>
+      <tr><td class="sv-num">4</td><td class="sv-section">Prelude</td><td>Superior Spider-Man #33</td><td class="sv-book">Prelude section (front of mega TPB)</td></tr>
+      <tr><td class="sv-num">5</td><td class="sv-section">Prelude</td><td>Free Comic Book Day 2014 (Spider-Man story)</td><td class="sv-book">Prelude section (front of mega TPB)</td></tr>
+      <tr><td class="sv-num">6</td><td class="sv-section">Prelude</td><td>Edge of Spider-Verse #1</td><td class="sv-book">SEPARATE BOOK: Amazing Spider-Man: Edge of Spider-Verse TPB</td></tr>
+      <tr><td class="sv-num">7</td><td class="sv-section">Prelude</td><td>Edge of Spider-Verse #2 <span style="color:var(--yel)">(Spider-Gwen origin)</span></td><td class="sv-book">SEPARATE BOOK: Amazing Spider-Man: Edge of Spider-Verse TPB</td></tr>
+      <tr><td class="sv-num">8</td><td class="sv-section">Prelude</td><td>Edge of Spider-Verse #3</td><td class="sv-book">SEPARATE BOOK: Amazing Spider-Man: Edge of Spider-Verse TPB</td></tr>
+      <tr><td class="sv-num">9</td><td class="sv-section">Prelude</td><td>Edge of Spider-Verse #4 <span style="color:var(--yel)">(Peni Parker / SP//dr debut)</span></td><td class="sv-book">SEPARATE BOOK: Amazing Spider-Man: Edge of Spider-Verse TPB</td></tr>
+      <tr><td class="sv-num">10</td><td class="sv-section">Prelude</td><td>Edge of Spider-Verse #5</td><td class="sv-book">SEPARATE BOOK: Amazing Spider-Man: Edge of Spider-Verse TPB</td></tr>
+      <tr class="sv-part"><td class="sv-num">11</td><td class="sv-section">Part 1</td><td>Amazing Spider-Man (2014) #9</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">12</td><td class="sv-section">Part 1 tie-in</td><td>Spider-Verse Team-Up #1</td><td class="sv-book">Spider-Verse Team-Up section</td></tr>
+      <tr><td class="sv-num">13</td><td class="sv-section">Part 1 tie-in</td><td>Spider-Verse #1</td><td class="sv-book">Spider-Verse mini section</td></tr>
+      <tr class="sv-part"><td class="sv-num">14</td><td class="sv-section">Part 2</td><td>Amazing Spider-Man (2014) #10</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">15</td><td class="sv-section">Part 2 tie-in</td><td>Spider-Woman (2014) #1</td><td class="sv-book">Spider-Woman (2014) section</td></tr>
+      <tr><td class="sv-num">16</td><td class="sv-section">Part 2 tie-in</td><td>Scarlet Spiders #1</td><td class="sv-book">Scarlet Spiders section</td></tr>
+      <tr><td class="sv-num">17</td><td class="sv-section">Part 2 tie-in</td><td>Spider-Man 2099 (2014) #6</td><td class="sv-book">Spider-Man 2099 (2014) section</td></tr>
+      <tr class="sv-part"><td class="sv-num">18</td><td class="sv-section">Part 3</td><td>Amazing Spider-Man (2014) #11</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">19</td><td class="sv-section">Part 3 tie-in</td><td>Spider-Verse Team-Up #2</td><td class="sv-book">Spider-Verse Team-Up section</td></tr>
+      <tr><td class="sv-num">20</td><td class="sv-section">Part 3 tie-in</td><td>Scarlet Spiders #2</td><td class="sv-book">Scarlet Spiders section</td></tr>
+      <tr><td class="sv-num">21</td><td class="sv-section">Part 3 tie-in</td><td>Spider-Woman (2014) #2</td><td class="sv-book">Spider-Woman (2014) section</td></tr>
+      <tr class="sv-part"><td class="sv-num">22</td><td class="sv-section">Part 4</td><td>Amazing Spider-Man (2014) #12</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">23</td><td class="sv-section">Part 4 tie-in</td><td>Spider-Man 2099 (2014) #7</td><td class="sv-book">Spider-Man 2099 (2014) section</td></tr>
+      <tr><td class="sv-num">24</td><td class="sv-section">Part 4 tie-in</td><td>Spider-Verse #2</td><td class="sv-book">Spider-Verse mini section</td></tr>
+      <tr><td class="sv-num">25</td><td class="sv-section">Part 4 tie-in</td><td>Scarlet Spiders #3</td><td class="sv-book">Scarlet Spiders section</td></tr>
+      <tr class="sv-part"><td class="sv-num">26</td><td class="sv-section">Part 5</td><td>Amazing Spider-Man (2014) #13</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">27</td><td class="sv-section">Part 5 tie-in</td><td>Spider-Woman (2014) #3</td><td class="sv-book">Spider-Woman (2014) section</td></tr>
+      <tr><td class="sv-num">28</td><td class="sv-section">Part 5 tie-in</td><td>Spider-Verse Team-Up #3</td><td class="sv-book">Spider-Verse Team-Up section</td></tr>
+      <tr><td class="sv-num">29</td><td class="sv-section">Part 5 tie-in</td><td>Spider-Man 2099 (2014) #8</td><td class="sv-book">Spider-Man 2099 (2014) section</td></tr>
+      <tr class="sv-part"><td class="sv-num">30</td><td class="sv-section">Part 6</td><td>Amazing Spider-Man (2014) #14</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr class="sv-part"><td class="sv-num">31</td><td class="sv-section">Epilogue</td><td>Amazing Spider-Man (2014) #15</td><td class="sv-book">Amazing Spider-Man main run section</td></tr>
+      <tr><td class="sv-num">32</td><td class="sv-section">Epilogue</td><td>Spider-Woman (2014) #4</td><td class="sv-book">Spider-Woman (2014) section</td></tr>
+    </tbody>
+  </table>
+</dialog>
 
 </body>
 </html>
